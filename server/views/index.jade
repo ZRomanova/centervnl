@@ -1,5 +1,31 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .col-xs-12.col-sm-8
+    .carousel.slide#anouncements(data-bs-ride="carousel")
+      .carousel-inner
+        each item in anouncements
+          .carousel-item.anouncement-box(class=item.active ? "active" : "")
+            img.d-block.img-cover(src=item.image)
+            .carousel-caption.yellow-text.text-block-anouncement
+              h3.marck-script= item.title
+              p.mh-300.text-justify.text-ellipsis= item.text
+              button.orange-button Запись
+      button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
+        span.carousel-control-prev-icon(aria-hidden="true")
+        span.visually-hidden Previous
+      button.carousel-control-next(type="button" data-bs-target="#anouncements" data-bs-slide="next")
+        span.carousel-control-next-icon(aria-hidden="true")
+        span.visually-hidden Next
+
+  p.text-justify.col-12 !{text}
+
+  .col-12.bg-light-blue.text-dark-blue#contacts
+    h1.text-center СВЯЖИТЕСЬ С НАМИ
+    .row
+      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-6
+        h5.text-center= contacts.address
+        h5.text-center= contacts.email
+        h5.text-center Телефон: #{contacts.phone}
+

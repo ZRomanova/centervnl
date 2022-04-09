@@ -1777,11 +1777,8 @@
 
       const complete = () => {
         this._isTransitioning = false;
-
         this._element.classList.remove(CLASS_NAME_COLLAPSING);
-
         this._element.classList.add(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW$7);
-
         this._element.style[dimension] = '';
         EventHandler.trigger(this._element, EVENT_SHOWN$5);
       };
@@ -1795,16 +1792,17 @@
     }
 
     hide() {
+      
       if (this._isTransitioning || !this._isShown()) {
         return;
       }
-
+      
       const startEvent = EventHandler.trigger(this._element, EVENT_HIDE$5);
 
       if (startEvent.defaultPrevented) {
         return;
       }
-
+      
       const dimension = this._getDimension();
 
       this._element.style[dimension] = `${this._element.getBoundingClientRect()[dimension]}px`;
@@ -1813,7 +1811,7 @@
       this._element.classList.add(CLASS_NAME_COLLAPSING);
 
       this._element.classList.remove(CLASS_NAME_COLLAPSE, CLASS_NAME_SHOW$7);
-
+      
       const triggerArrayLength = this._triggerArray.length;
 
       for (let i = 0; i < triggerArrayLength; i++) {
@@ -1824,16 +1822,13 @@
           this._addAriaAndCollapsedClass([trigger], false);
         }
       }
-
+      
       this._isTransitioning = true;
 
       const complete = () => {
         this._isTransitioning = false;
-
         this._element.classList.remove(CLASS_NAME_COLLAPSING);
-
         this._element.classList.add(CLASS_NAME_COLLAPSE);
-
         EventHandler.trigger(this._element, EVENT_HIDDEN$5);
       };
 
@@ -1928,12 +1923,11 @@
     if (event.target.tagName === 'A' || event.delegateTarget && event.delegateTarget.tagName === 'A') {
       event.preventDefault();
     }
-
     const selector = getSelectorFromElement(this);
     const selectorElements = SelectorEngine.find(selector);
     selectorElements.forEach(element => {
       Collapse.getOrCreateInstance(element, {
-        toggle: false
+        toggle: true
       }).toggle();
     });
   });

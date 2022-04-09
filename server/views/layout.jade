@@ -5,7 +5,50 @@ html
     title= title
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
   body
-    block header
-    block content
-    block footer
+    nav.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand(href='/') 
+            img.nav-logo(src='/images/logo.webp')
+          button.navbar-toggle(type='button', data-bs-toggle="collapse", data-bs-target='#navbar-main')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #navbar-main.navbar-collapse.collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/shop/') Магазин
+            li#dropdownMenuProjects(data-bs-toggle="dropdown" aria-expanded="false")
+              a.dropdown-toggle(href='/projects/') Проекты
+              ul.dropdown-menu(aria-labelledby="dropdownMenuProjects")
+                each project in nav_projects
+                  a.dropdown-item(href=project.url) #{project.title}
+            li#dropdownMenuAbout(data-bs-toggle="dropdown" aria-expanded="false")
+              a.dropdown-toggle(href='/about/' ) О нас
+              ul.dropdown-menu(aria-labelledby="dropdownMenuAbout")
+                a.dropdown-item(href="/#") Уставные документы
+                a.dropdown-item(href="/#") Годовые отчёты
+                a.dropdown-item(href="/#") Наша команда
+                a.dropdown-item(href="/#contacts") Контакты
+            li
+              a(href='/news/') Новости
+            li
+              a(href='/services/') Услуги
+
+    .container.first-container
+      block content
+
+    footer.panel-footer
+      .row
+        .col-12
+          each logo in footer_logos 
+            a(href=logo.url target="_blank")
+              img.footer_logo(src=logo.img)
+          div
+            small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
+
+    script(src='/javascripts/jquery-3.6.0.js')
+    script(src='/bootstrap/js/bootstrap.js')
+    script(src='/javascripts/main.js')
