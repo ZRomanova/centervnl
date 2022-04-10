@@ -1568,7 +1568,7 @@ th {
 
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
 }
 
 table col[class*="col-"] {
@@ -2204,7 +2204,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary {
   color: #ffffff;
   background-color: rgb(247,141,46);
-  border-color: rgb(247,141,46);
+  border-color: rgb(247, 120, 9);
 }
 
 .btn-primary:hover,
@@ -2213,8 +2213,8 @@ fieldset[disabled] .btn-default.active {
 .btn-primary.active,
 .open .dropdown-toggle.btn-primary {
   color: #ffffff;
-  background-color: #8a1720;
-  border-color: #79141c;
+  background-color: rgb(247, 120, 9);
+  border-color: rgb(247,141,46);
 }
 
 .btn-primary:active,
@@ -2506,11 +2506,11 @@ input[type="button"].btn-block {
           transition: height 0.35s ease;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
   src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
-}
+} */
 
 .glyphicon {
   position: relative;
@@ -4963,7 +4963,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   padding: 8px 15px;
   margin-bottom: 20px;
   list-style: none;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border-radius: 4px;
 }
 
@@ -5000,7 +5000,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   margin-left: -1px;
   line-height: 1.428571429;
   text-decoration: none;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border: 1px solid transparent;
 }
 
@@ -5043,7 +5043,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pagination > .disabled > a:focus {
   color: #ffffff;
   cursor: not-allowed;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border-color: transparent;
 }
 
@@ -5148,7 +5148,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager li > span {
   display: inline-block;
   padding: 5px 14px;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border: 1px solid transparent;
   border-radius: 15px;
 }
@@ -5175,7 +5175,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager .disabled > span {
   color: #ffffff;
   cursor: not-allowed;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
 }
 
 .label {
@@ -5697,7 +5697,7 @@ a.list-group-item:focus {
 
 .panel {
   margin-bottom: 20px;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border: 1px solid transparent;
   border-radius: 4px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -6048,7 +6048,7 @@ body.modal-open,
 
 .modal-content {
   position: relative;
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
   border: 1px solid #999999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -6171,7 +6171,7 @@ body.modal-open,
 @media screen and (min-width: 768px) {
   .modal-dialog {
     right: auto;
-    left: 50%;
+    /* left: 50%; */
     width: 600px;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -6650,10 +6650,6 @@ body.modal-open,
 
 .clearfix:after {
   clear: both;
-}
-
-.pull-right {
-  float: right !important;
 }
 
 .pull-left {
@@ -7352,7 +7348,7 @@ legend {
 }
 
 .list-group-item {
-  background-color: #13a0aa;
+  background-color: rgb(3,178,183);
 }
 
 .popover {

@@ -113,3 +113,9 @@ body {
 .text-dark-blue {
   color: rgb(15,79,79);
 }
+
+.small-user-nav {
+  height: 32px;
+  width: 32px;
+  border-radius: .5;
+}

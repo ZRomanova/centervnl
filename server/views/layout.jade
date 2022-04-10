@@ -6,7 +6,185 @@ html
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
+    script(src="https://kit.fontawesome.com/f3bc034a55.js" crossorigin="anonymous")
   body
+    #authModal.modal.fade(aria-hidden='true' aria-labelledby='authModalLabel' tabindex='-1')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5#authModalLabel.modal-title Авторизация
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form#login(action="/auth/login", method="post", role="form")
+              label.col-form-label(for='auth-email') Email:
+              .mb-3.input-group
+                input#auth-email.form-control(type='email' autocomplete="on" name="email" required)
+
+              label.col-form-label(for='auth-password') Пароль:
+              .input-group.mb-3
+                span.input-group-text.input-group-btn
+                  i.fas.fa-lock
+                input#auth-password.form-control(type='password' autocomplete="current-password" name="password" required)
+                span.input-group-text.input-group-btn
+                  i#togglePasswordA.far.fa-eye(style='cursor: pointer')
+
+          .modal-footer
+            button.btn.btn-secondary(data-bs-target='#checkRegModal' data-bs-toggle='modal' data-bs-dismiss='modal') Регистрация
+            button.btn.btn-primary(type='submit' form="login") Вход
+
+    #authEmoModal.modal.fade(aria-hidden='true' aria-labelledby='authEmoModalLabel' tabindex='-1')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5#authEmoModalLabel.modal-title Авторизация в ЭМО
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form#login-emo(action="", method="post", role="form")
+              label.col-form-label(for='emo-login') Логин:
+              .mb-3.input-group
+                input#emo-login.form-control(type='text' autocomplete="off" name='login')
+
+              label.col-form-label(for='emo-password') Пароль:
+              .input-group.mb-3
+                span.input-group-text.input-group-btn
+                  i.fas.fa-lock
+                input#emo-password.form-control(type='password' autocomplete="off" name='password')
+                span.input-group-text.input-group-btn
+                  i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
+          .modal-footer
+            button.btn.btn-primary(type='submit' form='login-emo') Авторизоваться
+
+    #registrEmoModal.modal.fade(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
+      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
+        .modal-content
+          .modal-header
+            h5#registrEmoModalLabel.modal-title Регистрация
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form#registr-emo(action="/auth/registration-emo", method="post", role="form")
+              label.col-form-label(for='emo-email') Email:
+              .mb-3.input-group
+                input#emo-email.form-control(type='email' autocomplete="on" required name='email')
+
+              label.col-form-label(for='registr-emo-password') Пароль от данного сайта (придумайте):
+              .input-group.mb-3
+                span.input-group-text.input-group-btn
+                  i.fas.fa-lock
+                input#registr-emo-password.form-control(type='password' autocomplete="new-password" required name='password')
+                span.input-group-text.input-group-btn
+                  i#togglePasswordE.far.fa-eye(style='cursor: pointer')
+
+              label.col-form-label(for='registr-emo-patronymic') Отчество:
+              .mb-3.input-group
+                input#registr-emo-patronymic.form-control(type='text' name='patronymic')
+
+          .modal-footer
+            button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
+            button.btn.btn-primary(type='submit' form="registr-emo") Регистрация
+
+    #registrModal.modal.fade(aria-hidden='true' aria-labelledby='registrModalLabel' tabindex='-1')
+      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
+        .modal-content
+          .modal-header
+            h5#registrModalLabel.modal-title Регистрация
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form#registr(action="/auth/registration", method="post", role="form")
+              label.col-form-label(for='registr-email') Email:
+              .mb-3.input-group
+                input#registr-email.form-control(type='email' required name='email' autocomplete="on")
+
+              label.col-form-label(for='registr-password') Пароль:
+              .input-group.mb-3
+                span.input-group-text.input-group-btn
+                  i.fas.fa-lock
+                input#registr-password.form-control(type='password' required name='password'  autocomplete="new-password")
+                span.input-group-text.input-group-btn
+                  i#togglePasswordR.far.fa-eye(style='cursor: pointer')
+
+              label.col-form-label(for='registr-surname') Фамилия:
+              .mb-3.input-group
+                input#registr-surname.form-control(type='text' required name='surname')
+              label.col-form-label(for='registr-name') Имя:
+              .mb-3.input-group
+                input#registr-name.form-control(type='text' required name='name')
+              label.col-form-label(for='registr-patronymic') Отчество:
+              .mb-3.input-group
+                input#registr-patronymic.form-control(type='text' name='patronymic')
+
+              label.col-form-label(for='registr-sex' required) Пол:
+              select#registr-sex.form-select.form-select-lg.mb-3(name='sex')
+                option(selected='') Выберите
+                option(value='1') Мужчина
+                option(value='2') Женщина
+
+              label.col-form-label(for='registr-info') О себе:
+              .mb-3
+                textarea#registr-info.form-control(name='info')
+
+          .modal-footer
+            button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
+            button.btn.btn-primary(type="submit" form="registr") Регистрация
+
+    #checkRegModal.modal.fade(tabindex='-1' aria-labelledby='checkRegModalLabel' aria-hidden='true')
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h5#checkRegModalLabel.modal-title Способ регистрации
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body Хотите использовать учётную запись ЭМО для регистрации?
+          .modal-footer
+            button.btn.btn-secondary(data-bs-target='#registrModal' data-bs-toggle='modal' data-bs-dismiss='modal') Нет
+            button.btn.btn-primary(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
+
+    #editUserModal.modal.fade(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
+      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
+        .modal-content
+          .modal-header
+            h5#editUserModalLabel.modal-title Редактировать профиль
+            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+          .modal-body
+            form#edit-user(action="/auth/update", method="post", role="form")
+              label.col-form-label(for='edit-email') Email:
+              .mb-3.input-group
+                input#edit-email.form-control(type='email' required name='email' autocomplete="on")
+
+              label.col-form-label(for='edit-password') Пароль:
+              .input-group.mb-3
+                span.input-group-text.input-group-btn
+                  i.fas.fa-lock
+                input#edit-password.form-control(type='password' required name='password'  autocomplete="current-password")
+                span.input-group-text.input-group-btn
+                  i#togglePasswordR.far.fa-eye(style='cursor: pointer')
+
+              label.col-form-label(for='edit-surname') Фамилия:
+              .mb-3.input-group
+                input#edit-surname.form-control(type='text' required name='surname' value=user.surname)
+              label.col-form-label(for='edit-name') Имя:
+              .mb-3.input-group
+                input#edit-name.form-control(type='text' required name='name' value=user.name)
+              label.col-form-label(for='edit-patronymic') Отчество:
+              .mb-3.input-group
+                input#edit-patronymic.form-control(type='text' name='patronymic' value=user.patronymic)
+
+              label.col-form-label(for='edit-sex' required) Пол:
+              select#edit-sex.form-select.form-select-lg.mb-3(name='sex')
+                option(value=1 selected=(user.sex == 1)) Мужчина
+                option(value=2 selected=(user.sex == 2)) Женщина
+
+              label.col-form-label(for='edit-info') О себе:
+              .mb-3
+                textarea#edit-info.form-control(name='info'  value=user.info)
+
+          .modal-footer
+            a.btn.btn-secondary(href='/auth/exit') Выход
+            if user.emo 
+              button.btn.btn-primary(type="button") Обновить из ЭМО
+            else
+              button.btn.btn-secondary(type="button") Привязать аккаунт ЭМО
+            button.btn.btn-primary(type="submit" form="edit-user") Coxpaнить
+
+
     nav.navbar-default.navbar-fixed-top
       .container
         .navbar-header
@@ -23,8 +201,9 @@ html
             li#dropdownMenuProjects(data-bs-toggle="dropdown" aria-expanded="false")
               a.dropdown-toggle(href='/projects/') Проекты
               ul.dropdown-menu(aria-labelledby="dropdownMenuProjects")
-                each project in nav_projects
-                  a.dropdown-item(href=project.url) #{project.title}
+                if nav_projects && nav_projects.length
+                  each project in nav_projects
+                    a.dropdown-item(href=project.url) #{project.title}
             li#dropdownMenuAbout(data-bs-toggle="dropdown" aria-expanded="false")
               a.dropdown-toggle(href='/about/' ) О нас
               ul.dropdown-menu(aria-labelledby="dropdownMenuAbout")
@@ -35,7 +214,18 @@ html
             li
               a(href='/news/') Новости
             li
-              a(href='/services/') Услуги
+              a(href='/services/') Мероприятия
+            li
+              if !user
+                a(data-bs-toggle='modal' href='#authModal' role='button')
+                  i.fa-solid.fa-arrow-right-to-bracket
+              else
+                a(data-bs-toggle='modal' href='#editUserModal' role='button') 
+                  img.small-user-nav(src=user.photo)
+            li
+              if user && user.isAdmin
+                a(href='/admin')
+                  i.fa-solid.fa-crown
 
     .container.first-container
       block content
@@ -43,9 +233,10 @@ html
     footer.panel-footer
       .row
         .col-12
-          each logo in footer_logos 
-            a(href=logo.url target="_blank")
-              img.footer_logo(src=logo.img)
+          if footer_logos && footer_logos.length
+            each logo in footer_logos 
+              a(href=logo.url target="_blank")
+                img.footer_logo(src=logo.img)
           div
             small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
