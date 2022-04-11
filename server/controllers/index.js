@@ -5,7 +5,8 @@ const apiProjects = require('../api/controllers/projects')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
-        const result = {...data}
+        if (data.user) req.session.passport.user = data.user
+        const result = {user: req.user}
         await apiData.getContacts(req, res, async (req, res, contacts) => {
             result.contacts = contacts
             await apiData.getHomeText(req, res, async (req, res, home) => {
@@ -40,7 +41,7 @@ const renderHomePage = function(req, res, data) {
         contacts: data.contacts,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: data.user
     })
     
 }

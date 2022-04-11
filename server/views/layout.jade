@@ -39,20 +39,20 @@ html
             h5#authEmoModalLabel.modal-title Авторизация в ЭМО
             button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
           .modal-body
-            form#login-emo(action="", method="post", role="form")
+
               label.col-form-label(for='emo-login') Логин:
               .mb-3.input-group
-                input#emo-login.form-control(type='text' autocomplete="off" name='login')
+                input#emo-login.form-control(type='text' name='loginEmo' form="registr-emo" autocomplete="off" )
 
               label.col-form-label(for='emo-password') Пароль:
               .input-group.mb-3
                 span.input-group-text.input-group-btn
                   i.fas.fa-lock
-                input#emo-password.form-control(type='password' autocomplete="off" name='password')
+                input#emo-password.form-control(type='password' autocomplete="off" name='passwordEmo' form="registr-emo")
                 span.input-group-text.input-group-btn
                   i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
           .modal-footer
-            button.btn.btn-primary(type='submit' form='login-emo') Авторизоваться
+            button.btn.btn-primary(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
 
     #registrEmoModal.modal.fade(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
@@ -137,6 +137,7 @@ html
             button.btn.btn-secondary(data-bs-target='#registrModal' data-bs-toggle='modal' data-bs-dismiss='modal') Нет
             button.btn.btn-primary(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
 
+
     #editUserModal.modal.fade(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
         .modal-content
@@ -159,29 +160,29 @@ html
 
               label.col-form-label(for='edit-surname') Фамилия:
               .mb-3.input-group
-                input#edit-surname.form-control(type='text' required name='surname' value=user.surname)
+                input#edit-surname.form-control(type='text' required name='surname' value=user?user.surname:'')
               label.col-form-label(for='edit-name') Имя:
               .mb-3.input-group
-                input#edit-name.form-control(type='text' required name='name' value=user.name)
+                input#edit-name.form-control(type='text' required name='name' value=user?user.name:'')
               label.col-form-label(for='edit-patronymic') Отчество:
               .mb-3.input-group
-                input#edit-patronymic.form-control(type='text' name='patronymic' value=user.patronymic)
+                input#edit-patronymic.form-control(type='text' name='patronymic' value=user?user.patronymic:'')
 
               label.col-form-label(for='edit-sex' required) Пол:
               select#edit-sex.form-select.form-select-lg.mb-3(name='sex')
-                option(value=1 selected=(user.sex == 1)) Мужчина
-                option(value=2 selected=(user.sex == 2)) Женщина
+                option(value=1 selected=(user && user.sex == 1)) Мужчина
+                option(value=2 selected=(user && user.sex == 2)) Женщина
 
               label.col-form-label(for='edit-info') О себе:
               .mb-3
-                textarea#edit-info.form-control(name='info'  value=user.info)
+                textarea#edit-info.form-control(name='info')= user?user.info:''
 
           .modal-footer
-            a.btn.btn-secondary(href='/auth/exit') Выход
-            if user.emo 
-              button.btn.btn-primary(type="button") Обновить из ЭМО
-            else
-              button.btn.btn-secondary(type="button") Привязать аккаунт ЭМО
+            a.btn.btn-secondary(href='/auth/logout') Выход
+            //- if user && user.emo 
+            //-   button.btn.btn-primary(type="button") Обновить из ЭМО
+            //- else
+            //-   button.btn.btn-secondary(type="button") Привязать аккаунт ЭМО
             button.btn.btn-primary(type="submit" form="edit-user") Coxpaнить
 
 
@@ -224,7 +225,7 @@ html
                   img.small-user-nav(src=user.photo)
             li
               if user && user.isAdmin
-                a(href='/admin')
+                a(href='/admin/')
                   i.fa-solid.fa-crown
 
     .container.first-container

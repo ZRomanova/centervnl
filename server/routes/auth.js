@@ -5,6 +5,7 @@ const passport = require('passport')
 const controller = require('../controllers/auth');
 
 router.post('/registration', controller.registr)
+router.post('/update', controller.update)
 router.post('/registration-emo', controller.registrEmo)
 
 router.post('/login', passport.authenticate('local', {
@@ -13,5 +14,10 @@ router.post('/login', passport.authenticate('local', {
     }),
     function(req, res) {res.redirect('/')}
   )
+
+router.get('/logout', (req, res, next) => {
+    req.logout();
+    res.redirect('/');
+});
 
 module.exports = router;

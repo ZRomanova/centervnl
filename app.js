@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const indexRouter = require('./server/routes/index');
 const apiRouter = require('./server/api/routes');
+const auth = require('./server/middleware/auth')
 
 const app = express();
 app.locals.moment = require('moment');
@@ -58,8 +59,13 @@ require('./server/middleware/passport')
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
+app.get('/admin/', auth.isAdmin, (req, res) => {
+  res.sendFile(
+    path.resolve(
+      'admin', 'index.html'
+    )
+  )
+})
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 // app.use('/users', usersRouter);
