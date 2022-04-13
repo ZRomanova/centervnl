@@ -1,0 +1,78 @@
+<div class="modal d-block">
+    <div class="modal-dialog" style="width: 80vw !important; max-width: 80vw !important;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Справка</h3>
+          <button class="btn-close" type="button" (click)="cross()"></button>
+        </div>
+        <div class="modal-body">
+            <p>Данное поле принимает гипертекст. Ниже приведены примеры корректной разметки.<br> 
+                Использование подчёркнутого текста не рекомендуется, так как пользователи будут путать его со ссылками.</p>
+            <div class="row">
+                <div class="col-8">
+                    <h3>Введено</h3>
+                </div>
+                <div class="col-4">
+                    <h3>Результат</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="Перенос<br>строки">
+                </div>
+                <div class="col-4 arial">
+                    Перенос<br>строки
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="<b>Жирный текст</b>">
+                </div>
+                <div class="col-4 arial">
+                    <b>Жирный текст</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="<i>Текст курсивом</i>">
+                </div>
+                <div class="col-4 arial"><i>Текст курсивом</i></div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="<s>Зачёркнутый текст</s>">
+                </div>
+                <div class="col-4 arial"><s>Зачёркнутый текст</s></div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="<ol><li>Нумерованный</li><li>список</li></ol>">
+                </div>
+                <div class="col-4 arial"><ol><li>Нумерованный</li><li>список</li></ol></div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value="<ul><li>Маркерованный</li><li>список</li></ul>">
+                </div>
+                <div class="col-4 arial"><ul><li>Маркерованный</li><li>список</li></ul></div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value='<a href="https://emo.su">Ссылка откроется в текущем окне</a>'>
+                </div>
+                <div class="col-4 arial">
+                    <a href="https://emo.su">Ссылка откроется в текущем окне</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mb-3">
+                    <input class="form-control" disabled value='<a href="https://emo.su" target="_blank">Ссылка откроется в новом окне</a>'>
+                </div>
+                <div class="col-4 arial">
+                    <a href="https://emo.su" target="_blank">Ссылка откроется в новом окне</a>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

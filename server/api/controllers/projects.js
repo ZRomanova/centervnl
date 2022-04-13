@@ -1,11 +1,20 @@
-const Project = require('../../models/projects')
+const Project = require('../models/projects')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.getActive = async function(req, res, next) {
     try {
         const now = new Date()
-        const activeProjects = await Project.find({$or: [{date_end: {$exists: false}}, {date_end: {$gt: now}}]}).sort({date: -1}).lean()
+        const activeProjects = await Project.find({$or: [{'date.end': {$exists: false}}, {'date.end': {$gt: now}}]}).sort({name: 1}).lean()
         next(req, res, activeProjects)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getProjectById = async function(req, res, next) {
+    try {
+        const project = await Project.findById(req.params.id).lean()
+        next(req, res, project)
     } catch (e) {
         errorHandler(res, e)
     }
@@ -26,7 +35,7 @@ module.exports.getProjects = async function(req, res, next) {
         .find(filter, fields)
         .skip(+req.query.offset)
         .limit(+req.query.limit)
-        .sort({date_end: -1})
+        .sort({'date.end': -1})
         .lean()
 
         next(req, res, projects)
@@ -35,14 +44,34 @@ module.exports.getProjects = async function(req, res, next) {
     }
 }
 
+module.exports.createProject = async function(req, res, next) {
+    try {
+        const created = req.body
+        const project = await new Project(created).save()
+        next(req, res, project)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
 
-module.exports.uploadImages = async function(req, res, next) {
+module.exports.updateProject = async function(req, res, next) {
+    try {
+        const updated = req.body
+        const project = await Project.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        next(req, res, project)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+
+module.exports.uploadImagesProject = async function(req, res, next) {
     try {
         const updated = req.body
         if (req.files && req.files.image) updated.image = req.file.image[0].path
         if (req.files['images']) {
             let paths = req.files['images'].map(file => file.filename)
-            if (!req.body.images) updated.images = paths
+            if (!req.body.galley) updated.images = paths
             else updated.images = [...updated.images, ...paths]
         }
         const project = await Project.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
