@@ -1,134 +1,48 @@
-module.exports.getHomePage = function(req, res) {
+const apiPartners = require('../api/controllers/partners')
+const apiData = require('../api/controllers/data')
+const apiBlog = require('../api/controllers/blog')
+const apiProjects = require('../api/controllers/projects')
+
+module.exports.getHomePage = async function(req, res, data = {}) {
+    try {
+        if (data.user) req.session.passport.user = data.user
+        const result = {user: req.user}
+        await apiData.getContacts(req, res, async (req, res, contacts) => {
+            result.contacts = contacts
+            await apiData.getHomeText(req, res, async (req, res, home) => {
+                result.description = home.text
+                await apiPartners.getPartners(req, res, async (req, res, partners) => {
+                    result.partners = partners
+                    await apiBlog.getAnouncements(req, res, async (req, res, anouncements) => {
+                        result.anouncements = anouncements
+                        await apiProjects.getActive(req, res, async (req, res, projects) => {
+                            result.projects = projects
+                            req.query = {offset: 0, limit: 16}
+                            await apiBlog.getPosts(req, res, (req, res, posts) => {
+                                result.posts = posts
+                                renderHomePage(req, res, result)
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderHomePage = function(req, res, data) {
     res.render('index', {
         title: 'Главная',
-        text: `<b>Автономная некоммерческая организация "Ресурсный центр помощи людям с ментальными нарушениями "Вера. Надежда. Любовь"</b> создана в 2017 году.
-        Организация является участником межотраслевого профессионального объединения "Оценка программ в сфере детства".
-        Ресурсный центр реализует различные социально значимые проекты совместно с государственными и негосударственными СО НКО.
-        <br>
-        <b>Направления деятельности:</b>
-        <br>- реализация социальных проектов и программ, направленных на поддержку людей с ментальными нарушениями.
-        <br>- реализация программ, направленных на развитие профессиональных компетенций специалистов организаций, сопровождающих людей с выраженными нарушениями развития;
-        <br>- содействие созданию, консолидации и распространению информационно-методических, дидактических и реабилитационных ресурсов, направленных на поддержку людей с ментальными нарушениями. 
-        <br><b>Нашими основными партнерами являются</b> ГБУ ЦССВ «Вера. Надежда. Любовь», Благотворительный фонд социальной помощи детям «Расправь крылья!», Центр доказательного социального проектирования МГППУ, Благотворительный фонд Елены и Геннадия Тимченко, АНО «Эволюция и филантропия», АНО «Федеральный информационный центр молодёжных социальных программ» и др.
-        <br><b>Наша организация</b> призвана создавать условия для лучшей жизни людей с психическими и физическими нарушениями развития и их семей. Наши усилия направлены на то, чтобы дети с тяжелыми нарушениями развития жили жизнью достойной человека.`,
-        anouncements: [
-            {
-                title: '«Рабочие субботы»',
-                text: `Наша база визуальных средств содержит более 2000 уникальных наименований. Визуальные помощники нужны каждому особому ребенку на пути к самостоятельности. 
-                По субботам мы приглашаем родителей вместе с их особыми детьми изготовить визуальные помощники в нашей Печатной мастерской #ПиктоДидактик и получить консультацию по использованию их в домашних условиях. 
-                Также мы приглашаем особых ребят в возрасте от 14 лет пройти месячную стажировку в нашей Печатной мастерской и по итогам пройти независимую аттестацию трудовых навыков, получив соответствующий сертификат. 
-                Мастерская располагается по адресу ул. Ключевая, д.22, корп 2.
-                С базой визуальных помощников можно ознакомиться здесь. 
-                Условия: бесплатно, по предварительной записи здесь.`,
-                image: "images/logo.webp",
-                active: true
-            },
-            {
-                title: '«Рабочие субботы 2»',
-                text: `Наша база визуальных средств содержит более 2000 уникальных наименований. Визуальные помощники нужны каждому особому ребенку на пути к самостоятельности. 
-                По субботам мы приглашаем родителей вместе с их особыми детьми изготовить визуальные помощники в нашей Печатной мастерской #ПиктоДидактик и получить консультацию по использованию их в домашних условиях. 
-                `,
-                image: "images/logo.webp"
-            }
-        ],
-        news: [],
-        contacts: {
-            address: 'ул. Ключевая, д.22, корп.2, Москва',
-            phone: '+7 (916) 612-34-71',
-            email: 'centerVNL@mail.ru'
-        },
-        nav_projects: getProjects(),
-        footer_logos: getFooterLogos(), 
+        text: data.description,
+        anouncements: data.anouncements,
+        news: data.posts,
+        contacts: data.contacts,
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: data.user
     })
+    
 }
 
-module.exports.getProjectsPage = function(req, res) {
-    res.render('new-page', {title: 'Проекты', footer_logos: getFooterLogos(), nav_projects: getProjects()})
-}
-
-module.exports.getShopPage = function(req, res) {
-    res.render('new-page', {title: 'Магазин', footer_logos: getFooterLogos(), nav_projects: getProjects()})
-}
-
-module.exports.getAboutPage = function(req, res) {
-    res.render('new-page', {title: 'О нас', footer_logos: getFooterLogos(), nav_projects: getProjects()})
-}
-
-module.exports.getNewsPage = function(req, res) {
-    res.render('new-page', {title: 'Новости', footer_logos: getFooterLogos(), nav_projects: getProjects()})
-}
-
-module.exports.getServicesPage = function(req, res) {
-    res.render('new-page', {title: 'Услуги', footer_logos: getFooterLogos(), nav_projects: getProjects()})
-}
-
-getProjects = function() {
-    return [
-        {
-            title: "Проект 1",
-            url: "/#"
-        },
-        {
-            title: "Проект 2",
-            url: "/#"
-        },
-        {
-            title: "Проект 3",
-            url: "/#"
-        }
-    ]
-}
-
-getFooterLogos = function() {
-    return [
-        {
-            img: "images/logo.webp",
-            url: "https://vk.com"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "images/logo.webp"
-        },
-        {
-            img: "/images/logo.webp"
-        },
-        {
-            img: "/images/logo.webp"
-        },
-        {
-            img: "/images/logo.webp"
-        },
-        {
-            img: "/images/logo.webp"
-        },
-    ]
-}

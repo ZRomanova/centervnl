@@ -1,15 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const {isAdmin} = require('../middleware/auth')
 
 const controller = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', controller.getHomePage) 
 
-router.get('/shop/', controller.getShopPage)
-router.get('/projects/', controller.getProjectsPage)
-router.get('/about/', controller.getAboutPage)
-router.get('/services/', controller.getServicesPage)
-router.get('/news/', controller.getNewsPage)
+router.use('/shop', require('./shop'))
+router.use('/projects', require('./projects'))
+router.use('/about', require('./about'))
+router.use('/services', require('./services'))
+router.use('/news', require('./news'))
+
+//auth
+router.use('/auth', require('./auth'))
 
 module.exports = router;
