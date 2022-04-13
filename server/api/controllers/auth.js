@@ -1,11 +1,8 @@
 const request = require('request');
-const User = require('../../models/users')
+const User = require('../models/users')
 const errorHandler = require('../utils/errorHandler')
-const { genPassword } = require('../../middleware/password')
-
-const getRandomNumber = (min, max) => {
-    return Math.round(Math.random() * (max - min) + min)
-}
+const { genPassword } = require('../../middleware/password');
+const randomNumber = require('../utils/randomNumber');
 
 module.exports.register = async function(req, res, next) {
   try {
@@ -20,7 +17,7 @@ module.exports.register = async function(req, res, next) {
       } else {
         // Нужно создать пользователя
         const create = req.body
-        if (!create.photo) create.photo = `/images/avatars/user-${req.body.sex}-${getRandomNumber(1, 10)}.svg`
+        if (!create.photo) create.photo = `/images/avatars/user-${req.body.sex}-${randomNumber(1, 10)}.svg`
         create.password = genPassword(req.body.password)
 
         const user = await new User(create).save()

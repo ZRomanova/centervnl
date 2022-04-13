@@ -3,3 +3,12 @@
 @import url('https://centervnl.ru/bootstrap/css/bootstrap.css');
 @import url('https://centervnl.ru/bootstrap/css/amelia.bootstrap.css');
 @import url('https://centervnl.ru/stylesheets/style.css');
+
+.text-blue-hover:hover {
+    color: rgb(15,79,79);
+}
+
+.text-blue-hover {
+    color: rgb(3,178,183);
+    cursor: pointer;
+}

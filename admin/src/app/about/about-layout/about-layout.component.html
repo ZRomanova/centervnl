@@ -1,0 +1,25 @@
+<app-page-title title="Раздел общее" text="Здесь можно редактировать информацию об организации, такую как содержание главной страницы, контакты, команду, партнёров, документы, отчётность, а также теги"></app-page-title>
+<div class="col" *ngIf="loading == 0; else loader">
+    <app-save-button (saveClick)="onSubmit()"></app-save-button>
+    <h3>Текст на главной странице <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h3>
+    <form [formGroup]="textForm">
+        <textarea class="form-control" formControlName="text" rows="15"></textarea>
+    </form>
+    <form [formGroup]="contactsForm">
+        <h3>Контакты</h3>
+        <h5>Адрес:</h5>
+        <input type="text" class="form-control" formControlName="address">
+        <h5>Телефон:</h5>
+        <input type="tel" class="form-control" formControlName="phone">
+        <h5>Email:</h5>
+        <input type="email" class="form-control" formControlName="email">
+    </form>
+    <h3>Команда</h3>
+    <h3>Партнеры</h3>
+</div>
+
+<app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
