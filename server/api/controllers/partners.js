@@ -29,6 +29,15 @@ module.exports.createPartner = async function(req, res, next) {
     }
 }
 
+module.exports.deletePartner = async function(req, res, next) {
+    try {
+        await Partner.deleteOne({_id: req.params.id})
+        next(req, res, {message: "Удалено"})
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
 module.exports.updatePartner = async function(req, res, next) {
     try {
         const updated = req.body
@@ -41,8 +50,9 @@ module.exports.updatePartner = async function(req, res, next) {
 
 module.exports.uploadImagesPartner = async function(req, res, next) {
     try {
+        console.log(req.file)
         const updated = {}
-        if (req.file) updated.image = req.file.path
+        if (req.file) updated.image = 'https://centervnl.ru/' + req.file.path
         const partner = await Partner.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, partner)
     } catch (e) {

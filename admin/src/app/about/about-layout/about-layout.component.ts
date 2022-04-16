@@ -2,6 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {GeneralService} from '../../shared/transport/general.service'
+import {PartnersService} from '../../shared/transport/partners.service'
+import {TagService} from '../../shared/transport/tag.service'
+import {Partner, Staff, Tag} from '../../shared/interfaces'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-about-layout',
@@ -17,11 +21,24 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   textForm: FormGroup
   htModal = false
   cSub: Subscription
+  pSub: Subscription
   hSub: Subscription
+  tSub: Subscription
+  partners: Partner[]
+  team: Staff[]
+  tagForm = false
+  currentTag = null
+  tags: Tag[]
+  tagSort: any[] = []
+  activeTagsPage = 0
 
-  constructor(private generalService: GeneralService) { }
+  constructor(private generalService: GeneralService, 
+    private partnersService: PartnersService, 
+    private tagsService: TagService, 
+    private router: Router) { }
 
   ngOnInit(): void {
+    
     this.generalService.fetch("CONTACTS").subscribe(data => {
       this.contacts = data
       this.contactsForm = new FormGroup({
@@ -38,6 +55,13 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
       })
       this.loading--
     })
+    this.pSub = this.partnersService.fetch().subscribe(partners => {
+      this.partners = partners
+    })
+    this.tSub = this.tagsService.fetch().subscribe(tags => {
+      this.tags = tags
+      this.tagSort = this.makeArray(this.tags)
+    })
   }
   openHtModal() {
     this.htModal = true
@@ -46,13 +70,68 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.htModal = false
   }
 
+  makeArray(arrFrom) {
+    const chunkArray = (arr, cnt) => arr.reduce((prev, cur, i, a) => !(i % cnt) ? prev.concat([a.slice(i, i + cnt)]) : prev, []);
+    return chunkArray(arrFrom, 3)
+  }
+
   onSubmit() {
+    this.contactsForm.disable()
+    this.textForm.disable()
     this.cSub = this.generalService.update("CONTACTS", this.contactsForm.value).subscribe(value => {
       this.contacts = value
       this.hSub = this.generalService.update("HOME", {text: this.textForm.value.text}).subscribe(text => {
         this.homeText = text
+        this.contactsForm.enable()
+        this.textForm.enable()
       })
     })
+  }
+
+  deletePartner(id) {
+    this.partnersService.delete(id).subscribe()
+  }
+
+  visiblePartner(data) {
+    this.partnersService.update(data._id, data).subscribe()
+  }
+
+  createPartner() {
+    this.router.navigate(['partner'])
+  }
+
+  openTagForm(tag) {
+    this.currentTag = tag
+    this.tagForm = true
+  }
+
+  closeTagForm(tag) {
+    if (tag) {
+      if (this.currentTag) {
+        const index = this.tags.indexOf(this.tags.find(t => t._id == this.currentTag._id))
+        this.tags[index] = tag
+        this.tagSort = this.makeArray(this.tags)
+      } else {
+        this.tags.push(tag)
+        this.tagSort = this.makeArray(this.tags)
+      }
+    }
+    this.currentTag = null
+    this.tagForm = false
+  }
+
+  editPartner(id) {
+    this.router.navigate(['partner', id])
+  }
+
+  nextTags() {
+    if (this.activeTagsPage == this.tagSort.length - 1) this.activeTagsPage = 0
+    else this.activeTagsPage ++
+  }
+
+  backTags() {
+    if (this.activeTagsPage == 0) this.activeTagsPage = this.tagSort.length - 1
+    else this.activeTagsPage --
   }
 
   ngOnDestroy() {

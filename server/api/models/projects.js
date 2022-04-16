@@ -2,17 +2,18 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const projectSchema = new Schema({
-  image: {
-    type: String
-  },
-  title: {
+  image: String,
+  name: {
     type: String,
     required: true,
     unique: true
   },
-  description: {
-    type: String
+  author: {
+    ref: 'users',
+    type: Schema.Types.ObjectId,
+    required: true
   },
+  description: String,
   gallery: [String],
   period: {
     start: {
@@ -25,6 +26,10 @@ const projectSchema = new Schema({
   },
   tags: {
     ref: 'tags',
+    type: [mongoose.Types.ObjectId]
+  },
+  partners: {
+    ref: 'partners',
     type: [mongoose.Types.ObjectId]
   },
   created: {

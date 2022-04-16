@@ -1,0 +1,11 @@
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <h2>Вход в интерфейс администратора</h2>
+        <h4>Email:</h4>
+        <input type="email" class="form-control" formControlName="email" autocomplete="on">
+        <h4>Пароль:</h4>
+        <input type="password" class="form-control" formControlName="password" autocomplete="current-password">
+
+        <button class="btn btn-primary" type="submit" [disabled]="loginForm.disabled || loginForm.invalid">Отправить</button>
+    </form>
+</div>

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  if services.active.length
+    h1= 'Сейчас открыта запись'
+    hr
+    each item in services.active
+      .row.col-12.p-3
+        .col-2 
+          img.rounded.mx-auto.d-block.img-thumbnail.img-5.m-2(alt=item.name src=item.image )
+        .col-4 
+          h4= item.name
+        .col-4
+          h4 Доступна запись
+          p
+            each single in item.date.single
+              div.m-1= single.text
+            each period in item.date.period
+              div.m-1= period.text
+        .col-2
+          a.orange-button(href='/services/' + item.path + '#checkout') Записаться
+        hr
+  
+

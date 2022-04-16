@@ -12,7 +12,7 @@ module.exports.getByType = async function(req, res, next) {
 
 module.exports.updateByType = async function(req, res, next) {
     try {
-        const data = await Data.findOneAndUpdate({_id: req.params.type}, req.body, {new: true}).lean()
+        const data = await Data.findOneAndUpdate({type: req.params.type}, {$set: {data: req.body}}, {new: true}).lean()
         next(req, res, data)
     } catch (e) {
         errorHandler(res, e)

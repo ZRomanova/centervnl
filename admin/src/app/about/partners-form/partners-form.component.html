@@ -1,0 +1,27 @@
+<div class="col" *ngIf="loading == 0; else loader">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h3>{{id ? 'Редактирование' : 'Добавление'}} партнёра</h3>
+        <h5>Название:</h5>
+        <input type="text" class="form-control" formControlName="name">
+        <h5>Ссылка на сайт:</h5>
+        <input type="text" class="form-control" formControlName="url">
+        <h5>Загрузить эмблему для подвала:</h5>
+        <input type="file" class="form-control" (change)="onFileUpload($event)">
+        <h5>Эмблема для подвала по ссылке:</h5>
+        <input type="text" class="form-control" formControlName="image" placeholder="Добавляйте только общедоступные ссылки">
+        <div class="form-check form-switch mt-2">
+            <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="visible">
+            <h5>Отображать в подвале</h5>
+        </div>
+        <button class="btn btn-secondary mt-3 me-2" type="button" (click)="back()">
+            Назад
+        </button>
+        <button class="btn btn-primary mt-3" type="submit">
+            {{id ? 'Сохранить' : 'Создать'}}
+        </button>
+    </form>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

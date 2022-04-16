@@ -1,1 +1,91 @@
-<p>post-page works!</p>
+<div class="col" *ngIf="loading == 0; else loader">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h3>{{id ? 'Редактирование' : 'Добавление'}} поста</h3>
+                <h5>Название:</h5>
+                <input type="text" class="form-control" formControlName="name">
+
+                <div class="row">
+                    <div class="col-lg-6 col-sm-12">
+                        <h5>Дата публикации:</h5>
+                        <input class="form-control" type="date" formControlName="date">
+                    </div>
+                </div>
+                
+
+                <h5>Путь:</h5>
+                <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
+                <h5>Обложка из файла:</h5>
+                <input type="file" class="form-control" (change)="onFileUpload($event)">
+                <h5>Обложка по ссылке:</h5>
+                <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
+                placeholder="Добавляйте только общедоступные ссылки">
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <img *ngIf="imagePreview" [src]="imagePreview" class="img-cover">
+            </div>
+        </div>
+
+        <h5>Пост <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
+        <textarea class="form-control" formControlName="description" rows="15"></textarea>
+        <div class="row">
+            <div class="col-12" *ngIf="tags && tags.length">
+                <h5>Теги:</h5>
+                <button *ngFor="let tag of tags" (click)="clickTag(tag._id)" class="btn m-1" style="color: #fff"
+                [ngClass]="{'bg-success': tagsSelected.includes(tag._id), 'bg-danger': !tagsSelected.includes(tag._id)}">{{tag.name}}</button>
+            </div>
+            <div class="col-12" *ngIf="tags && tags.length">
+                <h5>Проекты:</h5>
+                <button *ngFor="let tag of projects" (click)="clickProject(tag._id)" class="btn m-1" style="color: #fff"
+                [ngClass]="{'bg-success': projectsSelected.includes(tag._id), 'bg-danger': !projectsSelected.includes(tag._id)}">{{tag.name}}</button>
+            </div>
+            <div class="col-12" *ngIf="tags && tags.length">
+                <h5>Мероприятия:</h5>
+                <button *ngFor="let tag of services" (click)="clickService(tag._id)" class="btn m-1" style="color: #fff"
+                [ngClass]="{'bg-success': servicesSelected.includes(tag._id), 'bg-danger': !servicesSelected.includes(tag._id)}">{{tag.name}}</button>
+            </div>
+            <div class="col-12" *ngIf="tags && tags.length">
+                <h5>Партнёры:</h5>
+                <button *ngFor="let partner of partners" (click)="clickPartner(partner._id)" class="btn m-1" style="color: #fff"
+                [ngClass]="{'bg-success': partnersSelected.includes(partner._id), 'bg-danger': !partnersSelected.includes(partner._id)}">{{partner.name}}</button>
+            </div>
+        </div>
+
+
+        <h5>Добавить в галерею из файлов:</h5>
+        <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple>
+        <app-horizontal-gallery [data]="galleryPreview"  (delete)="deletePhotoByIndex($event)"></app-horizontal-gallery>
+        <h5>Добавить в галерею по ссылке:</h5>
+        <div formArrayName="gallery">
+            <div class="input-group mb-3" *ngFor="let photo of form.controls.gallery.controls; index as i">
+                <input class="form-control" type="text" placeholder="Добавляйте только общедоступные ссылки"
+                [formControlName]="i">
+                <span class="input-group-text input-group-btn btn btn-primary" (click)="deleteFromGallery(i)">
+                  <i class="fa fa-trash"></i>
+                </span>
+            </div>
+        </div>
+        <button class="btn btn-primary mb-3 mt-3" type="button" (click)="plusToGallery()">
+            <i class="fa fa-plus"></i>
+        </button>
+        <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery>
+
+        <div class="form-check form-switch mt-2">
+            <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="visible">
+            <h5>Отображать на сайте</h5>
+        </div>
+        <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+            Назад
+        </button>
+        <button class="btn btn-primary mt-3 mb-3" type="submit">
+            {{id ? 'Сохранить' : 'Создать'}}
+        </button>
+    </form>
+</div>
+
+<app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

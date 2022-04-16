@@ -1,0 +1,32 @@
+.hg-box {
+    height: 150px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.hg-img {
+    height: 150px;
+    display: inline-block;
+    width: auto;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.costom-trash {
+    font-size: 17px;
+    position: relative;
+    vertical-align: top;
+    color: rgb(247,141,46);
+    margin-right: -10px;
+    left: 10px;
+    top: 5px;
+    margin-bottom: -5px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.costom-trash:hover {
+    color: rgb(3,178,183);
+}

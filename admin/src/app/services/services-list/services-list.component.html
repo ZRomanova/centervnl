@@ -1,1 +1,21 @@
 <app-page-title title="Раздел мероприятия" text="Здесь можно работать с мероприятиями и записями на них"></app-page-title>
+
+<a class="btn btn-primary mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+    <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-primary mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+    <i class="fa fa-arrow-right"></i>
+</a>
+<app-table (create)="createService($event)" (edit)="editService($event)" 
+*ngIf="!loading; else loader" [data]="services" [offset]="offset" [title]="['Название', 'Запись', 'Описание']"></app-table>
+
+<a class="btn btn-primary mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+    <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-primary mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+    <i class="fa fa-arrow-right"></i>
+</a>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

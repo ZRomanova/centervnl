@@ -1,27 +1,24 @@
 const Service = require('../models/services')
 const errorHandler = require('../utils/errorHandler')
+const cyrillicToTranslit = require('cyrillic-to-translit-js')
+const moment = require('moment')
 
 module.exports.getAnouncements = async function(req, res, next) {
     try {
-        const now = new Date()
+        const start = moment().startOf('day');
+        const end = moment(start).startOf('day');
         const аnouncements = await Service.find({
             visible: true, 
             $or: [{
-                'date.single': {$gt: now}
+                'date.single': {$gt: start}
                 },{
                 'date.period': {
                     $elemMatch: {
-                        start: {$lt: now}, 
-                        end: {$gt: now}, 
-                        $or: [
-                            {'week.monday.0': {$exists: true}}, 
-                            {'week.tuesday.0': {$exists: true}}, 
-                            {'week.wednesday.0': {$exists: true}}, 
-                            {'week.thursday.0': {$exists: true}}, 
-                            {'week.friday.0': {$exists: true}}, 
-                            {'week.saturday.0': {$exists: true}}, 
-                            {'week.sunday.0': {$exists: true}}
-                        ]
+                        start: {$lt: start}, 
+                        $or: [{end: {$gt: end}}, {end: null}, {end: {$exists: false}}], 
+                        time: {$exists: true},
+                        day: {$exists: true},
+                        visible: true
                     }
                 }
             }
@@ -35,18 +32,19 @@ module.exports.getAnouncements = async function(req, res, next) {
 module.exports.getServices = async function(req, res, next) {
     try {
         const filter = {}
-        const fields = {_id: 1}
+        const fields = {}
         for (const str in req.query) {
             if (str.length > 7 && str.substring(0, 7) === "filter_") {
-                filter[str.slice(7)] = req.query[str]
+                filter[str.slice(7)] = +req.query[str]
             } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
-                fields[str.slice(7)] = req.query[str]
+                fields[str.slice(7)] = +req.query[str]
             }
         }
         const services = await Service
         .find(filter, fields)
         .skip(+req.query.offset)
         .limit(+req.query.limit)
+        .sort({created: -1})
         .lean()
 
         next(req, res, services)
@@ -58,6 +56,9 @@ module.exports.getServices = async function(req, res, next) {
 module.exports.createService = async function(req, res, next) {
     try {
         const created = req.body
+        created.author = req.user.id
+        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase()
+        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase()
         const service = await new Service(created).save()
         next(req, res, service)
     } catch (e) {
@@ -68,6 +69,7 @@ module.exports.createService = async function(req, res, next) {
 module.exports.updateService = async function(req, res, next) {
     try {
         const updated = req.body
+        updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase()
         const service = await Service.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {
@@ -84,18 +86,35 @@ module.exports.getServiceById = async function(req, res, next) {
     }
 }
 
+module.exports.getServiceByPath = async function(req, res, next) {
+    try {
+        const service = await Service.findOne({path: req.params.path, visible: true}).lean()
+        next(req, res, service)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
 
 module.exports.uploadImagesService = async function(req, res, next) {
     try {
         const updated = req.body
-        if (req.files && req.files.image) updated.image = req.file.image[0].path
+        if (req.files && req.files.image) updated.image = 'https://centervnl.ru/' + req.files.image[0].path
         if (req.files['galley']) {
-            let paths = req.files['galley'].map(file => file.filename)
+            let paths = req.files['galley'].map(file => 'https://centervnl.ru/' + file.path)
             if (!req.body.galley) updated.galley = paths
             else updated.galley = [...updated.galley, ...paths]
         }
         const service = await Service.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.deleteService = async function(req, res, next) {
+    try {
+        await Service.deleteOne({_id: req.params.id})
+        next(req, res, {message: "Удалено"})
     } catch (e) {
         errorHandler(res, e)
     }

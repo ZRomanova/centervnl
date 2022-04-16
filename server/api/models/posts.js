@@ -5,13 +5,16 @@ const blogSchema = new Schema({
   image: {
     type: String
   },
-  title: {
+  author: {
+    ref: 'users',
+    type: Schema.Types.ObjectId,
+    required: true
+  },
+  name: {
     type: String,
     required: true
   },
-  text: {
-    type: String
-  },
+  description: String,
   gallery: [String],
   date: {
     type: Date,
@@ -23,6 +26,10 @@ const blogSchema = new Schema({
   },
   projects: {
     ref: 'projects',
+    type: [mongoose.Types.ObjectId]
+  },
+  partners: {
+    ref: 'partners',
     type: [mongoose.Types.ObjectId]
   },
   tags: {

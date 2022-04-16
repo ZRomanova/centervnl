@@ -1,2 +1,22 @@
 <app-page-title title="Раздел проекты" text="Здесь можно редактировать и добавлять новые проекты"></app-page-title>
 
+<a class="btn btn-primary mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+    <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-primary mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+    <i class="fa fa-arrow-right"></i>
+</a>
+<app-table (create)="createProject($event)" (edit)="editProject($event)" 
+*ngIf="!loading; else loader" [data]="projects" [offset]="offset"
+[title]="['Название', 'Реализация', 'Описание']"></app-table>
+<a class="btn btn-primary mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+    <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-primary mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+    <i class="fa fa-arrow-right"></i>
+</a>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
+
