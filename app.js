@@ -69,13 +69,13 @@ app.get('/admin/*', (req, res) => {
 
 app.use('/uploads', express.static('uploads'))
 
-// app.get('/admin', (req, res) => {
-//   res.sendFile(
-//     path.resolve(
-//       'admin', 'index.html'
-//     )
-//   )
-// })
+app.get('/admin', (req, res) => {
+  res.sendFile(
+    path.resolve(
+      'admin', 'index.html'
+    )
+  )
+})
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 // app.use('/users', usersRouter);
