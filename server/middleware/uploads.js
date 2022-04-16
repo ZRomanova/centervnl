@@ -3,7 +3,7 @@ const moment = require('moment')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+  return String(Math.floor(Math.random() * (max - min)) + min);
 }
 
 const storage = multer.diskStorage({
@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
     cb(null, 'uploads/');
   },
   filename(req, file, cb) {
-    cb(null, `${moment().format('DDMMYYYY-HHmmss_SSS')}-${getRandomInt(1, 10000)}-${getRandomInt(1, 10000)}-${cyrillicToTranslit().transform(file.originalname, "_")}`)
+    cb(null, `${moment().format('DDMMYYYY_HHmmss_SSS')}-${getRandomInt(1, 10000)}_${cyrillicToTranslit().transform(file.originalname, "_")}`)
   }
 })
 

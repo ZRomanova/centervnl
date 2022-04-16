@@ -59,11 +59,15 @@ require('./server/middleware/jwt-auth')
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/admin/*', (req, res) => {
-  res.redirect('/admin')
-})
-
 app.use('/uploads', express.static('uploads'))
+
+app.get('/admin/*', (req, res) => {
+  res.sendFile(
+    path.resolve(
+      'admin', 'index.html'
+    )
+  )
+})
 
 app.get('/admin', (req, res) => {
   res.sendFile(
