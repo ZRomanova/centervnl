@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import url('https://centervnl.ru/bootstrap/css/bootstrap.css');
-@import url('https://centervnl.ru/bootstrap/css/amelia.bootstrap.css');
-@import url('https://centervnl.ru/stylesheets/style.css');
+@import url('./theme/bootstrap.css');
+@import url('./theme/amelia.bootstrap.css');
+@import url('./theme/style.css');
 
 .text-blue-hover:hover {
     color: rgb(15,79,79);

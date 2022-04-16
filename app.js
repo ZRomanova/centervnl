@@ -60,11 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/admin/*', (req, res) => {
-  res.sendFile(
-    path.resolve(
-      'admin', 'index.html'
-    )
-  )
+  res.redirect('/admin')
 })
 
 app.use('/uploads', express.static('uploads'))
