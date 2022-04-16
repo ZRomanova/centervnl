@@ -6,16 +6,17 @@ block content
       .carousel.slide#anouncements(data-bs-ride="carousel")
         .carousel-inner
           each item in anouncements
-            .carousel-item.anouncement-box(class=item.active ? "active" : "")
-              img.d-block.img-cover(src=item.image)
+            .carousel-item.anouncement-box.item-a
+              img.d-block.img-cover(src=item.image )
               .carousel-caption.yellow-text.text-block-anouncement
-                h3.marck-script= item.title
-                p.mh-300.text-justify.text-ellipsis= item.text
+                h3.marck-script= item.name
+                p.mh-300.text-justify.text-ellipsis= item.description
                 .row
                   .col-6
-                    button.orange-button Запись
+                    a.orange-button(href='/services/' + item.path + '#checkout') Запись
                   .col-6
-                    button.orange-button Читать
+                    a.orange-button(href='/services/' + item.path) Подробнее
+
         button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
           span.carousel-control-prev-icon(aria-hidden="true")
           span.visually-hidden Previous

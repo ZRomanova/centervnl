@@ -14,12 +14,65 @@
         <h5>Email:</h5>
         <input type="email" class="form-control" formControlName="email">
     </form>
-    <h3>Команда</h3>
-    <h3>Партнеры</h3>
+    <app-multi-slider page="Команда" *ngIf="team" [data]="team"></app-multi-slider>
+    <app-multi-slider page="Партнёры" *ngIf="partners" [data]="partners" 
+    (add)="createPartner($event)" (edit)="editPartner($event)" (delete)="deletePartner($event)" (visible)="visiblePartner($event)"></app-multi-slider>
+
+    <div class="container mb-3 mt-5">
+        <div class="row">
+            <div class="col-6">
+                <h3>Теги</h3>
+            </div>
+            <div class="col-6 text-right">
+                <a class="btn btn-primary mb-3 me-2" role="button" (click)="backTags()">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-primary mb-3 me-2" role="button" (click)="openTagForm(null)">
+                    <i class="fa fa-plus"></i>
+                </a>
+                <a class="btn btn-primary mb-3" role="button" (click)="nextTags()">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-12">
+                <p>Теги бывают для поиска, специальные, теги проектов, теги мероприятий и теги партнёров. <br>
+                    В данном разделе можно редактировать теги для поиска и просматривать специальные. <br>
+                    Теги партнёров автоматически появляются при добавлении партнёра,
+                    теги проектов и мероприятий - при публикации проекта или мероприятия.<br>
+                    Специальные теги редактировать нельзя - они настраиваются програмно и служат для навигации по статическим страницам.<br>
+                </p>
+            </div>
+            <div class="col-12">
+                <ng-container *ngFor="let item of tagSort; index as i">
+                    <div class="carousel-item" [ngClass]="{'active': i == activeTagsPage}" >
+                        <div class="row">
+                            <div class="col-md-4 mb-3" *ngFor="let box of item">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{box.name}}</h4>
+                                        <p>{{box.description}}</p>
+                                        <div *ngIf="!box.spetial">
+                                            <a class="btn btn-primary me-2" role="button" (click)="openTagForm(box)">
+                                                <i class="fa fa-pen"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>
+
+<app-add-tag (close)="closeTagForm($event)" [tag]="currentTag" *ngIf="tagForm"></app-add-tag>
 
 <app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
 
 <ng-template #loader>
     <app-loader></app-loader>
 </ng-template>
+
+<!--  -->

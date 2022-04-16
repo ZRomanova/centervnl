@@ -6,7 +6,7 @@ const apiProjects = require('../api/controllers/projects')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
-        if (data.user) req.session.passport.user = data.user
+        if (data.user) req.user = data.user
         const result = {user: req.user}
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, async (req, res, contacts) => {
@@ -17,7 +17,7 @@ module.exports.getHomePage = async function(req, res, data = {}) {
                 await apiPartners.getPartners(req, res, async (req, res, partners) => {
                     result.partners = partners
                     await apiServices.getAnouncements(req, res, async (req, res, anouncements) => {
-                        result.anouncements = anouncements
+                        result.anouncements = anouncements.filter(el => el.image)
                         await apiProjects.getActive(req, res, async (req, res, projects) => {
                             result.projects = projects
                             req.query = {offset: 0, limit: 16}

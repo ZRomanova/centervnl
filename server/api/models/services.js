@@ -27,10 +27,22 @@ const serviceSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
+  name: {
     type: String,
     required: true,
     unique: true
+  },
+  partners: {
+    ref: 'partners',
+    type: [mongoose.Types.ObjectId]
+  },
+  tags: {
+    ref: 'tags',
+    type: [mongoose.Types.ObjectId]
+  },
+  projects: {
+    ref: 'projects',
+    type: [mongoose.Types.ObjectId]
   },
   likes: {
     ref: 'users',
@@ -41,15 +53,12 @@ const serviceSchema = new Schema({
       period: [{
           start: Date,
           end: Date,
-          week: {
-            monday: [Number],
-            tuesday: [Number],
-            wednesday: [Number],
-            thursday: [Number],
-            friday: [Number],
-            saturday: [Number],
-            sunday: [Number]
-          }
+          visible: Boolean,
+          day: {
+            type: String,
+            enum: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+          },
+          time: Number
       }]
   },
   visible: Boolean,

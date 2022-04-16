@@ -1,0 +1,26 @@
+<div class="modal d-block" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{tag ? 'Редактирование' : 'Добавление'}} тега</h5>
+                <button type="button" class="btn-close" (click)="finish(false)"></button>
+            </div>
+        <div class="modal-body">
+            <form [formGroup]="form">
+                <p class="col-form-label">Название:</p>
+                <div class="mb-3 input-group">
+                  <input class="form-control" formControlName="name"/>
+                </div>
+                <p class="col-form-label">Описание:</p>
+                <div class="mb-3">
+                  <textarea class="form-control" formControlName="description" rows="7" style="resize: none;"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"  (click)="finish(false)">Отмена</button>
+            <button type="button" class="btn btn-primary" (click)="finish(true)" >{{tag ? 'Сохранить' : 'Создать'}}</button>
+        </div>
+      </div>
+    </div>
+</div>

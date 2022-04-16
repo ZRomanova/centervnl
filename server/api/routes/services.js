@@ -4,17 +4,19 @@ const controller = require('../controllers/services');
 const responseJson = require('../utils/responseJson');
 const auth = require('../../middleware/auth')
 const upload = require('../../middleware/uploads')
+const passport = require('passport')
 
 fields = [
     { name: 'image', maxCount: 1 },
     { name: 'gallery', maxCount: 20 }
 ]
 
-router.put('/:id', auth.isAdmin, controller.updateService, responseJson)
-router.patch('/:id', auth.isAdmin, upload.fields(fields), controller.uploadImagesService, responseJson)
-router.get('/', controller.getServices, responseJson)
-router.get('/active', controller.getAnouncements, responseJson)
-router.get('/:id', controller.getServiceById, responseJson)
-router.post('/', auth.isAdmin, controller.createService, responseJson)
+router.put('/:id', passport.authenticate('jwt', {session: false}), auth.isAdmin, (req, res) => controller.updateService(req, res, responseJson))
+router.patch('/:id', passport.authenticate('jwt', {session: false}), auth.isAdmin, upload.fields(fields), (req, res) => controller.uploadImagesService(req, res, responseJson))
+router.get('/', (req, res) => controller.getServices(req, res, responseJson))
+router.get('/active', (req, res) => controller.getAnouncements(req, res, responseJson))
+router.get('/:id', (req, res) => controller.getServiceById(req, res, responseJson))
+router.post('/', passport.authenticate('jwt', {session: false}), auth.isAdmin, (req, res) => controller.createService(req, res, responseJson))
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => controller.deleteService(req, res, responseJson))
 
 module.exports = router;

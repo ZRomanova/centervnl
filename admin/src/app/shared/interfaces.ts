@@ -14,10 +14,26 @@ export interface User {
 }
 
 export interface Tag {
+    _id?: string,
     name: string,
     description?: string,
     created?: Date,
     spetial?: boolean
+}
+
+export interface Partner {
+    _id?: string,
+    name: string,
+    url?: string,
+    image?: string,
+    visible?: boolean
+}
+
+export interface Staff {
+    _id?: string,
+    name: string,
+    description?: string,
+    photo?: string
 }
 
 export interface PriceList {
@@ -29,23 +45,18 @@ export interface PriceList {
 export interface Period {
     start: Date,
     end?: Date,
-    week: {
-        monday: number[],
-        tuesday: number[],
-        wednesday: number[],
-        thursday: number[],
-        friday: number[],
-        saturday: number[],
-        sunday: number[]
-    }
+    visible: boolean,
+    day?: 'ПН' | 'ВТ' | 'СР' | 'ЧТ' | 'ПТ' | 'СБ' | 'ВС' | '',
+    time?: number
 }
 
 export interface Project {
     _id?: string,
-    title: string
+    name: string
     path: string,
     description: string,
     created?: Date,
+    author?: any,
     likes?: User[],
     period: {
         start: Date,
@@ -53,14 +64,17 @@ export interface Project {
     },
     visible: boolean,
     image: string,
-    gallery: string[]
+    gallery: string[],
+    dateStr: string,
+    tags?: string[],
+    partners?: string[],
 }
 
 export interface Service {
     _id?: string,
-    title: string
+    name: string
     path: string,
-    author?: string,
+    author?: any,
     description: string,
     address: string,
     priceList: PriceList[],
@@ -72,24 +86,29 @@ export interface Service {
     },
     visible: boolean,
     image: string,
-    tags?: Tag[],
-    gallery: string[]
+    tags?: string[],
+    dateStr: string,
+    gallery: string[],
+    projects?: string[],
+    partners?: string[],
 }
 
 export interface Post {
     _id?: string,
-    title: string
+    name: string
     path: string,
-    author?: string,
-    text: string,
+    author?: any,
+    description: string,
     created?: Date,
-    likes?: User[],
+    likes?: any[],
     date?: Date,
     visible: boolean,
     image: string,
     gallery: string[],
-    tags?: Tag[],
-    services?: Service[],
-    projects?: Project[]
+    dateStr: string,
+    tags?: string[],
+    services?: string[],
+    projects?: string[],
+    partners?: string[],
 }
 

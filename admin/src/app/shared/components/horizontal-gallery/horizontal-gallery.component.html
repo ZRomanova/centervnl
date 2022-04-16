@@ -1,0 +1,6 @@
+<div class="col-12 hg-box" *ngIf="data.length">
+    <ng-container *ngFor="let src of data; index as i">
+        <i class="fa fa-trash costom-trash" (click)="trash(i)"></i>
+        <img class="hg-img" [src]="src" alt="Эта картинка не отображается, проверьте ссылку">
+    </ng-container>
+</div>

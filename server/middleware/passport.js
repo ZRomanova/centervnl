@@ -23,6 +23,7 @@ const verifyCallback = (username, password, done) => {
             }
         })
         .catch((err) => {   
+            console.log('local', err)
             done(err);
         });
 

@@ -1,0 +1,46 @@
+
+<div class="container mb-3 mt-5">
+    <div class="row">
+        <div class="col-6">
+            <h3>{{page}}</h3>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary mb-3 me-2" role="button" (click)="back()">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+            <a class="btn btn-primary mb-3 me-2" role="button" (click)="plus()">
+                <i class="fa fa-plus"></i>
+            </a>
+            <a class="btn btn-primary mb-3" role="button" (click)="next()">
+                <i class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="col-12">
+            <ng-container *ngFor="let item of items; index as i">
+                <div class="carousel-item" [ngClass]="{'active': i == active}">
+                    <div class="row">
+                        <div class="col-md-4 mb-3" *ngFor="let box of item">
+                            <div class="card">
+                                <img class="img-contain" alt="{{box.name}}" [src]="box.image">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{box.name}}</h4>
+                                    <a class="btn btn-primary me-2" role="button" (click)="pen(box._id)">
+                                        <i class="fa fa-pen"></i>
+                                    </a>
+                                    <a class="btn btn-primary me-2" role="button" (click)="trash(box)">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    <a class="btn btn-primary me-2" role="button" (click)="eye(box)">
+                                        <i class="fa fa-eye{{box.visible ? '' : '-slash'}}"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<app-want-delete *ngIf="deletingItem" [title]="deletingItem.title" [text]="deletingItem.name" (result)="closeDeletingModal($event)"></app-want-delete>

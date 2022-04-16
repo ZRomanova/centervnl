@@ -70,3 +70,5 @@ if (togglePasswordAE && passwordAE) togglePasswordE.addEventListener("click", fu
   this.classList.toggle('fa-eye');
   this.classList.toggle('fa-eye-slash');
 });
+
+$('.item-a').first().addClass('active');

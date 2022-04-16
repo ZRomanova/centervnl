@@ -204,7 +204,7 @@ html
               ul.dropdown-menu(aria-labelledby="dropdownMenuProjects")
                 if nav_projects && nav_projects.length
                   each project in nav_projects
-                    a.dropdown-item(href=project.url) #{project.title}
+                    a.dropdown-item(href='/projects/'+project.path) #{project.name}
             li#dropdownMenuAbout(data-bs-toggle="dropdown" aria-expanded="false")
               a.dropdown-toggle(href='/about/' ) О нас
               ul.dropdown-menu(aria-labelledby="dropdownMenuAbout")
@@ -236,8 +236,9 @@ html
         .col-12
           if footer_logos && footer_logos.length
             each logo in footer_logos 
-              a(href=logo.url target="_blank")
-                img.footer_logo(src=logo.img)
+              if logo.visible
+                a(href=logo.url target="_blank")
+                  img.footer_logo(src=logo.image)
           div
             small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
