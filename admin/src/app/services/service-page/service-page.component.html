@@ -31,6 +31,9 @@
                     </button>
                 </ng-container>
 
+                <h5>Максимум участников:</h5>
+                <input type="number" class="form-control" formControlName="peopleLimit" placeholder="∞">
+
                 <h5>Путь:</h5>
                 <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
                 <h5>Обложка из файла:</h5>
@@ -40,7 +43,7 @@
                 placeholder="Добавляйте только общедоступные ссылки">
             </div>
             <div class="col-xs-12 col-sm-6">
-                <img *ngIf="imagePreview" [src]="imagePreview" class="img-cover">
+                <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">
             </div>
         </div>
         
@@ -148,7 +151,7 @@
             <div class="input-group mb-3" *ngFor="let photo of form.controls.gallery.controls; index as i">
                 <input class="form-control" type="text" placeholder="Добавляйте только общедоступные ссылки"
                 [formControlName]="i">
-                <span class="input-group-text input-group-btn btn btn-primary" (click)="deleteFromGallery(i)">
+                <span class="input-group-text input-group-btn btn btn-primary" (click)="deleteURLByIndex(i)">
                   <i class="fa fa-trash"></i>
                 </span>
             </div>

@@ -72,7 +72,8 @@ export interface Project {
 
 export interface Service {
     _id?: string,
-    name: string
+    name: string,
+    peopleLimit: number,
     path: string,
     author?: any,
     description: string,

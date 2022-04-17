@@ -10,7 +10,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const indexRouter = require('./server/routes/index');
 const apiRouter = require('./server/api/routes');
-const auth = require('./server/middleware/auth')
 
 const app = express();
 app.locals.moment = require('moment');
@@ -59,23 +58,25 @@ require('./server/middleware/jwt-auth')
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static(path.resolve(
+  __dirname, 'uploads'
+)))
 
 app.get('/admin/*', (req, res) => {
   res.sendFile(
     path.resolve(
-      'admin', 'index.html'
+      __dirname, 'public', 'admin', 'index.html'
     )
   )
 })
 
-app.get('/admin', (req, res) => {
-  res.sendFile(
-    path.resolve(
-      'admin', 'index.html'
-    )
-  )
-})
+// app.get('/admin', (req, res) => {
+//   res.sendFile(
+//     path.resolve(
+//       'admin', 'index.html'
+//     )
+//   )
+// })
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 // app.use('/users', usersRouter);

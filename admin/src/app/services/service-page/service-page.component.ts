@@ -97,6 +97,7 @@ export class ServicePageComponent implements OnInit {
           path: new FormControl(''),
           visible: new FormControl(true),
           image: new FormControl(''),
+          peopleLimit: new FormControl(null),
           gallery: new FormArray([]),
           description: new FormControl(''),
           address: new FormControl(''),
@@ -125,6 +126,7 @@ export class ServicePageComponent implements OnInit {
         path: new FormControl(this.service.path),
         visible: new FormControl(this.service.visible),
         image: new FormControl(this.service.image),
+        peopleLimit: new FormControl(this.service.peopleLimit),
         gallery: new FormArray(this.service.gallery.map(el => new FormControl(el))),
         description: new FormControl(this.service.description),
         address: new FormControl(this.service.address),
@@ -245,7 +247,7 @@ export class ServicePageComponent implements OnInit {
       gallery.push(new FormControl(''))
     }
   
-    deleteFromGallery(i) {
+    deleteURLByIndex(i) {
       const gallery = this.form.get('gallery') as FormArray
       gallery.removeAt(i)
     }
@@ -257,12 +259,6 @@ export class ServicePageComponent implements OnInit {
     deletePhotoByIndex(i: number) {
       this.galleryPreview.splice(i, 1)
       this.gallery.splice(i, 1)
-    }
-  
-    deleteURLByIndex(i: number) {
-      const gallery = this.form.get('gallery') as FormArray
-      gallery.removeAt(i)
-      console.log(gallery.value)
     }
 
     clickTag(id) {
@@ -290,7 +286,7 @@ export class ServicePageComponent implements OnInit {
       const data = {...this.form.value, tags: this.tagsSelected, projects: this.projectsSelected, partners: this.partnersSelected}
       if (this.id) {
         this.oSub = this.servicesService.update(this.id, data).subscribe(result1 => {
-          if (this.image) {
+          if (this.image || this.gallery.length) {
             this.iSub = this.servicesService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
               this.service = result2
               this.data()
@@ -303,7 +299,7 @@ export class ServicePageComponent implements OnInit {
         })
       } else {
         this.oSub = this.servicesService.create(data).subscribe(result1 => {
-          if (this.image) {
+          if (this.image || this.gallery.length) {
             this.iSub = this.servicesService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
               this.image = null
               this.router.navigate(['services', result1._id])

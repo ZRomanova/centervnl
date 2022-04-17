@@ -7,6 +7,7 @@ const serviceSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
+  peopleLimit: Number,
   description: String,
   address: String,
   priceList: [{

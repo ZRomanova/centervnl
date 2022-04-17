@@ -41,12 +41,12 @@ export class ProjectService {
     return this.http.put<Project>(`${URL}/api/projects/${id}`, json, {headers: myHeaders})
   }
 
-  upload(id: string, image: File, images?: File[]): Observable<Project> {
+  upload(id: string, image?: File, images?: File[]): Observable<Project> {
     const fd = new FormData()
-    fd.append('image', image, image.name)
+    if (image) fd.append('image', image, image.name)
     if (images) {
       for (let i = 0; i < images.length; i++) {
-        fd.append(`images`, images[i], images[i].name)
+        fd.append(`gallery`, images[i], images[i].name)
       }
     }
     return this.http.patch<Project>(`${URL}/api/projects/${id}`, fd)

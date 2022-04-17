@@ -93,12 +93,11 @@ module.exports.deleteProject = async function(req, res, next) {
 
 module.exports.uploadImagesProject = async function(req, res, next) {
     try {
-        const updated = req.body
-        if (req.files && req.files.image) updated.image = 'https://centervnl.ru/' + req.files.image[0].path
-        if (req.files['images']) {
-            let paths = req.files['images'].map(file => 'https://centervnl.ru/' + file.path)
-            if (!req.body.galley) updated.images = paths
-            else updated.images = [...updated.images, ...paths]
+        const updated = {}
+        if (req.files && req.files.image) updated['$set'] = {image: 'https://centervnl.ru/' + req.files.image[0].path}
+        if (req.files && req.files['gallery']) {
+            let paths = req.files['gallery'].map(file => 'https://centervnl.ru/' + file.path)
+            updated['$addToSet'] = {gallery: {$each: paths}}
         }
         const project = await Project.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, project)

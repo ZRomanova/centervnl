@@ -40,12 +40,12 @@ export class PostService {
     return this.http.put<Post>(`${URL}/api/posts/${id}`, json, {headers: myHeaders})
   }
 
-  upload(id: string, image: File, images?: File[]): Observable<Post> {
+  upload(id: string, image?: File, images?: File[]): Observable<Post> {
     const fd = new FormData()
-    fd.append('image', image, image.name)
-    if (images) {
+    if (image) fd.append('image', image, image.name)
+    if (images || images.length) {
       for (let i = 0; i < images.length; i++) {
-        fd.append(`images`, images[i], images[i].name)
+        fd.append(`gallery`, images[i], images[i].name)
       }
     }
     return this.http.patch<Post>(`${URL}/api/posts/${id}`, fd)

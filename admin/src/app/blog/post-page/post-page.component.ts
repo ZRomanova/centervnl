@@ -114,15 +114,14 @@ export class PostPageComponent implements OnInit, OnDestroy {
     return array.map(el => el._id)
   }
 
+  deleteURLByIndex(i) {
+    const gallery = this.form.get('gallery') as FormArray
+    gallery.removeAt(i)
+  }
+
   deletePhotoByIndex(i: number) {
     this.galleryPreview.splice(i, 1)
     this.gallery.splice(i, 1)
-  }
-
-  deleteURLByIndex(i: number) {
-    const gallery = this.form.get('gallery') as FormArray
-    gallery.removeAt(i)
-    console.log(gallery.value)
   }
 
   onFileUpload(event: any) {
@@ -149,7 +148,6 @@ export class PostPageComponent implements OnInit, OnDestroy {
       }
       reader.readAsDataURL(file)
     }
-    console.log(this.gallery, this.galleryPreview)
   }
   plusToGallery() {
     const gallery = this.form.get('gallery') as FormArray
@@ -160,7 +158,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
     const data = {...this.form.value, tags: this.tagsSelected, projects: this.projectsSelected, partners: this.partnersSelected, services: this.servicesSelected}
     if (this.id) {
       this.oSub = this.postsService.update(this.id, data).subscribe(result1 => {
-        if (this.image) {
+        if (this.image || this.gallery.length) {
           this.iSub = this.postsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.post = result2
             this.data()
@@ -173,7 +171,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
       })
     } else {
       this.oSub = this.postsService.create(data).subscribe(result1 => {
-        if (this.image) {
+        if (this.image || this.gallery.length) {
           this.iSub = this.postsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
             this.router.navigate(['blog', result1._id])

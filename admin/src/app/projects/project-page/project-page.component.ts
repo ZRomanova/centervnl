@@ -129,11 +129,6 @@ export class ProjectPageComponent implements OnInit {
     gallery.push(new FormControl(''))
   }
 
-  deleteFromGallery(i) {
-    const gallery = this.form.get('gallery') as FormArray
-    gallery.removeAt(i)
-  }
-
   photoURL() {
     if (this.form.value.image) this.imagePreview = this.form.value.image
   }
@@ -146,7 +141,6 @@ export class ProjectPageComponent implements OnInit {
   deleteURLByIndex(i: number) {
     const gallery = this.form.get('gallery') as FormArray
     gallery.removeAt(i)
-    console.log(gallery.value)
   }
 
   clickTag(id) {
@@ -164,7 +158,7 @@ export class ProjectPageComponent implements OnInit {
     const data = {...this.form.value, tags: this.tagsSelected, partners: this.partnersSelected}
     if (this.id) {
       this.oSub = this.projectsService.update(this.id, data).subscribe(result1 => {
-        if (this.image) {
+        if (this.image || this.gallery.length) {
           this.iSub = this.projectsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.project = result2
             this.data()
@@ -177,7 +171,7 @@ export class ProjectPageComponent implements OnInit {
       })
     } else {
       this.oSub = this.projectsService.create(data).subscribe(result1 => {
-        if (this.image) {
+        if (this.image || this.gallery.length) {
           this.iSub = this.projectsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
             this.router.navigate(['projects', result1._id])
