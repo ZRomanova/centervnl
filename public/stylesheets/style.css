@@ -88,6 +88,12 @@ body {
   text-overflow: ellipsis;
 }
 
+.text-ellipsis-nowrap {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .text-block-anouncement {
   max-height: 420px;
 }
@@ -97,6 +103,14 @@ body {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+}
+
+.mh-40 {
+  height: 40px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
@@ -135,3 +149,27 @@ body {
   border-radius: 50% !important;
   object-fit: cover !important;
 }
+
+.carousel-indicators-orange {
+  background-color: rgb(255,255,146) !important;
+  border: 0.3rem solid  rgb(247,141,46)!important;
+  
+}
+
+.carousel-indicators-block {
+  position: relative !important;
+  bottom: -10px !important;
+}
+
+.img-cover-small {
+  display: block;
+  position: relative;
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.mw-100 {
+  max-width: 100%;
+}
+

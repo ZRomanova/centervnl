@@ -14,13 +14,13 @@ block content
                 .row
                   .col-12
                     a.orange-button(href='/services/' + item.path) Запись
-
-        button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
-          span.carousel-control-prev-icon(aria-hidden="true")
-          span.visually-hidden Previous
-        button.carousel-control-next(type="button" data-bs-target="#anouncements" data-bs-slide="next")
-          span.carousel-control-next-icon(aria-hidden="true")
-          span.visually-hidden Next
+        if anouncements.length > 1
+          button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
+            span.carousel-control-prev-icon(aria-hidden="true")
+            span.visually-hidden Previous
+          button.carousel-control-next(type="button" data-bs-target="#anouncements" data-bs-slide="next")
+            span.carousel-control-next-icon(aria-hidden="true")
+            span.visually-hidden Next
 
   p.text-justify.col-12 !{text}
 

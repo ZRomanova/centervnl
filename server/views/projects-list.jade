@@ -1,5 +1,22 @@
 extends layout
 
 block content
-  h1= title
-  p Здесь скоро будет #{title}
+  if nav_projects && nav_projects.length 
+    h1 Активные проекты
+    .container.my-4.item-1
+        hr.mb-5
+        // Carousel Wrapper
+        - var sliderData = nav_projects
+        - var sdID = 'idA'
+        include includes/multi-carusel
+
+        each projects_group, index in old_projects
+          hr.mb-5
+          h2 Архив за #{projects_group.year} год
+          - sliderData = projects_group.projects
+          - sdID = 'id'+index
+          include includes/multi-carusel
+
+          
+
+
