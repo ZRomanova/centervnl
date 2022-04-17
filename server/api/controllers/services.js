@@ -98,9 +98,9 @@ module.exports.getServiceByPath = async function(req, res, next) {
 module.exports.uploadImagesService = async function(req, res, next) {
     try {
         const updated = {}
-        if (req.files && req.files.image) updated['$set'] = {image: 'https://centervnl.ru/' + req.files.image[0].path}
+        if (req.files && req.files.image) updated['$set'] = {image: 'https://centervnl.ru/uploads/' + req.files.image[0].filename}
         if (req.files && req.files['gallery']) {
-            let paths = req.files['gallery'].map(file => 'https://centervnl.ru/' + file.path)
+            let paths = req.files['gallery'].map(file => 'https://centervnl.ru/uploads/' + file.filename)
             updated['$addToSet'] = {gallery: {$each: paths}}
         }
         const service = await Service.findOneAndUpdate({_id: req.params.id}, updated, {new: true}).lean()
