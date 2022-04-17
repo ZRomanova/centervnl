@@ -124,7 +124,7 @@ body {
   font-size: medium;
 }
 
-.orange-button:hover {
+.orange-button:hover, .bg-green {
   background-color: rgb(3,178,183);
 }
 
@@ -173,3 +173,8 @@ body {
   max-width: 100%;
 }
 
+.custom-border {
+  border: 3px solid #dddddd;
+  border-radius: 3px;
+  padding: 4px;
+}
