@@ -184,3 +184,25 @@ body {
   position: absolute;
   background: none;
 }
+
+.container-gallery {
+  height: 60vh;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  filter: blur(0);
+  -webkit-filter: blur(0);
+  margin-top: -60vh;
+  z-index: 10;
+}
+
+.bg-blur-image {
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  height: 60vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -10;
+}

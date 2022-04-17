@@ -23,9 +23,47 @@ module.exports.getActive = async function(req, res, next) {
     }
 }
 
+module.exports.getProjectByPath = async function(req, res, next) {
+    try {
+        const project = await Project.aggregate([
+            {
+                $match: {path: req.params.path, visible: true}
+            },
+            { 
+                $project: { "created": 0, author: 0 }
+            },
+            {
+                $lookup:
+                {
+                    from: 'tags',
+                    localField: 'tags',
+                    foreignField: '_id',
+                    as: 'tagsObjArray'
+                }
+             },
+             {
+                $lookup:
+                {
+                    from: 'partners',
+                    localField: 'partners',
+                    foreignField: '_id',
+                    as: 'partnersObjArray'
+                }
+                
+            }
+        ])
+        if (project.length)
+            next(req, res, project[0])
+        else 
+            next(req, res, new Error("Проект не найден"))
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
 module.exports.getProjectById = async function(req, res, next) {
     try {
-        const project = await Project.findById(req.params.id).lean()
+        const project = await Project.findOne({_id: req.params.id})
         next(req, res, project)
     } catch (e) {
         errorHandler(res, e)

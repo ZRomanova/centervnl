@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= project.name
+  if project.description
+    hr
+    p.text-justify.col-12 !{project.description}
+  if project.gallery && project.gallery.length 
+    hr
+    #carouselExampleControlsNoTouching.carousel.slide(data-bs-touch='false' data-bs-interval='false')
+      .carousel-inner
+        each item in project.gallery
+          .carousel-item.item-a 
+            .bg-blur-image(style="background-image: url("+item+");")
+            img.container-gallery(src= item alt=project.name)
+      if project.gallery.length > 1
+        button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='prev')
+          span.carousel-control-prev-icon(aria-hidden='true')
+          span.visually-hidden Previous
+        button.carousel-control-next(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='next')
+          span.carousel-control-next-icon(aria-hidden='true')
+          span.visually-hidden Next
+  hr

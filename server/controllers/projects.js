@@ -47,16 +47,25 @@ module.exports.getProjectPage = async function(req, res, data = {}) {
         const result = {...data}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                    result.nav_projects = nav_projects
-                    renderProjectListPage(req, res, result)
-                    console.log('getProjectPage')
+            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
+                result.nav_projects = nav_projects
+                await apiProjects.getProjectByPath(req, res, async (req, res, project) => {
+                    result.project = project
+                    renderProjectPage(req, res, result)
                 })
             })
         })
     } catch (e) {
         console.log(e)
     }
+}
+
+const renderProjectPage = function(req, res, data) {
+    res.render('project', {
+        title: data.project ? data.project.name : "Не найдено",
+        project: data.project,
+        nav_projects: data.nav_projects,
+        footer_logos: data.partners, 
+        user: req.user
+    })
 }
