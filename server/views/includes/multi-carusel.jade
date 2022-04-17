@@ -20,7 +20,7 @@
                 .card.mb-2.clearfix.bg-green.custom-border
                   img.card-img-top.img-cover-small(src= box.image alt= box.name)
                   .card-body
-                    h6.card-text.text-ellipsis.mh-40= box.description
+                    h6.card-text.text-ellipsis.mh-40 !{box.description}
                     .col-12
                       a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
     if forBig.length > 1
@@ -46,7 +46,7 @@
                 .card.mb-2.clearfix.bg-green.custom-border
                   img.card-img-top.img-cover-small(src= box.image alt= box.name)
                   .card-body
-                    h6.card-text.text-ellipsis.mh-40= box.description
+                    h6.card-text.text-ellipsis.mh-40 !{box.description}
                     .col-12
                       a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
     if forSmall.length > 1
