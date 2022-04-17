@@ -103,7 +103,7 @@ module.exports.uploadImagesService = async function(req, res, next) {
             let paths = req.files['gallery'].map(file => 'https://centervnl.ru/' + file.path)
             updated['$addToSet'] = {gallery: {$each: paths}}
         }
-        const service = await Service.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        const service = await Service.findOneAndUpdate({_id: req.params.id}, updated, {new: true}).lean()
         next(req, res, service)
     } catch (e) {
         errorHandler(res, e)
