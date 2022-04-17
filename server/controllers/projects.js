@@ -1,5 +1,6 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
+const moment = require('moment')
 
 module.exports.getProjectListPage = async function(req, res, data = {}) {
     try {
@@ -50,6 +51,12 @@ module.exports.getProjectPage = async function(req, res, data = {}) {
             await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
                 result.nav_projects = nav_projects
                 await apiProjects.getProjectByPath(req, res, async (req, res, project) => {
+                    const time = moment.locale('ru')
+                    if (project.period.end) {
+                        project.date = `${moment(project.period.start).format('LL')} - ${moment(project.period.end).format('LL')}`
+                    } else {
+                        project.date = `c ${moment(project.period.start).format('LL')}`
+                    }
                     result.project = project
                     renderProjectPage(req, res, result)
                 })

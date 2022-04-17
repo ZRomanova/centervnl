@@ -201,8 +201,8 @@ html
               a(href='/shop/') Магазин
             li.hover-section
               a(href='/projects/') Проекты
-              ul.dropdown-menu.hover-item
-                if nav_projects && nav_projects.length
+              if nav_projects && nav_projects.length
+                ul.dropdown-menu.hover-item
                   each project in nav_projects
                     a.dropdown-item(href='/projects/'+project.path) #{project.name}
             li.hover-section

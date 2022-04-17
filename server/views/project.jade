@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1= project.name
+  h4.marck-script Реализация: #{project.date}
   if project.description
     hr
     p.text-justify.col-12 !{project.description}
@@ -20,4 +21,20 @@ block content
         button.carousel-control-next(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='next')
           span.carousel-control-next-icon(aria-hidden='true')
           span.visually-hidden Next
+
+  if (project.tagsObjArray && project.tagsObjArray.length) || (project.partnersObjArray && project.parthnersObjArray.length)
+    hr
+    .row
+      if project.tagsObjArray && project.tagsObjArray.length
+        .col-12.col-md-6
+          h5 Теги:
+          each p in project.tagsObjArray
+            a.btn.btn-warning.marck-script.m-1= p.name
+
+      if project.partnersObjArray && project.partnersObjArray.length
+        .col-12.col-md-6
+          h5 Партнёры проекта:
+          each p in project.partnersObjArray
+            a.btn.btn-success.marck-script.m-1(href= p.url target="_blank")= p.name
+
   hr
