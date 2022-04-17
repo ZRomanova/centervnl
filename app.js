@@ -17,6 +17,8 @@ app.locals.moment = require('moment');
 app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('view engine', 'jade');
 
+// app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')))
+
 app.use(logger('dev'));
 
 app.use(express.json());
@@ -58,14 +60,18 @@ require('./server/middleware/jwt-auth')
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/uploads', express.static(path.resolve(
-  __dirname, 'uploads'
-)))
-
 app.get('/admin/*', (req, res) => {
   res.sendFile(
     path.resolve(
       __dirname, 'public', 'admin', 'index.html'
+    )
+  )
+})
+
+app.get('/uploads/*', (req, res) => {
+  res.sendFile(
+    path.resolve(
+      __dirname, req.path,
     )
   )
 })
