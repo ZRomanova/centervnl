@@ -8,12 +8,10 @@ function getRandomInt(min, max) {
   return String(Math.floor(Math.random() * (max - min)) + min);
 }
 
-console.log(__dirname
-  )
 const storage = multer.diskStorage({
   destination(req, file,  cb) {
     cb(null, path.resolve(
-      `home/web/www/centervnl/uploads`, 'uploads/'
+      `/home/web/www/centervnl/uploads`, 'uploads/'
     ));
   },
   filename(req, file, cb) {
