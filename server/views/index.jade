@@ -12,10 +12,8 @@ block content
                 h3.marck-script= item.name
                 p.mh-300.text-justify.text-ellipsis= item.description
                 .row
-                  .col-6
-                    a.orange-button(href='/services/' + item.path + '#checkout') Запись
-                  .col-6
-                    a.orange-button(href='/services/' + item.path) Подробнее
+                  .col-12
+                    a.orange-button(href='/services/' + item.path) Запись
 
         button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
           span.carousel-control-prev-icon(aria-hidden="true")

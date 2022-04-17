@@ -36,8 +36,7 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
                                 }
                             } 
                         })
-                        result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && elvisible)}
-                        console.log(JSON.stringify(result.services))
+                        result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
                         renderServicesListPage(req, res, result)
                     })
                 })
