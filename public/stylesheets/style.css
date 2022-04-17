@@ -178,3 +178,9 @@ body {
   border-radius: 3px;
   padding: 4px;
 }
+
+.hover-section:hover .hover-item{
+  display: block;
+  position: absolute;
+  background: none;
+}

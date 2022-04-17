@@ -19,7 +19,7 @@ module.exports.getProjectListPage = async function(req, res, data = {}) {
                         if (obj) obj.projects.push(p)
                         else arr.push({year, projects: [p]})
                     }
-                    arr.sort((a, b) => a.year > b.year)
+                    arr.sort((a, b) => b.year - a.year)
                 })
                 result.old_projects = arr
                 result.nav_projects = active

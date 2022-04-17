@@ -6,15 +6,17 @@ block content
       h1 Активные проекты
       hr.mb-5
       // Carousel Wrapper
-      - var sliderData = nav_projects
-      - var sdID = 'idA'
+      - var data = nav_projects
+      - var bID = 'idB'
+      - var sID = 'idC'
       include includes/multi-carusel
     if old_projects && old_projects.length
       each projects_group, index in old_projects
         hr.mb-5
         h2.text-dark-blue Архив за #{projects_group.year} год
-        - sliderData = projects_group.projects
-        - sdID = 'id'+index
+        - data = projects_group.projects
+        - bID = 'idB'+index
+        - sID = 'idC'+index
         include includes/multi-carusel
 
           

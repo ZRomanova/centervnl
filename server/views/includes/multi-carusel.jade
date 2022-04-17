@@ -1,33 +1,55 @@
-.carousel.slide.carousel-multi-item.item-2(data-ride='carousel' id= sdID)
-  // Controls
-  - var chunkArray = (arr, cnt) => arr.reduce((prev, cur, i, a) => !(i % cnt) ? prev.concat([a.slice(i, i + cnt)]) : prev, []);
-  - var data = chunkArray(sliderData, 3)
-  if data.length > 1
-    .controls-top.text-right.col-12
-      a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sdID data-bs-slide='prev')
-        i.fa.fa-arrow-left
-      a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sdID data-bs-slide='next')
-        i.fa.fa-arrow-right
-  // /.Controls
 
-  // Slides
-  .carousel-inner(role='listbox')
-    // First slide
-    each item in data
-      .carousel-item.item-3
-        .row
-          each box in item
-            .col-md-4
-              .card.mb-2.clearfix.bg-green.custom-border
-                img.card-img-top.img-cover-small(src= box.image alt= box.name)
-                .card-body
-                  h6.card-text.text-ellipsis.mh-40= box.description
-                  .col-12
-                    a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
+- var chunkArray = (arr, cnt) => arr.reduce((prev, cur, i, a) => !(i % cnt) ? prev.concat([a.slice(i, i + cnt)]) : prev, []);
+- var forBig = chunkArray(data,  3)
+- var forSmall = chunkArray(data,  1)
 
-  // Indicators
-  if data.length > 1
-    ol.carousel-indicators.carousel-indicators-block
-      for item, index in data
-        li.carousel-indicators-orange(data-bs-target='#'+sdID data-bs-slide-to= index)
-  // /.Indicators
+.d-none.d-md-block.item-1
+  .carousel.slide.carousel-multi-item(data-ride='carousel' id= bID)
+    if forBig.length > 1
+      .controls-top.text-right.col-12
+        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='prev')
+          i.fa.fa-arrow-left
+        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='next')
+          i.fa.fa-arrow-right
+    .carousel-inner(role='listbox')
+      each item in forBig
+        .carousel-item.item-3
+          .row
+            each box in item
+              .col-md-4
+                .card.mb-2.clearfix.bg-green.custom-border
+                  img.card-img-top.img-cover-small(src= box.image alt= box.name)
+                  .card-body
+                    h6.card-text.text-ellipsis.mh-40= box.description
+                    .col-12
+                      a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
+    if forBig.length > 1
+      ol.carousel-indicators.carousel-indicators-block
+        for item, index in forBig
+          li.carousel-indicators-orange(data-bs-target='#'+bID data-bs-slide-to= index)
+
+
+.d-block.d-md-none.item-2
+  .carousel.slide.carousel-multi-item(data-ride='carousel' id= sID)
+    if forSmall.length > 1
+      .controls-top.text-right.col-12
+        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='prev')
+          i.fa.fa-arrow-left
+        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='next')
+          i.fa.fa-arrow-right
+    .carousel-inner(role='listbox')
+      each item in forSmall
+        .carousel-item.item-3
+          .row
+            each box in item
+              .col-md-4
+                .card.mb-2.clearfix.bg-green.custom-border
+                  img.card-img-top.img-cover-small(src= box.image alt= box.name)
+                  .card-body
+                    h6.card-text.text-ellipsis.mh-40= box.description
+                    .col-12
+                      a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
+    if forSmall.length > 1
+      ol.carousel-indicators.carousel-indicators-block
+        for item, index in forSmall
+          li.carousel-indicators-orange(data-bs-target='#'+sID data-bs-slide-to= index)
