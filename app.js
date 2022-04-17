@@ -17,7 +17,7 @@ app.locals.moment = require('moment');
 app.set('views', path.join(__dirname, 'server', 'views'));
 app.set('view engine', 'jade');
 
-// app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')))
+app.use('/uploads', express.static(path.resolve(__dirname, 'uploads')))
 
 app.use(logger('dev'));
 
@@ -68,21 +68,15 @@ app.get('/admin/*', (req, res) => {
   )
 })
 
-app.get('/uploads/*', (req, res) => {
-  res.sendFile(
-    path.resolve(
-      __dirname, req.path,
-    )
-  )
-})
-
-// app.get('/admin', (req, res) => {
+// app.get('/uploads/*', (req, res) => {
+//   console.log(req.path)
 //   res.sendFile(
 //     path.resolve(
-//       'admin', 'index.html'
+//       __dirname, req.path,
 //     )
 //   )
 // })
+
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 // app.use('/users', usersRouter);
