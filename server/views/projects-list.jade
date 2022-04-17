@@ -1,21 +1,21 @@
 extends layout
 
 block content
-  if nav_projects && nav_projects.length 
-    h1 Активные проекты
-    .container.my-4.item-1
+  .container.my-4.item-1
+    if nav_projects && nav_projects.length 
+      h1 Активные проекты
+      hr.mb-5
+      // Carousel Wrapper
+      - var sliderData = nav_projects
+      - var sdID = 'idA'
+      include includes/multi-carusel
+    if old_projects && old_projects.length
+      each projects_group, index in old_projects
         hr.mb-5
-        // Carousel Wrapper
-        - var sliderData = nav_projects
-        - var sdID = 'idA'
+        h2.text-dark-blue Архив за #{projects_group.year} год
+        - sliderData = projects_group.projects
+        - sdID = 'id'+index
         include includes/multi-carusel
-
-        each projects_group, index in old_projects
-          hr.mb-5
-          h2 Архив за #{projects_group.year} год
-          - sliderData = projects_group.projects
-          - sdID = 'id'+index
-          include includes/multi-carusel
 
           
 
