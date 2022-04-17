@@ -11,7 +11,7 @@ function getRandomInt(min, max) {
 
 const storage = multer.diskStorage({
   destination(req, file,  cb) {
-    cb(null, path.join(
+    cb(null, path.resolve(
       __dirname + '/../../', 'uploads'
     ));
   },
