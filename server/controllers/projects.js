@@ -50,8 +50,11 @@ module.exports.getProjectPage = async function(req, res, data = {}) {
             result.partners = partners
             await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
                 result.nav_projects = nav_projects
-                await apiProjects.getProjectByPath(req, res, async (req, res, project) => {
-                    const time = moment.locale('ru')
+                await apiProjects.getProjectByPath(req, res, async (req, res, data) => {
+                    const project = data.project
+                    result.services = data.services
+                    result.posts = data.posts
+                    moment.locale('ru')
                     if (project.period.end) {
                         project.date = `${moment(project.period.start).format('LL')} - ${moment(project.period.end).format('LL')}`
                     } else {
@@ -73,6 +76,8 @@ const renderProjectPage = function(req, res, data) {
         project: data.project,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: req.user,
+        posts: data.posts,
+        services: data.services
     })
 }

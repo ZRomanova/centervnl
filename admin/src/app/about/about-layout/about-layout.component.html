@@ -26,13 +26,13 @@
                 <h3>Теги</h3>
             </div>
             <div class="col-6 text-right">
-                <a class="btn btn-primary mb-3 me-2" role="button" (click)="backTags()">
+                <a class="btn btn-custom mb-3 me-2" role="button" (click)="backTags()">
                     <i class="fa fa-arrow-left"></i>
                 </a>
-                <a class="btn btn-primary mb-3 me-2" role="button" (click)="openTagForm(null)">
+                <a class="btn btn-custom mb-3 me-2" role="button" (click)="openTagForm(null)">
                     <i class="fa fa-plus"></i>
                 </a>
-                <a class="btn btn-primary mb-3" role="button" (click)="nextTags()">
+                <a class="btn btn-custom mb-3" role="button" (click)="nextTags()">
                     <i class="fa fa-arrow-right"></i>
                 </a>
             </div>
@@ -54,7 +54,7 @@
                                         <h4 class="card-title">{{box.name}}</h4>
                                         <p>{{box.description}}</p>
                                         <div *ngIf="!box.spetial">
-                                            <a class="btn btn-primary me-2" role="button" (click)="openTagForm(box)">
+                                            <a class="btn btn-custom me-2" role="button" (click)="openTagForm(box)">
                                                 <i class="fa fa-pen"></i>
                                             </a>
                                         </div>

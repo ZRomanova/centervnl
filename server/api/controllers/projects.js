@@ -1,4 +1,6 @@
 const Project = require('../models/projects')
+const Post = require('../models/posts')
+const Service = require('../models/services')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
@@ -25,7 +27,7 @@ module.exports.getActive = async function(req, res, next) {
 
 module.exports.getProjectByPath = async function(req, res, next) {
     try {
-        const project = await Project.aggregate([
+        const projects = await Project.aggregate([
             {
                 $match: {path: req.params.path, visible: true}
             },
@@ -52,8 +54,12 @@ module.exports.getProjectByPath = async function(req, res, next) {
                 
             }
         ])
-        if (project.length)
-            next(req, res, project[0])
+        if (projects.length){
+            const project = projects[0]
+            const posts = await Post.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1}).sort({date: -1}).lean()
+            const services = await Service.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1, date: 1}).sort({created: -1}).lean()
+            next(req, res, {project, posts, services})
+        }
         else 
             next(req, res, new Error("Проект не найден"))
     } catch (e) {

@@ -2,7 +2,51 @@ extends layout
 
 block content
   h1= service.name
+
+  if service.description
+    hr
+    p.text-justify.col-12 !{service.description}
+
+  if service.image || (service.gallery && service.gallery.length) 
+    hr
+    - var gallery= []
+    if service.gallery && service.gallery.length
+      - gallery = [...service.gallery]
+    if service.image
+      - gallery.push(service.image)
+    - var sliderId= 'ID'+service._id
+    include includes/blur-slider
+
+  if posts && posts.length
+    hr
+    h4.marck-script Новости
+    - var data = posts
+    - var bID = 'idBN'
+    - var sID = 'idCN'
+    - var rootPath = '/news/'
+    include includes/multi-carusel
+
+  if (service.tagsObjArray && service.tagsObjArray.length) || (service.partnersObjArray && service.partnersObjArray.length) || (service.projectsObjArray && service.projectsObjArray.length)
+    hr
+    .row
+      if service.tagsObjArray && service.tagsObjArray.length
+        .col-12.col-md-6
+          h5 Теги:
+          each p in service.tagsObjArray
+            a.btn.btn-warning.marck-script.m-1.text-ellipsis-nowrap.mw-100= p.name
+
+      if service.projectsObjArray && service.projectsObjArray.length
+        .col-12.col-md-3
+          h5 #{'В рамках проект' + (service.projectsObjArray.length == 1 ? 'а' : 'ов')}:
+          each p in service.projectsObjArray
+            a.btn.btn-primary.marck-script.m-1.text-ellipsis-nowrap.mw-100(href= '/projects/'+p.path )= p.name
+
+      if service.partnersObjArray && service.partnersObjArray.length
+        .col-12.col-md-3
+          h5 При поддержке:
+          each p in service.partnersObjArray
+            a.btn.btn-success.marck-script.m-1.text-ellipsis-nowrap.mw-100(href= p.url target="_blank")= p.name
+
   hr
-  p.text-justify.col-12 !{service.description}
   
 

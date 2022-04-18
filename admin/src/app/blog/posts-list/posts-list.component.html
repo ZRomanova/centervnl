@@ -1,17 +1,17 @@
 <app-page-title title="Раздел блог" text="Здесь можно работать с постами, добавлять к ним теги"></app-page-title>
 
-<a class="btn btn-primary mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-primary mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
     <i class="fa fa-arrow-right"></i>
 </a>
 <app-table (create)="createPost($event)" (edit)="editPost($event)" 
 *ngIf="!loading; else loader" [data]="posts" [offset]="offset" [title]="['Заголовок', 'Дата', 'Текст']"></app-table>
-<a class="btn btn-primary mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-primary mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
     <i class="fa fa-arrow-right"></i>
 </a>
 

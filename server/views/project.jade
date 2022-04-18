@@ -8,20 +8,31 @@ block content
     p.text-justify.col-12 !{project.description}
   if project.gallery && project.gallery.length 
     hr
-    #carouselExampleControlsNoTouching.carousel.slide(data-bs-touch='false' data-bs-interval='false')
-      .carousel-inner
-        each item in project.gallery
-          .carousel-item.item-a 
-            .bg-blur-image(style="background-image: url("+item+");")
-            img.container-gallery(src= item alt=project.name)
-            
-      if project.gallery.length > 1
-        button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='prev')
-          span.carousel-control-prev-icon(aria-hidden='true')
-          span.visually-hidden Previous
-        button.carousel-control-next(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='next')
-          span.carousel-control-next-icon(aria-hidden='true')
-          span.visually-hidden Next
+    - var gallery= []
+    if project.gallery && project.gallery.length
+      - gallery = [...project.gallery]
+    if project.image
+      - gallery.push(project.image)
+    - var sliderId= 'ID'+project._id
+    include includes/blur-slider
+
+  if services && services.length
+    hr
+    h4.marck-script Мероприятия
+    - var data = services
+    - var bID = 'idBM'
+    - var sID = 'idCM'
+    - var rootPath = '/services/'
+    include includes/multi-carusel
+  
+  if posts && posts.length
+    hr
+    h4.marck-script Новости
+    - var data = posts
+    - var bID = 'idBN'
+    - var sID = 'idCN'
+    - var rootPath = '/news/'
+    include includes/multi-carusel
 
   if (project.tagsObjArray && project.tagsObjArray.length) || (project.partnersObjArray && project.partnersObjArray.length)
     hr
@@ -30,12 +41,13 @@ block content
         .col-12.col-md-6
           h5 Теги:
           each p in project.tagsObjArray
-            a.btn.btn-warning.marck-script.m-1= p.name
+            a.btn.btn-warning.marck-script.m-1.text-ellipsis-nowrap.mw-100= p.name
 
       if project.partnersObjArray && project.partnersObjArray.length
         .col-12.col-md-6
-          h5 Партнёры проекта:
+          h5 При поддержке:
           each p in project.partnersObjArray
-            a.btn.btn-success.marck-script.m-1(href= p.url target="_blank")= p.name
+            a.btn.btn-success.marck-script.m-1.text-ellipsis-nowrap.mw-100(href= p.url target="_blank")= p.name
+
 
   hr

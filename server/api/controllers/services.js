@@ -1,4 +1,5 @@
 const Service = require('../models/services')
+const Post = require('../models/posts')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
@@ -88,8 +89,52 @@ module.exports.getServiceById = async function(req, res, next) {
 
 module.exports.getServiceByPath = async function(req, res, next) {
     try {
-        const service = await Service.findOne({path: req.params.path, visible: true}).lean()
-        next(req, res, service)
+
+        const services = await Service.aggregate([
+            {
+                $match: {path: req.params.path, visible: true}
+            },
+            { 
+                $project: { "created": 0, author: 0 }
+            },
+            {
+                $lookup:
+                {
+                    from: 'tags',
+                    localField: 'tags',
+                    foreignField: '_id',
+                    as: 'tagsObjArray'
+                }
+             },
+             {
+                $lookup:
+                {
+                    from: 'partners',
+                    localField: 'partners',
+                    foreignField: '_id',
+                    as: 'partnersObjArray'
+                }
+                
+            },
+            {
+               $lookup:
+               {
+                   from: 'projects',
+                   localField: 'projects',
+                   foreignField: '_id',
+                   as: 'projectsObjArray'
+               }
+               
+           }
+        ])
+        if (services.length) {
+            const service = services[0]
+            const posts = await Post.find({visible: true, posts: service._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1}).sort({date: -1}).lean()
+            next(req, res, {service, posts})
+        }
+        else 
+            next(req, res, new Error("Проект не найден"))
+
     } catch (e) {
         errorHandler(res, e)
     }

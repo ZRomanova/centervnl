@@ -61,12 +61,12 @@
             <div class="input-group mb-3" *ngFor="let photo of form.controls.gallery.controls; index as i">
                 <input class="form-control" type="text" placeholder="Добавляйте только общедоступные ссылки"
                 [formControlName]="i">
-                <span class="input-group-text input-group-btn btn btn-primary" (click)="deleteURLByIndex(i)">
+                <span class="input-group-text input-group-btn btn btn-custom" (click)="deleteURLByIndex(i)">
                   <i class="fa fa-trash"></i>
                 </span>
             </div>
         </div>
-        <button class="btn btn-primary mb-3 mt-3" type="button" (click)="plusToGallery()">
+        <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusToGallery()">
             <i class="fa fa-plus"></i>
         </button>
         <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery>
@@ -78,7 +78,7 @@
         <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
             Назад
         </button>
-        <button class="btn btn-primary mt-3 mb-3" type="submit">
+        <button class="btn btn-custom mt-3 mb-3" type="submit">
             {{id ? 'Сохранить' : 'Создать'}}
         </button>
     </form>

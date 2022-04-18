@@ -32,7 +32,7 @@ html
 
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#checkRegModal' data-bs-toggle='modal' data-bs-dismiss='modal') Регистрация
-            button.btn.btn-primary(type='submit' form="login") Вход
+            button.btn.btn-custom(type='submit' form="login") Вход
 
     #authEmoModal.modal.fade(aria-hidden='true' aria-labelledby='authEmoModalLabel' tabindex='-1')
       .modal-dialog
@@ -54,7 +54,7 @@ html
                 span.input-group-text.input-group-btn
                   i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
           .modal-footer
-            button.btn.btn-primary(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
+            button.btn.btn-custom(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
 
     #registrEmoModal.modal.fade(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
@@ -82,7 +82,7 @@ html
 
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
-            button.btn.btn-primary(type='submit' form="registr-emo") Регистрация
+            button.btn.btn-custom(type='submit' form="registr-emo") Регистрация
 
     #registrModal.modal.fade(aria-hidden='true' aria-labelledby='registrModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
@@ -126,7 +126,7 @@ html
 
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
-            button.btn.btn-primary(type="submit" form="registr") Регистрация
+            button.btn.btn-custom(type="submit" form="registr") Регистрация
 
     #checkRegModal.modal.fade(tabindex='-1' aria-labelledby='checkRegModalLabel' aria-hidden='true')
       .modal-dialog
@@ -137,7 +137,7 @@ html
           .modal-body Хотите использовать учётную запись ЭМО для регистрации?
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#registrModal' data-bs-toggle='modal' data-bs-dismiss='modal') Нет
-            button.btn.btn-primary(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
+            button.btn.btn-custom(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
 
 
     #editUserModal.modal.fade(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
@@ -182,10 +182,10 @@ html
           .modal-footer
             a.btn.btn-secondary(href='/auth/logout') Выход
             //- if user && user.emo 
-            //-   button.btn.btn-primary(type="button") Обновить из ЭМО
+            //-   button.btn.btn-custom(type="button") Обновить из ЭМО
             //- else
             //-   button.btn.btn-secondary(type="button") Привязать аккаунт ЭМО
-            button.btn.btn-primary(type="submit" form="edit-user") Coxpaнить
+            button.btn.btn-custom(type="submit" form="edit-user") Coxpaнить
 
 
     nav.navbar-default.navbar-fixed-top

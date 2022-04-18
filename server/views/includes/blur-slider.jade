@@ -1,0 +1,16 @@
+
+
+.carousel.slide(data-bs-touch='false' data-bs-interval='false' id=sliderId)
+  .carousel-inner
+    each item in gallery
+      .carousel-item.item-a 
+        .bg-blur-image(style="background-image: url("+item+");")
+        img.container-gallery(src= item)
+        
+  if gallery.length > 1
+    button.carousel-control-prev(type='button' data-bs-target='#'+sliderId data-bs-slide='prev')
+      span.carousel-control-prev-icon(aria-hidden='true')
+      span.visually-hidden Previous
+    button.carousel-control-next(type='button' data-bs-target='#'+sliderId data-bs-slide='next')
+      span.carousel-control-next-icon(aria-hidden='true')
+      span.visually-hidden Next

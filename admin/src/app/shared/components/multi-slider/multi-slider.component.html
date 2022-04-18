@@ -5,13 +5,13 @@
             <h3>{{page}}</h3>
         </div>
         <div class="col-6 text-right">
-            <a class="btn btn-primary mb-3 me-2" role="button" (click)="back()">
+            <a class="btn btn-custom mb-3 me-2" role="button" (click)="back()">
                 <i class="fa fa-arrow-left"></i>
             </a>
-            <a class="btn btn-primary mb-3 me-2" role="button" (click)="plus()">
+            <a class="btn btn-custom mb-3 me-2" role="button" (click)="plus()">
                 <i class="fa fa-plus"></i>
             </a>
-            <a class="btn btn-primary mb-3" role="button" (click)="next()">
+            <a class="btn btn-custom mb-3" role="button" (click)="next()">
                 <i class="fa fa-arrow-right"></i>
             </a>
         </div>
@@ -24,13 +24,13 @@
                                 <img class="img-contain" alt="{{box.name}}" [src]="box.image">
                                 <div class="card-body">
                                     <h4 class="card-title">{{box.name}}</h4>
-                                    <a class="btn btn-primary me-2" role="button" (click)="pen(box._id)">
+                                    <a class="btn btn-custom me-2" role="button" (click)="pen(box._id)">
                                         <i class="fa fa-pen"></i>
                                     </a>
-                                    <a class="btn btn-primary me-2" role="button" (click)="trash(box)">
+                                    <a class="btn btn-custom me-2" role="button" (click)="trash(box)">
                                         <i class="fa fa-trash"></i>
                                     </a>
-                                    <a class="btn btn-primary me-2" role="button" (click)="eye(box)">
+                                    <a class="btn btn-custom me-2" role="button" (click)="eye(box)">
                                         <i class="fa fa-eye{{box.visible ? '' : '-slash'}}"></i>
                                     </a>
                                 </div>

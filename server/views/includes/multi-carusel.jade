@@ -3,13 +3,14 @@
 - var forBig = chunkArray(data,  3)
 - var forSmall = chunkArray(data,  1)
 
+
 .d-none.d-md-block.item-1
   .carousel.slide.carousel-multi-item(data-ride='carousel' id= bID)
     if forBig.length > 1
       .controls-top.text-right.col-12
-        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='prev')
+        a.btn.btn-custom.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='prev')
           i.fa.fa-arrow-left
-        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='next')
+        a.btn.btn-custom.mb-3.me-2(type="button" data-bs-target='#'+bID data-bs-slide='next')
           i.fa.fa-arrow-right
     .carousel-inner(role='listbox')
       each item in forBig
@@ -20,9 +21,10 @@
                 .card.mb-2.clearfix.bg-green.custom-border
                   img.card-img-top.img-cover-small(src= box.image alt= box.name)
                   .card-body
+                    h4.text-ellipsis-nowrap.mw-100= box.name
                     h6.card-text.text-ellipsis.mh-40 !{box.description}
                     .col-12
-                      a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
+                      a.btn.btn-custom.text-ellipsis-nowrap.mw-100(href= rootPath+box.path) Смотреть
     if forBig.length > 1
       ol.carousel-indicators.carousel-indicators-block
         for item, index in forBig
@@ -33,9 +35,9 @@
   .carousel.slide.carousel-multi-item(data-ride='carousel' id= sID)
     if forSmall.length > 1
       .controls-top.text-right.col-12
-        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='prev')
+        a.btn.btn-custom.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='prev')
           i.fa.fa-arrow-left
-        a.btn.btn-primary.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='next')
+        a.btn.btn-custom.mb-3.me-2(type="button" data-bs-target='#'+sID data-bs-slide='next')
           i.fa.fa-arrow-right
     .carousel-inner(role='listbox')
       each item in forSmall
@@ -46,9 +48,10 @@
                 .card.mb-2.clearfix.bg-green.custom-border
                   img.card-img-top.img-cover-small(src= box.image alt= box.name)
                   .card-body
+                    h4.text-ellipsis-nowrap.mw-100= box.name
                     h6.card-text.text-ellipsis.mh-40 !{box.description}
                     .col-12
-                      a.btn.btn-primary.text-ellipsis-nowrap.mw-100(href= '/projects/' + box.path)= box.name
+                      a.btn.btn-custom.text-ellipsis-nowrap.mw-100(href= rootPath+box.path) Смотреть
     if forSmall.length > 1
       ol.carousel-indicators.carousel-indicators-block
         for item, index in forSmall

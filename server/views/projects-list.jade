@@ -3,12 +3,14 @@ extends layout
 block content
   .container.my-4.item-1
     if nav_projects && nav_projects.length 
+      
       h1 Активные проекты
       hr.mb-5
       // Carousel Wrapper
       - var data = nav_projects
       - var bID = 'idB'
       - var sID = 'idC'
+      - var rootPath = '/projects/'
       include includes/multi-carusel
     if old_projects && old_projects.length
       each projects_group, index in old_projects
@@ -17,6 +19,7 @@ block content
         - data = projects_group.projects
         - bID = 'idB'+index
         - sID = 'idC'+index
+        - rootPath = '/projects/'
         include includes/multi-carusel
 
           

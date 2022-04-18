@@ -77,7 +77,9 @@ module.exports.getServicePage = async function(req, res) {
                 result.projects = projects
                 await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
                 result.nav_projects = nav_projects
-                    await apiServices.getServiceByPath(req, res, async (req, res, service) => {
+                    await apiServices.getServiceByPath(req, res, async (req, res, data) => {
+                        const service = data.service
+                        result.posts = data.posts
                         const now = new Date()
                         if (service.date.single && service.date.single.length) {
                             service.date.single.forEach(d => {
@@ -116,6 +118,7 @@ const renderServicePage = function(req, res, data) {
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         service: data.service,
-        user: req.user
+        user: req.user,
+        posts: data.posts
     })
 }

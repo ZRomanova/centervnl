@@ -1,6 +1,5 @@
 @import url("//fonts.googleapis.com/css?family=Lobster|Cabin:400,700");
-@import url('https://fonts.googleapis.com/css2?family=Marck+Script&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap');
+
 
 /*!
  * Bootstrap v3.0.0
@@ -2135,11 +2134,11 @@ textarea.input-lg {
   outline-offset: -2px;
 }
 
-.btn:hover,
+/* .btn:hover,
 .btn:focus {
   color: #444444;
   text-decoration: none;
-}
+} */
 
 .btn:active,
 .btn.active {
@@ -2201,43 +2200,43 @@ fieldset[disabled] .btn-default.active {
   border-color: #dddddd;
 }
 
-.btn-primary {
+.btn-custom {
   color: #ffffff;
   background-color: rgb(247,141,46);
   border-color: rgb(247, 120, 9);
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.open .dropdown-toggle.btn-primary {
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active,
+.open .dropdown-toggle.btn-custom {
   color: #ffffff;
   background-color: rgb(247, 120, 9);
   border-color: rgb(247,141,46);
 }
 
-.btn-primary:active,
-.btn-primary.active,
-.open .dropdown-toggle.btn-primary {
+.btn-custom:active,
+.btn-custom.active,
+.open .dropdown-toggle.btn-custom {
   background-image: none;
 }
 
-.btn-primary.disabled,
-.btn-primary[disabled],
-fieldset[disabled] .btn-primary,
-.btn-primary.disabled:hover,
-.btn-primary[disabled]:hover,
-fieldset[disabled] .btn-primary:hover,
-.btn-primary.disabled:focus,
-.btn-primary[disabled]:focus,
-fieldset[disabled] .btn-primary:focus,
-.btn-primary.disabled:active,
-.btn-primary[disabled]:active,
-fieldset[disabled] .btn-primary:active,
-.btn-primary.disabled.active,
-.btn-primary[disabled].active,
-fieldset[disabled] .btn-primary.active {
+.btn-custom.disabled,
+.btn-custom[disabled],
+fieldset[disabled] .btn-custom,
+.btn-custom.disabled:hover,
+.btn-custom[disabled]:hover,
+fieldset[disabled] .btn-custom:hover,
+.btn-custom.disabled:focus,
+.btn-custom[disabled]:focus,
+fieldset[disabled] .btn-custom:focus,
+.btn-custom.disabled:active,
+.btn-custom[disabled]:active,
+fieldset[disabled] .btn-custom:active,
+.btn-custom.disabled.active,
+.btn-custom[disabled].active,
+fieldset[disabled] .btn-custom.active {
   background-color: rgb(247,141,46);
   border-color: rgb(247,141,46);
 }
@@ -3473,7 +3472,7 @@ input[type="button"].btn-block {
   border-top-color: #444444;
 }
 
-.btn-primary .caret,
+.btn-custom .caret,
 .btn-success .caret,
 .btn-warning .caret,
 .btn-danger .caret,
@@ -3485,7 +3484,7 @@ input[type="button"].btn-block {
   border-bottom-color: #444444;
 }
 
-.dropup .btn-primary .caret,
+.dropup .btn-custom .caret,
 .dropup .btn-success .caret,
 .dropup .btn-warning .caret,
 .dropup .btn-danger .caret,
