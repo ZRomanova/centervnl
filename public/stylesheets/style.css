@@ -245,3 +245,7 @@ body {
   height: 50vh;
   padding: 1rem;
 }
+
+.float-right{
+  float: right !important;
+}

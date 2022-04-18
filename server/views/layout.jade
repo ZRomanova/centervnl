@@ -189,7 +189,7 @@ html
 
 
     nav.navbar-default.navbar-fixed-top
-      .container
+      
         .navbar-header
           a.navbar-brand(href='/') 
             img.nav-logo(src='/images/logo.webp')
@@ -198,7 +198,7 @@ html
             span.icon-bar
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav
+          ul.nav.navbar-nav.col-12
             li
               a(href='/shop/') Магазин
             li.hover-section
@@ -218,14 +218,14 @@ html
               a(href='/news/') Новости
             li
               a(href='/services/') Запись
-            li
+            li.float-right
               if !user
                 a(data-bs-toggle='modal' href='#authModal' role='button')
                   i.fa-solid.fa-arrow-right-to-bracket
               else
                 a(data-bs-toggle='modal' href='#editUserModal' role='button') 
                   img.small-user-nav(src=user.photo)
-            li
+            li.float-right
               if user && user.isAdmin
                 a(href='/admin/')
                   i.fa-solid.fa-crown
