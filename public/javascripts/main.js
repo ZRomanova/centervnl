@@ -73,6 +73,8 @@ if (togglePasswordAE && passwordAE) togglePasswordE.addEventListener("click", fu
 });
 
 $('.item-a').first().addClass('active');
+$('.item-b').first().addClass('active');
+$('.item-bb').first().addClass('active');
 
 $('.item-2').each(function(index) {
   $('.item-3', this).first().addClass('active')

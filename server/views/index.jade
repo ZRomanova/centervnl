@@ -1,6 +1,35 @@
 extends layout
 
 block content
+  if gallery && gallery.length
+    #homeHeadSlider.carousel.slide.home-slider(data-bs-ride='carousel')
+      if gallery.length > 1
+        .carousel-indicators
+          each item, index in gallery
+            button.item-bb(type='button' data-bs-target='#homeHeadSlider' data-bs-slide-to=index aria-current='true' aria-label='Slide '+index)
+
+      .carousel-inner
+        each item, index in gallery
+          .carousel-item.item-b(data-bs-interval='10000')
+            if item.url
+              a.slider-link.float-end(href=item.url target="_blank")
+                i.fa-solid.fa-arrow-up-right-from-square
+            .bg-blur-home-image(style="background-image: url("+item.image+");")
+            img.d-block.w-100.container-home-gallery(src=item.image alt=item.name)
+            .carousel-caption
+              h3.marck-script= item.name
+              p.mh-300.text-justify.text-ellipsis= item.description
+
+      if gallery.length > 1
+        button.carousel-control-prev(type='button' data-bs-target='#homeHeadSlider' data-bs-slide='prev')
+          span.carousel-control-prev-icon(aria-hidden='true')
+          span.visually-hidden Previous
+        button.carousel-control-next(type='button' data-bs-target='#homeHeadSlider' data-bs-slide='next')
+          span.carousel-control-next-icon(aria-hidden='true')
+          span.visually-hidden Next
+
+    hr
+
   if anouncements.length
     .col-xs-12.col-sm-8
       .carousel.slide#anouncements(data-bs-ride="carousel")

@@ -6,7 +6,9 @@ const dataSchema = new Schema({
       type: String,
       required: true,
       unique: true
-  }
+  },
+  data: mongoose.Mixed
+
 })
 
 module.exports = mongoose.model('infos', dataSchema)

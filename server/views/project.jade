@@ -14,6 +14,7 @@ block content
           .carousel-item.item-a 
             .bg-blur-image(style="background-image: url("+item+");")
             img.container-gallery(src= item alt=project.name)
+            
       if project.gallery.length > 1
         button.carousel-control-prev(type='button' data-bs-target='#carouselExampleControlsNoTouching' data-bs-slide='prev')
           span.carousel-control-prev-icon(aria-hidden='true')

@@ -21,9 +21,13 @@ module.exports.getHomePage = async function(req, res, data = {}) {
                         await apiProjects.getActive(req, res, async (req, res, projects) => {
                             result.projects = projects
                             req.query = {offset: 0, limit: 16}
-                            await apiPosts.getPosts(req, res, (req, res, posts) => {
+                            await apiPosts.getPosts(req, res, async (req, res, posts) => {
                                 result.posts = posts
-                                renderHomePage(req, res, result)
+                                req.params.type = "GALLERY"
+                                await apiData.getByType(req, res, (req, res, gallery) => {
+                                    result.gallery = gallery.filter(el => el.image)
+                                    renderHomePage(req, res, result)
+                                })
                             })
                         })
                     })
@@ -44,7 +48,8 @@ const renderHomePage = function(req, res, data) {
         contacts: data.contacts,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: data.user
+        user: data.user,
+        gallery: data.gallery
     })
     
 }

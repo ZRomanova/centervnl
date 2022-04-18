@@ -36,7 +36,12 @@ module.exports.addToGallery = async function(req, res, next) {
 
 module.exports.removeFormGallery = async function(req, res, next) {
     try {
-        await Data.findOneAndUpdate({'data._id': req.params.id}, {$pull: {'data.$': req.params.id}} , {new: true}).lean()
+        const id = mongoose.Types.ObjectId(req.params.id)
+        await Data.updateMany(
+            {'data._id': id}, 
+            {$pull: {'data': {_id: id}}},
+            {multi: true}
+            )
         next(req, res, {message: "Удалено"})
     } catch (e) {
         errorHandler(res, e)
@@ -45,16 +50,18 @@ module.exports.removeFormGallery = async function(req, res, next) {
 
 module.exports.updateInGallery = async function(req, res, next) {
     try {
+        const id = mongoose.Types.ObjectId(req.params.id)
         const updated = req.body
-        updated.visible = !!updated.visible
+        updated.visible = updated.visible == "true" ? true : false
+        updated._id = id
 
         if (req.file) updated.image = 'https://centervnl.ru/uploads/' + req.file.filename
-        const data = await Data.findOne(
-            {'data._id': req.params.id},
-            { $set: { 'data.$': updated } },
-            {new: true}
-        ).lean()
-        next(req, res, data.data)
+        await Data.updateMany(
+            {'data._id': id},
+            { $set:  {'data.$': updated} },
+            {multi: true}
+        )
+        next(req, res, {message: "Обновлено"})
     } catch (e) {
         errorHandler(res, e)
     }
