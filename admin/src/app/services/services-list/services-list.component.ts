@@ -51,7 +51,7 @@ export class ServicesListComponent implements OnInit {
       this.services = services
       this.services.forEach(service => {
         if (service.date) {
-          if (service.date.single && service.date.single.find(d => d > this.now)) {
+          if (service.date.single && service.date.single.find(d => new Date(d) > this.now)) {
             service.dateStr = "Открыта"
           }
           else if (!!service.date.period && service.date.period.find(p =>  ((new Date(p.start) <= this.now) && (!p.end || new Date(p.end) > this.now) && p.visible))) {
