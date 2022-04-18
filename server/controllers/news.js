@@ -17,7 +17,12 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
                 req.query.filter_visible = true
                 await apiPosts.getPosts(req, res, async (req, res, posts) => {
                     posts.forEach(post => {
-                        post.date = moment(post.date).calendar() 
+                        post.date = moment(post.date).calendar(null,{
+                            lastDay : '[вчера]',
+                            sameDay : '[сегодня]',
+                            lastWeek : '[в прошлый] dddd',
+                            sameElse : 'll'
+                        }) 
                     })
                     result.posts = posts
                     renderNewsListPage(req, res, result)
@@ -45,7 +50,12 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
             await apiPosts.getPostByPath(req, res, async (req, res, post) => {
-                post.date = moment(post.date).calendar()
+                post.date = moment(post.date).calendar(null,{
+                    lastDay : '[вчера]',
+                    sameDay : '[сегодня]',
+                    lastWeek : '[в прошлый] dddd',
+                    sameElse : 'll'
+                })
                 post.servicesObjArray.forEach(el => {
                     el.color = 'btn-danger'
                     el.url = '/services/' + el.path
