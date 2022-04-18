@@ -55,10 +55,45 @@ block content
 
   .col-12.bg-light-blue.text-dark-blue#contacts
     h1.text-center СВЯЖИТЕСЬ С НАМИ
+    #coords.d-none= contacts.coords
     .row
-      .col-xs-12.col-sm-6
+      .col-xs-12.col-sm-6.square-block
+        #map.square-box
       .col-xs-12.col-sm-6
         h5.text-center= contacts.address
         h5.text-center= contacts.email
         h5.text-center Телефон: #{contacts.phone}
+
+  script.
+    ymaps.ready(function () {
+      var location = coords.innerText.split(',')
+      var myMap = new ymaps.Map('map', {
+              center: location,
+              zoom: 13
+          }, {
+              searchControlProvider: 'yandex#search'
+          }),
+
+          // Создаём макет содержимого.
+          MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
+              '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
+          ),
+
+          myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
+              hintContent: 'Собственный значок метки',
+              balloonContent: 'Это красивая метка'
+          }, {
+              // Опции.
+              // Необходимо указать данный тип макета.
+              iconLayout: 'default#image',
+              // Своё изображение иконки метки.
+              iconImageHref: '/images/map.svg',
+              // Размеры метки.
+              iconImageSize: [50, 50],
+              // Смещение левого верхнего угла иконки относительно
+              // её "ножки" (точки привязки).
+              iconImageOffset: [-22, -50]
+          })
+      myMap.geoObjects.add(myPlacemark);
+    });
 
