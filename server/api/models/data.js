@@ -6,9 +6,6 @@ const dataSchema = new Schema({
       type: String,
       required: true,
       unique: true
-  },
-  data: {
-    type: Object
   }
 })
 

@@ -24,6 +24,7 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   pSub: Subscription
   hSub: Subscription
   tSub: Subscription
+  gSub: Subscription
   partners: Partner[]
   team: Staff[]
   tagForm = false
@@ -31,6 +32,7 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   tags: Tag[]
   tagSort: any[] = []
   activeTagsPage = 0
+  gallery: any[]
 
   constructor(private generalService: GeneralService, 
     private partnersService: PartnersService, 
@@ -61,6 +63,9 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.tSub = this.tagsService.fetch().subscribe(tags => {
       this.tags = tags
       this.tagSort = this.makeArray(this.tags)
+    })
+    this.gSub = this.generalService.fetch("GALLERY").subscribe(data => {
+      this.gallery = data ? data : []
     })
   }
   openHtModal() {
@@ -100,6 +105,26 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate(['partner'])
   }
 
+  editPartner(id) {
+    this.router.navigate(['partner', id])
+  }
+
+  deleteSlide(id) {
+    this.generalService.deleteSlide(id).subscribe()
+  }
+
+  visibleSlide(data) {
+    this.generalService.updateSlide(data._id, data).subscribe()
+  }
+
+  createSlide() {
+    this.router.navigate(['slide'])
+  }
+
+  editSlide(id) {
+    this.router.navigate(['slide', id])
+  }
+
   openTagForm(tag) {
     this.currentTag = tag
     this.tagForm = true
@@ -120,9 +145,6 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.tagForm = false
   }
 
-  editPartner(id) {
-    this.router.navigate(['partner', id])
-  }
 
   nextTags() {
     if (this.activeTagsPage == this.tagSort.length - 1) this.activeTagsPage = 0
@@ -137,5 +159,8 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.cSub) this.cSub.unsubscribe()
     if (this.hSub) this.hSub.unsubscribe()
+    if (this.gSub) this.gSub.unsubscribe()
+    if (this.tSub) this.tSub.unsubscribe()
+    if (this.cSub) this.cSub.unsubscribe()
   }
 }

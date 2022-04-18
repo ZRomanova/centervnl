@@ -14,6 +14,8 @@
         <h5>Email:</h5>
         <input type="email" class="form-control" formControlName="email">
     </form>
+    <app-multi-slider page="Слайдер на главной" *ngIf="gallery" [data]="gallery" 
+    (add)="createSlide($event)" (edit)="editSlide($event)" (delete)="deleteSlide($event)" (visible)="visibleSlide($event)"></app-multi-slider>
     <app-multi-slider page="Команда" *ngIf="team" [data]="team"></app-multi-slider>
     <app-multi-slider page="Партнёры" *ngIf="partners" [data]="partners" 
     (add)="createPartner($event)" (edit)="editPartner($event)" (delete)="deletePartner($event)" (visible)="visiblePartner($event)"></app-multi-slider>

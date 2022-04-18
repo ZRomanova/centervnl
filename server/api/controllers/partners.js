@@ -52,7 +52,7 @@ module.exports.uploadImagesPartner = async function(req, res, next) {
     try {
         console.log(req.file)
         const updated = {}
-        if (req.file) updated.image = 'https://centervnl.ru/uploads/' + req.files.image[0].filename
+        if (req.file) updated.image = 'https://centervnl.ru/uploads/' + req.file.filename
         const partner = await Partner.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, partner)
     } catch (e) {

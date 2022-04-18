@@ -1,0 +1,30 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h3>{{id ? 'Редактирование' : 'Добавление'}} картинки в слайдере на главной</h3>
+      <img [src]="imagePreview" *ngIf="imagePreview" class="col-12">
+      <h5>Заголовок:</h5>
+      <input type="text" class="form-control" formControlName="name">
+      <h5>Текст:</h5>
+      <textarea type="text" class="form-control" formControlName="description"></textarea>
+      <h5>Ссылка:</h5>
+      <input type="text" class="form-control" formControlName="url">
+      <h5>Загрузить картинку:</h5>
+      <input type="file" class="form-control" (change)="onFileUpload($event)">
+      <h5>Картинка по ссылке:</h5>
+      <input type="text" class="form-control" formControlName="image" placeholder="Добавляйте только общедоступные ссылки" (change)="changeIMG()">
+      <div class="form-check form-switch mt-2">
+          <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
+          <h5>Отображать на сайте</h5>
+      </div>
+      <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+          Назад
+      </button>
+      <button class="btn btn-primary mt-3 mb-3" type="submit">
+          {{id ? 'Сохранить' : 'Создать'}}
+      </button>
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

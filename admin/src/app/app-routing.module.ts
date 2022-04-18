@@ -14,6 +14,7 @@ import { StaffFormComponent } from './about/staff-form/staff-form.component';
 import { PartnersFormComponent } from './about/partners-form/partners-form.component';
 import { PostPageComponent } from './blog/post-page/post-page.component';
 import { ServicePageComponent } from './services/service-page/service-page.component';
+import {SlidePageComponent} from './about/slide-page/slide-page.component'
 
 const routes: Routes = [
   {
@@ -35,6 +36,8 @@ const routes: Routes = [
       {path: 'staff/:id', component: StaffFormComponent},
       {path: 'partner', component: PartnersFormComponent},
       {path: 'partner/:id', component: PartnersFormComponent},
+      {path: 'slide', component: SlidePageComponent},
+      {path: 'slide/:id', component: SlidePageComponent},
     ],
   },
   {path: 'login', component: LoginPageComponent}

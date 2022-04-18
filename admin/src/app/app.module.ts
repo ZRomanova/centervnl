@@ -32,6 +32,7 @@ import { TableComponent } from './shared/components/table/table.component';
 import { DatePipe } from '@angular/common';
 import { HorizontalGalleryComponent } from './shared/components/horizontal-gallery/horizontal-gallery.component';
 import { AddTagComponent } from './about/add-tag/add-tag.component';
+import { SlidePageComponent } from './about/slide-page/slide-page.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { AddTagComponent } from './about/add-tag/add-tag.component';
     WantDeleteComponent,
     TableComponent,
     HorizontalGalleryComponent,
-    AddTagComponent
+    AddTagComponent,
+    SlidePageComponent
   ],
   imports: [
     BrowserModule,
