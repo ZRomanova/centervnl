@@ -6,7 +6,7 @@ block content
   if project.description
     hr
     p.text-justify.col-12 !{project.description}
-  if project.gallery && project.gallery.length 
+  if (project.gallery && project.gallery.length) || project.image
     hr
     - var gallery= []
     if project.gallery && project.gallery.length
