@@ -8,37 +8,35 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
         const result = {...data}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                    result.nav_projects = nav_projects
-                    await apiServices.getServices(req, res, async (req, res, services) => {
-                        const now = new Date()
-                        services.forEach(service => {
-                            if (service.date) {
-                                if (service.date.single && service.date.single.length) {
-                                    service.date.single.forEach(d => {
-                                        d.text = []
-                                        if (new Date(d) > now) {
-                                            d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
-                                            service.active = true
-                                        }
-                                    })
-                                }
-                                if (!!service.date.period && service.date.period.length) {
-                                    service.date.period.forEach(p =>  {
-                                        p.text = []
-                                        if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
-                                            p.text.push(`${p.day} ${intToStringDate(p.time)}`)
-                                            service.active = true
-                                        }
-                                    })
-                                }
-                            } 
-                        })
-                        result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
-                        renderServicesListPage(req, res, result)
+            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
+                result.nav_projects = nav_projects
+                req.query.filter_visible = true
+                await apiServices.getServices(req, res, async (req, res, services) => {
+                    const now = new Date()
+                    services.forEach(service => {
+                        if (service.date) {
+                            if (service.date.single && service.date.single.length) {
+                                service.date.single.forEach(d => {
+                                    d.text = []
+                                    if (new Date(d) > now) {
+                                        d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
+                                        service.active = true
+                                    }
+                                })
+                            }
+                            if (!!service.date.period && service.date.period.length) {
+                                service.date.period.forEach(p =>  {
+                                    p.text = []
+                                    if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
+                                        p.text.push(`${p.day} ${intToStringDate(p.time)}`)
+                                        service.active = true
+                                    }
+                                })
+                            }
+                        } 
                     })
+                    result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
+                    renderServicesListPage(req, res, result)
                 })
             })
         })
@@ -73,37 +71,36 @@ module.exports.getServicePage = async function(req, res) {
         const result = {}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                result.nav_projects = nav_projects
-                    await apiServices.getServiceByPath(req, res, async (req, res, data) => {
-                        const service = data.service
-                        result.posts = data.posts
-                        const now = new Date()
-                        if (service.date.single && service.date.single.length) {
-                            service.date.single.forEach(d => {
-                                d.text = []
-                                if (new Date(d) > now) {
-                                    d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
-                                    service.active = true
-                                }
-                            })
-                        }
-                        if (!!service.date.period && service.date.period.length) {
-                            service.date.period.forEach(p =>  {
-                                p.text = []
-                                if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
-                                    p.text.push(`${p.day} ${intToStringDate(p.time)}`)
-                                    service.active = true
-                                }
-                            })
-                        }
-                        result.service = service
-                        renderServicePage(req, res, result)
-                    })
+
+            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
+            result.nav_projects = nav_projects
+                await apiServices.getServiceByPath(req, res, async (req, res, data) => {
+                    const service = data.service
+                    result.posts = data.posts
+                    const now = new Date()
+                    if (service.date.single && service.date.single.length) {
+                        service.date.single.forEach(d => {
+                            d.text = []
+                            if (new Date(d) > now) {
+                                d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
+                                service.active = true
+                            }
+                        })
+                    }
+                    if (!!service.date.period && service.date.period.length) {
+                        service.date.period.forEach(p =>  {
+                            p.text = []
+                            if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
+                                p.text.push(`${p.day} ${intToStringDate(p.time)}`)
+                                service.active = true
+                            }
+                        })
+                    }
+                    result.service = service
+                    renderServicePage(req, res, result)
                 })
             })
+
         })
     } catch (e) {
         console.log(e)
@@ -114,7 +111,6 @@ module.exports.getServicePage = async function(req, res) {
 const renderServicePage = function(req, res, data) {
     res.render('service', {
         title: data.name,
-        projects: data.projects,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         service: data.service,

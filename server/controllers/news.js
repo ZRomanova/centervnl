@@ -1,15 +1,25 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
+const apiPosts = require('../api/controllers/posts')
+const moment = require('moment')
+
+moment.locale('ru')
 
 module.exports.getNewsListPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                    result.nav_projects = nav_projects
+            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
+                result.nav_projects = nav_projects
+                // req.query.limit = '20'
+                req.query.offset = '0'
+                req.query.filter_visible = true
+                await apiPosts.getPosts(req, res, async (req, res, posts) => {
+                    posts.forEach(post => {
+                        post.date = moment(post.date).calendar() 
+                    })
+                    result.posts = posts
                     renderNewsListPage(req, res, result)
                 })
             })
@@ -20,11 +30,53 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
 }
 
 const renderNewsListPage = function(req, res, data) {
-    res.render('new-page', {
+    res.render('posts-list', {
         title: 'Новости',
-        projects: data.projects,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: req.user,
+        posts: data.posts
+    })
+}
+
+module.exports.getNewsPage = async function(req, res, data = {}) {
+    try {
+        const result = {...data}
+        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+            result.partners = partners
+            await apiPosts.getPostByPath(req, res, async (req, res, post) => {
+                post.date = moment(post.date).calendar()
+                post.servicesObjArray.forEach(el => {
+                    el.color = 'btn-danger'
+                    el.url = '/services/' + el.path
+                })
+                post.projectsObjArray.forEach(el => {
+                    el.color = 'btn-primary'
+                    el.url = '/projects/' + el.path
+                })
+                post.partnersObjArray.forEach(el => {
+                    el.color = 'btn-success'
+                })
+                post.tagsObjArray.forEach(el => {
+                    el.color = 'btn-warning'
+                })
+                post.links = [...post.tagsObjArray, ...post.partnersObjArray, ...post.projectsObjArray, ...post.servicesObjArray]
+                post.links.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase())
+                result.post = post
+                renderPostPage(req, res, result)
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderPostPage = function(req, res, data) {
+    res.render('post', {
+        title: data.post.name,
+        nav_projects: data.nav_projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        post: data.post
     })
 }

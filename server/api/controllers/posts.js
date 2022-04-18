@@ -83,3 +83,62 @@ module.exports.uploadImagesPost = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
+
+module.exports.getPostByPath = async function(req, res, next) {
+    try {
+        const posts = await Post.aggregate([
+            {
+                $match: {path: req.params.path, visible: true}
+            },
+            { 
+                $project: { "created": 0, author: 0 }
+            },
+            {
+                $lookup:
+                {
+                    from: 'tags',
+                    localField: 'tags',
+                    foreignField: '_id',
+                    as: 'tagsObjArray'
+                }
+             },
+             {
+                $lookup:
+                {
+                    from: 'partners',
+                    localField: 'partners',
+                    foreignField: '_id',
+                    as: 'partnersObjArray'
+                }
+                
+            },
+            {
+                $lookup:
+                {
+                    from: 'projects',
+                    localField: 'projects',
+                    foreignField: '_id',
+                    as: 'projectsObjArray'
+                }
+             },
+             {
+                $lookup:
+                {
+                    from: 'services',
+                    localField: 'services',
+                    foreignField: '_id',
+                    as: 'servicesObjArray'
+                }
+                
+            }
+        ])
+        if (posts.length){
+            const post = posts[0]
+            next(req, res, post)
+        }
+        else 
+            next(req, res, new Error("Пост не найден"))
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}

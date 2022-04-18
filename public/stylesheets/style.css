@@ -139,6 +139,10 @@ body {
   color: rgb(15,79,79);
 }
 
+.text-green {
+  color: rgb(3,178,183);
+}
+
 .small-user-nav {
   height: 32px;
   width: 32px;
@@ -251,4 +255,17 @@ body {
 
 .float-right{
   float: right !important;
+}
+
+.box-post {
+  max-height: 410px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image-post {
+  object-fit: cover;
+  height: 400px;
+  width: 100%;
+  overflow: hidden;
 }

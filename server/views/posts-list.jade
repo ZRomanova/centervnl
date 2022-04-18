@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  
+  h1= title
+  hr
+  if posts && posts.length
+    .container.bg-light-blue
+      each post in posts
+        .row.g-0.bg-light.position-relative.m-5.p-5
+          h6= "Опубликовано " + post.date
+          if post.image
+            .col-12.col-md-6
+              img.image-post(src=post.image alt=post.name)
+          .box-post(class= (post.image ? 'col-md-6' : 'col-12') )
+            a(href=post.path)
+              h3.mt-0.text-green= post.name
+            p.text-justify !{post.description}
+          a(href=post.path) Читать
+
+
+  else 
+    p Новостей пока нет
+
+  hr
+
+  

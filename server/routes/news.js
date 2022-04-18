@@ -4,6 +4,7 @@ const router = express.Router();
 const controller = require('../controllers/news');
 
 router.get('/', controller.getNewsListPage) 
+router.get('/:path', controller.getNewsPage) 
 
 
 module.exports = router;

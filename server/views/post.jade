@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  .row.g-0.position-relative.m-5.p-5.bg-light-blue
+    .container.bg-light
+      h1= title
+      h5= "Опубликовано " + post.date
+      if post.description
+        hr
+        p.col-12.text-justify !{post.description}
+        
+      if (post.gallery && post.gallery.length) || post.image
+        hr
+        - var gallery= []
+        if post.gallery && post.gallery.length
+          - gallery = [...post.gallery]
+        if post.image
+          - gallery.push(post.image)
+        - var sliderId= 'ID'+post._id
+        include includes/blur-slider
+
+      if (post.links.length)
+        hr
+        .row
+          .col-12
+            each link in post.links
+              a.btn.marck-script.m-1.text-ellipsis-nowrap.mw-100(class= link.color href=link.url)= link.name
+      hr
+
+    
+
+
+            
