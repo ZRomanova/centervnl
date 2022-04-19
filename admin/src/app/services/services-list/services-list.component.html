@@ -1,18 +1,18 @@
-<app-page-title title="Раздел мероприятия" text="Здесь можно работать с мероприятиями и записями на них"></app-page-title>
+<app-page-title title="Мероприятия" text="Здесь можно работать с мероприятиями и записями на них"></app-page-title>
 
-<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
     <i class="fa fa-arrow-right"></i>
 </a>
 <app-table (create)="createService($event)" (edit)="editService($event)" 
-*ngIf="!loading; else loader" [data]="services" [offset]="offset" [title]="['Название', 'Запись', 'Описание']"></app-table>
+*ngIf="!loading; else loader" [data]="services" [offset]="offset" [title]="['Название', 'Запись', 'Описание']" [columns]="[2, 1, 6]"></app-table>
 
-<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
     <i class="fa fa-arrow-right"></i>
 </a>
 

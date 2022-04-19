@@ -113,3 +113,34 @@ export interface Post {
     partners?: string[],
 }
 
+export interface ProductVariant {
+    name: string,
+    variants: PriceList[]
+}
+
+export interface Shop {
+    _id?: string
+    name: string
+    path?: string
+}
+
+export interface Product {
+    _id?: string,
+    name: string,
+    path: string,
+    author?: any,
+    gallery: string[],
+    description?: string,
+    price: number,
+    options: ProductVariant[],
+    group: string,
+    created?: Date,
+    likes?: User[],
+    visible: boolean,
+    image: string,
+    shop: Shop | string
+
+    dateStr: string,
+
+}
+

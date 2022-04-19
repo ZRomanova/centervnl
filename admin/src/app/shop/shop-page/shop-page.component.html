@@ -1,0 +1,26 @@
+<div class="modal d-block" tabindex="-1">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">{{shop ? 'Редактирование' : 'Добавление'}} раздела магазина</h5>
+              <button type="button" class="btn-close" (click)="finish(false)"></button>
+          </div>
+      <div class="modal-body">
+          <form [formGroup]="form">
+              <p class="col-form-label">Название:</p>
+              <div class="mb-3">
+                <input class="form-control" formControlName="name"/>
+              </div>
+              <p class="col-form-label">Путь:</p>
+              <div class="mb-3">
+                <input class="form-control" formControlName="path" placeholder="{{shop ? 'Заполните это поле' : 'Необязательно'}}"/>
+              </div>
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"  (click)="finish(false)">Отмена</button>
+          <button type="button" class="btn btn-custom" (click)="finish(true)" >{{shop ? 'Сохранить' : 'Создать'}}</button>
+      </div>
+    </div>
+  </div>
+</div>

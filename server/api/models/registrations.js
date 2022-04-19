@@ -22,6 +22,10 @@ const registrSchema = new Schema({
   payment: {
     price: Number,
     description: String,
+    status: {
+      type: String,
+      enum: 'оплачено' | 'не оплачено'
+  },
     method: {
         type: String,
         enum: 'на месте' | 'онлайн'

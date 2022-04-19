@@ -1,18 +1,17 @@
-<app-page-title title="Раздел проекты" text="Здесь можно редактировать и добавлять новые проекты"></app-page-title>
+<app-page-title title="Проекты" text="Здесь можно редактировать и добавлять новые проекты"></app-page-title>
 
-<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
     <i class="fa fa-arrow-right"></i>
 </a>
 <app-table (create)="createProject($event)" (edit)="editProject($event)" 
-*ngIf="!loading; else loader" [data]="projects" [offset]="offset"
-[title]="['Название', 'Реализация', 'Описание']"></app-table>
-<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+*ngIf="!loading; else loader" [data]="projects" [offset]="offset" [title]="['Название', 'Реализация', 'Описание']"></app-table>
+<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
     <i class="fa fa-arrow-left"></i>
 </a>
-<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore">
+<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
     <i class="fa fa-arrow-right"></i>
 </a>
 

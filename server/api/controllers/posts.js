@@ -8,7 +8,7 @@ module.exports.getPosts = async function(req, res, next) {
         const fields = {}
         for (const str in req.query) {
             if (str.length > 7 && str.substring(0, 7) === "filter_") {
-                filter[str.slice(7)] = +req.query[str]
+                filter[str.slice(7)] = req.query[str]
             } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
                 fields[str.slice(7)] = +req.query[str]
             }
@@ -52,6 +52,10 @@ module.exports.updatePost = async function(req, res, next) {
     try {
         const updated = req.body
         updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase()
+        updated.lastChange = {
+            author: req.user.id,
+            time: new Date()
+        }
         const post = await Post.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, post)
     } catch (e) {

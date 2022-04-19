@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Project } from 'src/app/shared/interfaces';
 import { ProjectService } from 'src/app/shared/transport/project.service';
 
-const STEP = 25
+const STEP = 100
 
 @Component({
   selector: 'app-projects-list',

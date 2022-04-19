@@ -33,6 +33,8 @@ import { DatePipe } from '@angular/common';
 import { HorizontalGalleryComponent } from './shared/components/horizontal-gallery/horizontal-gallery.component';
 import { AddTagComponent } from './about/add-tag/add-tag.component';
 import { SlidePageComponent } from './about/slide-page/slide-page.component';
+import { ShopsListComponent } from './shop/shops-list/shops-list.component';
+import { ShopPageComponent } from './shop/shop-page/shop-page.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { SlidePageComponent } from './about/slide-page/slide-page.component';
     TableComponent,
     HorizontalGalleryComponent,
     AddTagComponent,
-    SlidePageComponent
+    SlidePageComponent,
+    ShopsListComponent,
+    ShopPageComponent
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,9 @@
             <tr class="table-warning">
                 <th class="col-1 text-center"><h4>№</h4></th>
                 <th class="col-1 text-center"><h4>Фото</h4></th>
-                <th class="col-2"><h4>{{title[0]}}</h4></th>
-                <th class="col-2"><h4>{{title[1]}}</h4></th>
-                <th class="col-5"><h4>{{title[2]}}</h4></th>
+                <th class="col-{{columns[0]}}"><h4>{{title[0]}}</h4></th>
+                <th class="col-{{columns[1]}}"><h4>{{title[1]}}</h4></th>
+                <th class="col-{{columns[2]}}"><h4>{{title[2]}}</h4></th>
                 <th class="col-1 text-center">
                     <a class="btn btn-custom" role="button" (click)="plus()">
                         <i class="fa fa-plus"></i>
@@ -23,13 +23,13 @@
                     <p class="desc-text" *ngIf="!item.image">нет</p>
                     <img class="small-photo-table" *ngIf="item.image" [src]="item.image" >
                 </td>
-                <td class="col-2">
+                <td class="col-{{columns[0]}}">
                     <p class="desc-text">{{item.name}}</p>
                 </td>
-                <td class="col-2">
+                <td class="col-{{columns[1]}}">
                     <p class="desc-text">{{item.dateStr}}</p>
                 </td>
-                <td class="col-5 text-justify">
+                <td class="col-{{columns[2]}} text-justify">
                     <p class="desc-text">{{item.description}}</p>
                 </td>
                 <td class="col-1 text-center">

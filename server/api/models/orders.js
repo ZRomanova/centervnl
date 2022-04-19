@@ -17,9 +17,22 @@ const productSchema = new Schema({
         price: Number,
         description: String
     }],
-    discount: {
-        type: String,
-        value: String
+    info: String,
+    payment: {
+        price: Number,
+        discount: {
+            type: String,
+            value: String
+        },
+        status: {
+            type: String,
+            enum: 'оплачено' | 'не оплачено'
+        },
+        method: {
+            type: String,
+            enum: 'на месте' | 'онлайн'
+        },
+        paid: Number
     },
     created: {
         type: Date,

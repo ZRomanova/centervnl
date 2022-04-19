@@ -82,7 +82,7 @@ module.exports.getProjects = async function(req, res, next) {
         const fields = {}
         for (const str in req.query) {
             if (str.length > 7 && str.substring(0, 7) === "filter_") {
-                filter[str.slice(7)] = +req.query[str]
+                filter[str.slice(7)] = req.query[str]
             } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
                 fields[str.slice(7)] = +req.query[str]
             }
@@ -117,6 +117,10 @@ module.exports.createProject = async function(req, res, next) {
 module.exports.updateProject = async function(req, res, next) {
     try {
         const updated = req.body
+        updated.lastChange = {
+            author: req.user.id,
+            time: new Date()
+        }
         updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase()
         const project = await Project.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, project)
@@ -133,7 +137,6 @@ module.exports.deleteProject = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
-
 
 module.exports.uploadImagesProject = async function(req, res, next) {
     try {

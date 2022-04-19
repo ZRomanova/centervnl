@@ -65,7 +65,6 @@ export class ServicePageComponent implements OnInit {
   partners: Partner[]
   partnersSelected: string[] = []
 
-
   pSub: Subscription
   ptSub: Subscription
   tSub: Subscription
@@ -239,7 +238,6 @@ export class ServicePageComponent implements OnInit {
         }
         reader.readAsDataURL(file)
       }
-      console.log(this.gallery, this.galleryPreview)
     }
   
     plusToGallery() {

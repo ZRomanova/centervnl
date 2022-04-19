@@ -15,21 +15,23 @@ import { PartnersFormComponent } from './about/partners-form/partners-form.compo
 import { PostPageComponent } from './blog/post-page/post-page.component';
 import { ServicePageComponent } from './services/service-page/service-page.component';
 import {SlidePageComponent} from './about/slide-page/slide-page.component'
+import { ProductPageComponent } from './shop/product-page/product-page.component';
+import { ShopsListComponent } from './shop/shops-list/shops-list.component';
 
 const routes: Routes = [
   {
     path: '', component: HeaderComponent, canActivate: [AdminGuard], children: [
       {path: '', redirectTo: '/general', pathMatch: 'full'},
-      {path: 'shop', component: ProductsListComponent},
+      {path: 'products', component: ShopsListComponent, children: [
+        {path: ':shop', component: ProductsListComponent},
+      ]},
+      {path: 'products/:shop/:id', component: ProductPageComponent},
       {path: 'users', component: UsersListComponent},
       {path: 'projects', component: ProjectsListComponent},
-      {path: 'projects/new', component: ProjectPageComponent},
       {path: 'projects/:id', component: ProjectPageComponent},
       {path: 'blog', component: PostsListComponent},
-      {path: 'blog/new', component: PostPageComponent},
       {path: 'blog/:id', component: PostPageComponent},
       {path: 'services', component: ServicesListComponent},
-      {path: 'services/new', component: ServicePageComponent},
       {path: 'services/:id', component: ServicePageComponent},
       {path: 'general', component: AboutLayoutComponent},
       {path: 'staff', component: StaffFormComponent},

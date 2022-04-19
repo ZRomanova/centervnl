@@ -41,6 +41,13 @@ const projectSchema = new Schema({
     type: String,
     required: true,
     unique: true
+  },
+  lastChange: {
+      author: {
+          ref: 'users',
+          type: Schema.Types.ObjectId
+      },
+      time: Date
   }
 })
 

@@ -8,18 +8,20 @@ const productSchema = new Schema({
         unique: true
     },
     image: String,
-    gallery: {
-        type: [String]
-    },
+    gallery: [String],
     description: String,
-    catalog: String,
+    shop: {
+        ref: 'shops',
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+    group: String,
     price: Number,
     visible: Boolean,
     options: [{
         name: String,
         variants: [{
             name: String,
-            description: String,
             price: Number
         }]
     }],
@@ -35,6 +37,18 @@ const productSchema = new Schema({
     likes: {
       ref: 'users',
       type: [mongoose.Types.ObjectId]
+    },
+    author: {
+        ref: 'users',
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    lastChange: {
+        author: {
+            ref: 'users',
+            type: Schema.Types.ObjectId
+        },
+        time: Date
     }
 })
 

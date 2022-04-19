@@ -1,0 +1,23 @@
+<app-page-title title="Магазин" text="Здесь можно работать с товарами и заказами"></app-page-title>
+
+<h3>Разделы магазина</h3>
+
+<div >
+  <button class="btn btn-custom me-5" role="button" (click)="openForm(null)">
+    <i class="fa fa-plus"></i>
+  </button>
+  <ng-container *ngIf="shops && shops.length">
+    <ng-container *ngFor="let shop of shops">
+      <button class="btn me-2" role="button" (click)="openShop(shop._id)" [ngClass]="{'btn-warning': shopID == shop._id, 'btn-custom': shopID != shop._id}">
+        {{shop.name}}
+      </button>
+      <button class="btn btn-custom me-5" role="button" (click)="openForm(shop)">
+        <i class="fa fa-pen"></i>
+      </button>
+    </ng-container>
+  </ng-container>
+</div>
+
+<app-shop-page *ngIf="shopForm" (close)="closeForm($event)" [shop]="currentShop"></app-shop-page>
+
+<router-outlet></router-outlet>

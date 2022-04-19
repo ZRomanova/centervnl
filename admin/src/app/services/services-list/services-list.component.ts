@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Service } from 'src/app/shared/interfaces';
 import { ServiceService } from 'src/app/shared/transport/service.service';
 
-const STEP = 25
+const STEP = 100
 
 @Component({
   selector: 'app-services-list',

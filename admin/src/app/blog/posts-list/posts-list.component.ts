@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Post } from 'src/app/shared/interfaces';
 import { PostService } from 'src/app/shared/transport/post.service';
 
-const STEP = 25
+const STEP = 100
 
 @Component({
   selector: 'app-posts-list',

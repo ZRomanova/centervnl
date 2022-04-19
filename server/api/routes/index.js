@@ -8,5 +8,8 @@ router.use('/projects', require('./projects'))
 router.use('/posts', require('./posts'))
 router.use('/services', require('./services'))
 router.use('/tags', require('./tags'))
+router.use('/shops', require('./shops'))
+router.use('/products', require('./products'))
+
 
 module.exports = router;
