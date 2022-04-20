@@ -1,4 +1,5 @@
 const Product = require('../models/products')
+const Shop = require('../models/shops')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const mongoose = require('mongoose')
@@ -51,7 +52,7 @@ module.exports.getProducts = async function(req, res, next) {
         const products = await Product.aggregate([
             { $match: filter },
             { $project: fields },
-            {$sort: {group: 1, name: 1}},
+            { $sort: {group: 1, name: 1}},
             { $skip:  +req.query.offset},
             { $limit:  +req.query.limit},
             { $lookup:

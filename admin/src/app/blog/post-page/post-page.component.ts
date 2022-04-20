@@ -161,11 +161,13 @@ export class PostPageComponent implements OnInit, OnDestroy {
         if (this.image || this.gallery.length) {
           this.iSub = this.postsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.post = result2
+            this.id = this.post._id
             this.data()
             this.image = null
           })
         } else {
           this.post = result1
+          this.id = this.post._id
           this.data()
         }
       })
@@ -174,9 +176,13 @@ export class PostPageComponent implements OnInit, OnDestroy {
         if (this.image || this.gallery.length) {
           this.iSub = this.postsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
-            this.router.navigate(['blog', result1._id])
+            this.post = result2
+            this.id = this.post._id
+            this.router.navigate(['blog', result2._id])
           })
         } else {
+          this.post = result1
+          this.id = this.post._id
           this.router.navigate(['blog', result1._id])
         }
       })

@@ -287,11 +287,13 @@ export class ServicePageComponent implements OnInit {
           if (this.image || this.gallery.length) {
             this.iSub = this.servicesService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
               this.service = result2
+              this.id = this.service._id
               this.data()
               this.image = null
             })
           } else {
             this.service = result1
+            this.id = this.service._id
             this.data()
           }
         })
@@ -300,9 +302,13 @@ export class ServicePageComponent implements OnInit {
           if (this.image || this.gallery.length) {
             this.iSub = this.servicesService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
               this.image = null
+              this.service = result2
+              this.id = this.service._id
               this.router.navigate(['services', result1._id])
             })
           } else {
+            this.service = result1
+            this.id = this.service._id
             this.router.navigate(['services', result1._id])
           }
         })

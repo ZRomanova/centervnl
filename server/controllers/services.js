@@ -1,6 +1,7 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
+const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
 
 module.exports.getServicesListPage = async function(req, res, data = {}) {
@@ -36,7 +37,11 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
                         } 
                     })
                     result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
-                    renderServicesListPage(req, res, result)
+                    
+                    await apiShops.getShops(req, res, (req, res, shops) => {
+                        result.shops = shops
+                        renderServicesListPage(req, res, result)
+                    })
                 })
             })
         })
@@ -62,7 +67,8 @@ const renderServicesListPage = function(req, res, data) {
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         services: data.services,
-        user: req.user
+        user: req.user,
+        shops: data.shops
     })
 }
 
@@ -97,7 +103,11 @@ module.exports.getServicePage = async function(req, res) {
                         })
                     }
                     result.service = service
-                    renderServicePage(req, res, result)
+                    await apiShops.getShops(req, res, (req, res, shops) => {
+                        result.shops = shops
+                        renderServicePage(req, res, result)
+                    })
+                    
                 })
             })
 
@@ -115,6 +125,7 @@ const renderServicePage = function(req, res, data) {
         footer_logos: data.partners, 
         service: data.service,
         user: req.user,
-        posts: data.posts
+        posts: data.posts,
+        shops: data.shops
     })
 }

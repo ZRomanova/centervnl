@@ -30,14 +30,14 @@
       
       
 
-        <h5>Опции - укажите опции товара и коэффициент:</h5>
+        <h5>Опции - укажите опции товара и коэффициент - число, на которое будет умножаться базовая цена при выборе опции:</h5>
         <ng-container formArrayName="options">
             <div *ngFor="let option of form.controls.options.controls; index as j">
               <div [formGroupName]="j">
                 <input type="text" class="form-control mb-2 mt-4" formControlName="name"  placeholder="Название опции">
                 <div class="form-row">
                   <div class="col-2">
-                    <h6>Коэффициент - на это число будет умножаться базовая цена при выборе опции:</h6>
+                    <h6>Коэффициент:</h6>
                   </div>
                   <div class="col-10">
                     <h6>Название варианта:</h6>

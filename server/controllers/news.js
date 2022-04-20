@@ -1,6 +1,7 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiPosts = require('../api/controllers/posts')
+const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
 
 moment.locale('ru')
@@ -25,7 +26,11 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
                         }) 
                     })
                     result.posts = posts
-                    renderNewsListPage(req, res, result)
+                    
+                    await apiShops.getShops(req, res, (req, res, shops) => {
+                        result.shops = shops
+                        renderNewsListPage(req, res, result)
+                    })
                 })
             })
         })
@@ -40,7 +45,8 @@ const renderNewsListPage = function(req, res, data) {
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         user: req.user,
-        posts: data.posts
+        posts: data.posts,
+        shops: data.shops
     })
 }
 
@@ -73,7 +79,11 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
                 post.links = [...post.tagsObjArray, ...post.partnersObjArray, ...post.projectsObjArray, ...post.servicesObjArray]
                 post.links.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase())
                 result.post = post
-                renderPostPage(req, res, result)
+                
+                await apiShops.getShops(req, res, (req, res, shops) => {
+                    result.shops = shops
+                    renderPostPage(req, res, result)
+                })
             })
         })
     } catch (e) {
@@ -87,6 +97,7 @@ const renderPostPage = function(req, res, data) {
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         user: req.user,
-        post: data.post
+        post: data.post,
+        shops: data.shops
     })
 }

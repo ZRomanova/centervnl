@@ -1,5 +1,6 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
+const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
 
 moment.locale('ru')
@@ -26,7 +27,11 @@ module.exports.getProjectListPage = async function(req, res, data = {}) {
                 })
                 result.old_projects = arr
                 result.nav_projects = active
-                renderProjectListPage(req, res, result)
+                
+                await apiShops.getShops(req, res, (req, res, shops) => {
+                    result.shops = shops
+                    renderProjectListPage(req, res, result)
+                })
             })
         })
     } catch (e) {
@@ -40,7 +45,8 @@ const renderProjectListPage = function(req, res, data) {
         old_projects: data.old_projects,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: req.user,
+        shops: data.shops
     })
 }
 
@@ -64,7 +70,11 @@ module.exports.getProjectPage = async function(req, res, data = {}) {
                         project.date = `c ${moment(project.period.start).format('LL')}`
                     }
                     result.project = project
-                    renderProjectPage(req, res, result)
+                    
+                    await apiShops.getShops(req, res, (req, res, shops) => {
+                        result.shops = shops
+                        renderProjectPage(req, res, result)
+                    })
                 })
             })
         })
@@ -81,6 +91,7 @@ const renderProjectPage = function(req, res, data) {
         footer_logos: data.partners, 
         user: req.user,
         posts: data.posts,
-        services: data.services
+        services: data.services,
+        shops: data.shops
     })
 }

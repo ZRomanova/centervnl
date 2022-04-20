@@ -191,13 +191,14 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         if (this.image || this.gallery.length) {
           this.iSub = this.productsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.product = result2
+            this.id = this.product._id
             this.data()
             this.image = null
           })
         } else {
           this.product = result1
+          this.id = this.product._id
           this.product.shop = this.shops.find((el: Shop) => el._id == result1.shop)
-          console.log(this.product)
           this.data()
         }
       })
@@ -206,9 +207,13 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         if (this.image || this.gallery.length) {
           this.iSub = this.productsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
+            this.product = result2
+            this.id = this.product._id
             this.router.navigate(['products', result1._id])
           })
         } else {
+          this.product = result1
+          this.id = this.product._id
           this.router.navigate(['products', result1._id])
         }
       })

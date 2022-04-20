@@ -3,6 +3,7 @@ const apiData = require('../api/controllers/data')
 const apiPosts = require('../api/controllers/posts')
 const apiServices = require('../api/controllers/services')
 const apiProjects = require('../api/controllers/projects')
+const apiShops = require('../api/controllers/shops')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
@@ -24,9 +25,13 @@ module.exports.getHomePage = async function(req, res, data = {}) {
                             await apiPosts.getPosts(req, res, async (req, res, posts) => {
                                 result.posts = posts
                                 req.params.type = "GALLERY"
-                                await apiData.getByType(req, res, (req, res, gallery) => {
+                                await apiData.getByType(req, res, async (req, res, gallery) => {
                                     result.gallery = gallery.filter(el => el.image && el.visible)
-                                    renderHomePage(req, res, result)
+                                    
+                                    await apiShops.getShops(req, res, (req, res, shops) => {
+                                        result.shops = shops
+                                        renderHomePage(req, res, result)
+                                    })
                                 })
                             })
                         })
@@ -49,7 +54,8 @@ const renderHomePage = function(req, res, data) {
         nav_projects: data.projects,
         footer_logos: data.partners, 
         user: data.user,
-        gallery: data.gallery
+        gallery: data.gallery,
+        shops: data.shops
     })
     
 }

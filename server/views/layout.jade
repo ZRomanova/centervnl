@@ -7,6 +7,7 @@ html
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
+    script(src='/javascripts/jquery-3.6.0.js')
     script(src="https://kit.fontawesome.com/f3bc034a55.js" crossorigin="anonymous")
     script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=a493de3f-96c4-4a34-b93b-89feb872409d' type='text/javascript')
 
@@ -200,8 +201,12 @@ html
             span.icon-bar
         #navbar-main.navbar-collapse.collapse
           ul.nav.navbar-nav.col-12
-            li
+            li.hover-section
               a(href='/shop/') Магазин
+              if shops && shops.length
+                ul.dropdown-menu.hover-item
+                  each shop in shops
+                    a.dropdown-item(href='/shop/'+shop.path) #{shop.name}
             li.hover-section
               a(href='/projects/') Проекты
               if nav_projects && nav_projects.length
@@ -245,6 +250,5 @@ html
           div
             small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
-    script(src='/javascripts/jquery-3.6.0.js')
     script(src='/bootstrap/js/bootstrap.js')
     script(src='/javascripts/main.js')
