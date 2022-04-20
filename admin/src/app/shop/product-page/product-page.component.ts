@@ -148,7 +148,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   plusOption() {
     const option: ProductVariant = {
       name: '',
-      variants: [{name: '', price: 0}]
+      variants: [{name: '', price: 1}]
     }
     const options = this.form.get('options') as FormArray
     options.push(this.createOptionFormGroup(option))
@@ -162,7 +162,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   plusVariant(j) {
     const variant: PriceList = {
       name: '',
-      price: 0
+      price: 1
     }
     const options = this.form.get('options') as FormArray
     const variants = options.controls[j].get('variants') as FormArray
