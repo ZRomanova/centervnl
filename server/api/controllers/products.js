@@ -80,8 +80,8 @@ module.exports.createProduct = async function(req, res, next) {
     try {
         const created = req.body
         created.author = req.user.id
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase()
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase()
+        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
         const product = await new Product(created).save()
         next(req, res, product)
     } catch (e) {
@@ -92,7 +92,8 @@ module.exports.createProduct = async function(req, res, next) {
 module.exports.updateProduct = async function(req, res, next) {
     try {
         const updated = req.body
-        updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase()
+        if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
         updated.lastChange = {
             author: req.user.id,
             time: new Date()

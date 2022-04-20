@@ -25,8 +25,8 @@ module.exports.getShopById = async function(req, res, next) {
 module.exports.createShop = async function(req, res, next) {
     try {
         const created = req.body
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase()
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase()
+        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
         const shop = await new Shop(created).save()
         next(req, res, shop)
     } catch (e) {
@@ -46,8 +46,8 @@ module.exports.deleteShop = async function(req, res, next) {
 module.exports.updateShop = async function(req, res, next) {
     try {
       const updated = req.body
-      if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase()
-      else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase()
+      if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+      else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
       const shop = await Shop.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
       next(req, res, shop)
     } catch (e) {
