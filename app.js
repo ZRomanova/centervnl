@@ -45,6 +45,8 @@ app.use(session({
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
+      sameSite: 'none', 
+      secure: true,
       maxAge: 1000 * 60 * 60 * 24 // 1 day 
   }
 }));
@@ -68,18 +70,9 @@ app.get('/admin/*', (req, res) => {
   )
 })
 
-// app.get('/uploads/*', (req, res) => {
-//   console.log(req.path)
-//   res.sendFile(
-//     path.resolve(
-//       __dirname, req.path,
-//     )
-//   )
-// })
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
