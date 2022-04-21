@@ -1,5 +1,6 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
+const apiProducts = require('../api/controllers/products')
 const apiShops = require('../api/controllers/shops')
 
 module.exports.getShopPage = async function(req, res, data = {}) {
@@ -41,12 +42,13 @@ module.exports.getProductPage = async function(req, res, data = {}) {
         const result = {...data}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                    result.nav_projects = nav_projects
-                    await apiShops.getShops(req, res, (req, res, shops) => {
-                        result.shops = shops
+            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
+                result.nav_projects = nav_projects
+                await apiShops.getShops(req, res, async (req, res, shops) => {
+                    result.shops = shops
+                    await apiProducts.getProductOne(req, res, async (req, res, product) => {
+                        result.product = product
+                        console.log(product)
                         renderProductPage(req, res, result)
                     })
                 })
@@ -58,9 +60,9 @@ module.exports.getProductPage = async function(req, res, data = {}) {
 }
 
 const renderProductPage = function(req, res, data) {
-    res.render('new-page', {
-        title: 'Maгазин',
-        projects: data.projects,
+    res.render('product', {
+        title: data.product.name,
+        product: data.product,
         shops: data.shops,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 

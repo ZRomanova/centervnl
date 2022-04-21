@@ -27,7 +27,6 @@ module.exports.getHomePage = async function(req, res, data = {}) {
                                 req.params.type = "GALLERY"
                                 await apiData.getByType(req, res, async (req, res, gallery) => {
                                     result.gallery = gallery.filter(el => el.image && el.visible)
-                                    
                                     await apiShops.getShops(req, res, (req, res, shops) => {
                                         result.shops = shops
                                         renderHomePage(req, res, result)

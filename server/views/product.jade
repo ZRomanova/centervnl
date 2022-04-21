@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  h1= title
+  a(href="/shop/"+product.shop.path)
+    h4.marck-script= product.shop.name
+  .container.p-0
+    if (product.gallery && product.gallery.length) || product.image
+      hr
+      - var gallery= []
+      if product.gallery && product.gallery.length
+        - gallery = [...product.gallery]
+      if product.image
+        - gallery.push(product.image)
+      .col-xs-12.col-sm-7.d-block
+        .carousel.slide#gallery(data-bs-ride="carousel")
+          .carousel-inner
+            each item in gallery
+              .carousel-item.anouncement-box.item-a
+                img.d-block.img-cover.orange-border(src=item )
+          if gallery.length > 1
+            button.carousel-control-prev(type="button" data-bs-target="#gallery" data-bs-slide="prev")
+              span.carousel-control-prev-icon(aria-hidden="true")
+              span.visually-hidden Previous
+            button.carousel-control-next(type="button" data-bs-target="#gallery" data-bs-slide="next")
+              span.carousel-control-next-icon(aria-hidden="true")
+              span.visually-hidden Next
+
+    .col-12.col-sm-5
+      if product.options && product.options.length 
+        each option in product.options
+          if option.variants && option.variants.length 
+            h3.marck-script= option.name
+            select.marck-script.form-select.form-select-lg
+              each variant in option.variants
+                option(value=variant.name)= variant.name
+
+  if product.description
+    hr
+    p.col-12.text-justify !{product.description}
+
+  hr

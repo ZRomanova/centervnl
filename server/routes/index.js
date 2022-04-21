@@ -7,6 +7,7 @@ const controller = require('../controllers/index');
 router.get('/', controller.getHomePage) 
 
 router.use('/shop', require('./shop'))
+router.use('/product', require('./product'))
 router.use('/projects', require('./projects'))
 router.use('/about', require('./about'))
 router.use('/services', require('./services'))
