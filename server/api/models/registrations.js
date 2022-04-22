@@ -24,7 +24,7 @@ const registrSchema = new Schema({
     description: String,
     status: {
       type: String,
-      enum: 'оплачено' | 'не оплачено'
+      enum: 'оплачен' | 'не оплачен' | 'оплачен частично'
   },
     method: {
         type: String,

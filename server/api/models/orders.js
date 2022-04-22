@@ -5,10 +5,11 @@ const productSchema = new Schema({
     user: {
         ref: 'users',
         type: Schema.Types.ObjectId,
-      },
+    },
     status: {
         type: String,
-        enum: 'в корзине' | 'заказан' | 'выполнен' | 'доставлен'
+        enum: 'в корзине' | 'в работе' | 'выполнен' | 'доставлен' | 'отменен',
+        default: 'в корзине'
     },
     description: String,
     address: String,
@@ -17,7 +18,6 @@ const productSchema = new Schema({
         price: Number,
         description: String
     }],
-    info: String,
     payment: {
         price: Number,
         discount: {
@@ -26,7 +26,8 @@ const productSchema = new Schema({
         },
         status: {
             type: String,
-            enum: 'оплачено' | 'не оплачено'
+            enum: 'оплачен' | 'не оплачен' | 'оплачен частично',
+            default: 'не оплачен'
         },
         method: {
             type: String,
@@ -40,4 +41,4 @@ const productSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('products', productSchema)
+module.exports = mongoose.model('orders', productSchema)

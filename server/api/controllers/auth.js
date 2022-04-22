@@ -30,7 +30,6 @@ module.exports.register = async function(req, res, next) {
         if (create.patronymic) create.patronymic = cyrillicToTranslit().reverse(create.patronymic[0].toUpperCase() + create.patronymic.slice(1).toLowerCase())
         create.name = cyrillicToTranslit().reverse(create.name[0].toUpperCase() + create.name.slice(1).toLowerCase())
         create.surname = cyrillicToTranslit().reverse(create.surname[0].toUpperCase() + create.surname.slice(1).toLowerCase())
-        
         const user = await new User(create).save()
         next(req, res, user)
       }

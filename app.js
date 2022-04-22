@@ -45,8 +45,8 @@ const captchaSessionId = 'captcha';
 const captcha = require('svg-captcha-express').create({
   fontSize: 40,
   noise: 7,
-  width: 180,
-  height: 80,
+  width: 240,
+  height: 120,
   background: 'rgb(3,178,183)',
   color: true,
   cookie: captchaSessionId,
