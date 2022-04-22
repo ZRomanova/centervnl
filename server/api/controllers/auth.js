@@ -5,6 +5,7 @@ const { genPassword, validPassword } = require('../../middleware/password');
 const randomNumber = require('../utils/randomNumber');
 const jwt = require('jsonwebtoken')
 const keys = require('../../config/keys')
+const cyrillicToTranslit = require('cyrillic-to-translit-js')
 
 module.exports.register = async function(req, res, next) {
   try {
@@ -18,10 +19,14 @@ module.exports.register = async function(req, res, next) {
         })
       } else {
         // Нужно создать пользователя
-        const create = req.body
+        const create = {...req.body}
         if (!create.photo) create.photo = `/images/avatars/user-${req.body.sex}-${randomNumber(1, 10)}.svg`
         create.password = genPassword(req.body.password)
-
+        create.email = create.email.toLowerCase()
+        if (create.patronymic) cyrillicToTranslit().reverse(create.patronymic = create.patronymic[0].toUpperCase() + create.patronymic.slice(1).toLowerCase())
+        create.name = cyrillicToTranslit().reverse(create.name[0].toUpperCase() + create.name.slice(1).toLowerCase())
+        create.surname = cyrillicToTranslit().reverse(create.surname[0].toUpperCase() + create.surname.slice(1).toLowerCase())
+        
         const user = await new User(create).save()
         next(req, res, user)
       }
@@ -32,8 +37,12 @@ module.exports.register = async function(req, res, next) {
 
 module.exports.update = async function(req, res, next) {
   try {
-    const updated = req.body
+    const updated = {...req.body}
     updated.password = genPassword(req.body.password)
+    updated.email = updated.email.toLowerCase()
+    if (create.patronymic) cyrillicToTranslit().reverse(updated.patronymic = updated.patronymic[0].toUpperCase() + updated.patronymic.slice(1).toLowerCase())
+    updated.name = cyrillicToTranslit().reverse(updated.name[0].toUpperCase() + updated.name.slice(1).toLowerCase())
+    updated.surname = cyrillicToTranslit().reverse(updated.surname[0].toUpperCase() + updated.surname.slice(1).toLowerCase())
     const user = await User.findOneAndUpdate({_id: req.user.id}, {$set: updated}, {new: true}).lean()
     next(req, res, user)
   } catch (e) {
@@ -61,7 +70,7 @@ module.exports.registerEmo = async function(req, res, next) {
 
 module.exports.login = async (req, res) => {
   try {
-    const candidate = await User.findOne({email: req.body.email}, {email: 1, password: 1, isAdmin: 1}).lean()
+    const candidate = await User.findOne({email: req.body.email.toLowerCase()}, {email: 1, password: 1, isAdmin: 1}).lean()
 
     if (candidate) {
       // Проверка пароля, пользователь существует

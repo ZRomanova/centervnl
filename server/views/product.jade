@@ -2,8 +2,9 @@ extends layout
 
 block content
   h1= title
-  a(href="/shop/"+product.shop.path)
-    h4.marck-script= product.shop.name
+  
+  h4.marck-script
+    a(href="/shop/"+product.shop.path)= product.shop.name
   .container.p-0
     if (product.gallery && product.gallery.length) || product.image
       hr
@@ -27,16 +28,30 @@ block content
               span.visually-hidden Next
 
     .col-12.col-sm-5
+      #price.d-none= product.price
+      h2.orange-text#priceBox 
+        |  #{product.price} ₽
+
       if product.options && product.options.length 
-        each option in product.options
-          if option.variants && option.variants.length 
-            h3.marck-script= option.name
-            select.marck-script.form-select.form-select-lg
-              each variant in option.variants
-                option(value=variant.name)= variant.name
+        #priceSelects
+          each option, i in product.options
+            if option.variants && option.variants.length 
+              h3.marck-script= option.name
+              select.marck-script.form-select.form-select-lg(onchange="changeOptionSelect()" id=option._id)
+                each variant in option.variants
+                  option(value=variant.price id=variant._id)= variant.name
+
+      h3.marck-script Количество
+      .col-4
+        input.form-control.marck-script(value="1" type="number" min="1")
+
+      button.btn.btn-custom.mt-5 
+        h5 Добавить в корзину
 
   if product.description
     hr
     p.col-12.text-justify !{product.description}
 
   hr
+
+  script(src='/javascripts/product.js' type='text/javascript')

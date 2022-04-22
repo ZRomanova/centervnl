@@ -48,7 +48,6 @@ module.exports.getProductPage = async function(req, res, data = {}) {
                     result.shops = shops
                     await apiProducts.getProductOne(req, res, async (req, res, product) => {
                         result.product = product
-                        console.log(product)
                         renderProductPage(req, res, result)
                     })
                 })

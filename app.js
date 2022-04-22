@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport')
 const indexRouter = require('./server/routes/index');
 const apiRouter = require('./server/api/routes');
+const authContr = require('./server/controllers/auth');
 
 const app = express();
 app.locals.moment = require('moment');
@@ -39,6 +40,18 @@ const sessionStore = new MongoStore({ mongooseConnection: mongoose.connection, c
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const captchaSessionId = 'captcha';
+ 
+const captcha = require('svg-captcha-express').create({
+  fontSize: 40,
+  noise: 7,
+  width: 180,
+  height: 80,
+  background: 'rgb(3,178,183)',
+  color: true,
+  cookie: captchaSessionId,
+});
+
 app.use(session({
   secret: keys.jwt,
   resave: false,
@@ -53,6 +66,14 @@ app.use(session({
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(require('cors')())
+
+app.get('/captcha.jpg', captcha.math());
+
+app.post('/registration', (req, res) => {
+  const valid = captcha.check(req, req.body.captcha)
+  if (valid) authContr.registr(req, res)
+  else res.redirect('/')
+});
 
 
 require('./server/middleware/passport')
