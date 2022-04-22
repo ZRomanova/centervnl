@@ -7,12 +7,12 @@ block content
       form.col-2.heart-container.float-end#likeForm(action="/projects/" + project.path + "/like", method="post", role="form")
         - var ch = !!Array.from(project.likes).find(el => String(el) == String(user._id))
         input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
-        label(for="toggle-heart" aria-label="like") ❤
+        label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
     else 
       .col-2.heart-container.float-end
         a(data-bs-toggle='modal' href='#authModal' role='button')
           input.d-none#toggle-heart(type="checkbox")
-          label(for="toggle-heart" aria-label="like") ❤
+          label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
 
   h4.marck-script Реализация: #{project.date}
   if project.description

@@ -9,12 +9,12 @@ block content
           form.col-2.heart-container.float-end#likeForm(action="/news/" + post.path + "/like", method="post", role="form")
             - var ch = !!Array.from(post.likes).find(el => String(el) == String(user._id))
             input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
-            label(for="toggle-heart" aria-label="like") ❤
+            label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
         else 
           .col-2.heart-container.float-end
             a(data-bs-toggle='modal' href='#authModal' role='button')
               input.d-none#toggle-heart(type="checkbox")
-              label(for="toggle-heart" aria-label="like") ❤
+              label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
 
       h5= "Опубликовано " + post.date
       if post.description
@@ -38,8 +38,3 @@ block content
             each link in post.links
               a.btn.marck-script.m-1.text-ellipsis-nowrap.mw-100(class= link.color href=link.url)= link.name
       hr
-
-    
-
-
-            

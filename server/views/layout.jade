@@ -192,7 +192,6 @@ html
             button.btn.btn-custom(type="submit" form="edit-user") Coxpaнить
 
     nav.navbar-default.navbar-fixed-top
-      
         .navbar-header
           a.navbar-brand(href='/') 
             img.nav-logo(src='/images/logo.webp')
@@ -207,13 +206,13 @@ html
               if shops && shops.length
                 ul.dropdown-menu.hover-item
                   each shop in shops
-                    a.dropdown-item(href='/shop/'+shop.path) #{shop.name}
+                    a.dropdown-item(href='/shop/'+shop.path+'/') #{shop.name}
             li.hover-section
               a(href='/projects/') Проекты
               if nav_projects && nav_projects.length
                 ul.dropdown-menu.hover-item
                   each project in nav_projects
-                    a.dropdown-item(href='/projects/'+project.path) #{project.name}
+                    a.dropdown-item(href='/projects/'+project.path+'/') #{project.name}
             li.hover-section
               a(href='/about/' ) О нас
               ul.dropdown-menu.hover-item
@@ -230,7 +229,7 @@ html
                 a(data-bs-toggle='modal' href='#authModal' role='button')
                   i.fa-solid.fa-arrow-right-to-bracket
               else
-                a(data-bs-toggle='modal' href='#editUserModal' role='button') 
+                a(href="/profile/") 
                   img.small-user-nav(src=user.photo)
             li.float-right
               if user && user.isAdmin

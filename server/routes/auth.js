@@ -11,7 +11,7 @@ router.post('/registration-emo', controller.registrEmo)
 router.post('/login', passport.authenticate('local', {
       failureRedirect: '/#authFail',
       failureFlash: true,
-    }), (req, res) =>  {res.redirect('/')}
+    }), (req, res) => res.redirect(req.headers.referer)
   )
 
 router.get('/logout', (req, res, next) => {

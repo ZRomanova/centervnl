@@ -27,7 +27,7 @@ module.exports.register = async function(req, res, next) {
         if (!create.photo) create.photo = `/images/avatars/user-${req.body.sex}-${randomNumber(1, 10)}.svg`
         create.password = genPassword(req.body.password)
         create.email = create.email.toLowerCase()
-        if (create.patronymic) cyrillicToTranslit().reverse(create.patronymic = create.patronymic[0].toUpperCase() + create.patronymic.slice(1).toLowerCase())
+        if (create.patronymic) create.patronymic = cyrillicToTranslit().reverse(create.patronymic[0].toUpperCase() + create.patronymic.slice(1).toLowerCase())
         create.name = cyrillicToTranslit().reverse(create.name[0].toUpperCase() + create.name.slice(1).toLowerCase())
         create.surname = cyrillicToTranslit().reverse(create.surname[0].toUpperCase() + create.surname.slice(1).toLowerCase())
         
@@ -44,7 +44,7 @@ module.exports.update = async function(req, res, next) {
     const updated = {...req.body}
     updated.password = genPassword(req.body.password)
     updated.email = updated.email.toLowerCase()
-    if (create.patronymic) cyrillicToTranslit().reverse(updated.patronymic = updated.patronymic[0].toUpperCase() + updated.patronymic.slice(1).toLowerCase())
+    if (updated.patronymic) cyrillicToTranslit().reverse(updated.patronymic = updated.patronymic[0].toUpperCase() + updated.patronymic.slice(1).toLowerCase())
     updated.name = cyrillicToTranslit().reverse(updated.name[0].toUpperCase() + updated.name.slice(1).toLowerCase())
     updated.surname = cyrillicToTranslit().reverse(updated.surname[0].toUpperCase() + updated.surname.slice(1).toLowerCase())
     const user = await User.findOneAndUpdate({_id: req.user.id}, {$set: updated}, {new: true}).lean()

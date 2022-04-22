@@ -1,5 +1,47 @@
 extends layout
 
 block content
-  h1= title
-  p Здесь скоро будет страница #{title}
+  .row.col-12.p-3
+    .col-2 
+      img.rounded.mx-auto.d-block.img-thumbnail.img-5.m-2(alt=user.name src=user.photo )
+    .col-7 
+      h4= user.surname + ' ' + user.name + ' ' + user.patronymic
+    .col-3
+      button.orange-button.float-end(data-bs-toggle='modal' href='#editUserModal' role='button') Редактировать
+
+  hr
+  h2 Избранное
+  if !profile.likes.products.length && !profile.likes.services.length && !profile.likes.projects.length && !profile.likes.posts.length 
+    h4 Вы пока ничего не добавили в избранное
+  else 
+    if profile.likes.products.length
+      h3.marck-script Избранные товары
+      - data = profile.likes.products
+      - bID = 'idBProd'
+      - sID = 'idCProd'
+      - rootPath = '/product/'
+      include includes/multi-carusel
+    
+    if profile.likes.services.length
+      h3.marck-script Избранные мероприятия
+      - data = profile.likes.services
+      - bID = 'idBS'
+      - sID = 'idCS'
+      - rootPath = '/services/'
+      include includes/multi-carusel
+
+    if profile.likes.posts.length
+      h3.marck-script Избранные новости
+      - data = profile.likes.posts
+      - bID = 'idBPosts'
+      - sID = 'idCPosts'
+      - rootPath = '/news/'
+      include includes/multi-carusel
+
+    if profile.likes.projects.length
+      h3.marck-script Избранные проекты
+      - data = profile.likes.projects
+      - bID = 'idBProj'
+      - sID = 'idCProj'
+      - rootPath = '/projects/'
+      include includes/multi-carusel

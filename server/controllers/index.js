@@ -4,6 +4,7 @@ const apiPosts = require('../api/controllers/posts')
 const apiServices = require('../api/controllers/services')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
+const apiUser = require('../api/controllers/auth')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
@@ -61,13 +62,17 @@ const renderHomePage = function(req, res, data) {
 
 module.exports.getProfilePage = async function(req, res,) {
     try {
+        const result = {}
         await apiPartners.getPartners(req, res, async (req, res, partners) => {
             result.partners = partners
             await apiProjects.getActive(req, res, async (req, res, projects) => {
                 result.projects = projects
-                await apiShops.getShops(req, res, (req, res, shops) => {
+                await apiShops.getShops(req, res, async (req, res, shops) => {
                     result.shops = shops
-                    renderProfilePage(req, res, result)
+                    await apiUser.profile(req, res, (req, res, profile) => {
+                        result.profile = profile
+                        renderProfilePage(req, res, result)
+                    })
                 })
             })
         })
@@ -79,10 +84,11 @@ module.exports.getProfilePage = async function(req, res,) {
 
 const renderProfilePage = function(req, res, data) {
     res.render('profile', {
-        title: data.user.name + ' ' + data.user.surname,
+        title: req.user.name + ' ' + req.user.surname,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: data.user,
+        user: req.user,
+        profile: data.profile,
         shops: data.shops
     })
     
