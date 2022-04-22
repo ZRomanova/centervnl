@@ -73,11 +73,11 @@ module.exports.getGroups = async function(req, res, next) {
 
 module.exports.getProductsInShop = async function(req, res, next) {
     try {
-        const skip = req.query.offset ? +req.query.offset * 100 : 0
-        const limit = 100
+        const skip = req.query.offset ? +req.query.offset * 20 : 0
+        const limit = 20
         const shop = await Shop.findOne({path: req.params.shop}).lean()
         const products = await Product.aggregate([
-            { $match: {shop: shop._id} },
+            { $match: {shop: shop._id, visible: true} },
             { "$sort": { "name": 1 } },
             { "$skip": skip },
             { "$limit": limit },

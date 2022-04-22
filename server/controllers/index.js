@@ -45,7 +45,7 @@ module.exports.getHomePage = async function(req, res, data = {}) {
 
 const renderHomePage = function(req, res, data) {
     res.render('index', {
-        title: 'Главная',
+        title: 'Ресурсный центр Вера Надежда Любовь',
         text: data.description,
         anouncements: data.anouncements,
         news: data.posts,
@@ -54,6 +54,35 @@ const renderHomePage = function(req, res, data) {
         footer_logos: data.partners, 
         user: data.user,
         gallery: data.gallery,
+        shops: data.shops
+    })
+    
+}
+
+module.exports.getProfilePage = async function(req, res,) {
+    try {
+        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+            result.partners = partners
+            await apiProjects.getActive(req, res, async (req, res, projects) => {
+                result.projects = projects
+                await apiShops.getShops(req, res, (req, res, shops) => {
+                    result.shops = shops
+                    renderProfilePage(req, res, result)
+                })
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+const renderProfilePage = function(req, res, data) {
+    res.render('profile', {
+        title: data.user.name + ' ' + data.user.surname,
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: data.user,
         shops: data.shops
     })
     

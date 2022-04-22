@@ -5,6 +5,7 @@ const controller = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', controller.getHomePage) 
+router.get('/profile', controller.getProfilePage) 
 
 router.use('/shop', require('./shop'))
 router.use('/product', require('./product'))

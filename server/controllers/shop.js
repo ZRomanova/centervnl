@@ -47,8 +47,14 @@ module.exports.getProductPage = async function(req, res, data = {}) {
                 await apiShops.getShops(req, res, async (req, res, shops) => {
                     result.shops = shops
                     await apiProducts.getProductOne(req, res, async (req, res, product) => {
-                        result.product = product
-                        renderProductPage(req, res, result)
+                        if (product.visible) {
+                            result.product = product
+                            renderProductPage(req, res, result)
+                        }
+                        else {
+                            res.status(404).json({massage: "Товар не найден"})
+                        }
+                        
                     })
                 })
             })
