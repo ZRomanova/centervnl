@@ -3,7 +3,19 @@ extends layout
 block content
   .row.g-0.position-relative.m-5.p-5.bg-light-blue
     .container.bg-light
-      h1= title
+      .row
+        h1.col-10= post.name
+        if !!user
+          form.col-2.heart-container.float-end#likeForm(action="/news/" + post.path + "/like", method="post", role="form")
+            - var ch = !!Array.from(post.likes).find(el => String(el) == String(user._id))
+            input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
+            label(for="toggle-heart" aria-label="like") ❤
+        else 
+          .col-2.heart-container.float-end
+            a(data-bs-toggle='modal' href='#authModal' role='button')
+              input.d-none#toggle-heart(type="checkbox")
+              label(for="toggle-heart" aria-label="like") ❤
+
       h5= "Опубликовано " + post.date
       if post.description
         hr

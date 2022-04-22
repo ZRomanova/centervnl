@@ -46,7 +46,7 @@ function scrollMore(){
         }
         $target.attr('data-page', page)
 
-        if (data.products.length < 100) {
+        if (data.products.length < 20) {
           $target.remove();
         }
 			}

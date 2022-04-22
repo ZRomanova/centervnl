@@ -153,3 +153,16 @@ module.exports.uploadImagesProject = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
+
+module.exports.toggleLike = async function(req, res, next) {
+    try {
+        const like = req.body.like
+        if (like) 
+            await Project.updateOne({path: req.params.id}, {$addToSet: {likes: req.user._id}}, {new: true})
+        else
+            await Project.updateOne({path: req.params.id}, {$pull: {likes: req.user._id}}, {new: true})
+        next(req, res, {message: "Обновлено."})
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}

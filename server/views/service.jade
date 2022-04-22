@@ -1,7 +1,18 @@
 extends layout
 
 block content
-  h1= service.name
+  .row
+    h1.col-10= service.name
+    if !!user
+      form.col-2.heart-container.float-end#likeForm(action="/services/" + service.path + "/like", method="post", role="form")
+        - var ch = !!Array.from(service.likes).find(el => String(el) == String(user._id))
+        input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
+        label(for="toggle-heart" aria-label="like") ❤
+    else 
+      .col-2.heart-container.float-end
+        a(data-bs-toggle='modal' href='#authModal' role='button')
+          input.d-none#toggle-heart(type="checkbox")
+          label(for="toggle-heart" aria-label="like") ❤
 
   if service.description
     hr

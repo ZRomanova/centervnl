@@ -101,3 +101,13 @@ const renderPostPage = function(req, res, data) {
         shops: data.shops
     })
 }
+
+module.exports.toggleLike = async (req, res) => {
+    try {
+        await apiPosts.toggleLike(req, res, (req, res, message) => {
+            console.log(message)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}

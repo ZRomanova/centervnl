@@ -48,6 +48,10 @@ const projectSchema = new Schema({
           type: Schema.Types.ObjectId
       },
       time: Date
+  },
+  likes: {
+    ref: 'users',
+    type: [mongoose.Types.ObjectId]
   }
 })
 

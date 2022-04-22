@@ -95,3 +95,13 @@ const renderProjectPage = function(req, res, data) {
         shops: data.shops
     })
 }
+
+module.exports.toggleLike = async (req, res) => {
+    try {
+        await apiProjects.toggleLike(req, res, (req, res, message) => {
+            console.log(message)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}

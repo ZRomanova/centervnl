@@ -1,8 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  
+  .row
+    h1.col-10= title
+    if !!user
+      form.col-2.heart-container.float-end#likeForm(action="/product/" + product.path + "/like", method="post", role="form")
+        - var ch = !!Array.from(product.likes).find(el => String(el) == String(user._id))
+        input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
+        label(for="toggle-heart" aria-label="like") ❤
+    else 
+      .col-2.heart-container.float-end
+        a(data-bs-toggle='modal' href='#authModal' role='button')
+          input.d-none#toggle-heart(type="checkbox")
+          label(for="toggle-heart" aria-label="like") ❤
+
   h4.marck-script
     a(href="/shop/"+product.shop.path)= product.shop.name
   .container.p-0

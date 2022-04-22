@@ -85,3 +85,13 @@ module.exports.redirectToShop = async (req, res) => {
     }
 }
 
+module.exports.toggleLike = async (req, res) => {
+    try {
+        await apiProducts.toggleLike(req, res, (req, res, message) => {
+            console.log(message)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
