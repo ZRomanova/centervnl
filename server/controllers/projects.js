@@ -99,7 +99,7 @@ const renderProjectPage = function(req, res, data) {
 module.exports.toggleLike = async (req, res) => {
     try {
         await apiProjects.toggleLike(req, res, (req, res, message) => {
-            console.log(message)
+            res.redirect(req.headers.referer)
         })
     } catch (e) {
         console.log(e)

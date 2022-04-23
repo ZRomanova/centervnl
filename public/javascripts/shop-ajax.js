@@ -30,7 +30,7 @@ function scrollMore(){
               <div class="product__border">
                 <a class="product__inner" href="/product/${product.path}">
                   <div class="product__group">
-                    <h5 class="text-ellipsis mh-h5-2 orange-text"> ${product.group}</h5>
+                    <h5 class="text-ellipsis mh-h5-2 text-green"> ${product.group}</h5>
                   </div>
                   <div class="product__image">
                     <img class="img__product" src="${product.image ? product.image : '/images/box-icon.svg'}" />

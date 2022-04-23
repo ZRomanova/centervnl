@@ -17,8 +17,8 @@ block content
   h4.marck-script
     a(href="/shop/"+product.shop.path)= product.shop.name
   .container.p-0
+    hr
     if (product.gallery && product.gallery.length) || product.image
-      hr
       - var gallery= []
       if product.gallery && product.gallery.length
         - gallery = [...product.gallery]
@@ -64,5 +64,6 @@ block content
     p.col-12.text-justify !{product.description}
 
   hr
+  h4.marck-script Добавили в избранное: #{product.likes.length}
 
   script(src='/javascripts/product.js' type='text/javascript')

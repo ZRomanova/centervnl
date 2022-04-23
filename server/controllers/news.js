@@ -105,7 +105,7 @@ const renderPostPage = function(req, res, data) {
 module.exports.toggleLike = async (req, res) => {
     try {
         await apiPosts.toggleLike(req, res, (req, res, message) => {
-            console.log(message)
+            res.redirect(req.headers.referer)
         })
     } catch (e) {
         console.log(e)

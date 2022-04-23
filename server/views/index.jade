@@ -38,8 +38,9 @@ block content
             .carousel-item.anouncement-box.item-a
               img.d-block.img-cover.orange-border(src=item.image )
               .carousel-caption.yellow-text.text-block-anouncement
-                h3.marck-script= item.name
-                p.mh-300.text-justify.text-ellipsis= item.description
+                .mh-300
+                  h3.marck-script= item.name
+                  p.text-justify.text-ellipsis !{item.description}
                 .row
                   .col-12
                     a.orange-button(href='/services/' + item.path) Запись

@@ -48,7 +48,7 @@ const serviceSchema = new Schema({
   likes: {
     ref: 'users',
     type: [Schema.Types.ObjectId]
-  },
+  }, 
   date: {
       single: [Date],
       period: [{

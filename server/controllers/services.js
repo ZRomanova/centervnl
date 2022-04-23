@@ -3,6 +3,45 @@ const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
 const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
+moment.locale('ru')
+
+const week = [
+    {
+        num: 1,
+        en:'monday',
+        ru: 'ПН'
+    },
+    {
+        num: 2,
+        en: 'tuesday',
+        ru: 'ВТ'
+    },
+    {
+        num: 3,
+        en: 'wednesday',
+        ru: 'СР'
+    },
+    {
+        num: 4,
+        en: 'thursday',
+        ru: 'ЧТ'
+    },
+    {
+        num: 5,
+        db: 'friday',
+        ru: 'ПТ'
+    },
+    {
+        num: 6,
+        en: 'saturday',
+        ru: 'СБ'
+    },
+    {
+        num: 0,
+        en: 'sunday',
+        ru: 'ВС'
+    }
+]
 
 module.exports.getServicesListPage = async function(req, res, data = {}) {
     try {
@@ -18,26 +57,23 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
                         if (service.date) {
                             if (service.date.single && service.date.single.length) {
                                 service.date.single.forEach(d => {
-                                    d.text = []
                                     if (new Date(d) > now) {
-                                        d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
+                                        d.text_active = moment(d).format('DD.MM.YYYY HH:mm')
                                         service.active = true
-                                    }
+                                    } 
                                 })
                             }
                             if (!!service.date.period && service.date.period.length) {
                                 service.date.period.forEach(p =>  {
-                                    p.text = []
                                     if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
-                                        p.text.push(`${p.day} ${intToStringDate(p.time)}`)
                                         service.active = true
+                                        p.text_active = `${p.day} ${intToStringDate(p.time)}`
                                     }
                                 })
                             }
                         } 
                     })
                     result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
-                    
                     await apiShops.getShops(req, res, (req, res, shops) => {
                         result.shops = shops
                         renderServicesListPage(req, res, result)
@@ -63,7 +99,6 @@ const intToStringDate = (num) => {
 const renderServicesListPage = function(req, res, data) {
     res.render('services-list', {
         title: 'Мероприятия',
-        projects: data.projects,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         services: data.services,
@@ -82,26 +117,46 @@ module.exports.getServicePage = async function(req, res) {
             result.nav_projects = nav_projects
                 await apiServices.getServiceByPath(req, res, async (req, res, data) => {
                     const service = data.service
+                    service.dates = []
                     result.posts = data.posts
                     const now = new Date()
                     if (service.date.single && service.date.single.length) {
                         service.date.single.forEach(d => {
-                            d.text = []
                             if (new Date(d) > now) {
-                                d.text.push(moment(d).format('DD.MM.YYYY HH:mm'))
+                                service.dates.push({text: moment(d).format('D MMMM YYYY HH:mm[,] dddd'), date: d})
                                 service.active = true
+                            } else {
+                                d.text_inactive = moment(d).format('D MMMM YYYY HH:mm[,] dddd')
                             }
                         })
                     }
                     if (!!service.date.period && service.date.period.length) {
                         service.date.period.forEach(p =>  {
-                            p.text = []
-                            if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
-                                p.text.push(`${p.day} ${intToStringDate(p.time)}`)
+                            if ((!p.end || new Date(p.end) > now) && p.visible) {
+                                const day = week.find(el => el.ru == p.day).num
+                                let iDate = new Date(now)
+                                if (new Date(p.start) > now) iDate = new Date(p.start)
+                                iDate.setHours(0)
+                                iDate.setMinutes(0)
+                                iDate.setSeconds(0)
+                                iDate.setMilliseconds(p.time)
+                                iDate = new Date(iDate)
+                                if (iDate < now)
+                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
+                                for (let i = 0; i < 7; i++) {
+                                    if (iDate.getDay() == day) break
+                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
+                                }
+                                const end = p.end ? new Date(p.end) : new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 28))
+                                while (iDate < end) {
+                                    service.dates.push({text: moment(iDate).format('D MMMM YYYY HH:mm[,] dddd'), date: iDate})
+                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 7))
+                                }
                                 service.active = true
                             }
                         })
                     }
+                    service.dates = service.dates.sort((a, b) => a.date - b.date)
                     result.service = service
                     await apiShops.getShops(req, res, (req, res, shops) => {
                         result.shops = shops
@@ -116,7 +171,6 @@ module.exports.getServicePage = async function(req, res) {
         console.log(e)
     }
 }
-
 
 const renderServicePage = function(req, res, data) {
     res.render('service', {
@@ -133,7 +187,7 @@ const renderServicePage = function(req, res, data) {
 module.exports.toggleLike = async (req, res) => {
     try {
         await apiServices.toggleLike(req, res, (req, res, message) => {
-            console.log(message)
+            res.redirect(req.headers.referer)
         })
     } catch (e) {
         console.log(e)

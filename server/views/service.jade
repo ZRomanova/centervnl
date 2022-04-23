@@ -14,6 +14,39 @@ block content
           input.d-none#toggle-heart(type="checkbox")
           label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
 
+    if service.address
+      h4.marck-script Место проведения: #{service.address}
+  hr
+  if service.active 
+    h2 Запись
+    .row
+      .col-12.col-md-6
+        h4.marck-script Время
+        .form-check
+          each date in service.dates
+            .m-1
+              input.form-check-input(type='radio' name='date' id=date.text)
+              label.form-check-label(for=date.text)= date.text
+
+      .col-12.col-md-6
+        h4.marck-script Стоимость
+        .form-check
+          each item in service.priceList
+            .m-1
+              input.form-check-input(type='radio' name='price' id=item.name+item.price)
+              label.form-check-label(for=item.name+item.price)= (item.price ? item.price + ' ₽' : 'Бесплатно') + (item.name ? ', ' + item.name : '')
+                if item.description 
+                  div= item.description
+          
+
+  else
+    h2 Сейчас мероприятие не проводится
+    if service.date.single && service.date.single.length
+      h4.marck-script Прошедшие даты
+      each single in service.date.single
+        .m-1= single.text_inactive
+    h4.marck-script Ждите анонсов!
+
   if service.description
     hr
     p.text-justify.col-12 !{service.description}
@@ -59,5 +92,5 @@ block content
             a.btn.btn-success.marck-script.m-1.text-ellipsis-nowrap.mw-100(href= p.url target="_blank")= p.name
 
   hr
-  
+  h4.marck-script Добавили в избранное: #{service.likes.length}
 

@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const {isAuth} = require('../middleware/auth')
 
 const controller = require('../controllers/index');
 
 /* GET home page. */
 router.get('/', controller.getHomePage) 
-router.get('/profile', controller.getProfilePage) 
+router.get('/profile', isAuth, controller.getProfilePage) 
 
 router.use('/shop', require('./shop'))
 router.use('/product', require('./product'))

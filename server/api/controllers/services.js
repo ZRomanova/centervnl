@@ -100,7 +100,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
                 $match: {path: req.params.path, visible: true}
             },
             { 
-                $project: { "created": 0, author: 0 }
+                $project: { created: 0, author: 0 }
             },
             {
                 $lookup:
@@ -138,7 +138,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
             next(req, res, {service, posts})
         }
         else 
-            next(req, res, new Error("Проект не найден"))
+            next(req, res, new Error("Мероприятие не найдено"))
 
     } catch (e) {
         errorHandler(res, e)
