@@ -61,12 +61,12 @@ if (togglePasswordE && passwordE) togglePasswordE.addEventListener("click", func
 });
 
 const togglePasswordAE = document.querySelector("#togglePasswordAE");
-const passwordAE = document.querySelector("#emo-password");
+const passwordAE = document.querySelector("#edit-password");
 
-if (togglePasswordAE && passwordAE) togglePasswordE.addEventListener("click", function () {
+if (togglePasswordAE && passwordAE) togglePasswordAE.addEventListener("click", function () {
   // toggle the type attribute
-  const type = passwordE.getAttribute("type") === "password" ? "text" : "password";
-  passwordE.setAttribute("type", type);
+  const type = passwordAE.getAttribute("type") === "password" ? "text" : "password";
+  passwordAE.setAttribute("type", type);
   // toggle the eye icon
   this.classList.toggle('fa-eye');
   this.classList.toggle('fa-eye-slash');

@@ -49,12 +49,8 @@ html
                 input#emo-login.form-control(type='text' name='loginEmo' form="registr-emo" autocomplete="off" )
 
               label.col-form-label(for='emo-password') Пароль:
-              .input-group.mb-3
-                span.input-group-text.input-group-btn
-                  i.fas.fa-lock
+              .mb-3
                 input#emo-password.form-control(type='text' autocomplete="off" name='passwordEmo' form="registr-emo")
-                span.input-group-text.input-group-btn
-                  i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
           .modal-footer
             button.btn.btn-custom(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
 
@@ -162,7 +158,7 @@ html
                   i.fas.fa-lock
                 input#edit-password.form-control(type='password' required name='password'  autocomplete="current-password")
                 span.input-group-text.input-group-btn
-                  i#togglePasswordR.far.fa-eye(style='cursor: pointer')
+                  i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
 
               label.col-form-label(for='edit-surname') Фамилия:
               .mb-3
