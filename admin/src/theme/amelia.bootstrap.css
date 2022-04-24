@@ -2242,7 +2242,7 @@ fieldset[disabled] .btn-custom.active {
   border-color: rgb(247,141,46);
 }
 
-.btn-warning {
+/* .btn-warning {
   color: #ffffff;
   background-color: #debb27;
   border-color: #debb27;
@@ -2483,7 +2483,7 @@ fieldset[disabled] .btn-link:hover,
 fieldset[disabled] .btn-link:focus {
   color: #bbbbbb;
   text-decoration: none;
-}
+} */
 
 .btn-lg {
   padding: 14px 16px;

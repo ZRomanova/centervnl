@@ -21,7 +21,7 @@ html
           .modal-body
             form#login(action="/auth/login", method="post", role="form")
               label.col-form-label(for='auth-email') Email:
-              .mb-3.input-group
+              .mb-3
                 input#auth-email.form-control(type='email' autocomplete="on" name="email" required)
 
               label.col-form-label(for='auth-password') Пароль:
@@ -45,7 +45,7 @@ html
           .modal-body
 
               label.col-form-label(for='emo-login') Логин:
-              .mb-3.input-group
+              .mb-3
                 input#emo-login.form-control(type='text' name='loginEmo' form="registr-emo" autocomplete="off" )
 
               label.col-form-label(for='emo-password') Пароль:
@@ -67,7 +67,7 @@ html
           .modal-body
             form#registr-emo(action="/auth/registration-emo", method="post", role="form")
               label.col-form-label(for='emo-email') Email:
-              .mb-3.input-group
+              .mb-3
                 input#emo-email.form-control(type='email' autocomplete="on" required name='email')
 
               label.col-form-label(for='registr-emo-password') Пароль от данного сайта (придумайте):
@@ -79,7 +79,7 @@ html
                   i#togglePasswordE.far.fa-eye(style='cursor: pointer')
 
               label.col-form-label(for='registr-emo-patronymic') Отчество:
-              .mb-3.input-group
+              .mb-3
                 input#registr-emo-patronymic.form-control(type='text' name='patronymic')
 
           .modal-footer
@@ -95,7 +95,7 @@ html
           .modal-body
             form#registr(action="/registration", method="post", role="form")
               label.col-form-label(for='registr-email') Email:
-              .mb-3.input-group
+              .mb-3
                 input#registr-email.form-control(type='email' required name='email' autocomplete="on")
 
               label.col-form-label(for='registr-password') Пароль:
@@ -107,13 +107,13 @@ html
                   i#togglePasswordR.far.fa-eye(style='cursor: pointer')
 
               label.col-form-label(for='registr-surname') Фамилия:
-              .mb-3.input-group
+              .mb-3
                 input#registr-surname.form-control(type='text' required name='surname')
               label.col-form-label(for='registr-name') Имя:
-              .mb-3.input-group
+              .mb-3
                 input#registr-name.form-control(type='text' required name='name')
               label.col-form-label(for='registr-patronymic') Отчество:
-              .mb-3.input-group
+              .mb-3
                 input#registr-patronymic.form-control(type='text' name='patronymic')
 
               label.col-form-label(for='registr-sex' required) Пол:
@@ -153,7 +153,7 @@ html
           .modal-body
             form#edit-user(action="/auth/update", method="post", role="form")
               label.col-form-label(for='edit-email') Email:
-              .mb-3.input-group
+              .mb-3
                 input#edit-email.form-control(type='email' required name='email' autocomplete="on")
 
               label.col-form-label(for='edit-password') Пароль:
@@ -165,10 +165,10 @@ html
                   i#togglePasswordR.far.fa-eye(style='cursor: pointer')
 
               label.col-form-label(for='edit-surname') Фамилия:
-              .mb-3.input-group
+              .mb-3
                 input#edit-surname.form-control(type='text' required name='surname' value=user?user.surname:'')
               label.col-form-label(for='edit-name') Имя:
-              .mb-3.input-group
+              .mb-3
                 input#edit-name.form-control(type='text' required name='name' value=user?user.name:'')
               label.col-form-label(for='edit-patronymic') Отчество:
               .mb-3.input-group
@@ -185,10 +185,6 @@ html
 
           .modal-footer
             a.btn.btn-secondary(href='/auth/logout') Выход
-            //- if user && user.emo 
-            //-   button.btn.btn-custom(type="button") Обновить из ЭМО
-            //- else
-            //-   button.btn.btn-secondary(type="button") Привязать аккаунт ЭМО
             button.btn.btn-custom(type="submit" form="edit-user") Coxpaнить
 
     nav.navbar-default.navbar-fixed-top

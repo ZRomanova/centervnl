@@ -4,10 +4,12 @@ block content
   .row.col-12.p-3
     .col-2 
       img.rounded.mx-auto.d-block.img-thumbnail.img-5.m-2(alt=user.name src=user.photo )
-    .col-7 
+    .col-10 
       h4= user.surname + ' ' + user.name + ' ' + user.patronymic
-    .col-3
-      button.orange-button.float-end(data-bs-toggle='modal' href='#editUserModal' role='button') Редактировать
+      .col-12.pt-3
+        a.orange-button.me-3(data-bs-toggle='modal' href='#editUserModal' role='button') Редактировать
+        a.orange-button.me-3(href="/profile/checkout") Мои записи
+      
 
   hr
   h2 Избранное

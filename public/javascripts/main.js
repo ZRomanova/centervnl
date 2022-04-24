@@ -86,5 +86,25 @@ $('.item-1').each(function(index) {
   $('.carousel-indicators-orange', this).first().addClass('active')
 })
 
+function changePaySelect() {
+  const form = $('#priceList')[0]
+  if (+form.elements.price.value != 0) {
+    $('#pay').removeClass('d-none')
+    $('#pay').addClass('d-block mb-3')
+  } else {
+    $('#pay').removeClass('d-block')
+    $('#pay').addClass('d-none mb-3')
+  }
+  for(const inp of form.elements.price) {
+    if (inp.checked) {form.elements.priceID.value = inp.id}
+  }
+}
+
+function changeServiceForm(form) {
+  let disabled = false
+  if (!form.elements.date.value) disabled = true
+  if (!form.elements.price.value) disabled = true
+  $('#checkout')[0].disabled = disabled
+}
 
 

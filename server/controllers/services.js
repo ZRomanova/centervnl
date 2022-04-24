@@ -1,6 +1,7 @@
 const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
+const apiRegistrations = require('../api/controllers/registrations')
 const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
 moment.locale('ru')
@@ -121,17 +122,18 @@ module.exports.getServicePage = async function(req, res) {
                     result.posts = data.posts
                     const now = new Date()
                     if (service.date.single && service.date.single.length) {
-                        service.date.single.forEach(d => {
+                        for await (const d of service.date.single)  {
                             if (new Date(d) > now) {
-                                service.dates.push({text: moment(d).format('D MMMM YYYY HH:mm[,] dddd'), date: d})
+                                let obj = await apiRegistrations.check(req.user, new Date(d), service)
+                                service.dates.push({text: moment(d).format('D MMMM YYYY HH:mm[,] dddd'), date: d, isReg: obj.isReg, count: obj.count })
                                 service.active = true
                             } else {
                                 d.text_inactive = moment(d).format('D MMMM YYYY HH:mm[,] dddd')
                             }
-                        })
+                        }
                     }
                     if (!!service.date.period && service.date.period.length) {
-                        service.date.period.forEach(p =>  {
+                        for await (const p of service.date.period)  {
                             if ((!p.end || new Date(p.end) > now) && p.visible) {
                                 const day = week.find(el => el.ru == p.day).num
                                 let iDate = new Date(now)
@@ -149,12 +151,13 @@ module.exports.getServicePage = async function(req, res) {
                                 }
                                 const end = p.end ? new Date(p.end) : new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 28))
                                 while (iDate < end) {
-                                    service.dates.push({text: moment(iDate).format('D MMMM YYYY HH:mm[,] dddd'), date: iDate})
+                                    let obj = await apiRegistrations.check(req.user, new Date(iDate), service)
+                                    service.dates.push({text: moment(iDate).format('D MMMM YYYY HH:mm[,] dddd'), date: iDate, isReg: obj.isReg, count: obj.count})
                                     iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 7))
                                 }
                                 service.active = true
                             }
-                        })
+                        }
                     }
                     service.dates = service.dates.sort((a, b) => a.date - b.date)
                     result.service = service
@@ -188,6 +191,16 @@ module.exports.toggleLike = async (req, res) => {
     try {
         await apiServices.toggleLike(req, res, (req, res, message) => {
             res.redirect(req.headers.referer)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports.createRegistration = async (req, res) => {
+    try {
+        await apiRegistrations.create(req, res, (req, res, reg) => {
+            res.redirect('/profile/checkout')
         })
     } catch (e) {
         console.log(e)

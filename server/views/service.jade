@@ -20,24 +20,46 @@ block content
   if service.active 
     h2 Запись
     .row
-      .col-12.col-md-6
-        h4.marck-script Время
-        .form-check
-          each date in service.dates
-            .m-1
-              input.form-check-input(type='radio' name='date' id=date.text)
-              label.form-check-label(for=date.text)= date.text
+      form#priceList(onchange="changeServiceForm(this)" action="/services" method="post" role="form")
+        .col-12.col-md-6
+          h4.marck-script Время
+          .form-check
+            each date in service.dates
+              .m-1
+                input.form-check-input(type='radio' name='date' id=date.text value=date.text disabled=(date.isReg || (service.peopleLimit && service.peopleLimit <= date.count)) checked=false)
+                label.form-check-label(for=date.text)= date.text
+                  if date.isReg
+                    |  (вы уже записаны)
+                  else if service.peopleLimit
+                    |  (#{date.count}/#{service.peopleLimit})
 
-      .col-12.col-md-6
-        h4.marck-script Стоимость
-        .form-check
-          each item in service.priceList
-            .m-1
-              input.form-check-input(type='radio' name='price' id=item.name+item.price)
-              label.form-check-label(for=item.name+item.price)= (item.price ? item.price + ' ₽' : 'Бесплатно') + (item.name ? ', ' + item.name : '')
-                if item.description 
-                  div= item.description
-          
+        .col-12.col-md-6
+          h4.marck-script Стоимость
+          .form-check
+            input.d-none#priceID(name='priceID' type="text")
+            input.d-none#service(name='service' value=service._id)
+            input.d-none(type='radio' name='price' value="")
+            each item in service.priceList
+              .m-1
+                input.form-check-input(type='radio' name='price' id=item._id value=item.price onchange="changePaySelect()" checked=false)
+                label.form-check-label(for=item._id)= (item.price ? item.price + ' ₽' : 'Бесплатно') + (item.name ? ', ' + item.name : '')
+                  if item.description 
+                    div= item.description
+
+          #pay.d-none
+            h4.marck-script Способ оплаты
+            select.marck-script.form-select.form-select-lg
+              option(value='на месте' id='pay1' name='method' selected) На месте
+
+      .col-12.text-center
+        h4.marck-script.text-start Дополнительная информация
+        .mb-3
+          textarea.form-control(name='info', form="priceList")
+
+        if !user
+          button.orange-button#checkout(disabled, data-bs-toggle='modal', href='#authModal', type="button") Записаться
+        else 
+          button.orange-button#checkout(disabled, type="submit", form="priceList") Записаться
 
   else
     h2 Сейчас мероприятие не проводится

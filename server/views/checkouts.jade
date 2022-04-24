@@ -1,0 +1,53 @@
+extends layout
+
+block content
+  h1 Мои записи
+  if checkouts.regsActive && checkouts.regsActive.length
+    h4.marck-script Предстоящие мероприятия
+    .col-12.container 
+      each item in checkouts.regsActive
+        if item.service 
+          .row
+            .col-12.col-sm-6
+              p= item.service.name
+              p= item.service.address
+              p= item.date
+            .col-12.col-sm-3
+              if item.payment.description
+                p= item.payment.description
+              p Стоимость: #{item.payment.price}
+              p Оплачено: #{item.payment.paid}
+              p Способ оплаты: #{item.payment.method}
+            .col-12.col-sm-3
+                p Статус: #{item.status}
+                if item.status == "заявка"
+                  form#checkoutOn(method="get" action="/profile/checkout/#{item._id}/отмена")
+                    button.btn.btn-danger(type="submit") Отменить
+                else if item.status == "отмена"
+                  if !item.service.peopleLimit || item.count < item.service.peopleLimit
+                    form#checkoutOn(method="get" action="/profile/checkout/#{item._id}/заявка")
+                      button.btn.btn-success(type="submit") Участвовать
+                  else 
+                    button.btn.btn-secondary.disabled Мест нет
+        hr
+
+  if checkouts.regsInactive && checkouts.regsInactive.length
+    h4.marck-script Прошедшие мероприятия
+    .col-12.container 
+      each item in checkouts.regsInactive
+        if item.service 
+          if item.service 
+          .row
+            .col-12.col-sm-6
+              p= item.service.name
+              p= item.service.address
+              p= item.date
+            .col-12.col-sm-3
+              if item.payment.description
+                p= item.payment.description
+              p Стоимость: #{item.payment.price}
+              p Оплачено: #{item.payment.paid}
+              p Способ оплаты: #{item.payment.method}
+            .col-12.col-sm-3
+                p Статус: #{item.status}
+        hr

@@ -8,7 +8,8 @@ const registrSchema = new Schema({
   },
   status: {
     type: String,
-    enum: 'заявка' | 'отмена' | 'участник' | 'неявка' | 'ведущий'
+    enum: ['заявка', 'отмена', 'участник', 'неявка', 'ведущий'],
+    default: 'заявка'
   },
   service: {
     ref: 'services',
@@ -24,13 +25,18 @@ const registrSchema = new Schema({
     description: String,
     status: {
       type: String,
-      enum: 'оплачен' | 'не оплачен' | 'оплачен частично'
-  },
+      enum: ['оплачен', 'не оплачен', 'оплачен частично'],
+      default: 'не оплачен'
+    },
     method: {
         type: String,
-        enum: 'на месте' | 'онлайн'
+        enum: ['на месте', 'онлайн'],
+        default: 'на месте'
     },
-    paid: Number
+    paid: {
+      type: Number,
+      default: 0
+    }
   },
   created: {
     type: Date,
