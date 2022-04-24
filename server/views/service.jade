@@ -24,6 +24,7 @@ block content
         .col-12.col-md-6
           h4.marck-script Время
           .form-check
+            input.d-none(type='radio' name='date' value="")
             each date in service.dates
               .m-1
                 input.form-check-input(type='radio' name='date' id=date.text value=date.text disabled=(date.isReg || (service.peopleLimit && service.peopleLimit <= date.count)) checked=false)
