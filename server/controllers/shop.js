@@ -2,6 +2,7 @@ const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiProducts = require('../api/controllers/products')
 const apiShops = require('../api/controllers/shops')
+const apiOrders = require('../api/controllers/orders')
 
 module.exports.getShopPage = async function(req, res, data = {}) {
     try {
@@ -13,9 +14,13 @@ module.exports.getShopPage = async function(req, res, data = {}) {
                 await apiShops.getProductsInShop(req, res, async (req, res, obj) => {
                     result.products = obj.products
                     result.shop = obj.shop
-                    await apiShops.getShops(req, res, (req, res, shops) => {
+                    await apiShops.getShops(req, res, async (req, res, shops) => {
                         result.shops = shops
-                        renderShopPage(req, res, result)
+                        await apiOrders.addToBin(req, res, (req, res, bin) => {
+                            result.bin = bin
+                            renderShopPage(req, res, result)
+                        })
+                        
                     })
                 })
             })
@@ -33,7 +38,8 @@ const renderShopPage = function(req, res, data) {
         shops: data.shops,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: req.user,
+        bin: data.bin
     })
 }
 
@@ -49,7 +55,11 @@ module.exports.getProductPage = async function(req, res, data = {}) {
                     await apiProducts.getProductOne(req, res, async (req, res, product) => {
                         if (product.visible) {
                             result.product = product
-                            renderProductPage(req, res, result)
+                            await apiOrders.addToBin(req, res, (req, res, bin) => {
+                                result.bin = bin
+                                renderProductPage(req, res, result)
+                            })
+                            
                         }
                         else {
                             res.status(404).json({massage: "Товар не найден"})
@@ -71,7 +81,8 @@ const renderProductPage = function(req, res, data) {
         shops: data.shops,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
-        user: req.user
+        user: req.user,
+        bin: data.bin
     })
 }
 

@@ -35,6 +35,9 @@ import { AddTagComponent } from './about/add-tag/add-tag.component';
 import { SlidePageComponent } from './about/slide-page/slide-page.component';
 import { ShopsListComponent } from './shop/shops-list/shops-list.component';
 import { ShopPageComponent } from './shop/shop-page/shop-page.component';
+import { CheckoutListComponent } from './services/checkout-list/checkout-list.component';
+import { CheckoutFormComponent } from './services/checkout-form/checkout-form.component';
+import { CheckoutPageComponent } from './services/checkout-page/checkout-page.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { ShopPageComponent } from './shop/shop-page/shop-page.component';
     AddTagComponent,
     SlidePageComponent,
     ShopsListComponent,
-    ShopPageComponent
+    ShopPageComponent,
+    CheckoutListComponent,
+    CheckoutFormComponent,
+    CheckoutPageComponent
   ],
   imports: [
     BrowserModule,

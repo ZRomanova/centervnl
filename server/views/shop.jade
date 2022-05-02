@@ -1,8 +1,16 @@
 extends layout
 
 block content
-  h1= shop.name
+  .row
+    .col-10.col-sm-11
+      h1= shop.name
+    .col-2.col-sm-1
+      if !!user && !!bin
+        button.btn.btn-custom#add-to-bin(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight')
+          i.fa-solid.fa-cart-shopping#order-bin #{' ' + bin.products.length}
+        include includes/bin
   hr
+  
   .col-12#shop_container
     each product in products 
       .col-sm-6.col-md-4.col-lg-3.col-xs-12
@@ -15,7 +23,6 @@ block content
             .product__text
               h4.product__price.orange-text #{product.options && product.options.length ? 'От' : ''} #{product.price} ₽
               h4.product__content.marck-script.text-green #{product.name}
-
 
   #showmore-triger(data-page="0")
     .text-center

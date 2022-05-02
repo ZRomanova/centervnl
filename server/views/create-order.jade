@@ -1,0 +1,63 @@
+extends layout
+
+block content
+  h1= title
+  hr
+  if bin.products.length == 0
+    h3.marck-script Вы ничего не добавили в корзину
+  else
+    h3.marck-script Товары
+    ul.list-group
+      li.list-group-item.col-12
+        - var total = 0
+        each item, index in bin.products 
+          - total += item.price * item.count
+          if index > 0
+            hr.m-4
+          .row.p-3
+            .col-12
+              .row
+                .col-10= item.name
+                .col-2 #{item.price} ₽ x #{item.count}
+                .col-12= item.description
+            //- .col-1 
+            //-   a.col-12.m-2(onclick="updateInBin('"+ item._id + "', 1)")
+            //-     i.fa-solid.fa-plus
+            //-   a.col-12.m-2(onclick="updateInBin('"+ item._id + "', -1)")
+            //-     i.fa-solid.fa-minus
+            //-   a.col-12.m-2(onclick="updateInBin('"+ item._id +"')")
+            //-     i.fa-solid.fa-trash
+      #total.d-none= total
+
+    hr 
+    h3.marck-script Доставка
+    form(action="/order/"+bin._id method="POST" role="form") 
+      .mb-3
+        input.form-check-input#svradio(type='radio' name='address' value="ул. Ключевая, д. 22, к. 2, Москва" checked=true)
+        label.form-check-label(for="svradio") Самовывоз, ул. Ключевая, д. 22, к. 2, Москва (бесплатно)
+
+      .mb-3
+        label.col-form-label= "Доставка по Москве " + (total >= 2000 ? "бесплатно" : 200 + " ₽ (при заказе от 2000 ₽ бесплатно)")
+          .input-group
+            span.input-group-text.input-group-btn
+              input.form-check-input#dradio(type='radio' name='address' value='')
+            input.form-control(type='text' placeholder="Адрес" name='custom-address')
+
+      input.d-none#delivery(type='text' name='delivery' value='0')
+
+      hr 
+      h3.marck-script Оплата
+      select.marck-script.form-select.form-select-lg(name='method')
+        option(value='на месте' id='pay1' selected) На месте
+
+      hr
+      h3.marck-script Комментарий к заказу
+      textarea.form-control(name='comment')
+
+      hr
+      h3#total-block Итого: #{total} ₽
+      input.d-none#input-total(type='text' name='total' value=total)
+
+      hr
+      button.btn.btn-custom.mb-4(type="submit")
+        h5 Подтвердить

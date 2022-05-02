@@ -2485,7 +2485,7 @@ input[type="button"].btn-block {
           transition: opacity 0.15s linear;
 }
 
-.fade.show {
+.show.fade.fade-show {
   opacity: 1;
 }
 

@@ -21,7 +21,7 @@ function scrollMore(){
 		$.ajax({ 
 			url: `/api/shops/products/${path}?offset=${page}`,  
 			dataType: 'json',
-			success: function(data){
+			success: function(data) {
 				block_show = false;
 
         for (const product of data.products) {

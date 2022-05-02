@@ -18,6 +18,7 @@ block content
               p Стоимость: #{item.payment.price}
               p Оплачено: #{item.payment.paid}
               p Способ оплаты: #{item.payment.method}
+              p Статус: #{item.payment.status}
             .col-12.col-sm-3
                 p Статус: #{item.status}
                 if item.status == "заявка"
@@ -48,6 +49,7 @@ block content
               p Стоимость: #{item.payment.price}
               p Оплачено: #{item.payment.paid}
               p Способ оплаты: #{item.payment.method}
+              p Статус: #{item.payment.status}
             .col-12.col-sm-3
                 p Статус: #{item.status}
         hr

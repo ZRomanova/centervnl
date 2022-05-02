@@ -2,20 +2,28 @@ extends layout
 
 block content
   .row
-    h1.col-10= title
+    h1.col-8.col-sm-10#product-name= title
     if !!user
-      form.col-2.heart-container.float-end#likeForm(action="/product/" + product.path + "/like", method="post", role="form")
+      .col-2.col-sm-1
+        button.btn.btn-custom#add-to-bin(type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasRight' aria-controls='offcanvasRight')
+          i.fa-solid.fa-cart-shopping#order-bin #{' ' + bin.products.length}
+        include includes/bin
+      form.col-2.col-sm-1.heart-container.float-end#likeForm(action="/product/" + product.path + "/like", method="post", role="form")
         - var ch = !!Array.from(product.likes).find(el => String(el) == String(user._id))
         input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
         label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
-    else 
-      .col-2.heart-container.float-end
+    else
+      .col-2.col-sm-1
+        a.btn.btn-custom(data-bs-toggle='modal' href='#authModal' role='button')
+          i.fa-solid.fa-cart-shopping
+      .col-2.col-sm-1.heart-container.float-end
         a(data-bs-toggle='modal' href='#authModal' role='button')
           input.d-none#toggle-heart(type="checkbox")
           label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
 
   h4.marck-script
     a(href="/shop/"+product.shop.path)= product.shop.name
+
   .container.p-0
     hr
     if (product.gallery && product.gallery.length) || product.image
@@ -38,7 +46,7 @@ block content
               span.carousel-control-next-icon(aria-hidden="true")
               span.visually-hidden Next
 
-    .col-12.col-sm-5
+    form.col-12.col-sm-5#order(role="form")
       #price.d-none= product.price
       h2.orange-text#priceBox 
         |  #{product.price} ₽
@@ -50,14 +58,15 @@ block content
               h3.marck-script= option.name
               select.marck-script.form-select.form-select-lg(onchange="changeOptionSelect()" id=option._id)
                 each variant in option.variants
-                  option(value=variant.price id=variant._id)= variant.name
+                  option.price-option(value=variant.price id=variant._id)= variant.name
 
       h3.marck-script Количество
       .col-4
-        input.form-control.marck-script(value="1" type="number" min="1")
+        input.form-control.marck-script#count-control(value="1" type="number" min="1" name="count")
 
-      button.btn.btn-custom.mt-5 
-        h5 Добавить в корзину
+      if !!user
+        button.btn.btn-custom.mt-5(onclick="addToBin()" type="button")
+          h5 Добавить в корзину
 
   if product.description
     hr

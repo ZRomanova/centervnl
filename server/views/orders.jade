@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1 Мои заказы
+  hr
+  .col-12.container 
+    each item in orders
+      if item.send 
+        .row
+          .col-12.col-sm-3
+              p Заказ №#{item.number}
+              p Статус: #{item.status}
+              p Адрес: #{item.address}
+              if item.comment
+                p Комментарий: #{item.comment}
+          .col-12.col-sm-6
+            each product in item.products
+              p #{product.name}, #{product.price} ₽ x #{product.count}
+              p #{product.description}
+              br
+            if item.payment.delivery 
+              p Доставка, #{item.payment.delivery} ₽
+              br
+          .col-12.col-sm-3
+            p Стоимость: #{item.payment.price}
+            p Оплачено: #{item.payment.paid}
+            p Способ оплаты: #{item.payment.method}
+            p Статус: #{item.payment.status}
+          
+              //- if item.status == "заявка"
+              //-   form#checkoutOn(method="get" action="/profile/checkout/#{item._id}/отмена")
+              //-     button.btn.btn-danger(type="submit") Отменить
+              //- else if item.status == "отмена"
+              //-   if !item.service.peopleLimit || item.count < item.service.peopleLimit
+              //-     form#checkoutOn(method="get" action="/profile/checkout/#{item._id}/заявка")
+              //-       button.btn.btn-success(type="submit") Участвовать
+              //-   else 
+              //-     button.btn.btn-secondary.disabled Мест нет
+        hr

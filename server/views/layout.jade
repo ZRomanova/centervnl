@@ -12,7 +12,7 @@ html
     script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
 
   body
-    #authModal.modal.fade(aria-hidden='true' aria-labelledby='authModalLabel' tabindex='-1')
+    #authModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='authModalLabel' tabindex='-1')
       .modal-dialog
         .modal-content
           .modal-header
@@ -36,7 +36,7 @@ html
             button.btn.btn-secondary(data-bs-target='#checkRegModal' data-bs-toggle='modal' data-bs-dismiss='modal') Регистрация
             button.btn.btn-custom(type='submit' form="login") Вход
 
-    #authEmoModal.modal.fade(aria-hidden='true' aria-labelledby='authEmoModalLabel' tabindex='-1')
+    #authEmoModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='authEmoModalLabel' tabindex='-1')
       .modal-dialog
         .modal-content
           .modal-header
@@ -54,7 +54,7 @@ html
           .modal-footer
             button.btn.btn-custom(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
 
-    #registrEmoModal.modal.fade(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
+    #registrEmoModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
         .modal-content
           .modal-header
@@ -82,7 +82,7 @@ html
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
             button.btn.btn-custom(type='submit' form="registr-emo") Регистрация
 
-    #registrModal.modal.fade(aria-hidden='true' aria-labelledby='registrModalLabel' tabindex='-1')
+    #registrModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='registrModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
         .modal-content
           .modal-header
@@ -129,7 +129,7 @@ html
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
             button.btn.btn-custom(type="submit" form="registr") Регистрация
 
-    #checkRegModal.modal.fade(tabindex='-1' aria-labelledby='checkRegModalLabel' aria-hidden='true')
+    #checkRegModal.modal.fade.fade-show(tabindex='-1' aria-labelledby='checkRegModalLabel' aria-hidden='true')
       .modal-dialog
         .modal-content
           .modal-header
@@ -140,7 +140,7 @@ html
             button.btn.btn-secondary(data-bs-target='#registrModal' data-bs-toggle='modal' data-bs-dismiss='modal') Нет
             button.btn.btn-custom(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
 
-    #editUserModal.modal.fade(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
+    #editUserModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
       .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
         .modal-content
           .modal-header

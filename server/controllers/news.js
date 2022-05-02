@@ -21,7 +21,7 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
                         post.date = moment(post.date).calendar(null,{
                             lastDay : '[вчера]',
                             sameDay : '[сегодня]',
-                            lastWeek : '[в прошлый] dddd',
+                            lastWeek : 'll',
                             sameElse : 'll'
                         }) 
                     })
@@ -59,7 +59,7 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
                 post.date = moment(post.date).calendar(null,{
                     lastDay : '[вчера]',
                     sameDay : '[сегодня]',
-                    lastWeek : '[в прошлый] dddd',
+                    lastWeek : 'll',
                     sameElse : 'll'
                 })
                 post.servicesObjArray.forEach(el => {

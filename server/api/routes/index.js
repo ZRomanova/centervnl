@@ -10,6 +10,8 @@ router.use('/services', require('./services'))
 router.use('/tags', require('./tags'))
 router.use('/shops', require('./shops'))
 router.use('/products', require('./products'))
+router.use('/registrations', require('./registrations'))
+router.use('/orders', require('./orders'))
 
 
 module.exports = router;

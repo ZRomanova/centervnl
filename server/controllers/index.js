@@ -6,6 +6,7 @@ const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
 const apiRegistrations = require('../api/controllers/registrations')
+const apiOrders = require('../api/controllers/orders')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
@@ -96,6 +97,48 @@ const renderProfilePage = function(req, res, data) {
 }
 
 
+module.exports.getCreateOrder = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+            result.partners = partners
+            await apiProjects.getActive(req, res, async (req, res, projects) => {
+                result.projects = projects
+                await apiShops.getShops(req, res, async (req, res, shops) => {
+                    result.shops = shops
+                    await apiOrders.addToBin(req, res, (req, res, bin) => {
+                        result.bin = bin
+                        renderCreateOrder(req, res, result)
+                    })
+                })
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderCreateOrder = function(req, res, data) {
+    res.render('create-order', {
+        title: 'Новый заказ',
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        bin: data.bin,
+        shops: data.shops
+    })
+}
+
+module.exports.changeStatusCheckouts = async (req, res) => {
+    try {
+        await apiRegistrations.toggleStatus(req, res, (req, res, message) => {
+            res.redirect(req.headers.referer)
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 module.exports.getProfileCheckouts = async function(req, res,) {
     try {
         const result = {}
@@ -117,7 +160,6 @@ module.exports.getProfileCheckouts = async function(req, res,) {
     }
 }
 
-
 const renderProfileCheckouts = function(req, res, data) {
     res.render('checkouts', {
         title: req.user.name + ' ' + req.user.surname,
@@ -129,13 +171,44 @@ const renderProfileCheckouts = function(req, res, data) {
     })
 }
 
-
-module.exports.changeStatusCheckouts = async (req, res) => {
+module.exports.createOrder = async (req, res) => {
     try {
-        await apiRegistrations.toggleStatus(req, res, (req, res, message) => {
-            res.redirect(req.headers.referer)
+        await apiOrders.toggleStatus(req, res, (req, res, message) => {
+            res.redirect('/profile/orders')
         })
     } catch (e) {
         console.log(e)
     }
+}
+
+module.exports.getProfileOrders = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+            result.partners = partners
+            await apiProjects.getActive(req, res, async (req, res, projects) => {
+                result.projects = projects
+                await apiShops.getShops(req, res, async (req, res, shops) => {
+                    result.shops = shops
+                    await apiOrders.getByUser(req, res, (req, res, orders) => {
+                        result.orders = orders
+                        renderProfileOrders(req, res, result)
+                    })
+                })
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderProfileOrders = function(req, res, data) {
+    res.render('orders', {
+        title: req.user.name + ' ' + req.user.surname,
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        orders: data.orders,
+        shops: data.shops
+    })
 }

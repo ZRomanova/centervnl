@@ -1,20 +1,26 @@
 const Service = require('../models/services')
 const Registration = require('../models/registrations')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
 moment.locale('ru')
 
 module.exports.getByService = async function(req, res, next) {
     try {
-        const regs = await Service
-        .find({service: req.params.service, date: req.params.date})
-        .skip(+req.query.offset)
-        .limit(+req.query.limit)
+        const regs = await Registration
+        .find({service: req.params.service, date: new Date(req.params.date)})
         .sort({created: -1})
         .lean()
 
         next(req, res, regs)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getGroups = async function(req, res, next) {
+    try {
+      const groups = await Product.distinct("date", {service: req.params.service})
+      next(req, res, groups)
     } catch (e) {
         errorHandler(res, e)
     }
@@ -77,13 +83,7 @@ module.exports.create = async function(req, res, next) {
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
-        updated.lastChange = {
-            author: req.user.id,
-            time: new Date()
-        }
-        if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        const service = await Service.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        const service = await Registration.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {
         errorHandler(res, e)
@@ -107,16 +107,6 @@ module.exports.check = async function(user, date, service) {
   } catch (e) {
       console.log(e)
   }
-}
-
-
-module.exports.delete = async function(req, res, next) {
-    try {
-        await Registration.deleteOne({_id: req.params.id})
-        next(req, res, {message: "Удалено"})
-    } catch (e) {
-        errorHandler(res, e)
-    }
 }
 
 module.exports.toggleStatus = async function(req, res, next) {

@@ -1,0 +1,32 @@
+#offcanvasRight.offcanvas.offcanvas-end(tabindex='-1' aria-labelledby='offcanvasRightLabel')
+  .offcanvas-header
+    h2#offcanvasRightLabel.marck-script Корзина
+    button.btn-close.text-reset(type='button' data-bs-dismiss='offcanvas' aria-label='Close')
+  .offcanvas-body 
+    #order-list
+      .col-12
+        ul.list-group
+          - var total = 0
+          li.list-group-item.col-12
+            if bin.products.length == 0
+              .col-12 Вы ничего не добавили в корзину
+            each item, index in bin.products 
+              - total += item.price * item.count
+              if index > 0
+                hr.m-4
+              .row
+                .col-11
+                  .row.p-2
+                    .col-8= item.name
+                    .col-4 #{item.price} ₽ x #{item.count}
+                    .col-12= item.description
+                .col-1 
+                  a.col-12(onclick="updateInBin('"+ item._id + "', 1)")
+                    i.fa-solid.fa-plus
+                  a.col-12(onclick="updateInBin('"+ item._id + "', -1)")
+                    i.fa-solid.fa-minus
+                  a.col-12(onclick="updateInBin('"+ item._id +"')")
+                    i.fa-solid.fa-trash
+          h3 Итого: #{total} ₽
+    a.btn.btn-custom.mt-5(href="/profile/order")
+      h5 Оформить заказ
