@@ -17,6 +17,8 @@ import { ServicePageComponent } from './services/service-page/service-page.compo
 import {SlidePageComponent} from './about/slide-page/slide-page.component'
 import { ProductPageComponent } from './shop/product-page/product-page.component';
 import { ShopsListComponent } from './shop/shops-list/shops-list.component';
+import { OrdersListComponent } from './shop/orders-list/orders-list.component';
+import { OrderPageComponent } from './shop/order-page/order-page.component';
 
 const routes: Routes = [
   {
@@ -24,8 +26,10 @@ const routes: Routes = [
       {path: '', redirectTo: '/general', pathMatch: 'full'},
       {path: 'products', component: ShopsListComponent, children: [
         {path: ':shop', component: ProductsListComponent},
+        {path: '', component: OrdersListComponent},
       ]},
       {path: 'products/:shop/:id', component: ProductPageComponent},
+      {path: 'orders/:id', component: OrderPageComponent},
       {path: 'users', component: UsersListComponent},
       {path: 'projects', component: ProjectsListComponent},
       {path: 'projects/:id', component: ProjectPageComponent},

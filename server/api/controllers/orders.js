@@ -1,8 +1,59 @@
 const Order = require('../models/orders')
 const errorHandler = require('../utils/errorHandler')
+const mongoose = require('mongoose')
 const moment = require('moment')
 moment.locale('ru')
 
+module.exports.getOrders = async function(req, res, next) {
+    try {
+        const filter = {}
+        const fields = {}
+        for (const str in req.query) {
+            if (str.length > 7 && str.substring(0, 7) === "filter_") {
+                if (str.slice(-4) == 'user') {
+                    filter.user = mongoose.Types.ObjectId(req.query[str])
+                } else if (str.slice(-6) == 'number') {
+                    if (req.query[str] == 'true') {
+                        filter.number = {$exists: true}
+                    } else {
+                        filter.number = {$exists: false}
+                    }
+                    
+                } else {
+                    filter[str.slice(7)] = req.query[str]
+                }
+            } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
+                fields[str.slice(7)] = +req.query[str]
+            }
+        }
+
+        const products = await Order.aggregate([
+            { $match: filter },
+            { $project: fields },
+            { $sort: {group: 1, name: 1}},
+            { $skip:  +req.query.offset},
+            { $limit:  +req.query.limit},
+            { $lookup:
+                {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+        ])
+        for (const product of products) {
+            if (product.user && product.user.length) {
+                product.user = product.user[0]
+            } else {
+                product.user = null
+            }
+        }
+        next(req, res, products)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
 
 module.exports.getByUser = async function(req, res, next) {
   try {
@@ -92,8 +143,15 @@ module.exports.updateBin = async function (req, res, next) {
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
-        const service = await Order.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
-        next(req, res, service)
+        if (updated.payment.paid >= updated.payment.total) {
+            updated.payment.status = 'оплачен'
+        } else if (updated.payment.paid) {
+            updated.payment.status = 'оплачен частично'
+        } else {
+            updated.payment.status = 'не оплачен'
+        }
+        const item = await Order.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        next(req, res, item)
     } catch (e) {
         errorHandler(res, e)
     }
@@ -101,8 +159,28 @@ module.exports.update = async function(req, res, next) {
 
 module.exports.getById = async function(req, res, next) {
     try {
-        const reg = await Order.findById(req.params.id).lean()
-        next(req, res, reg)
+        const orders = await Order.aggregate([
+            {
+                $match: {_id: mongoose.Types.ObjectId(req.params.id)}
+            },
+            {
+                $lookup:
+                {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            }
+        ])
+
+        if (orders.length){
+            const order = orders[0]
+            if (order.user.length) order.user = order.user[0]
+            next(req, res, order)
+        }
+        else 
+            next(req, res, new Error("Заказ не найден"))
     } catch (e) {
         errorHandler(res, e)
     }

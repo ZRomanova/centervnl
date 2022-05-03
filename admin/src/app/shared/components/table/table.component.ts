@@ -8,6 +8,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class TableComponent implements OnInit {
 
   @Input() data = []
+  @Input() noAdd
   @Input() columns = [2, 2, 5]
   @Input() title = ['Название', 'Дата', 'Описание']
   @Input() offset = 0

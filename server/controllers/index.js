@@ -83,7 +83,6 @@ module.exports.getProfilePage = async function(req, res,) {
     }
 }
 
-
 const renderProfilePage = function(req, res, data) {
     res.render('profile', {
         title: req.user.name + ' ' + req.user.surname,
@@ -95,7 +94,6 @@ const renderProfilePage = function(req, res, data) {
     })
     
 }
-
 
 module.exports.getCreateOrder = async function(req, res,) {
     try {

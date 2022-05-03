@@ -1,0 +1,101 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3>Заказ № {{order.number}}</h3>
+    <hr>
+    <div class="row col-12">
+      <div class="col-4">
+        <h4>Название товара</h4>
+      </div>
+      <div class="col-4">
+        <h4>Опции</h4>
+      </div>
+      <div class="col-2">
+        <h4>Стоимость</h4>
+      </div>
+      <div class="col-2">
+        <h4>Количество</h4>
+      </div>
+    </div>
+
+    <div class="row col-12" *ngFor="let product of order.products">
+      <div class="col-4">
+        <h5>{{product.name}}</h5>
+      </div>
+      <div class="col-4">
+        <h5>{{product.description}}</h5>
+      </div>
+      <div class="col-2">
+        <h5>{{product.price}} руб.</h5>
+      </div>
+      <div class="col-2">
+        <h5>{{product.count}} шт.</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row col-12">
+      <div class="col-8">
+        <h4>Адрес доставки</h4>
+        <h5>{{order.address}}</h5>
+      </div>
+      <div class="col-4">
+        <h4>Стоимость</h4>
+        <h5>{{order.payment.delivery}} руб.</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row col-12">
+      <div class="col-3">
+        <h4>Статус выполнения:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Статус оплаты:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Способ оплаты:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Оплачено:</h4>
+      </div>
+    </div>
+    <div class="row col-12">
+      <div class="col-3">
+        <select class="form-select form-select-lg" formControlName="status">
+          <option *ngFor="let sts of statuses" [value]="sts">{{sts}}</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <h4>{{order.payment.status}}</h4>
+      </div>
+      <div class="col-3" formGroupName="payment">
+        <select class="form-select form-select-lg" formControlName="method">
+          <option *ngFor="let meth of methods" [value]="meth">{{meth}}</option>
+        </select>
+      </div>
+      <div class="col-3 row">
+        <div class="col-6" formGroupName="payment">
+          <input type="number" class="form-control" formControlName="paid">
+        </div>
+        <div class="col-6">
+          <h4>из {{order.payment.total}} руб.</h4>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="order.comment">
+      <hr>
+      <h4>Комментарий:</h4>
+      <h5>{{order.comment}}</h5>
+    </ng-container>
+    <hr>
+    <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+      Назад
+    </button>
+    <button class="btn btn-custom mt-3 mb-3" type="submit">
+        Сохранить
+    </button>
+  </form>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
