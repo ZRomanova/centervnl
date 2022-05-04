@@ -1,0 +1,52 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+          <div class="col-xs-12 col-sm-6">
+              <h3>Редактирование члена команды</h3>
+              <h5>Имя:</h5>
+              <input type="text" class="form-control" formControlName="name">
+
+              <h5>Фамилия:</h5>
+              <input type="text" class="form-control" formControlName="surname">
+
+              <h5>Должность:</h5>
+              <input class="form-control" list="datalistOptions" formControlName="position">
+              <datalist id="datalistOptions">
+                <option *ngFor="let p of positions" [value]="p">{{p}}</option>
+              </datalist>
+
+              <h5>Фото из файла:</h5>
+              <input type="file" class="form-control" (change)="onFileUpload($event)">
+              <h5>Фото по ссылке:</h5>
+              <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
+              placeholder="Добавляйте только общедоступные ссылки">
+
+          </div>
+          <div class="col-xs-12 col-sm-6">
+              <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">
+          </div>
+      </div>
+      
+      <h5>Информация:</h5>
+      <textarea class="form-control" formControlName="description" rows="10"></textarea>
+
+
+      <div class="form-check form-switch mt-2">
+          <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
+          <h5>Отображать на сайте</h5>
+      </div>
+
+
+      <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+          Назад
+      </button>
+      <button class="btn btn-custom mt-3 mb-3" type="submit">
+          Сохранить
+      </button>
+  </form>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

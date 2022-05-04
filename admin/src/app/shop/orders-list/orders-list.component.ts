@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Order } from 'src/app/shared/interfaces';
@@ -12,7 +12,7 @@ const STEP = 100
   templateUrl: './orders-list.component.html',
   styleUrls: ['./orders-list.component.css']
 })
-export class OrdersListComponent implements OnInit {
+export class OrdersListComponent implements OnInit, OnDestroy {
 
   limit = STEP
   offset = 0

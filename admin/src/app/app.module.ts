@@ -26,7 +26,6 @@ import {TokenInterceptor} from './shared/classes/token.interceptor';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { MultiSliderComponent } from './shared/components/multi-slider/multi-slider.component';
 import { PartnersFormComponent } from './about/partners-form/partners-form.component';
-import { StaffFormComponent } from './about/staff-form/staff-form.component';
 import { WantDeleteComponent } from './shared/components/modals/want-delete/want-delete.component';
 import { TableComponent } from './shared/components/table/table.component';
 import { DatePipe } from '@angular/common';
@@ -39,6 +38,9 @@ import { CheckoutListComponent } from './services/checkout-list/checkout-list.co
 import { CheckoutPageComponent } from './services/checkout-page/checkout-page.component';
 import { OrdersListComponent } from './shop/orders-list/orders-list.component';
 import { OrderPageComponent } from './shop/order-page/order-page.component';
+import { StaffsListComponent } from './users/staffs-list/staffs-list.component';
+import { StaffPageComponent } from './users/staff-page/staff-page.component';
+import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,6 @@ import { OrderPageComponent } from './shop/order-page/order-page.component';
     LoginPageComponent,
     MultiSliderComponent,
     PartnersFormComponent,
-    StaffFormComponent,
     WantDeleteComponent,
     TableComponent,
     HorizontalGalleryComponent,
@@ -74,7 +75,10 @@ import { OrderPageComponent } from './shop/order-page/order-page.component';
     CheckoutListComponent,
     CheckoutPageComponent,
     OrdersListComponent,
-    OrderPageComponent
+    OrderPageComponent,
+    StaffsListComponent,
+    StaffPageComponent,
+    UsersLayoutComponent
   ],
   imports: [
     BrowserModule,

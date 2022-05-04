@@ -1,0 +1,22 @@
+.desc-text {
+  width: 100%;
+  border-top: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  height: 40px !important;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.small-photo-table {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.mark-size {
+  font-size: 40px;
+}

@@ -1,2 +1,77 @@
-<app-page-title title="Пользователи" text="Здесь можно редактировать пользователей, смотреть аналитику конкретных людей"></app-page-title>
+<h3>Пользователи <a routerLink="team">Команда</a></h3>
+<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
+  <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
+  <i class="fa fa-arrow-right"></i>
+</a>
+
+
+<div class="container mb-3 mt-5 col-12">
+  <table class="table table-striped">
+      <thead>
+          <tr class="table-primary">
+              <th class="col-1 text-center"><h4>№</h4></th>
+              <th class="col-1 text-center"><h4>Фото</h4></th>
+              <th class="col-2 text-center"><h4>E-mail</h4></th>
+              <th class="col-3 text-center"><h4>ФИО</h4></th>
+              <th class="col-1 text-center"><h4>Создан</h4></th>
+              <th class="col-1 text-center"><h4>ЭМО</h4></th>
+              <th class="col-1 text-center"><h4>Команда</h4></th>
+              <th class="col-1 text-center"><h4>Админ</h4></th>
+              <th class="col-1 text-center">
+                  
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of users; index as i" class="table-light">
+              <td class="col-1 text-center">
+                  <p class="desc-text">{{i + 1 + offset}}</p>
+              </td>
+              <td class="col-1 text-center">
+                  <p class="desc-text" *ngIf="!item.photo">нет</p>
+                  <img class="small-photo-table" *ngIf="item.photo" [src]="item.photo" >
+              </td>
+              <td class="col-2">
+                  <p class="desc-text">{{item.email}}</p>
+              </td>
+              <td class="col-3">
+                  <p class="desc-text">{{item.surname}} {{item.name}} {{item.patronymic}}</p>
+              </td>
+              <td class="col-1 text-center">
+                <p class="desc-text">{{item.dateStr}}</p>
+              </td>
+              <td class="col-1 text-center">
+                <i class="fa-solid fa-check text-success mark-size" *ngIf="item.emo"></i>
+                <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.emo"></i>
+              </td>
+              <td class="col-1 text-center">
+                <i class="fa-solid fa-check text-success mark-size" *ngIf="item.team"></i>
+                <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.team"></i>
+              </td>
+              <td class="col-1 text-center">
+                <i class="fa-solid fa-check text-success mark-size" *ngIf="item.isAdmin"></i>
+                <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.isAdmin"></i>
+              </td>
+              <td class="col-1 text-center">
+                  <a class="btn btn-custom" role="button" (click)="edit(item._id)">
+                      <i class="fa fa-pen"></i>
+                  </a>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
+  <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
+  <i class="fa fa-arrow-right"></i>
+</a>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
 

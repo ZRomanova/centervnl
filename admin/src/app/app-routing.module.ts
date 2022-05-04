@@ -8,9 +8,11 @@ import { ProjectsListComponent } from './projects/projects-list/projects-list.co
 import { ServicesListComponent } from './services/services-list/services-list.component';
 import { ProductsListComponent } from './shop/products-list/products-list.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
+import { StaffsListComponent } from './users/staffs-list/staffs-list.component';
+import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
 import {AdminGuard} from './shared/classes/admin.guard'
 import { LoginPageComponent } from './login-page/login-page.component';
-import { StaffFormComponent } from './about/staff-form/staff-form.component';
+import { StaffPageComponent } from './users/staff-page/staff-page.component';
 import { PartnersFormComponent } from './about/partners-form/partners-form.component';
 import { PostPageComponent } from './blog/post-page/post-page.component';
 import { ServicePageComponent } from './services/service-page/service-page.component';
@@ -19,6 +21,7 @@ import { ProductPageComponent } from './shop/product-page/product-page.component
 import { ShopsListComponent } from './shop/shops-list/shops-list.component';
 import { OrdersListComponent } from './shop/orders-list/orders-list.component';
 import { OrderPageComponent } from './shop/order-page/order-page.component';
+import { UserPageComponent } from './users/user-page/user-page.component';
 
 const routes: Routes = [
   {
@@ -30,7 +33,12 @@ const routes: Routes = [
       ]},
       {path: 'products/:shop/:id', component: ProductPageComponent},
       {path: 'orders/:id', component: OrderPageComponent},
-      {path: 'users', component: UsersListComponent},
+      {path: 'users', component: UsersLayoutComponent, children: [
+        {path: '', component: UsersListComponent},
+        {path: 'team', component: StaffsListComponent},
+      ]},
+      {path: 'users/:id', component: UserPageComponent},
+      {path: 'users/team/:id', component: StaffPageComponent},
       {path: 'projects', component: ProjectsListComponent},
       {path: 'projects/:id', component: ProjectPageComponent},
       {path: 'blog', component: PostsListComponent},
@@ -38,8 +46,6 @@ const routes: Routes = [
       {path: 'services', component: ServicesListComponent},
       {path: 'services/:id', component: ServicePageComponent},
       {path: 'general', component: AboutLayoutComponent},
-      {path: 'staff', component: StaffFormComponent},
-      {path: 'staff/:id', component: StaffFormComponent},
       {path: 'partner', component: PartnersFormComponent},
       {path: 'partner/:id', component: PartnersFormComponent},
       {path: 'slide', component: SlidePageComponent},

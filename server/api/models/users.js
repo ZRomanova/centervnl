@@ -27,7 +27,11 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  emo: mongoose.Types.ObjectId
+  emo: mongoose.Types.ObjectId,
+  team: {
+    ref: 'staffs',
+    type: Schema.Types.ObjectId,
+  },
 })
 
 module.exports = mongoose.model('users', userSchema)

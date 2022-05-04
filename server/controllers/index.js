@@ -7,6 +7,7 @@ const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
+const apiTeam = require('../api/controllers/staffs')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
@@ -209,4 +210,46 @@ const renderProfileOrders = function(req, res, data) {
         orders: data.orders,
         shops: data.shops
     })
+}
+
+
+module.exports.getTeamPage = async function(req, res) {
+    try {
+        const result = {}
+
+        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+            result.partners = partners
+            await apiServices.getAnouncements(req, res, async (req, res, anouncements) => {
+                result.anouncements = anouncements.filter(el => el.image)
+                await apiProjects.getActive(req, res, async (req, res, projects) => {
+                    result.projects = projects
+                    await apiShops.getShops(req, res, async (req, res, shops) => {
+                        result.shops = shops
+                        req.query.visible = true
+                        await apiTeam.getStaffs(req, res, (req, res, staffs) => {
+                            result.staffs = staffs
+                            renderTeamPage(req, res, result)
+                        })
+                    })
+                        
+                })
+            })
+        })
+
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderTeamPage = function(req, res, data) {
+    res.render('team', {
+        title: 'Наша команда | Ресурсный центр Вера Надежда Любовь',
+        anouncements: data.anouncements,
+        team: data.staffs,
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: data.user,
+        shops: data.shops
+    })
+    
 }

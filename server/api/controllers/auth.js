@@ -24,7 +24,7 @@ module.exports.register = async function(req, res, next) {
       } else {
         // Нужно создать пользователя
         const create = {...req.body}
-        if (!create.photo) create.photo = `/images/avatars/user-${req.body.sex}-${randomNumber(1, 10)}.svg`
+        if (!create.photo) create.photo = `https://centervnl.ru/images/avatars/user-${req.body.sex}-${randomNumber(1, 10)}.svg`
         create.password = genPassword(req.body.password)
         create.email = create.email.toLowerCase()
         if (create.patronymic) create.patronymic = cyrillicToTranslit().reverse(create.patronymic[0].toUpperCase() + create.patronymic.slice(1).toLowerCase())

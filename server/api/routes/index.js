@@ -12,6 +12,8 @@ router.use('/shops', require('./shops'))
 router.use('/products', require('./products'))
 router.use('/registrations', require('./registrations'))
 router.use('/orders', require('./orders'))
+router.use('/team', require('./staffs'))
+router.use('/users', require('./users'))
 
 
 module.exports = router;

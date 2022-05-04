@@ -1,1 +1,45 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
+      <h3>Редактирование пользователя</h3>
+      <h5>E-mail:</h5>
+      <input type="text" class="form-control" formControlName="email">
+      <h5>Фамилия:</h5>
+      <input type="text" class="form-control" formControlName="surname">
+      <h5>Имя:</h5>
+      <input type="text" class="form-control" formControlName="name">
+      <h5>Отчество:</h5>
+      <input type="text" class="form-control" formControlName="patronymic">
+
+      <h5>Пол:</h5>
+      <select class="form-select form-select-lg" formControlName="sex">
+        <option [value]="1">Мужчина</option>
+        <option [value]="2">Женщина</option>
+      </select>
+
+      <h5>Информация:</h5>
+      <textarea class="form-control" formControlName="info" rows="5"></textarea>
+
+      <div class="form-check form-switch mt-2">
+          <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="isAdmin">
+          <h5>Админ</h5>
+      </div>
+      <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+          Назад
+      </button>
+      <button class="btn btn-custom mt-3 me-2 mb-3" type="submit">
+          Сохранить
+      </button>
+      <button class="btn btn-secondary mt-3 mb-3" type="button" (click)="onSubmit(true)" *ngIf="!user.team">
+        Добавить в команду
+      </button>
+      <button class="btn btn-custom mt-3 mb-3" type="button" (click)="toTeam()" *ngIf="user.team">
+        Член команды
+      </button>
+  </form>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

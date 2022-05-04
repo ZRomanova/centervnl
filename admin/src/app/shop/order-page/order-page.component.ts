@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +10,7 @@ import { OrdersService } from 'src/app/shared/transport/orders.service';
   templateUrl: './order-page.component.html',
   styleUrls: ['./order-page.component.css']
 })
-export class OrderPageComponent implements OnInit {
+export class OrderPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup
   loading = 1

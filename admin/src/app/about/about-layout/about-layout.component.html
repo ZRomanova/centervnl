@@ -1,4 +1,4 @@
-<app-page-title title="Общий раздел" text="Здесь можно редактировать информацию об организации, такую как содержание главной страницы, контакты, команду, партнёров, документы, отчётность, а также теги"></app-page-title>
+<app-page-title title="Общий раздел" text="Здесь можно редактировать содержание главной страницы, контакты, партнёров, теги"></app-page-title>
 <div class="col" *ngIf="loading == 0; else loader">
     <app-save-button (saveClick)="onSubmit()"></app-save-button>
     <h3>Текст на главной странице <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h3>

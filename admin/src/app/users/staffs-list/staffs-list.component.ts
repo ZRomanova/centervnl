@@ -1,18 +1,17 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from 'src/app/shared/interfaces';
-import { UsersService } from 'src/app/shared/transport/users.service';
+import { Staff } from 'src/app/shared/interfaces';
+import { TeamService } from 'src/app/shared/transport/team.service';
 
 const STEP = 100
 
 @Component({
-  selector: 'app-users-list',
-  templateUrl: './users-list.component.html',
-  styleUrls: ['./users-list.component.css']
+  selector: 'app-staffs-list',
+  templateUrl: './staffs-list.component.html',
+  styleUrls: ['./staffs-list.component.css']
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class StaffsListComponent implements OnInit, OnDestroy {
 
   limit = STEP
   offset = 0
@@ -20,12 +19,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
   now: Date
   oSub: Subscription
-  users: User[]
+  users: Staff[]
   loading = false
   noMore = false
   filter: any = {}
 
-  constructor(private usersService: UsersService, private router: Router, private datePipe: DatePipe) { }
+  constructor(private teamService: TeamService, private router: Router,) { }
 
   ngOnInit(): void {
     this.loading = true
@@ -39,10 +38,11 @@ export class UsersListComponent implements OnInit, OnDestroy {
       limit: this.limit
     })
 
-    this.oSub = this.usersService.fetch(params).subscribe(users => {
+    this.oSub = this.teamService.fetch(params).subscribe(users => {
       this.users = users
       this.users.forEach(user => {
-        user.dateStr = `${user.created ? this.datePipe.transform(user.created, 'dd.MM.yyyy') : '-'}`
+        user.dateStr = `${user.position}`
+        user.name = `${user.surname} ${user.name}`
       })
       this.noMore = users.length < this.limit
       this.loading = false
@@ -57,7 +57,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
   }
 
   edit(id) {
-    this.router.navigate(['users', id])
+    this.router.navigate(['users', 'team', id])
   }
 
   ngOnDestroy(): void {

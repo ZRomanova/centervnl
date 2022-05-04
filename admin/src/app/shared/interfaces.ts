@@ -10,7 +10,9 @@ export interface User {
     sex: '1' | '2',
     emo: string,
     created?: Date,
-    info?: string
+    info?: string,
+    team?: string
+    dateStr?: string
 }
 
 export interface Tag {
@@ -22,18 +24,22 @@ export interface Tag {
 }
 
 export interface Partner {
-    _id?: string,
-    name: string,
-    url?: string,
-    image?: string,
+    _id?: string
+    name: string
+    url?: string
+    image?: string
     visible?: boolean
 }
 
 export interface Staff {
-    _id?: string,
-    name: string,
-    description?: string,
-    photo?: string
+    _id?: string
+    name: string
+    surname: string
+    description?: string
+    image?: string
+    visible: boolean
+    position?: string
+    dateStr?: string
 }
 
 export interface PriceList {
