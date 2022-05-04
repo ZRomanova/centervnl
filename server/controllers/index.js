@@ -248,7 +248,7 @@ const renderTeamPage = function(req, res, data) {
         team: data.staffs,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: data.user,
+        user: req.user,
         shops: data.shops
     })
     
