@@ -156,8 +156,8 @@ body {
 }
 
 .img-7 {
-  width: calc(6vh + 5vw) !important;
-  height: calc(6vh + 5vw) !important;
+  width: calc(3vh + 7vw + 20px) !important;
+  height: calc(3vh + 7vw + 20px) !important;
   border-radius: 50% !important;
   object-fit: cover !important;
 }
