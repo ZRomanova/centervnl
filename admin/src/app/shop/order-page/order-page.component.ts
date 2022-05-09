@@ -33,7 +33,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
         this.data()
         this.loading --
       })
-    } else this.router.navigate(['products'])
+    } else this.back()
   }
 
   data() {

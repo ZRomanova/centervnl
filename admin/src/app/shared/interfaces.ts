@@ -152,14 +152,15 @@ export interface Product {
 
 export interface Payment {
     price: number,
-    delivery: number,
-    total: number,
+    delivery?: number,
+    total?: number,
     discount?: {
         type: string,
         value: string
     },
     status: 'оплачен' | 'не оплачен' | 'оплачен частично'
     method: 'на месте' | 'онлайн'
+    description?: string
     paid?: number
 }
 
@@ -173,6 +174,7 @@ export interface Bin {
 export interface Order {
     user: User,
     status: 'в корзине' | 'в работе' | 'выполнен' | 'доставлен' | 'отменен'
+    statusColor:  'primary' | 'danger' | 'warning'| 'success' | 'secondary' | string
     comment: string //комментарий клиента
     address: string //адрес доставки
     products: Bin[]
@@ -180,6 +182,21 @@ export interface Order {
     created: Date
     send?: Date
     number?: number
+    description?: string
+    dateStr?: string
+    image?: string
+    name?: string
+}
+
+export interface Checkout {
+    user: User | any,
+    status: 'заявка' | 'отмена' | 'участник' | 'неявка' | 'ведущий'
+    statusColor: 'warning' | 'secondary' | 'success' | 'danger' | 'primary' | string
+    info: string //комментарий клиента
+    payment: Payment
+    service: Service | any
+    created: Date
+    date?: Date
     description?: string
     dateStr?: string
     image?: string

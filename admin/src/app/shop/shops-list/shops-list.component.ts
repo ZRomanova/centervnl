@@ -1,6 +1,6 @@
 
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Shop } from 'src/app/shared/interfaces';
 import { ShopsService } from 'src/app/shared/transport/shops.service';
@@ -17,9 +17,16 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   shopForm = false
   currentShop = null
   shopID: string
+  private subscription: Subscription;
 
-  constructor(private shopsService: ShopsService, private router: Router) {
-    
+  constructor(private shopsService: ShopsService, 
+    private activateRoute: ActivatedRoute,
+    private router: Router) {
+      // this.shopID = this.activateRoute.snapshot.params['shop'];
+      // this.subscription = activateRoute.params.subscribe(params => {
+      //   console.log(params)
+      //   this.shopID = params['shop']
+      // });
    }
 
   ngOnInit(): void {
@@ -53,6 +60,7 @@ export class ShopsListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.oSub.unsubscribe()
+    if (this.subscription) this.oSub.unsubscribe()
   }
 
 }

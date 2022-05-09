@@ -1,1 +1,80 @@
-<p>checkout-page works!</p>
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <h3>{{checkout.service.name}}</h3>
+    <h4>Запись на {{checkout.date | date:"dd.MM.yyyy HH:mm"}}</h4>
+    <hr>
+    <div class="row col-12">
+      <div class="col-4">
+        <h4>Пользователь:</h4>
+      </div>
+      <div class="col-4">
+        <h4>Комментарий пользователя:</h4>
+      </div>
+      <div class="col-4">
+        <h4>Комментарий стоимости:</h4>
+      </div>
+    </div>
+    <div class="row col-12">
+      <div class="col-4">
+        <h5>{{checkout.user.email}}</h5>
+        <h5>{{checkout.user.surname}} {{checkout.user.name}} {{checkout.user.patronymic}}</h5>
+      </div>
+      <div class="col-4">
+        <h5>{{checkout.info}}</h5>
+      </div>
+      <div class="col-4">
+        <h5>{{checkout.payment.description}}</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row col-12">
+      <div class="col-3">
+        <h4>Статус заявки:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Статус оплаты:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Способ оплаты:</h4>
+      </div>
+      <div class="col-3">
+        <h4>Оплачено:</h4>
+      </div>
+    </div>
+    <div class="row col-12">
+      <div class="col-3">
+        <select class="form-select form-select-lg" formControlName="status">
+          <option *ngFor="let sts of statuses" [value]="sts">{{sts}}</option>
+        </select>
+      </div>
+      <div class="col-3">
+        <h4>{{checkout.payment.status}}</h4>
+      </div>
+      <div class="col-3" formGroupName="payment">
+        <select class="form-select form-select-lg" formControlName="method">
+          <option *ngFor="let meth of methods" [value]="meth">{{meth}}</option>
+        </select>
+      </div>
+      <div class="col-3 row">
+        <div class="col-6" formGroupName="payment">
+          <input type="number" class="form-control" formControlName="paid">
+        </div>
+        <div class="col-6">
+          <h4>из {{checkout.payment.price}} руб.</h4>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+      Назад
+    </button>
+    <button class="btn btn-custom mt-3 mb-3" type="submit">
+        Сохранить
+    </button>
+  </form>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

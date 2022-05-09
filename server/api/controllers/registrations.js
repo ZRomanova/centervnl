@@ -1,15 +1,34 @@
 const Service = require('../models/services')
 const Registration = require('../models/registrations')
 const errorHandler = require('../utils/errorHandler')
+const mongoose = require('mongoose')
 const moment = require('moment')
 moment.locale('ru')
 
 module.exports.getByService = async function(req, res, next) {
     try {
-        const regs = await Registration
-        .find({service: req.params.service, date: new Date(req.params.date)})
-        .sort({created: -1})
-        .lean()
+
+        const regs = await Registration.aggregate([
+            { $match: {date: new Date(req.params.date), service: mongoose.Types.ObjectId(req.params.service)} }, //
+            { $sort: {created: -1}},
+            { $skip:  +req.query.offset},
+            { $limit:  +req.query.limit},
+            { $lookup:
+                {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+        ])
+        for (const reg of regs) {
+            if (reg.user && reg.user.length) {
+                reg.user = reg.user[0]
+            } else {
+                reg.user = null
+            }
+        }
 
         next(req, res, regs)
     } catch (e) {
@@ -19,7 +38,7 @@ module.exports.getByService = async function(req, res, next) {
 
 module.exports.getGroups = async function(req, res, next) {
     try {
-      const groups = await Product.distinct("date", {service: req.params.service})
+      const groups = await Registration.distinct("date", {service: req.params.service})
       next(req, res, groups)
     } catch (e) {
         errorHandler(res, e)
@@ -83,6 +102,13 @@ module.exports.create = async function(req, res, next) {
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
+        if (updated.payment.paid >= updated.payment.price) {
+            updated.payment.status = 'оплачен'
+        } else if (updated.payment.paid) {
+            updated.payment.status = 'оплачен частично'
+        } else {
+            updated.payment.status = 'не оплачен'
+        }
         const service = await Registration.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {
@@ -92,8 +118,38 @@ module.exports.update = async function(req, res, next) {
 
 module.exports.getById = async function(req, res, next) {
     try {
-        const reg = await Registration.findById(req.params.id).lean()
-        next(req, res, reg)
+        const orders = await Registration.aggregate([
+            {
+                $match: {_id: mongoose.Types.ObjectId(req.params.id)}
+            },
+            {
+                $lookup:
+                {
+                    from: 'users',
+                    localField: 'user',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $lookup:
+                {
+                    from: 'services',
+                    localField: 'service',
+                    foreignField: '_id',
+                    as: 'service'
+                }
+            }
+        ])
+
+        if (orders.length){
+            const order = orders[0]
+            if (order.user.length) order.user = order.user[0]
+            if (order.service.length) order.service = order.service[0]
+            next(req, res, order)
+        }
+        else 
+            next(req, res, new Error("Запись не найдена"))
     } catch (e) {
         errorHandler(res, e)
     }

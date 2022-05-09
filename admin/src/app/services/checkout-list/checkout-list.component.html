@@ -1,1 +1,37 @@
-<p>checkout-list works!</p>
+<ng-container *ngIf="ready <= 0; else loader">
+  <app-page-title title="Запись" text="{{service.name}}"></app-page-title>
+
+  <ng-container *ngIf="dates && dates.length; else noDates">
+    <ng-container *ngFor="let chd of dates">
+      <button class="btn me-2" role="button" (click)="newDate(chd)" [ngClass]="{'btn-warning': chd == date, 'btn-custom': chd != date}">
+        {{chd | date:"dd.MM.yyyy HH:mm"}}
+      </button>
+    </ng-container>
+  </ng-container>
+  <ng-template #noDates>
+    <h3>Записей нет</h3>
+  </ng-template>
+
+  <ng-container *ngIf="!loading && dates && dates.length" >
+    <hr>
+    <a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+      <i class="fa fa-arrow-left"></i>
+    </a>
+    <a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && checkouts.length">
+        <i class="fa fa-arrow-right"></i>
+    </a>
+    <app-table [noAdd]="true" (edit)="edit($event)" 
+    [data]="checkouts" [offset]="offset" [title]="['Пользователь', 'Информация', 'Комментарий']" [columns]="[4, 2, 3]"></app-table>
+
+    <a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0">
+        <i class="fa fa-arrow-left"></i>
+    </a>
+    <a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && checkouts.length">
+        <i class="fa fa-arrow-right"></i>
+    </a>
+  </ng-container>
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

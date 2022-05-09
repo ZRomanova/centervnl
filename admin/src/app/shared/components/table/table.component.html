@@ -15,9 +15,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of data; index as i" [ngClass]="{'table-success': item.visible || item.status === 'доставлен', 
-            'table-warning': item.status === 'выполнен', 'table-secondary': item.status === 'отменен',
-            'table-danger': item.visible === false || item.status === 'в работе'}">
+            <tr *ngFor="let item of data; index as i" [ngClass]="{'table-success': item.visible || item.statusColor === 'success', 
+            'table-warning': item.statusColor === 'warning', 'table-secondary': item.statusColor === 'secondary',
+            'table-danger': item.visible === false || item.statusColor === 'danger', 'table-primary': item.statusColor === 'primary'}">
                 <td class="col-1 text-center">
                     <p class="desc-text">{{item.number ? item.number : (i + 1 + offset)}}</p>
                 </td>
@@ -29,7 +29,11 @@
                     <p class="desc-text">{{item.name}}</p>
                 </td>
                 <td class="col-{{columns[1]}}">
-                    <p class="desc-text">{{item.dateStr}}</p>
+                    <button class="btn" [ngClass]="{'bg-success': item.dateStr == 'Открыта', 'bg-danger': item.dateStr == 'Закрыта'}" style="color: #fff"
+                    [routerLink]="['checkouts', item._id]" *ngIf="item.dateStr == 'Открыта' || item.dateStr == 'Закрыта'; else dtmpl">{{item.dateStr}}</button>
+                    <ng-template #dtmpl>
+                        <p class="desc-text">{{item.dateStr}}</p>
+                    </ng-template>
                 </td>
                 <td class="col-{{columns[2]}} text-justify">
                     <p class="desc-text">{{item.description}}</p>

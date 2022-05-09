@@ -22,6 +22,8 @@ import { ShopsListComponent } from './shop/shops-list/shops-list.component';
 import { OrdersListComponent } from './shop/orders-list/orders-list.component';
 import { OrderPageComponent } from './shop/order-page/order-page.component';
 import { UserPageComponent } from './users/user-page/user-page.component';
+import { CheckoutListComponent } from './services/checkout-list/checkout-list.component';
+import { CheckoutPageComponent } from './services/checkout-page/checkout-page.component';
 
 const routes: Routes = [
   {
@@ -44,6 +46,8 @@ const routes: Routes = [
       {path: 'blog', component: PostsListComponent},
       {path: 'blog/:id', component: PostPageComponent},
       {path: 'services', component: ServicesListComponent},
+      {path: 'services/checkouts/:id', component: CheckoutListComponent},
+      {path: 'services/checkout/:id', component: CheckoutPageComponent},
       {path: 'services/:id', component: ServicePageComponent},
       {path: 'general', component: AboutLayoutComponent},
       {path: 'partner', component: PartnersFormComponent},
