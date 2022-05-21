@@ -58,7 +58,7 @@ block content
           textarea.form-control(name='info', form="priceList")
 
         if !user
-          button.orange-button#checkout(disabled, data-bs-toggle='modal', href='#authModal', type="button") Для записи зарегистрируйтесь
+          button.orange-button(data-bs-toggle='modal', href='#authModal', type="button") Для записи зарегистрируйтесь
         else 
           button.orange-button#checkout(disabled, type="submit", form="priceList") Записаться
 
