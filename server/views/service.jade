@@ -17,6 +17,9 @@ block content
     if service.address
       h4.marck-script Место проведения: #{service.address}
   hr
+  if service.description
+    p.text-justify.col-12 !{service.description}
+    hr
   if service.active 
     h2 Запись
     .row
@@ -69,10 +72,6 @@ block content
       each single in service.date.single
         .m-1= single.text_inactive
     h4.marck-script Ждите анонсов!
-
-  if service.description
-    hr
-    p.text-justify.col-12 !{service.description}
 
   if service.image || (service.gallery && service.gallery.length) 
     hr
