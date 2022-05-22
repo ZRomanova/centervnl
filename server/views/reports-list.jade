@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1= title
+  each year in years
+    a.orange-button.m-3(href="/reports/" + year)= year
+  hr

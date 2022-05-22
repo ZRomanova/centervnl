@@ -66,9 +66,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       this.shops = shops
       this.loading --
     })
-    this.sSub = this.shopsService.fetchGroups(this.shop).subscribe(groups => {
+    this.gSub = this.shopsService.fetchGroups(this.shop).subscribe(groups => {
       this.groups = groups
-      console.log(groups)
       this.loading --
     })
   }
@@ -223,6 +222,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.oSub) this.oSub.unsubscribe()
     if (this.iSub) this.iSub.unsubscribe()
+    if (this.sSub) this.sSub.unsubscribe()
+    if (this.gSub) this.gSub.unsubscribe()
   }
 
 }

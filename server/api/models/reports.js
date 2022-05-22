@@ -7,25 +7,23 @@ const reportsSchema = new Schema({
     required: true,
     unique: true
   },
+  title: String,
+  content: String,
   chapters: [{
     title: String,
+    link: String,
+    content: String,
     sections: [{
       title: String,
-      contentType: {
-        type: String,
-        enum: ["text", "team", "projects"]
-      },
-      content: Array
+      link: String,
+      content: String
     }]
   }],
   created: {
     type: Date,
     default: Date.now
   },
-  updated: {
-    type: Date,
-    default: Date.now
-  },
+  updated:  Date,
   visible: Boolean
 })
 

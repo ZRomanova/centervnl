@@ -24,6 +24,8 @@ import { OrderPageComponent } from './shop/order-page/order-page.component';
 import { UserPageComponent } from './users/user-page/user-page.component';
 import { CheckoutListComponent } from './services/checkout-list/checkout-list.component';
 import { CheckoutPageComponent } from './services/checkout-page/checkout-page.component';
+import { ReportsListComponent } from './reports/reports-list/reports-list.component';
+import { ReportPageComponent } from './reports/report-page/report-page.component';
 
 const routes: Routes = [
   {
@@ -54,6 +56,8 @@ const routes: Routes = [
       {path: 'partner/:id', component: PartnersFormComponent},
       {path: 'slide', component: SlidePageComponent},
       {path: 'slide/:id', component: SlidePageComponent},
+      {path: 'reports', component: ReportsListComponent},
+      {path: 'reports/:id', component: ReportPageComponent},
     ],
   },
   {path: 'login', component: LoginPageComponent}

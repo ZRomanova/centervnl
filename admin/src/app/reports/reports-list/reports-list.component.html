@@ -1,0 +1,40 @@
+<app-page-title title="Годовые отчёты" text="Здесь можно добавлять и редактировать годовые отчёты"></app-page-title>
+
+<div class="container mb-3 mt-5 col-12" *ngIf="!loading; else loader">
+  <table class="table table-striped">
+      <thead>
+          <tr class="table-primary">
+              <th class="col-1 text-center"><h4>Год</h4></th>
+              <th class="col-2 text-center"><h4>Создан</h4></th>
+              <th class="col-8 text-center"><h4>Название</h4></th>
+              <th class="col-1 text-center">
+                <a class="btn btn-custom" role="button" (click)="edit('new')">
+                  <i class="fa fa-plus"></i>
+                </a>
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of reports" class="table-light">
+              <td class="col-1 text-center">
+                  <p class="desc-text">{{item.year}}</p>
+              </td>
+              <td class="col-2 text-center">
+                <p class="desc-text">{{item.dateStr}}</p>
+              </td>
+              <td class="col-8 text-center">
+                <p class="desc-text">{{item.title}}</p>
+              </td>
+              <td class="col-1 text-center">
+                  <a class="btn btn-custom" role="button" (click)="edit(item._id)">
+                      <i class="fa fa-pen"></i>
+                  </a>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

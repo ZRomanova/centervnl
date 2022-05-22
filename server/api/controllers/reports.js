@@ -1,81 +1,68 @@
-const Reports = require('../models/reports')
-const Team = require('../models/staffs')
+const Report = require('../models/reports')
 const errorHandler = require('../utils/errorHandler')
 
-module.exports.getStaffs = async function(req, res, next) {
+module.exports.getReports = async function(req, res, next) {
     try {
         const filter = {}
         if (req.query.visible) filter.visible = true
-        const partners = await Staff.find(filter).skip(+req.query.offset).limit(+req.query.limit).lean()
-        next(req, res, partners)
+        const reports = await Report.find(filter).sort({year: -1}).lean()
+        next(req, res, reports)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.getStaffById = async function(req, res, next) {
+module.exports.getReportById = async function(req, res, next) {
     try {
-        const staff = await Staff.findById(req.params.id).lean()
-        next(req, res, staff)
+        const report = await Report.findById(req.params.id).lean()
+        next(req, res, report)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.createStaff = async function(req, res, next) {
+module.exports.getReportByYear = async function(req, res, next) {
+    try {
+        const report = await Report.findOne({year: req.params.year, visible: true}).lean()
+        next(req, res, report)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.createReport = async function(req, res, next) {
     try {
         const created = req.body
-        const staff = await new Staff(created).save()
-        next(req, res, staff)
+        const report = await new Report(created).save()
+        next(req, res, report)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.addStaff = async function(req, res, next) {
-    try {
-        const created = req.body
-        const staff = await new Staff(created).save()
-        await User.updateOne({_id: req.params.id}, {$set: {team: staff._id}}, {new: true})
-        next(req, res, staff)
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
-
-module.exports.deleteStaff = async function(req, res, next) {
-    try {
-        await Staff.deleteOne({_id: req.params.id})
-        next(req, res, {message: "Удалено"})
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
-
-module.exports.updateStaff = async function(req, res, next) {
+module.exports.updateReport = async function(req, res, next) {
     try {
         const updated = req.body
-        const staff = await Staff.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
-        next(req, res, staff)
+        updated.updated = new Date()
+        const report = await Report.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        next(req, res, report)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.uploadImagesStaff = async function(req, res, next) {
+module.exports.getChapters = async function(req, res, next) {
     try {
-        const updated = {}
-        if (req.file) updated.image = 'https://centervnl.ru/uploads/' + req.file.filename
-        const staff = await Staff.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
-        next(req, res, staff)
+      const positions = await Report.distinct("chapters.title", {})
+      next(req, res, positions)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.getPositions = async function(req, res, next) {
+module.exports.getYears = async function(req, res, next) {
     try {
-      const positions = await Staff.distinct("position", {})
+      const positions = await Report.distinct("year", {visible: true})
       next(req, res, positions)
     } catch (e) {
         errorHandler(res, e)

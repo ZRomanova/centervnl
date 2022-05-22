@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Наша команда
   each staff in team 
-    .col-12.m-2.p-3 
+    .col-12.m-2.p-3(id=staff._id)
       .row.grey-container
         .col-4.col-md-2 
           img.rounded.mx-auto.d-block.img-thumbnail.img-7.m-2(alt=staff.name src=staff.image )

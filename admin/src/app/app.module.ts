@@ -41,6 +41,8 @@ import { OrderPageComponent } from './shop/order-page/order-page.component';
 import { StaffsListComponent } from './users/staffs-list/staffs-list.component';
 import { StaffPageComponent } from './users/staff-page/staff-page.component';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
+import { ReportsListComponent } from './reports/reports-list/reports-list.component';
+import { ReportPageComponent } from './reports/report-page/report-page.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,9 @@ import { UsersLayoutComponent } from './users/users-layout/users-layout.componen
     OrderPageComponent,
     StaffsListComponent,
     StaffPageComponent,
-    UsersLayoutComponent
+    UsersLayoutComponent,
+    ReportsListComponent,
+    ReportPageComponent
   ],
   imports: [
     BrowserModule,
