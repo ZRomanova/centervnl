@@ -2,6 +2,7 @@ const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiReports = require('../api/controllers/reports')
+const apiData = require('../api/controllers/data')
 const moment = require('moment')
 
 moment.locale('ru')
@@ -21,6 +22,10 @@ module.exports.getReportsListPage = async function(req, res, data = {}) {
         await apiReports.getYears(req, res, (req, res, years) => {
             result.years = years
         })
+        req.params.type = "REPORTS"
+        await apiData.getByType(req, res, (req, res, home) => {
+            result.text = home.text
+        })
         renderReportListPage(req, res, result)
     } catch (e) {
         console.log(e)
@@ -30,6 +35,7 @@ module.exports.getReportsListPage = async function(req, res, data = {}) {
 const renderReportListPage = function(req, res, data) {
     res.render('reports-list', {
         title: 'Годовые отчёты',
+        text: data.text,
         years: data.years,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 

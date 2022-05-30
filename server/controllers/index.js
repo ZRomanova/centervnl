@@ -14,34 +14,34 @@ module.exports.getHomePage = async function(req, res, data = {}) {
         if (data.user) req.user = data.user
         const result = {user: req.user}
         req.params.type = "CONTACTS"
-        await apiData.getByType(req, res, async (req, res, contacts) => {
+        await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
-            req.params.type = "HOME"
-            await apiData.getByType(req, res, async (req, res, home) => {
-                result.description = home.text
-                await apiPartners.getPartners(req, res, async (req, res, partners) => {
-                    result.partners = partners
-                    await apiServices.getAnouncements(req, res, async (req, res, anouncements) => {
-                        result.anouncements = anouncements.filter(el => el.image)
-                        await apiProjects.getActive(req, res, async (req, res, projects) => {
-                            result.projects = projects
-                            req.query = {offset: 0, limit: 16}
-                            await apiPosts.getPosts(req, res, async (req, res, posts) => {
-                                result.posts = posts
-                                req.params.type = "GALLERY"
-                                await apiData.getByType(req, res, async (req, res, gallery) => {
-                                    result.gallery = gallery.filter(el => el.image && el.visible)
-                                    await apiShops.getShops(req, res, (req, res, shops) => {
-                                        result.shops = shops
-                                        renderHomePage(req, res, result)
-                                    })
-                                })
-                            })
-                        })
-                    })
-                })
-            })
         })
+        req.params.type = "HOME"
+        await apiData.getByType(req, res, (req, res, home) => {
+            result.description = home.text
+        })
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiServices.getAnouncements(req, res, (req, res, anouncements) => {
+            result.anouncements = anouncements.filter(el => el.image)
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        req.query = {offset: 0, limit: 16}
+        await apiPosts.getPosts(req, res, (req, res, posts) => {
+            result.posts = posts
+        })
+        req.params.type = "GALLERY"
+        await apiData.getByType(req, res, (req, res, gallery) => {
+            result.gallery = gallery.filter(el => el.image && el.visible)
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderHomePage(req, res, result)
     } catch (e) {
         console.log(e)
     }
@@ -66,19 +66,19 @@ const renderHomePage = function(req, res, data) {
 module.exports.getProfilePage = async function(req, res,) {
     try {
         const result = {}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getActive(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiShops.getShops(req, res, async (req, res, shops) => {
-                    result.shops = shops
-                    await apiUser.profile(req, res, (req, res, profile) => {
-                        result.profile = profile
-                        renderProfilePage(req, res, result)
-                    })
-                })
-            })
         })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiUser.profile(req, res, (req, res, profile) => {
+            result.profile = profile
+        })
+        renderProfilePage(req, res, result)
     } catch (e) {
         console.log(e)
     }
@@ -99,19 +99,19 @@ const renderProfilePage = function(req, res, data) {
 module.exports.getCreateOrder = async function(req, res,) {
     try {
         const result = {}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
             result.partners = partners
-            await apiProjects.getActive(req, res, async (req, res, projects) => {
-                result.projects = projects
-                await apiShops.getShops(req, res, async (req, res, shops) => {
-                    result.shops = shops
-                    await apiOrders.addToBin(req, res, (req, res, bin) => {
-                        result.bin = bin
-                        renderCreateOrder(req, res, result)
-                    })
-                })
-            })
         })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiOrders.addToBin(req, res, (req, res, bin) => {
+            result.bin = bin
+        })
+        renderCreateOrder(req, res, result)
     } catch (e) {
         console.log(e)
     }

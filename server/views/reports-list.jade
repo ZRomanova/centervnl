@@ -2,6 +2,10 @@ extends layout
 
 block content
   h1= title
+  hr
   each year in years
     a.orange-button.m-3(href="/reports/" + year)= year
   hr
+  if text
+    p.text-justify.col-12 !{text}
+    hr

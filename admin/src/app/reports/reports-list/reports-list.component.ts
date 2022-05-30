@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Report } from 'src/app/shared/interfaces';
+import { GeneralService } from 'src/app/shared/transport/general.service';
 import { ReportsService } from 'src/app/shared/transport/reports.service';
 
 @Component({
@@ -15,8 +17,12 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   reports: Report[]
   loading = false
   oSub: Subscription
+  cSub: Subscription
+  form: FormGroup
+  htModal = false
 
   constructor(private datePipe: DatePipe,
+    private generalService: GeneralService, 
     private reportsService: ReportsService,
     private router: Router) { }
 
@@ -34,16 +40,37 @@ export class ReportsListComponent implements OnInit, OnDestroy {
         // })
         // report.description = description
       })
-      this.loading = false
+      this.generalService.fetch("REPORTS").subscribe(data => {
+        this.form = new FormGroup({
+          text: new FormControl(data.text)
+        })
+        this.loading = false
+      })
+      
     })
+  }
+
+  openHtModal() {
+    this.htModal = true
+  }
+  closeHtModal(event) {
+    this.htModal = false
   }
 
   edit(id) {
     this.router.navigate(['reports', id])
   }
 
+  onSubmit() {
+    this.form.disable()
+    this.cSub = this.generalService.update("REPORTS", this.form.value).subscribe(value => {
+      this.form.patchValue(value)
+    })
+  }
+
   ngOnDestroy(): void {
     this.oSub.unsubscribe()
+    this.cSub.unsubscribe()
   }
 
 }
