@@ -69,8 +69,8 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.oSub.unsubscribe()
-    this.cSub.unsubscribe()
+    if (this.oSub) this.oSub.unsubscribe()
+    if (this.cSub) this.cSub.unsubscribe()
   }
 
 }
