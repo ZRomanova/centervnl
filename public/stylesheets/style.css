@@ -551,3 +551,9 @@ body {
   border: 3px solid #cccccc;
   border-radius: 10px;
 }
+
+@media (min-width: 768px) {
+  .text-420 {
+    min-height: 420px;
+  }
+}

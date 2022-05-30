@@ -51,10 +51,11 @@ block content
           button.carousel-control-next(type="button" data-bs-target="#anouncements" data-bs-slide="next")
             span.carousel-control-next-icon(aria-hidden="true")
             span.visually-hidden Next
+  .col-12.text-420
+    p.text-justify !{text}
 
-  p.text-justify.col-12 !{text}
 
-  .col-12.bg-light-blue.text-dark-blue#contacts
+  .col-12.bg-light-blue.text-dark-blue.d-block#contacts
     h1.text-center СВЯЖИТЕСЬ С НАМИ
     #coords.d-none= contacts.coords
     .row
