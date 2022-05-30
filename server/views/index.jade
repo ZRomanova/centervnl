@@ -31,7 +31,7 @@ block content
     hr
 
   if anouncements.length
-    .col-xs-12.col-sm-8
+    .col-xs-12.col-sm-8.float-end
       .carousel.slide#anouncements(data-bs-ride="carousel")
         .carousel-inner
           each item in anouncements
@@ -40,7 +40,7 @@ block content
               .carousel-caption.yellow-text.text-block-anouncement
                 .mh-300
                   h3.marck-script= item.name
-                  p.text-justify.text-ellipsis !{item.description}
+                  .text-justify.text-ellipsis !{item.description}
                 .row
                   .col-12
                     a.orange-button(href='/services/' + item.path) Запись
@@ -52,7 +52,7 @@ block content
             span.carousel-control-next-icon(aria-hidden="true")
             span.visually-hidden Next
   .col-12.text-420
-    p.text-justify !{text}
+    .text-justify !{text}
 
 
   .col-12.bg-light-blue.text-dark-blue.d-block#contacts

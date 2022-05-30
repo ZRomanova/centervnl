@@ -17,13 +17,13 @@ block content
         h3(id= chapter._id) #{i + 1} #{chapter.title}
     else
       h3(id= chapter._id) #{i + 1} #{chapter.title}
-    p.text-justify.col-12 !{chapter.content}
+    .text-justify.col-12 !{chapter.content}
     each section, j in chapter.sections 
       if section.link
         a.text-dark-blue(href= section.link, target="_blank")
           h4(id= section._id) #{j + 1} #{section.title} 
       else
         h4(id= section._id) #{j + 1} #{section.title} 
-      p.text-justify.col-12 !{section.content}
+      .text-justify.col-12 !{section.content}
 
   hr
