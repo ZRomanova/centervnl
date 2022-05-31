@@ -67,6 +67,47 @@
             </div>
         </div>
     </div>
+
+
+    <div class="container mb-3 mt-5">
+        <div class="row">
+            <div class="col-6">
+                <h3>Уставные документы</h3>
+            </div>
+            <div class="col-6 text-right">
+                <a class="btn btn-custom mb-3 me-2" role="button" (click)="backDocs()">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a class="btn btn-custom mb-3 me-2" role="button" (click)="openDocForm('new')">
+                    <i class="fa fa-plus"></i>
+                </a>
+                <a class="btn btn-custom mb-3" role="button" (click)="nextDocs()">
+                    <i class="fa fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="col-12" *ngIf="docsSort">
+                <ng-container *ngFor="let item of docsSort; index as i">
+                    <div class="carousel-item" [ngClass]="{'active': i == activeDocsPage}" >
+                        <div class="row">
+                            <div class="col-md-4 mb-3" *ngFor="let box of item">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{box.name}}</h4>
+                                        <p>{{box.description}}</p>
+                                        <div *ngIf="!box.spetial">
+                                            <a class="btn btn-custom me-2" role="button" (click)="openDocForm(box._id)">
+                                                <i class="fa fa-pen"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 </div>
 
 <app-add-tag (close)="closeTagForm($event)" [tag]="currentTag" *ngIf="tagForm"></app-add-tag>

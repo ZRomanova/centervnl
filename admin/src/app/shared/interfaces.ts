@@ -31,6 +31,14 @@ export interface Partner {
     visible?: boolean
 }
 
+export interface Doc {
+    _id?: string
+    name: string
+    description?: string
+    file?: string
+    visible?: boolean
+}
+
 export interface Staff {
     _id?: string
     name: string

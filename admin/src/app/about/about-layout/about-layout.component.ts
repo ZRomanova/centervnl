@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import {GeneralService} from '../../shared/transport/general.service'
 import {PartnersService} from '../../shared/transport/partners.service'
 import {TagService} from '../../shared/transport/tag.service'
-import {Partner, Staff, Tag} from '../../shared/interfaces'
+import {DocsService} from '../../shared/transport/documents.service'
+import {Doc, Partner, Staff, Tag} from '../../shared/interfaces'
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,17 +26,22 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   hSub: Subscription
   tSub: Subscription
   gSub: Subscription
+  dSub: Subscription
   partners: Partner[]
   team: Staff[]
   tagForm = false
   currentTag = null
   tags: Tag[]
   tagSort: any[] = []
+  docs: Doc[]
+  docsSort: any[] = []
   activeTagsPage = 0
+  activeDocsPage = 0
   gallery: any[]
 
   constructor(private generalService: GeneralService, 
     private partnersService: PartnersService, 
+    private docsService: DocsService, 
     private tagsService: TagService, 
     private router: Router) { }
 
@@ -63,6 +69,10 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.tSub = this.tagsService.fetch().subscribe(tags => {
       this.tags = tags
       this.tagSort = this.makeArray(this.tags)
+    })
+    this.dSub = this.docsService.fetch().subscribe(docs => {
+      this.docs = docs
+      this.docsSort = this.makeArray(this.docs)
     })
     this.gSub = this.generalService.fetch("GALLERY").subscribe(data => {
       this.gallery = data ? data : []
@@ -130,6 +140,10 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.tagForm = true
   }
 
+  openDocForm(id) {
+    this.router.navigate(['documents', id])
+  }
+
   closeTagForm(tag) {
     if (tag) {
       if (this.currentTag) {
@@ -145,15 +159,24 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.tagForm = false
   }
 
+  backTags() {
+    if (this.activeTagsPage == 0) this.activeTagsPage = this.tagSort.length - 1
+    else this.activeTagsPage --
+  }
 
   nextTags() {
     if (this.activeTagsPage == this.tagSort.length - 1) this.activeTagsPage = 0
     else this.activeTagsPage ++
   }
 
-  backTags() {
-    if (this.activeTagsPage == 0) this.activeTagsPage = this.tagSort.length - 1
-    else this.activeTagsPage --
+  backDocs() {
+    if (this.activeDocsPage == 0) this.activeDocsPage = this.docsSort.length - 1
+    else this.activeDocsPage --
+  }
+
+  nextDocs() {
+    if (this.activeDocsPage == this.docsSort.length - 1) this.activeDocsPage = 0
+    else this.activeDocsPage ++
   }
 
   ngOnDestroy() {
@@ -162,5 +185,6 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     if (this.gSub) this.gSub.unsubscribe()
     if (this.tSub) this.tSub.unsubscribe()
     if (this.cSub) this.cSub.unsubscribe()
+    if (this.dSub) this.dSub.unsubscribe()
   }
 }

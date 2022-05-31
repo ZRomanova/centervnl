@@ -10,7 +10,7 @@ router.put('/:type', passport.authenticate('jwt', {session: false}), auth.isAdmi
 router.post('/gallery', passport.authenticate('jwt', {session: false}), auth.isAdmin, upload.single('image'), (req, res) => controller.addToGallery(req, res, responseJson))
 router.patch('/gallery/:id', passport.authenticate('jwt', {session: false}), auth.isAdmin, upload.single('image'), (req, res) => controller.updateInGallery(req, res, responseJson))
 router.delete('/gallery/:id', passport.authenticate('jwt', {session: false}), auth.isAdmin, (req, res) => controller.removeFormGallery(req, res, responseJson))
-router.get('/:type', (req, res) => controller.getByType(req, res, responseJson))
+router.get('/:type', passport.authenticate('jwt', {session: false}), auth.isAdmin, (req, res) => controller.getByType(req, res, responseJson))
 
 
 module.exports = router;

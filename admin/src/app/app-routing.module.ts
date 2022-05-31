@@ -26,6 +26,7 @@ import { CheckoutListComponent } from './services/checkout-list/checkout-list.co
 import { CheckoutPageComponent } from './services/checkout-page/checkout-page.component';
 import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 import { ReportPageComponent } from './reports/report-page/report-page.component';
+import { DocsFormComponent } from './about/docs-form/docs-form.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,7 @@ const routes: Routes = [
       {path: 'general', component: AboutLayoutComponent},
       {path: 'partner', component: PartnersFormComponent},
       {path: 'partner/:id', component: PartnersFormComponent},
+      {path: 'documents/:id', component: DocsFormComponent},
       {path: 'slide', component: SlidePageComponent},
       {path: 'slide/:id', component: SlidePageComponent},
       {path: 'reports', component: ReportsListComponent},

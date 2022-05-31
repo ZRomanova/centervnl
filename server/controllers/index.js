@@ -5,6 +5,7 @@ const apiServices = require('../api/controllers/services')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
+const apiDocs = require('../api/controllers/docs')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
 const apiTeam = require('../api/controllers/staffs')
@@ -250,6 +251,39 @@ const renderTeamPage = function(req, res, data) {
         footer_logos: data.partners, 
         user: req.user,
         shops: data.shops
+    })
+    
+}
+
+module.exports.getDocsPage = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiDocs.getDocuments(req, res, (req, res, docs) => {
+            result.docs = docs.filter(doc => doc.visible && doc.name && doc.file)
+        })
+        renderDocsPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderDocsPage = function(req, res, data) {
+    res.render('docs', {
+        title: 'Уставные документы',
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        shops: data.shops,
+        docs: data.docs,
     })
     
 }

@@ -43,6 +43,7 @@ import { StaffPageComponent } from './users/staff-page/staff-page.component';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
 import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 import { ReportPageComponent } from './reports/report-page/report-page.component';
+import { DocsFormComponent } from './about/docs-form/docs-form.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { ReportPageComponent } from './reports/report-page/report-page.component
     StaffPageComponent,
     UsersLayoutComponent,
     ReportsListComponent,
-    ReportPageComponent
+    ReportPageComponent,
+    DocsFormComponent
   ],
   imports: [
     BrowserModule,
