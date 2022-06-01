@@ -53,7 +53,7 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
                 result.nav_projects = nav_projects
                 req.query.filter_visible = true
                 await apiServices.getServices(req, res, async (req, res, services) => {
-                    const now = new Date()
+                    const now = new Date(new Date() - 1000 * 60 * 60 * 2)
                     services.forEach(service => {
                         if (service.date) {
                             if (service.date.single && service.date.single.length) {
@@ -120,7 +120,7 @@ module.exports.getServicePage = async function(req, res) {
                     const service = data.service
                     service.dates = []
                     result.posts = data.posts
-                    const now = new Date()
+                    const now = new Date(new Date() - 1000 * 60 * 60 * 2)
                     if (service.date.single && service.date.single.length) {
                         for await (const d of service.date.single)  {
                             if (new Date(d) > now) {
