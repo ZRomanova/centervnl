@@ -177,7 +177,7 @@ module.exports.getServicePage = async function(req, res) {
 
 const renderServicePage = function(req, res, data) {
     res.render('service', {
-        title: data.name,
+        title: data.service?.name,
         nav_projects: data.nav_projects,
         footer_logos: data.partners, 
         service: data.service,
