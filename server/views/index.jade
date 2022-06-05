@@ -65,6 +65,14 @@ block content
         h5.text-center= contacts.address
         h5.text-center= contacts.email
         h5.text-center Телефон: #{contacts.phone}
+        .row
+          .col.text-center
+            a(href="https://vk.com/centervnl" target="_black")
+              img.contacts-images.m-1(src="images/vk.png" alt="ВКонтакте")
+            a(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+              img.contacts-images.m-1(src="images/tg.png" alt="Telegram")
+            a(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+              img.contacts-images.m-1(src="images/youtube.png" alt="YouTube")
 
   script.
     ymaps.ready(function () {
