@@ -287,3 +287,32 @@ const renderDocsPage = function(req, res, data) {
     })
     
 }
+
+
+module.exports.getGeographyPage = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderGeographyPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderGeographyPage = function(req, res, data) {
+    res.render('geography', {
+        title: 'География деятельности',
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        shops: data.shops
+    })
+}
