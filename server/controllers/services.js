@@ -3,6 +3,7 @@ const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiShops = require('../api/controllers/shops')
+const FormAnswer = require('../api/models/dk-form')
 const moment = require('moment')
 moment.locale('ru')
 
@@ -205,4 +206,42 @@ module.exports.createRegistration = async (req, res) => {
     } catch (e) {
         console.log(e)
     }
+}
+
+module.exports.dkTest = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        result.isRepit = !!await FormAnswer.findOne({user: req.user._id}, {_id: 1}).lean()
+        renderDKtest(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderDKtest = function(req, res, data) {
+    res.render('dk-test', {
+        title: 'ДоброКолледж',
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        shops: data.shops,
+        isRepit: data.isRepit
+    })
+    
+}
+
+module.exports.dkCheck = async function (req, res) {
+    const form = req.body
+    form.user = req.user
+    await new FormAnswer(form).save()
+    res.redirect('/services')
 }
