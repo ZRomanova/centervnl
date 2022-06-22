@@ -8,6 +8,7 @@ router.get('/', controller.getHomePage)
 router.get('/team', controller.getTeamPage) 
 router.get('/documents', controller.getDocsPage)
 router.get('/geography', controller.getGeographyPage)
+router.get('/policy', controller.getPolicyPage)
 router.post('/order/:id', controller.createOrder)
 router.use('/profile', require('./profile')) 
 

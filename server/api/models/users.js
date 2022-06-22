@@ -32,6 +32,7 @@ const userSchema = new Schema({
     ref: 'staffs',
     type: Schema.Types.ObjectId,
   },
+  policy: Boolean
 })
 
 module.exports = mongoose.model('users', userSchema)

@@ -78,6 +78,9 @@ html
               .mb-3
                 input#registr-emo-patronymic.form-control(type='text' name='patronymic')
 
+              input(type="checkbox" required name="policy" value="true") 
+              label !{'Согласен с <a href="https://centervnl.ru/policy" target="_blank"> политикой</a> обработки персональных данных'}
+
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
             button.btn.btn-custom(type='submit' form="registr-emo") Регистрация
@@ -125,6 +128,9 @@ html
               input.form-control(type="text" name="captcha" placeholder="Решите пример на картинке")
               .center.text-center.mt-3
                 img(src="/captcha.jpg")
+
+              input(type="checkbox" required name="policy" value="true") 
+              label !{'Согласен с <a href="https://centervnl.ru/policy" target="_blank"> политикой</a> обработки персональных данных'}
           .modal-footer
             button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
             button.btn.btn-custom(type="submit" form="registr") Регистрация
@@ -242,6 +248,9 @@ html
                   img.footer_logo(src=logo.image)
           div
             small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
+          div
+            small 
+              a(href="/policy") Обработка персональных данных
 
     script(src='/bootstrap/js/bootstrap.js')
     script(src='/javascripts/main.js')

@@ -316,3 +316,31 @@ const renderGeographyPage = function(req, res, data) {
         shops: data.shops
     })
 }
+
+module.exports.getPolicyPage = async function(req, res,) {
+    try {
+        const result = {}
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderPolicyPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderPolicyPage = function(req, res, data) {
+    res.render('policy', {
+        title: 'Обработка персональных данных',
+        nav_projects: data.projects,
+        footer_logos: data.partners, 
+        user: req.user,
+        shops: data.shops
+    })
+}
