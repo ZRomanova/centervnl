@@ -11,6 +11,18 @@ html
     script(src="https://kit.fontawesome.com/f3bc034a55.js" crossorigin="anonymous")
     script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
 
+    script(type='text/javascript').
+      (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+      ym(89305982, "init", {
+      clickmap:true,
+      trackLinks:true,
+      accurateTrackBounce:true,
+      webvisor:true
+      });
+
+
   body
     #authModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='authModalLabel' tabindex='-1')
       .modal-dialog
