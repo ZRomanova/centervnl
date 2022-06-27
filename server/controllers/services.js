@@ -220,7 +220,8 @@ module.exports.dkTest = async function(req, res,) {
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        result.isRepit = !!await FormAnswer.findOne({user: req.user._id}, {_id: 1}).lean()
+        if (req.user)
+            result.isRepit = !!await FormAnswer.findOne({user: req.user._id}, {_id: 1}).lean()
         renderDKtest(req, res, result)
     } catch (e) {
         console.log(e)
