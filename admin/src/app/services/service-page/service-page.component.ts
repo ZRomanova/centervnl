@@ -85,9 +85,9 @@ export class ServicePageComponent implements OnInit {
           this.service = service
           this.imagePreview = this.service.image
           this.data()
-          this.tagsSelected = this.service.tags ? this.service.tags : []
-          this.partnersSelected = this.service.partners ? this.service.partners : []
-          this.projectsSelected = this.service.projects ? this.service.projects: []
+          // this.tagsSelected = this.service.tags ? this.service.tags : []
+          // this.partnersSelected = this.service.partners ? this.service.partners : []
+          // this.projectsSelected = this.service.projects ? this.service.projects: []
           this.loading --
         })
       } else {
@@ -108,15 +108,15 @@ export class ServicePageComponent implements OnInit {
         })
         this.loading --
       }
-      this.pSub = this.projectsService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
-        this.projects = result
-      })
-      this.tSub = this.tagsService.fetch().subscribe(result => {
-        this.tags = result
-      })
-      this.ptSub = this.partnersService.fetch().subscribe(result => {
-        this.partners = result
-      })
+      // this.pSub = this.projectsService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
+      //   this.projects = result
+      // })
+      // this.tSub = this.tagsService.fetch().subscribe(result => {
+      //   this.tags = result
+      // })
+      // this.ptSub = this.partnersService.fetch().subscribe(result => {
+      //   this.partners = result
+      // })
     }
   
     data() {
@@ -259,21 +259,21 @@ export class ServicePageComponent implements OnInit {
       this.gallery.splice(i, 1)
     }
 
-    clickTag(id) {
-      let index = this.tagsSelected.indexOf(id)
-      if (index > -1) this.tagsSelected.splice(index, 1)
-      else this.tagsSelected.push(id)
-    }
-    clickProject(id) {
-      let index = this.projectsSelected.indexOf(id)
-      if (index > -1) this.projectsSelected.splice(index, 1)
-      else this.projectsSelected.push(id)
-    }
-    clickPartner(id) {
-      let index = this.partnersSelected.indexOf(id)
-      if (index > -1) this.partnersSelected.splice(index, 1)
-      else this.partnersSelected.push(id)
-    }
+    // clickTag(id) {
+    //   let index = this.tagsSelected.indexOf(id)
+    //   if (index > -1) this.tagsSelected.splice(index, 1)
+    //   else this.tagsSelected.push(id)
+    // }
+    // clickProject(id) {
+    //   let index = this.projectsSelected.indexOf(id)
+    //   if (index > -1) this.projectsSelected.splice(index, 1)
+    //   else this.projectsSelected.push(id)
+    // }
+    // clickPartner(id) {
+    //   let index = this.partnersSelected.indexOf(id)
+    //   if (index > -1) this.partnersSelected.splice(index, 1)
+    //   else this.partnersSelected.push(id)
+    // }
   
     onSubmit() {
       const dateFG = this.form.controls.date as FormGroup

@@ -27,6 +27,9 @@ import { CheckoutPageComponent } from './services/checkout-page/checkout-page.co
 import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 import { ReportPageComponent } from './reports/report-page/report-page.component';
 import { DocsFormComponent } from './about/docs-form/docs-form.component';
+import { ProgramPageComponent } from './projects/program-page/program-page.component';
+import { ProgramsListComponent } from './projects/programs-list/programs-list.component';
+import { ProjectsLayoutComponent } from './projects/projects-layout/projects-layout.component';
 
 const routes: Routes = [
   {
@@ -44,8 +47,12 @@ const routes: Routes = [
       ]},
       {path: 'users/:id', component: UserPageComponent},
       {path: 'users/team/:id', component: StaffPageComponent},
-      {path: 'projects', component: ProjectsListComponent},
-      {path: 'projects/:id', component: ProjectPageComponent},
+      {path: 'programs', component: ProjectsLayoutComponent, children: [
+        {path: '', component: ProgramsListComponent},
+        {path: 'projects', component: ProjectsListComponent},
+      ]},
+      {path: 'programs/:id', component: ProgramPageComponent},
+      {path: 'programs/projects/:id', component: ProjectPageComponent},
       {path: 'blog', component: PostsListComponent},
       {path: 'blog/:id', component: PostPageComponent},
       {path: 'services', component: ServicesListComponent},

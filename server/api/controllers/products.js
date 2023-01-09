@@ -115,7 +115,6 @@ module.exports.deleteProduct = async function(req, res, next) {
     }
 }
 
-
 module.exports.uploadImagesProduct = async function(req, res, next) {
     try {
         const updated = {}

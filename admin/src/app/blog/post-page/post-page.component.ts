@@ -43,10 +43,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   constructor(private activateRoute: ActivatedRoute,
     private datePipe: DatePipe,
-    private projectsService: ProjectService,
-    private tagsService: TagService,
-    private servicesService: ServiceService,
-    private partnersService: PartnersService,
+    // private projectsService: ProjectService,
+    // private tagsService: TagService,
+    // private servicesService: ServiceService,
+    // private partnersService: PartnersService,
     private postsService: PostService,
     private router: Router) { 
       this.id = this.activateRoute.snapshot.params['id'];
@@ -77,18 +77,18 @@ export class PostPageComponent implements OnInit, OnDestroy {
       })
       this.loading --
     }
-    this.pSub = this.projectsService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
-      this.projects = result
-    })
-    this.tSub = this.tagsService.fetch().subscribe(result => {
-      this.tags = result
-    })
-    this.ptSub = this.partnersService.fetch().subscribe(result => {
-      this.partners = result
-    })
-    this.sSub = this.servicesService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
-      this.services = result
-    })
+    // this.pSub = this.projectsService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
+    //   this.projects = result
+    // })
+    // this.tSub = this.tagsService.fetch().subscribe(result => {
+    //   this.tags = result
+    // })
+    // this.ptSub = this.partnersService.fetch().subscribe(result => {
+    //   this.partners = result
+    // })
+    // this.sSub = this.servicesService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
+    //   this.services = result
+    // })
   }
 
   data() {
@@ -155,7 +155,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const data = {...this.form.value, tags: this.tagsSelected, projects: this.projectsSelected, partners: this.partnersSelected, services: this.servicesSelected}
+    const data = this.form.value
     if (this.id) {
       this.oSub = this.postsService.update(this.id, data).subscribe(result1 => {
         if (this.image || this.gallery.length) {
@@ -189,26 +189,26 @@ export class PostPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  clickTag(id) {
-    let index = this.tagsSelected.indexOf(id)
-    if (index > -1) this.tagsSelected.splice(index, 1)
-    else this.tagsSelected.push(id)
-  }
-  clickProject(id) {
-    let index = this.projectsSelected.indexOf(id)
-    if (index > -1) this.projectsSelected.splice(index, 1)
-    else this.projectsSelected.push(id)
-  }
-  clickService(id) {
-    let index = this.servicesSelected.indexOf(id)
-    if (index > -1) this.servicesSelected.splice(index, 1)
-    else this.servicesSelected.push(id)
-  }
-  clickPartner(id) {
-    let index = this.partnersSelected.indexOf(id)
-    if (index > -1) this.partnersSelected.splice(index, 1)
-    else this.partnersSelected.push(id)
-  }
+  // clickTag(id) {
+  //   let index = this.tagsSelected.indexOf(id)
+  //   if (index > -1) this.tagsSelected.splice(index, 1)
+  //   else this.tagsSelected.push(id)
+  // }
+  // clickProject(id) {
+  //   let index = this.projectsSelected.indexOf(id)
+  //   if (index > -1) this.projectsSelected.splice(index, 1)
+  //   else this.projectsSelected.push(id)
+  // }
+  // clickService(id) {
+  //   let index = this.servicesSelected.indexOf(id)
+  //   if (index > -1) this.servicesSelected.splice(index, 1)
+  //   else this.servicesSelected.push(id)
+  // }
+  // clickPartner(id) {
+  //   let index = this.partnersSelected.indexOf(id)
+  //   if (index > -1) this.partnersSelected.splice(index, 1)
+  //   else this.partnersSelected.push(id)
+  // }
 
   back() {
     this.router.navigate(['blog'])

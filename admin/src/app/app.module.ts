@@ -44,6 +44,9 @@ import { UsersLayoutComponent } from './users/users-layout/users-layout.componen
 import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 import { ReportPageComponent } from './reports/report-page/report-page.component';
 import { DocsFormComponent } from './about/docs-form/docs-form.component';
+import { ProgramPageComponent } from './projects/program-page/program-page.component';
+import { ProgramsListComponent } from './projects/programs-list/programs-list.component';
+import { ProjectsLayoutComponent } from './projects/projects-layout/projects-layout.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +87,10 @@ import { DocsFormComponent } from './about/docs-form/docs-form.component';
     UsersLayoutComponent,
     ReportsListComponent,
     ReportPageComponent,
-    DocsFormComponent
+    DocsFormComponent,
+    ProgramPageComponent,
+    ProgramsListComponent,
+    ProjectsLayoutComponent
   ],
   imports: [
     BrowserModule,

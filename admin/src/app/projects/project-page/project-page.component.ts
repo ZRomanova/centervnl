@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Partner, Project, Tag } from 'src/app/shared/interfaces';
+import { Partner, Program, Project, Tag } from 'src/app/shared/interfaces';
 import { PartnersService } from 'src/app/shared/transport/partners.service';
+import { ProgramService } from 'src/app/shared/transport/program.service';
 import { ProjectService } from 'src/app/shared/transport/project.service';
 import { TagService } from 'src/app/shared/transport/tag.service';
 
@@ -19,29 +20,24 @@ export class ProjectPageComponent implements OnInit {
   loading = 1
   id: string
   project: Project
+  programs: Program[]
   oSub: Subscription
   iSub: Subscription
   image: File
   imagePreview: string
   gallery: File[] = []
   galleryPreview: string[] = []
-  htModal = false
-
-  tags: Tag[]
-  tagsSelected: string[] = []
-  partners: Partner[]
-  partnersSelected: string[] = []
-
+  filter: any = {
+    'fields_name': 1
+  }
+  // htModal = false
 
   pSub: Subscription
-  ptSub: Subscription
-  tSub: Subscription
 
   constructor(private activateRoute: ActivatedRoute,
     private datePipe: DatePipe,
     private projectsService: ProjectService,
-    private tagsService: TagService,
-    private partnersService: PartnersService,
+    private programsService: ProgramService,
     private router: Router ) { 
     this.id = this.activateRoute.snapshot.params['id']; }
 
@@ -51,8 +47,7 @@ export class ProjectPageComponent implements OnInit {
       this.projectsService.fetchById(this.id).subscribe(project => {
         this.project = project
         this.imagePreview = this.project.image
-        this.tagsSelected = this.project.tags ? this.project.tags : []
-        this.partnersSelected = this.project.partners ? this.project.partners : []
+
         this.data()
         this.loading --
       })
@@ -61,21 +56,20 @@ export class ProjectPageComponent implements OnInit {
         name: new FormControl('', Validators.required),
         path: new FormControl(''),
         visible: new FormControl(true),
+        is_grant: new FormControl(true),
         image: new FormControl(''),
         gallery: new FormArray([]),
         description: new FormControl(''),
         period: new FormGroup({
-          start: new FormControl(null, Validators.required),
+          start: new FormControl(null),
           end: new FormControl(null)
-        })
+        }),
+        programs: new FormArray([])
       })
       this.loading --
     }
-    this.tSub = this.tagsService.fetch().subscribe(result => {
-      this.tags = result
-    })
-    this.ptSub = this.partnersService.fetch().subscribe(result => {
-      this.partners = result
+    this.programsService.fetch(this.filter).subscribe(programs => {
+      this.programs = programs
     })
   }
 
@@ -84,22 +78,34 @@ export class ProjectPageComponent implements OnInit {
       name: new FormControl(this.project.name, Validators.required),
       path: new FormControl(this.project.path),
       visible: new FormControl(this.project.visible),
+      is_grant: new FormControl(this.project.is_grant),
       image: new FormControl(this.project.image),
       gallery: new FormArray(this.project.gallery.map(el => new FormControl(el))),
       description: new FormControl(this.project.description),
       period: new FormGroup({
         start: new FormControl(this.datePipe.transform(this.project.period.start, 'yyyy-MM-dd'), Validators.required),
         end: new FormControl(this.project.period.end ? this.datePipe.transform(this.project.period.end, 'yyyy-MM-dd') : null)
-      })
+      }),
+      programs: new FormArray(!this.project.programs ? [] : this.project.programs.map(program => {
+        return new FormGroup({
+          program: new FormControl(program.program, Validators.required),
+          description: new FormControl(program.description),
+        })
+      }))
     })
   }
 
-  openHtModal() {
-    this.htModal = true
+  programsFilter(id) {
+     return this.programs.filter((item) => !this.form.value.programs.find(p => p.program == item._id) || item._id == id)
+    //  return items
   }
-  closeHtModal(event) {
-    this.htModal = false
-  }
+
+  // openHtModal() {
+  //   this.htModal = true
+  // }
+  // closeHtModal(event) {
+  //   this.htModal = false
+  // }
 
   onFileUpload(event: any) {
     const file = event.target.files[0]
@@ -121,7 +127,7 @@ export class ProjectPageComponent implements OnInit {
       }
       reader.readAsDataURL(file)
     }
-    console.log(this.gallery, this.galleryPreview)
+    // console.log(this.gallery, this.galleryPreview)
   }
 
   plusToGallery() {
@@ -143,19 +149,21 @@ export class ProjectPageComponent implements OnInit {
     gallery.removeAt(i)
   }
 
-  clickTag(id) {
-    let index = this.tagsSelected.indexOf(id)
-    if (index > -1) this.tagsSelected.splice(index, 1)
-    else this.tagsSelected.push(id)
+  plusToProgram() {
+    const gallery = this.form.get('programs') as FormArray
+    gallery.push(new FormGroup({
+      program: new FormControl(null, Validators.required),
+      description: new FormControl(''),
+    }))
   }
-  clickPartner(id) {
-    let index = this.partnersSelected.indexOf(id)
-    if (index > -1) this.partnersSelected.splice(index, 1)
-    else this.partnersSelected.push(id)
+
+  deleteProgramByIndex(i) {
+    const array = this.form.get('programs') as FormArray
+    array.removeAt(i)
   }
 
   onSubmit() {
-    const data = {...this.form.value, tags: this.tagsSelected, partners: this.partnersSelected}
+    const data = this.form.value
     if (this.id) {
       this.oSub = this.projectsService.update(this.id, data).subscribe(result1 => {
         if (this.image || this.gallery.length) {
@@ -190,7 +198,7 @@ export class ProjectPageComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['projects'])
+    this.router.navigate(['programs', 'projects'])
   }
 
   ngOnDestroy(): void {

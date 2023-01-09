@@ -63,11 +63,11 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
   }
 
   createProject(event) {
-    this.router.navigate(['projects', 'new'])
+    this.router.navigate(['programs', 'projects', 'new'])
   }
 
   editProject(id) {
-    this.router.navigate(['projects', id])
+    this.router.navigate(['programs', 'projects', id])
   }
 
   ngOnDestroy(): void {

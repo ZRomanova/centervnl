@@ -17,8 +17,7 @@ const projectSchema = new Schema({
   gallery: [String],
   period: {
     start: {
-      type: Date,
-      required: true
+      type: Date
     },
     end: {
       type: Date
@@ -43,16 +42,24 @@ const projectSchema = new Schema({
     unique: true
   },
   lastChange: {
-      author: {
-          ref: 'users',
-          type: Schema.Types.ObjectId
-      },
-      time: Date
+    author: {
+      ref: 'users',
+      type: Schema.Types.ObjectId
+    },
+    time: Date
   },
   likes: {
     ref: 'users',
     type: [mongoose.Types.ObjectId]
-  }
+  },
+  is_grant: Boolean,
+  programs: [{
+    program: {
+      ref: 'programs',
+      type: Schema.Types.ObjectId
+    },
+    description: String
+  }]
 })
 
 module.exports = mongoose.model('projects', projectSchema)

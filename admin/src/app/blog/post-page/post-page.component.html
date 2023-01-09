@@ -29,7 +29,8 @@
 
         <h5>Пост <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
         <textarea class="form-control" formControlName="description" rows="15"></textarea>
-        <div class="row">
+        
+        <!-- <div class="row">
             <div class="col-12" *ngIf="tags && tags.length">
                 <h5>Теги:</h5>
                 <button *ngFor="let tag of tags" (click)="clickTag(tag._id)" class="btn m-1" style="color: #fff"
@@ -50,7 +51,7 @@
                 <button *ngFor="let partner of partners" (click)="clickPartner(partner._id)" class="btn m-1" style="color: #fff"
                 [ngClass]="{'bg-success': partnersSelected.includes(partner._id), 'bg-danger': !partnersSelected.includes(partner._id)}">{{partner.name}}</button>
             </div>
-        </div>
+        </div> -->
 
 
         <h5>Добавить в галерею из файлов:</h5>
