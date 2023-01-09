@@ -103,9 +103,10 @@ export interface Program {
     text_button: string,
     url_button: string,
     video: string,
-    // likes?: User[],
+    description: String,
     visible: boolean,
     image: string,
+    icon: string,
     gallery: string[]
 }
 

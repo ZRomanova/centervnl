@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.about__title.title О нас
+      .row.mx-xl-5.about__wrapper
+        a.col-6.col-lg-3.about__item(href='list')
+          .about__img
+            img.about__image(src='/img/about/start/about_1.svg' alt='about')
+          .about__descr Кто мы?
+        a.col-6.col-lg-3.about__item(href='/team/')
+          .about__img
+            img.about__image(src='/img/about/start/about_2.svg' alt='about')
+          .about__descr Наша команда
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_3.svg' alt='about')
+          .about__descr(href='#') Документы и отчеты
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_4.svg' alt='about')
+          .about__descr(href='#') Наши победы
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_5.svg' alt='about')
+          .about__descr(href='#') Наши партнеры
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_6.svg' alt='about')
+          .about__descr(href='#') СМИ о нас
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_7.svg' alt='about')
+          .about__descr(href='#') Контакты
+        a.col-6.col-lg-3.about__item(href='#')
+          .about__img
+            img.about__image(src='/img/about/start/about_8.svg' alt='about')
+          .about__descr(href='#') Фото и видео
+        a.col-6.col-lg-3.about__item(href='/projects/')
+          .about__img
+            img.about__image(src='/img/about/start/about_9.svg' alt='about')
+          .about__descr Гранты и субсидии

@@ -1,46 +1,51 @@
 const apiPartners = require('../api/controllers/partners')
 const apiData = require('../api/controllers/data')
-const apiPosts = require('../api/controllers/posts')
-const apiServices = require('../api/controllers/services')
+const apiPrograms = require('../api/controllers/programs')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
 const apiDocs = require('../api/controllers/docs')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
-const apiTeam = require('../api/controllers/staffs')
+const apiPosts = require('../api/controllers/posts')
+const moment = require('moment')
+moment.locale('ru')
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
         if (data.user) req.user = data.user
         const result = {user: req.user}
+        req.query.filter_visible = true
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
         })
-        req.params.type = "HOME"
-        await apiData.getByType(req, res, (req, res, home) => {
-            result.description = home.text
-        })
-        await apiPartners.getPartners(req, res, (req, res, partners) => {
-            result.partners = partners
-        })
-        await apiServices.getAnouncements(req, res, (req, res, anouncements) => {
-            result.anouncements = anouncements.filter(el => el.image)
-        })
-        await apiProjects.getActive(req, res, (req, res, projects) => {
-            result.projects = projects
-        })
-        req.query = {offset: 0, limit: 16}
-        await apiPosts.getPosts(req, res, (req, res, posts) => {
-            result.posts = posts
-        })
-        req.params.type = "GALLERY"
-        await apiData.getByType(req, res, (req, res, gallery) => {
-            result.gallery = gallery.filter(el => el.image && el.visible)
-        })
+        // req.params.type = "HOME"
+        // await apiData.getByType(req, res, (req, res, home) => {
+        //     result.description = home.text
+        // })
+
+
+        // req.params.type = "GALLERY"
+        // await apiData.getByType(req, res, (req, res, gallery) => {
+        //     result.gallery = gallery.filter(el => el.image && el.visible)
+        // })
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        req.query.fields_icon = 1
+        req.query.fields_subtitle = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        req.query = {limit: 2, offset: 0}
+        await apiPosts.getPosts(req, res, (req, res, posts) => {
+            posts.forEach(post => {
+                post.date = moment(post.date).format('D MMMM yyyy')
+            })
+            result.posts = posts
         })
         renderHomePage(req, res, result)
     } catch (e) {
@@ -52,17 +57,18 @@ const renderHomePage = function(req, res, data) {
     res.render('index', {
         title: 'Ресурсный центр Вера Надежда Любовь',
         text: data.description,
-        anouncements: data.anouncements,
-        news: data.posts,
         contacts: data.contacts,
-        nav_projects: data.projects,
-        footer_logos: data.partners, 
+        programs: data.programs,
+        posts: data.posts,
         user: data.user,
-        gallery: data.gallery,
         shops: data.shops
     })
     
 }
+
+
+
+
 
 module.exports.getProfilePage = async function(req, res,) {
     try {
@@ -213,47 +219,6 @@ const renderProfileOrders = function(req, res, data) {
     })
 }
 
-
-module.exports.getTeamPage = async function(req, res) {
-    try {
-        const result = {}
-
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-            await apiServices.getAnouncements(req, res, async (req, res, anouncements) => {
-                result.anouncements = anouncements.filter(el => el.image)
-                await apiProjects.getActive(req, res, async (req, res, projects) => {
-                    result.projects = projects
-                    await apiShops.getShops(req, res, async (req, res, shops) => {
-                        result.shops = shops
-                        req.query.visible = true
-                        await apiTeam.getStaffs(req, res, (req, res, staffs) => {
-                            result.staffs = staffs
-                            renderTeamPage(req, res, result)
-                        })
-                    })
-                        
-                })
-            })
-        })
-
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-const renderTeamPage = function(req, res, data) {
-    res.render('team', {
-        title: 'Наша команда | Ресурсный центр Вера Надежда Любовь',
-        anouncements: data.anouncements,
-        team: data.staffs,
-        nav_projects: data.projects,
-        footer_logos: data.partners, 
-        user: req.user,
-        shops: data.shops
-    })
-    
-}
 
 module.exports.getDocsPage = async function(req, res,) {
     try {

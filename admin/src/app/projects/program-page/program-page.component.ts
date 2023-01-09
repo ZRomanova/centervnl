@@ -18,6 +18,8 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
   program: Program
   image: File
   imagePreview: string
+  icon: File
+  iconPreview: string
   gallery: File[] = []
   galleryPreview: string[] = []
 
@@ -44,7 +46,9 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
         subtitle: new FormControl(''),
         path: new FormControl(''),
         visible: new FormControl(true),
+        description: new FormControl(''),
         image: new FormControl(''),
+        icon: new FormControl(''),
         gallery: new FormArray([]),
         text_1: new FormControl(''),
         text_2: new FormControl(''),
@@ -67,6 +71,8 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
       path: new FormControl(this.program.path),
       visible: new FormControl(this.program.visible),
       image: new FormControl(this.program.image),
+      description: new FormControl(this.program.description),
+      icon: new FormControl(this.program.icon),
       gallery: new FormArray(this.program.gallery.map(el => new FormControl(el))),
       text_1: new FormControl(this.program.text_1),
       text_2: new FormControl(this.program.text_2),

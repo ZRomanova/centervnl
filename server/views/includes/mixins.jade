@@ -1,0 +1,3 @@
+mixin long-text(text)
+  if text 
+    div !{text.split('\n').join('<br>')}

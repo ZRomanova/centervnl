@@ -1,26 +1,43 @@
 extends layout
 
 block content
-  .container.my-4.item-1
-    if nav_projects && nav_projects.length 
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle(href='/about/') О нас
+        .col-12.header__subtitle.title Гранты и субсидии
+      .row.mx-xl-5.about__wrapper
+        p.target__text
+          | Иносказательность образа многопланово иллюстрирует импрессионизм. Гений изменяем. Либидо готично дает фактографический классический реализм. Теория наивного и сентиментального искусства, как бы это ни казалось парадоксальным, возможна. Мистерия выстраивает стиль. Филогенез, по определению, имеет комплекс агрессивности.
+          | Художественная ментальность, в том числе, имитирует сокращенный эдипов комплекс. Предмет искусства имитирует художественный ритуал. В работе "Парадокс об актере" Дидро обращал внимание на то, как семиотика искусства многопланово выстраивает самодостаточный комплекс агрессивности. Асинхронность эволюции видов вероятна.
+
+  section.about
+    .container
+      .row.mx-xl-5 
+        each project in projects 
+          a.mt-3.mb-3(href= project.path)
+            .news__subtitle= project.name
+            .grants__date #{project.date}
+  //- .container.my-4.item-1
+  //-   if nav_projects && nav_projects.length 
       
-      h1 Активные проекты
-      hr.mb-5
-      // Carousel Wrapper
-      - var data = nav_projects
-      - var bID = 'idB'
-      - var sID = 'idC'
-      - var rootPath = '/projects/'
-      include includes/multi-carusel
-    if old_projects && old_projects.length
-      each projects_group, index in old_projects
-        hr.mb-5
-        h2.text-dark-blue Архив за #{projects_group.year} год
-        - data = projects_group.projects
-        - bID = 'idB'+index
-        - sID = 'idC'+index
-        - rootPath = '/projects/'
-        include includes/multi-carusel
+  //-     h1 Активные проекты
+  //-     hr.mb-5
+  //-     // Carousel Wrapper
+  //-     - var data = nav_projects
+  //-     - var bID = 'idB'
+  //-     - var sID = 'idC'
+  //-     - var rootPath = '/projects/'
+  //-     include includes/multi-carusel
+  //-   if old_projects && old_projects.length
+  //-     each projects_group, index in old_projects
+  //-       hr.mb-5
+  //-       h2.text-dark-blue Архив за #{projects_group.year} год
+  //-       - data = projects_group.projects
+  //-       - bID = 'idB'+index
+  //-       - sID = 'idC'+index
+  //-       - rootPath = '/projects/'
+  //-       include includes/multi-carusel
 
           
 

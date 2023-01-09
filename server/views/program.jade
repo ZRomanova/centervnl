@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12
+          a.back__subtitle(href='/programs/') Что мы делаем
+        .col-12.header__subtitle.title= program.name
+
+
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Кому мы помогаем?
+      .row.mx-xl-5
+        .target__text.mt-3
+          +long-text(program.text_1)
+
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Как мы помогаем?
+      .row.mx-xl-5
+        .target__text.mt-3
+          +long-text(program.text_2)
+
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Что меняется для наших подопечных?
+      .row.mx-xl-5
+        .target__text.mt-3
+          +long-text(program.text_3)
+
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Как работает программа?
+      .row.mx-xl-5
+        .target__text.mt-3
+          each text in program.text_4
+            .row.mt-4
+              .col-1 
+                svg(width='6' height='6' viewBox='0 0 6 6' fill='none' xmlns='http://www.w3.org/2000/svg')
+                  circle(cx='3' cy='3' r='3' fill='#FFA556')
+              .col
+                +long-text(text)
+
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Бюджет программы
+      .row.mx-xl-5
+        .target__text.mt-3
+          +long-text(program.text_5)
+

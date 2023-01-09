@@ -1,7 +1,5 @@
-const Project = require('../models/projects')
+
 const Program = require('../models/programs')
-const Post = require('../models/posts')
-const Service = require('../models/services')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
@@ -28,27 +26,15 @@ const moment = require('moment')
 
 module.exports.getProgramByPath = async function(req, res, next) {
     try {
-        const program = await Program.aggregate([
+        const program = await Program.findOne(
             {
-                $match: {path: req.params.path, visible: true}
+                path: req.params.path, visible: true
             },
             { 
-                $project: { "created": 0, author: 0 }
-            },
-            {
-                $lookup:
-                {
-                    from: 'projects',
-                    localField: '_id',
-                    foreignField: 'programs.program',
-                    as: 'projects'
-                }
-             }
-        ])
-        if (program.length){
-            const program = program[0]
-            // const posts = await Post.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1}).sort({date: -1}).lean()
-            // const services = await Service.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1, date: 1}).sort({created: -1}).lean()
+               "created": 0, author: 0 
+            }
+        )
+        if (program){
             next(req, res, program)
         }
         else 

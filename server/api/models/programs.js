@@ -8,7 +8,9 @@ const dataSchema = new Schema({
     unique: true
   },
   gallery: [String],
+  description: String,
   image: String,
+  icon: String,
   visible: Boolean,
   path: {
     type: String,

@@ -11,11 +11,13 @@
 
               <h5>Путь:</h5>
               <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
-              <h5>Иконка из файла:</h5>
+              <h5>Обложка из файла:</h5>
               <input type="file" class="form-control" (change)="onFileUpload($event)">
-              <h5>Иконка по ссылке:</h5>
+              <h5>Обложка по ссылке:</h5>
               <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
               placeholder="Добавляйте только общедоступные ссылки">
+              <h5>Иконка по ссылке:</h5>
+              <input type="text" class="form-control" formControlName="icon">
           </div>
           <div class="col-xs-12 col-sm-6">
               <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">
@@ -57,7 +59,8 @@
         </div>
       </div>
       
-
+      <h5>Текст на странице "Что мы делаем"</h5>
+      <textarea class="form-control" formControlName="description" rows="5"></textarea>
 
       <h5>Добавить в галерею из файлов:</h5>
       <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple>
