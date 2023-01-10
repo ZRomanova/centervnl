@@ -1,37 +1,45 @@
 extends layout
 
 block content
-  if services.active.length
-    h1 Сейчас открыта запись
-    //- hr
-    //- .row.col-12.p-3
-    //-   .col-8.col-md-10
-    //-     h4 Выбор летних активностей ДоброКолледжа
-    //-   .col-4.col-md-2
-    //-     a.orange-button(href='/services/good-college-summer') Заполнить
-    hr
-    each item in services.active
-      .row.col-12.p-3
-        .col-4.col-md-2 
-          img.rounded.mx-auto.d-block.img-thumbnail.img-5.m-2(alt=item.name src=item.image )
-        .col-8.col-md-5 
-          h4= item.name
-        .col-8.col-md-3
-          h4 Доступно время
-          p
-            each single in item.date.single
-              div.m-1= single.text_active
-            each period in item.date.period
-              div.m-1= period.text_active
-        .col-4.col-md-2
-          a.orange-button(href='/services/' + item.path) Записаться
-      hr
-    h2 Архив мероприятий
-    h4.marck-script Сейчас запись не ведётся
-    - data = services.inactive
-    - bID = 'idB'+index
-    - sID = 'idC'+index
-    - rootPath = '/services/'
-    include includes/multi-carusel
-  
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.about__title.title Мероприятия
 
+      .row.mx-xl-5.about__wrapper
+      
+        p.target__text.col.col-lg-7
+          | Иносказательность образа многопланово иллюстрирует импрессионизм. Гений изменяем. Либидо готично дает фактографический классический реализм. Теория наивного и сентиментального искусства, как бы это ни казалось парадоксальным, возможна. Мистерия выстраивает стиль. Филогенез, по определению, имеет комплекс агрессивности.
+          | Художественная ментальность, в том числе, имитирует сокращенный эдипов комплекс. Предмет искусства имитирует художественный ритуал. В работе "Парадокс об актере" Дидро обращал внимание на то, как семиотика искусства многопланово выстраивает самодостаточный комплекс агрессивности. Асинхронность эволюции видов вероятна.
+
+        .col-12.col-lg-7.mb-5.me-lg-5
+          .d-flex.justify-content-between
+            div
+              svg#btnPrev.circle-grey-button(width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
+                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
+                path(d="M16 23.5L28.75 16.1388L28.75 30.8612L16 23.5Z" fill="#656973")
+
+              svg#btnNext.circle-grey-button.ms-2(width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
+                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
+                path(d="M32 23.5L19.25 30.8612L19.25 16.1388L32 23.5Z" fill="#656973")
+            .title-500-32#monthYear 
+          .d-flex.justify-content-between.col-12.calendar-container#divCal
+
+
+        .col-12.col-lg
+          .row
+            .col-12#slider_buttons.d-none
+              svg.circle-grey-button(data-bs-target='#slider' data-bs-slide='prev' width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
+                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
+                path(d="M16 23.5L28.75 16.1388L28.75 30.8612L16 23.5Z" fill="#656973")
+
+              svg.circle-grey-button.ms-2(data-bs-target='#slider' data-bs-slide='next' width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
+                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
+                path(d="M32 23.5L19.25 30.8612L19.25 16.1388L32 23.5Z" fill="#656973")
+
+          .carousel.slide(data-bs-touch='false' data-bs-interval='false' id='slider')
+            .carousel-inner#events_gallary
+              
+
+block scripts
+  script(src='/javascripts/calendar.js')

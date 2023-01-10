@@ -3,6 +3,8 @@ const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiShops = require('../api/controllers/shops')
+const apiPrograms = require('../api/controllers/programs')
+const apiData = require('../api/controllers/data')
 const moment = require('moment')
 moment.locale('ru')
 
@@ -47,62 +49,33 @@ const week = [
 module.exports.getServicesListPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                result.nav_projects = nav_projects
-                req.query.filter_visible = true
-                await apiServices.getServices(req, res, async (req, res, services) => {
-                    const now = new Date(new Date() - 1000 * 60 * 60 * 2)
-                    services.forEach(service => {
-                        if (service.date) {
-                            if (service.date.single && service.date.single.length) {
-                                service.date.single.forEach(d => {
-                                    if (new Date(d) > now) {
-                                        d.text_active = moment(d).format('DD.MM.YYYY HH:mm')
-                                        service.active = true
-                                    } 
-                                })
-                            }
-                            if (!!service.date.period && service.date.period.length) {
-                                service.date.period.forEach(p =>  {
-                                    if ((new Date(p.start) <= now) && (!p.end || new Date(p.end) > now) && p.visible) {
-                                        service.active = true
-                                        p.text_active = `${p.day} ${intToStringDate(p.time)}`
-                                    }
-                                })
-                            }
-                        } 
-                    })
-                    result.services = {active: services.filter(el => el.active && el.visible), inactive: services.filter(el => !el.active && el.visible)}
-                    await apiShops.getShops(req, res, (req, res, shops) => {
-                        result.shops = shops
-                        renderServicesListPage(req, res, result)
-                    })
-                })
-            })
+
+        req.query.filter_visible = true
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
         })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        renderServicesListPage(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const intToStringDate = (num) => {
-    const hour = 1000 * 60 * 60 
-    const minute = 1000 * 60
-    let resH = Math.floor(num / hour) 
-    let resM = Math.round((num - resH * hour) / minute)
-    if (resH < 10) resH = "0" + resH
-    if (resM < 10) resM = "0" + resM
-    return `${resH}:${resM}`
-}
 
 const renderServicesListPage = function(req, res, data) {
     res.render('services-list', {
         title: 'Мероприятия',
-        nav_projects: data.nav_projects,
-        footer_logos: data.partners, 
-        services: data.services,
+        contacts: data.contacts,
+        programs: data.programs,
+        // services: data.services,
         user: req.user,
         shops: data.shops
     })

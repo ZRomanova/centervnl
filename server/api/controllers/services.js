@@ -4,28 +4,153 @@ const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
 
-module.exports.getAnouncements = async function(req, res, next) {
+const week = [
+    {num: 1, en:'monday', ru: 'ПН' },
+    {num: 2,en: 'tuesday',ru: 'ВТ'},
+    {num: 3, en: 'wednesday', ru: 'СР'},
+    {num: 4, en: 'thursday', ru: 'ЧТ'},
+    {num: 5, db: 'friday', ru: 'ПТ'},
+    {num: 6, en: 'saturday', ru: 'СБ'},
+    {num: 0, en: 'sunday', ru: 'ВС'}
+  ]
+
+module.exports.getAnouncementsByDay = async function(req, res, next) {
     try {
-        const start = moment().startOf('day');
-        const end = moment(start).startOf('day');
-        const аnouncements = await Service.find({
-            visible: true, 
-            $or: [{
-                'date.single': {$gt: start}
-                },{
-                'date.period': {
-                    $elemMatch: {
-                        start: {$lt: start}, 
-                        $or: [{end: {$gt: end}}, {end: null}, {end: {$exists: false}}], 
-                        time: {$exists: true},
-                        day: {$exists: true},
-                        visible: true
+        const queryDate = req.params.day ? new Date(req.params.day) : new Date()
+        const start = moment(queryDate).startOf('day');
+        const end = moment(queryDate).endOf('day');
+        const day = moment(queryDate).day();
+        const dayStr = week.find(el => el.num == day).ru
+
+        const events = await Service.find(
+            {
+                visible: true, 
+                $or: [{
+                    'date.single': {$gte: start, $lte: end}
+                    },{
+                    'date.period': {
+                        $elemMatch: {
+                            start: {$lte: end}, 
+                            $or: [{end: {$gte: start}}, {end: null}, {end: {$exists: false}}], 
+                            time: {$exists: true},
+                            day: {$exists: true},
+                            visible: true,
+                            day: dayStr
+                        }
                     }
-                }
+                }]
+            },{
+                name: 1, path: 1, image: 1, description: 1, date: 1
+            }).lean()
+            
+        results = []
+        for (let event of events) {
+            if (event.date.single && event.date.single.length) {
+                event.date.single.forEach(date => {
+                    if (moment(date) > start && moment(date) < end) {
+                        results.push({
+                            ...event,
+                            dateStr: moment(date).format('D MMMM HH:mm'),
+                            dateObj: Date.parse(date),
+                        })
+                    }
+                })
             }
-        ]}).lean()
-        next(req, res, аnouncements)
+
+            if (event.date.period && event.date.period.length) {
+                event.date.period.forEach(p =>  {
+                    if (p.visible && p.day == dayStr) {
+                        let startP = moment(p.start).startOf('day');
+                        let endP = moment(p.end ? p.end : new Date().parse() + 1000 * 60 * 60 * 60 * 24 * 7 * 10).endOf('day')
+                        if (startP <= start && endP >= end) {
+                            let time = intToStringTime(p.time)
+                            let dateTime = new Date(queryDate).setHours(time[0], time[1])
+                            results.push({
+                                ...event,
+                                dateStr: moment(dateTime).format('D MMMM HH:mm'),
+                                dateObj: dateTime,
+                            })
+                        }
+                    }
+                })
+            }
+        }
+
+        results.sort((a, b) => a.dateObj - b.dateObj)
+
+        next(req, res, results)
     } catch (e) {
+        // console.log(e)
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getAnouncementsByMonth = async function(req, res, next) {
+    try {
+        const queryDate = req.params.month ? new Date(req.params.month) : new Date()
+        const start = moment(queryDate).startOf('month');
+        const end = moment(queryDate).endOf('month');
+        
+        const events = await Service.find(
+            {
+                visible: true, 
+                $or: [{
+                    'date.single': {$gte: start, $lte: end}
+                    },{
+                    'date.period': {
+                        $elemMatch: {
+                            start: {$lte: end}, 
+                            $or: [{end: {$gte: start}}, {end: null}, {end: {$exists: false}}], 
+                            time: {$exists: true},
+                            day: {$exists: true},
+                            visible: true
+                        }
+                    }
+                }]
+            },{date: 1}).lean()
+
+        results = []
+        for (let event of events) {
+            if (event.date.single && event.date.single.length) {
+                event.date.single.forEach(date => {
+                    if (moment(date) >= start && moment(date) <= end) {
+                        results.push(moment(date).format('yyyy-MM-D'))
+                    }
+                })
+            }
+
+            if (event.date.period && event.date.period.length) {
+                event.date.period.forEach(p =>  {
+                    if (p.visible) {
+                        let startP = new Date(p.start)
+                        let endP = new Date(p.end ? p.end : new Date().parse() + 1000 * 60 * 60 * 60 * 24 * 7 * 10)
+                        
+                        if (startP < end && endP > start) {
+
+                            let day = week.find(el => el.ru == p.day)?.num
+                            let startDay = new Date(start).getDay()
+
+                            let startI = start
+                            while (day != startDay) {
+                                startI = new Date(Date.parse(startI) + 1000 * 60 * 60 * 24)
+                                startDay = new Date(startI).getDay()
+                            }
+
+                            while (startI < end) {
+                                
+                                results.push(moment(startI).format('yyyy-MM-D'))
+                                startI = new Date(Date.parse(startI) + 1000 * 60 * 60 * 24 * 7)
+                            }
+                            
+                        }
+                    }
+                })
+            }
+        }
+
+        next(req, res, results)
+    } catch (e) {
+        console.log(e)
         errorHandler(res, e)
     }
 }
@@ -169,15 +294,10 @@ module.exports.deleteService = async function(req, res, next) {
     }
 }
 
-module.exports.toggleLike = async function(req, res, next) {
-    try {
-        const like = req.body.like
-        if (like) 
-            await Service.updateOne({path: req.params.id}, {$addToSet: {likes: req.user._id}}, {new: true})
-        else
-            await Service.updateOne({path: req.params.id}, {$pull: {likes: req.user._id}}, {new: true})
-        next(req, res, {message: "Обновлено."})
-    } catch (e) {
-        errorHandler(res, e)
-    }
+const intToStringTime = (num) => {
+    const hour = 1000 * 60 * 60 
+    const minute = 1000 * 60
+    let resH = Math.floor(num / hour) 
+    let resM = Math.round((num - resH * hour) / minute)
+    return [resH, resM]
 }

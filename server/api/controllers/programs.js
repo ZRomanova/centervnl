@@ -4,26 +4,6 @@ const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
 
-// module.exports.getActive = async function(req, res, next) {
-//     try {
-//         const start = moment().startOf('day');
-//         const end = moment(start).startOf('day');
-
-//         const activeProjects = await Project.find({
-//             visible: true, 
-//             'period.start': {$lte: start}, 
-//             $or: [
-//                 {'period.end': {$exists: false}}, 
-//                 {'period.end': null},
-//                 {'period.end': {$gte: end}}
-//             ]
-//         }).sort({name: 1}).lean()
-//         next(req, res, activeProjects)
-//     } catch (e) {
-//         errorHandler(res, e)
-//     }
-// }
-
 module.exports.getProgramByPath = async function(req, res, next) {
     try {
         const program = await Program.findOne(
@@ -129,16 +109,3 @@ module.exports.uploadImagesProgram = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
-
-// module.exports.toggleLike = async function(req, res, next) {
-//     try {
-//         const like = req.body.like
-//         if (like) 
-//             await Program.updateOne({path: req.params.id}, {$addToSet: {likes: req.user._id}}, {new: true})
-//         else
-//             await Program.updateOne({path: req.params.id}, {$pull: {likes: req.user._id}}, {new: true})
-//         next(req, res, {message: "Обновлено."})
-//     } catch (e) {
-//         errorHandler(res, e)
-//     }
-// }

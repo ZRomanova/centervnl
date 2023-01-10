@@ -8,6 +8,12 @@ block content
           a.back__subtitle(href='/programs/') Что мы делаем
         .col-12.header__subtitle.title= program.name
 
+    - gallery = (program.gallery && program.gallery.length) ? [...program.gallery] : []
+      if program.image
+        - gallery.unshift(program.image)
+      if gallery.length
+        .container.mt-5
+          +slider(gallery)
 
     .container
       .row.mx-xl-5

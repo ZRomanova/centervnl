@@ -13,29 +13,18 @@ block content
         .col-12.header__subtitle.title= project.name
         .col-12.grants__date.mt-2 #{project.date}
 
+    - gallery = (project.gallery && project.gallery.length) ? [...project.gallery] : []
     if project.image
+      - gallery.unshift(project.image)
+    if gallery.length
       .container.mt-5
-        img.background__image(src= project.image alt='bg')
+        +slider(gallery)
 
     .container
       .row.mx-xl-5
         .mt-5
           +long-text(project.description)
 
-
-
-  //- if project.description
-  //-   hr
-  //-   .text-justify.col-12 !{project.description}
-  //- if (project.gallery && project.gallery.length) || project.image
-  //-   hr
-  //-   - var gallery= []
-  //-   if project.gallery && project.gallery.length
-  //-     - gallery = [...project.gallery]
-  //-   if project.image
-  //-     - gallery.push(project.image)
-  //-   - var sliderId= 'ID'+project._id
-  //-   include includes/blur-slider
 
 
 

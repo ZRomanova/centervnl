@@ -8,50 +8,16 @@ block content
         .col-12.header__subtitle.title= post.name
         .col-12.news__date.mt-2= post.date
 
+    - gallery = (post.gallery && post.gallery.length) ? [...post.gallery] : []
     if post.image
+      - gallery.unshift(post.image)
+    if gallery.length
       .container.mt-5
-        img.background__image(src= post.image alt='bg')
+        +slider(gallery)
 
 
     .container
       .row.mx-xl-5
         .mt-5 
           +long-text(post.description)
-  //- .row.g-0.position-relative.m-5.p-5.bg-light-blue
-  //-   .container.bg-light
-  //-     .row
-  //-       h1.col-10= post.name
-  //-       if !!user
-  //-         form.col-2.heart-container.float-end#likeForm(action="/news/" + post.path + "/like", method="post", role="form")
-  //-           - var ch = !!Array.from(post.likes).find(el => String(el) == String(user._id))
-  //-           input.d-none#toggle-heart(type="checkbox" name="like" onclick="document.querySelector('#likeForm').submit()" checked= ch)
-  //-           label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
-  //-       else 
-  //-         .col-2.heart-container.float-end
-  //-           a(data-bs-toggle='modal' href='#authModal' role='button')
-  //-             input.d-none#toggle-heart(type="checkbox")
-  //-             label.float-end.me-3(for="toggle-heart" aria-label="like") ❤
-
-  //-     h5= "Опубликовано " + post.date
-  //-     if post.description
-  //-       hr
-  //-       p.col-12.text-justify !{post.description}
-        
-  //-     if (post.gallery && post.gallery.length) || post.image
-  //-       hr
-  //-       - var gallery= []
-  //-       if post.gallery && post.gallery.length
-  //-         - gallery = [...post.gallery]
-  //-       if post.image
-  //-         - gallery.push(post.image)
-  //-       - var sliderId= 'ID'+post._id
-  //-       include includes/blur-slider
-
-  //-     if (post.links.length)
-  //-       hr
-  //-       .row
-  //-         .col-12
-  //-           each link in post.links
-  //-             a.btn.marck-script.m-1.text-ellipsis-nowrap.mw-100(class= link.color href=link.url)= link.name
-  //-     hr
-  //-     h4.marck-script Добавили в избранное: #{post.likes.length}
+  

@@ -4,8 +4,9 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     title= title
     link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
-    //- link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='/css/style.css')
+    
     //- link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
     script(src='/javascripts/jquery-3.6.0.js')
     script(src="https://kit.fontawesome.com/f3bc034a55.js" crossorigin="anonymous")
@@ -252,8 +253,12 @@ html
         .container-fluid
           a.navbar-brand(href='/')
             img.header__logo(src='/img/logo.svg' alt='logo')
-          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarTogglerDemo02' aria-controls='navbarTogglerDemo02' aria-expanded='false' aria-label='Toggle navigation')
-            span.navbar-toggler-icon
+          
+          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarTogglerDemo02' aria-controls='navbarTogglerDemo02' aria-expanded='false')
+            svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+              path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
+              path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
+
           #navbarTogglerDemo02.collapse.navbar-collapse
             .header__social
               a.header__social-item(href="https://vk.com/centervnl" target="_black")
@@ -264,9 +269,9 @@ html
                 img(src='/icons/header/youtube_orange.svg' alt='youtube')
             ul.navbar-nav.me-auto.ms-4
               li.nav-item.dropdown
-                a#navbarDropdown.nav-link.header__links-list.dropdown-toggle(href='/about/' role='button' data-bs-toggle='dropdown' aria-expanded='false')
+                a.nav-link.header__links-list(href='/about/')
                   | О нас
-                ul.dropdown-menu(aria-labelledby='navbarDropdown')
+                ul.dropdown-menu
                   li
                     a.dropdown-item.header__links-dropped(href='/about/list') Кто мы?
                   li
@@ -327,7 +332,7 @@ html
     footer.footer
       .container
         .row
-          .col-12.col-lg-2.offset-1.text-lg-center
+          .col-12.col-lg-3.text-lg-center
             .card-group.d-flex.d-lg-none
               a(href='/')
                 img.footer__logo(src='/img/logo.svg' alt='logo')
@@ -347,18 +352,18 @@ html
                 img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
               a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
                 img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
-          .col-12.col-lg-3.offset-1
+          .col-12.col-lg-3
             .footer__title.d-block.d-lg-none
             a.footer__title(href='/programs/') Что мы делаем
             each program, index in programs
               if index % 2 == 0
                 a.footer__item(href='/programs/'+program.path)= program.name
-          .col-12.col-lg-3.offset-1.offset-lg-0
+          .col-12.col-lg-3
             .footer__title.d-none.d-lg-block.footer__column
             each program, index in programs
               if index % 2 == 1
                 a.footer__item(href='/programs/'+program.path)= program.name
-          .col-12.col-lg-4.offset-1.offset-lg-0
+          .col-12.col-lg-3
             .footer__title.d-block.d-lg-none
             a.footer__title(href='/contacts/') Контакты
             .footer__item
@@ -378,6 +383,7 @@ html
             .footer__divider
             .footer__end © #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
-
+    
     script(src='/bootstrap/js/bootstrap.js')
     script(src='/javascripts/main.js')
+    block scripts
