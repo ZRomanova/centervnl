@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ const STEP = 100
   templateUrl: './smi-list.component.html',
   styleUrls: ['./smi-list.component.css']
 })
-export class SmiListComponent implements OnInit {
+export class SmiListComponent implements OnInit, OnDestroy {
 
   limit = STEP
   offset = 0

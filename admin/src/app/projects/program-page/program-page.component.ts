@@ -106,7 +106,6 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
       }
       reader.readAsDataURL(file)
     }
-    // console.log(this.gallery, this.galleryPreview)
   }
 
   plusToFormArray(type: string) {

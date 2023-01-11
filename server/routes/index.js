@@ -21,6 +21,7 @@ router.use('/services', require('./services'))
 router.use('/news', require('./news'))
 // router.use('/reports', require('./reports'))
 router.use('/team', require('./team'))
+router.use('/wins', require('./wins'))
 
 //auth
 router.use('/auth', require('./auth'))

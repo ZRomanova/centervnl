@@ -1,7 +1,4 @@
-<app-page-title title="Документы и отчеты" text="Здесь можно добавлять и редактировать годовые отчёты и документы"></app-page-title>
-
 <ng-container *ngIf="!loading; else loader">
-  <hr>
   <h3>Текст на странице</h3>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading">
       <div class="row">

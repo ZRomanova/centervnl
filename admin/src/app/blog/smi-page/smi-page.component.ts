@@ -15,7 +15,6 @@ export class SmiPageComponent implements OnInit {
   loading = 1
   id: string
   oSub: Subscription
-  file: File
 
   constructor(private transportService: TransportService,
     private router: Router,
@@ -46,10 +45,6 @@ export class SmiPageComponent implements OnInit {
       }
     }
   
-    onFileUpload(event: any) {
-      const file = event.target.files[0]
-      this.file = file
-    }
   
     back() {
       this.router.navigate(['blog', 'smi'])
