@@ -370,3 +370,74 @@ const renderSmiPage = function(req, res, data) {
         shops: data.shops
     })
 }
+
+module.exports.getGalleryPage = async function(req, res,) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderGalleryPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderGalleryPage = function(req, res, data) {
+    res.render('gallery', {
+        title: 'Фото и видео',
+        // text: data.text,
+        contacts: data.contacts,
+        programs: data.programs, 
+        // posts: data.posts, 
+        user: req.user,
+        shops: data.shops
+    })
+}
+
+
+module.exports.getContactsPage = async function(req, res,) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderContactsPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderContactsPage = function(req, res, data) {
+    res.render('contacts', {
+        title: 'Контакты',
+        // text: data.text,
+        contacts: data.contacts,
+        programs: data.programs, 
+        // posts: data.posts, 
+        user: req.user,
+        shops: data.shops
+    })
+}

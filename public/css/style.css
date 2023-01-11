@@ -41,6 +41,17 @@ body {
   color: #30333a;
   font-family: Montserrat;
 }
+.root-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.wrapper {
+  flex: 1 0 auto;
+}
+.footer {
+  flex: 0 0 auto;
+}
 .pageup {
   display: none;
   position: fixed;
@@ -137,11 +148,16 @@ body {
 
 
 .footer {
+  /* flex: 0 0 auto; */
   margin-top: 120px;
   min-height: 430px;
   background-color: #ffa556;
   padding-top: 60px;
-  width: 100%}
+  width: 100%;
+  left: 0;
+  right: 0;
+
+}
 .footer__logo-lg  {
   width: 142px;
   height: 124px;

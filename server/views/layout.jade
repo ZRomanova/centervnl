@@ -26,89 +26,78 @@ html
 
   body
     include ./includes/mixins
-    header.header
-      nav.navbar.navbar-expand-xl
-        .container-fluid
-          a.navbar-brand(href='/')
-            img.header__logo(src='/img/logo.svg' alt='logo')
-          
-          button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarTogglerDemo02' aria-controls='navbarTogglerDemo02' aria-expanded='false')
-            svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
-              path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
-              path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
-
-          #navbarTogglerDemo02.collapse.navbar-collapse
-            .header__social
-              a.header__social-item(href="https://vk.com/centervnl" target="_black")
-                img(src='/icons/header/vk_orange.svg' alt='vk')
-              a.header__social-item(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
-                img(src='/icons/header/telegram_orange.svg' alt='telegram')
-              a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
-                img(src='/icons/header/youtube_orange.svg' alt='youtube')
-            ul.navbar-nav.me-auto.ms-4
-              li.nav-item.dropdown
-                a.nav-link.header__links-list(href='/about/')
-                  | О нас
-                ul.dropdown-menu
-                  li
-                    a.dropdown-item.header__links-dropped(href='/about/list') Кто мы?
-                  li
-                    a.dropdown-item.header__links-dropped(href='/team/') Наша команда
-                  li
-                    a.dropdown-item.header__links-dropped(href='/docs/') Документы и отчеты
-                  li
-                    a.dropdown-item.header__links-dropped(href='/wins/') Наши победы
-                  li
-                    a.dropdown-item.header__links-dropped(href='/partners/') Наши партнеры
-                  li
-                    a.dropdown-item.header__links-dropped(href='/press/') СМИ о нас
-                  li
-                    a.dropdown-item.header__links-dropped(href='/contacts/') Контакты
-                  li
-                    a.dropdown-item.header__links-dropped(href='/gallery/') Фото и видео
-                  li
-                    a.dropdown-item.header__links-dropped(href='/projects/') Гранты и субсидии
-              li.nav-item
-                a.nav-link.header__links-list(aria-current='page' href='/programs/') Что мы делаем
-              li.nav-item
-                a.nav-link.header__links-list(href='#') Как помочь
-              li.nav-item
-                a.nav-link.header__links-list(href='#') Родителям
-              li.nav-item
-                a.nav-link.header__links-list(href='#') База знаний
-              li.nav-item
-                a.nav-link.header__links-list(href='/news/') Новости
-              li.nav-item
-                a.nav-link.header__links-list(href='/services/') Мероприятия
-              li.nav-item
-                a.nav-link.header__links-list(href='#') Магазин
-            .d-flex.w-auto.justify-content-between
-              .header__icons.d-none
-                a.header__icons-item(href='#')
-                  img(src='/icons/header/man.svg' alt='man')
-                a.header__icons-item(href='#')
-                  img(src='/icons/header/search.svg' alt='search')
-              a.header__help.button.button_blue(href='#') Помочь
+    .root-wrapper
+      .wrapper
+        header.header
+          nav.navbar.navbar-expand-xl
+            .container-fluid
+              a.navbar-brand(href='/')
+                img.header__logo(src='/img/logo.svg' alt='logo')
               
-    .container.first-container
-      block content
+              button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarTogglerDemo02' aria-controls='navbarTogglerDemo02' aria-expanded='false')
+                svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
+                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
 
-    //- footer.panel-footer
-      .row
-        .col-12
-          if footer_logos && footer_logos.length
-            each logo in footer_logos 
-              if logo.visible
-                a(href=logo.url target="_blank")
-                  img.footer_logo(src=logo.image)
-          div
-            small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
-          div
-            small 
-              a(href="/policy") Обработка персональных данных
+              #navbarTogglerDemo02.collapse.navbar-collapse
+                .header__social
+                  a.header__social-item(href="https://vk.com/centervnl" target="_black")
+                    img(src='/icons/header/vk_orange.svg' alt='vk')
+                  a.header__social-item(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+                    img(src='/icons/header/telegram_orange.svg' alt='telegram')
+                  a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+                    img(src='/icons/header/youtube_orange.svg' alt='youtube')
+                ul.navbar-nav.me-auto.ms-4
+                  li.nav-item.dropdown
+                    a.nav-link.header__links-list(href='/about/')
+                      | О нас
+                    ul.dropdown-menu
+                      li
+                        a.dropdown-item.header__links-dropped(href='/about/list') Кто мы?
+                      li
+                        a.dropdown-item.header__links-dropped(href='/team/') Наша команда
+                      li
+                        a.dropdown-item.header__links-dropped(href='/docs/') Документы и отчеты
+                      li
+                        a.dropdown-item.header__links-dropped(href='/wins/') Наши победы
+                      li
+                        a.dropdown-item.header__links-dropped(href='/partners/') Наши партнеры
+                      li
+                        a.dropdown-item.header__links-dropped(href='/press/') СМИ о нас
+                      li
+                        a.dropdown-item.header__links-dropped(href='/contacts/') Контакты
+                      li
+                        a.dropdown-item.header__links-dropped(href='/gallery/') Фото и видео
+                      li
+                        a.dropdown-item.header__links-dropped(href='/projects/') Гранты и субсидии
+                  li.nav-item
+                    a.nav-link.header__links-list(aria-current='page' href='/programs/') Что мы делаем
+                  li.nav-item
+                    a.nav-link.header__links-list(href='#') Как помочь
+                  li.nav-item
+                    a.nav-link.header__links-list(href='#') Родителям
+                  li.nav-item
+                    a.nav-link.header__links-list(href='#') База знаний
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/news/') Новости
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/services/') Мероприятия
+                  li.nav-item
+                    a.nav-link.header__links-list(href='#') Магазин
+                .d-flex.w-auto.justify-content-between
+                  .header__icons.d-none
+                    a.header__icons-item(href='#')
+                      img(src='/icons/header/man.svg' alt='man')
+                    a.header__icons-item(href='#')
+                      img(src='/icons/header/search.svg' alt='search')
+                  a.header__help.button.button_blue(href='#') Помочь
+                  
+        .container.first-container
+          block content
 
-    footer.footer
-      .container
+
+      footer.footer
+        .container
         .row
           .col-12.col-lg-3.text-lg-center
             .card-group.d-flex.d-lg-none
