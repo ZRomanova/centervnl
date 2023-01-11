@@ -98,57 +98,57 @@ html
 
       footer.footer
         .container
-        .row
-          .col-12.col-lg-3.text-lg-center
-            .card-group.d-flex.d-lg-none
-              a(href='/')
-                img.footer__logo(src='/img/logo.svg' alt='logo')
-              .d-flex.d-lg-none.justify-content-around.col.align-items-center
+          .row
+            .col-12.col-lg-3.text-lg-center
+              .card-group.d-flex.d-lg-none
+                a(href='/')
+                  img.footer__logo(src='/img/logo.svg' alt='logo')
+                .d-flex.d-lg-none.justify-content-around.col.align-items-center
+                  a.footer__social-link(href="https://vk.com/centervnl" target="_black")
+                    img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
+                  a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+                    img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
+                  a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+                    img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
+              a.d-none.d-lg-block(href='/')
+                img.footer__logo-lg(src='/img/logo.svg' alt='logo')
+              .d-none.footer__social.d-lg-flex.justify-content-around
                 a.footer__social-link(href="https://vk.com/centervnl" target="_black")
                   img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
                 a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
                   img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
                 a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
                   img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
-            a.d-none.d-lg-block(href='/')
-              img.footer__logo-lg(src='/img/logo.svg' alt='logo')
-            .d-none.footer__social.d-lg-flex.justify-content-around
-              a.footer__social-link(href="https://vk.com/centervnl" target="_black")
-                img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
-              a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
-                img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
-              a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
-                img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
-          .col-12.col-lg-3
-            .footer__title.d-block.d-lg-none
-            a.footer__title(href='/programs/') Что мы делаем
-            each program, index in programs
-              if index % 2 == 0
-                a.footer__item(href='/programs/'+program.path)= program.name
-          .col-12.col-lg-3
-            .footer__title.d-none.d-lg-block.footer__column
-            each program, index in programs
-              if index % 2 == 1
-                a.footer__item(href='/programs/'+program.path)= program.name
-          .col-12.col-lg-3
-            .footer__title.d-block.d-lg-none
-            a.footer__title(href='/contacts/') Контакты
-            .footer__item
-              a.footer__link
-                img.footer__link-image(src='/icons/footer/phone.svg' alt='phone') 
-                | #{contacts.phone}
-            .footer__item
-              a.footer__link(href='mailto:'+contacts.email)
-                img.footer__link-image(src='/icons/footer/mail.svg' alt='mail') 
-                | #{contacts.email}
-            .footer__item
-              .footer__link
-                img.footer__link-image(src='/icons/footer/geo.svg' alt='geo') 
-                | #{contacts.address}
-        .row
-          .col-12.col-lg-10.offset-lg-3
-            .footer__divider
-            .footer__end © #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
+            .col-12.col-lg-3
+              .footer__title.d-block.d-lg-none
+              a.footer__title(href='/programs/') Что мы делаем
+              each program, index in programs
+                if index % 2 == 0
+                  a.footer__item(href='/programs/'+program.path)= program.name
+            .col-12.col-lg-3
+              .footer__title.d-none.d-lg-block.footer__column
+              each program, index in programs
+                if index % 2 == 1
+                  a.footer__item(href='/programs/'+program.path)= program.name
+            .col-12.col-lg-3
+              .footer__title.d-block.d-lg-none
+              a.footer__title(href='/contacts/') Контакты
+              .footer__item
+                a.footer__link
+                  img.footer__link-image(src='/icons/footer/phone.svg' alt='phone') 
+                  | #{contacts.phone}
+              .footer__item
+                a.footer__link(href='mailto:'+contacts.email)
+                  img.footer__link-image(src='/icons/footer/mail.svg' alt='mail') 
+                  | #{contacts.email}
+              .footer__item
+                .footer__link
+                  img.footer__link-image(src='/icons/footer/geo.svg' alt='geo') 
+                  | #{contacts.address}
+          .row
+            .col-12.col-lg-10.offset-lg-3
+              .footer__divider
+              .footer__end © #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
     
     script(src='/bootstrap/js/bootstrap.js')
