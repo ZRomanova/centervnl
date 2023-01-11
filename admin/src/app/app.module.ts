@@ -47,6 +47,11 @@ import { DocsFormComponent } from './about/docs-form/docs-form.component';
 import { ProgramPageComponent } from './projects/program-page/program-page.component';
 import { ProgramsListComponent } from './projects/programs-list/programs-list.component';
 import { ProjectsLayoutComponent } from './projects/projects-layout/projects-layout.component';
+import { WinsListComponent } from './users/wins-list/wins-list.component';
+import { WinPageComponent } from './users/win-page/win-page.component';
+import { SmiPageComponent } from './blog/smi-page/smi-page.component';
+import { SmiListComponent } from './blog/smi-list/smi-list.component';
+import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +95,12 @@ import { ProjectsLayoutComponent } from './projects/projects-layout/projects-lay
     DocsFormComponent,
     ProgramPageComponent,
     ProgramsListComponent,
-    ProjectsLayoutComponent
+    ProjectsLayoutComponent,
+    WinsListComponent,
+    WinPageComponent,
+    SmiPageComponent,
+    SmiListComponent,
+    BlogLayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,11 @@ import { DocsFormComponent } from './about/docs-form/docs-form.component';
 import { ProgramPageComponent } from './projects/program-page/program-page.component';
 import { ProgramsListComponent } from './projects/programs-list/programs-list.component';
 import { ProjectsLayoutComponent } from './projects/projects-layout/projects-layout.component';
+import { WinsListComponent } from './users/wins-list/wins-list.component';
+import { WinPageComponent } from './users/win-page/win-page.component';
+import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
+import { SmiListComponent } from './blog/smi-list/smi-list.component';
+import { SmiPageComponent } from './blog/smi-page/smi-page.component';
 
 const routes: Routes = [
   {
@@ -44,17 +49,23 @@ const routes: Routes = [
       {path: 'users', component: UsersLayoutComponent, children: [
         {path: '', component: UsersListComponent},
         {path: 'team', component: StaffsListComponent},
+        {path: 'wins', component: WinsListComponent},
       ]},
       {path: 'users/:id', component: UserPageComponent},
       {path: 'users/team/:id', component: StaffPageComponent},
+      {path: 'users/wins/:id', component: WinPageComponent},
       {path: 'programs', component: ProjectsLayoutComponent, children: [
         {path: '', component: ProgramsListComponent},
         {path: 'projects', component: ProjectsListComponent},
       ]},
       {path: 'programs/:id', component: ProgramPageComponent},
       {path: 'programs/projects/:id', component: ProjectPageComponent},
-      {path: 'blog', component: PostsListComponent},
+      {path: 'blog', component: BlogLayoutComponent, children: [
+        {path: '', component: PostsListComponent},
+        {path: 'smi', component: SmiListComponent},
+      ]},
       {path: 'blog/:id', component: PostPageComponent},
+      {path: 'blog/smi/:id', component: SmiPageComponent},
       {path: 'services', component: ServicesListComponent},
       {path: 'services/checkouts/:id', component: CheckoutListComponent},
       {path: 'services/checkout/:id', component: CheckoutPageComponent},
