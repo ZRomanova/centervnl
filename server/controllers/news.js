@@ -26,7 +26,13 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
-            contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
+            try {
+                let tel = contacts.phone.replace('+7', '8')
+                contacts.tel = tel.replaceAll(/\D/g, '')
+            } catch (e) {
+                
+            }
+            
             result.contacts = contacts
         })
         renderNewsListPage(req, res, result)
