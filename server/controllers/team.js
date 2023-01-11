@@ -19,7 +19,7 @@ module.exports.getTeamList = async function(req, res) {
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
-            contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
+            // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
             result.contacts = contacts
         })
         req.params.type = "TEAM"
@@ -63,7 +63,7 @@ module.exports.getTeamPage = async function(req, res) {
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
-            contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
+            // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
             result.contacts = contacts
         })
         req.query.fields_name = 1
