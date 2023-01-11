@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle(href='/about/') О нас
+        .col-12.header__subtitle.title СМИ о нас
+      .row.mx-xl-5.about__wrapper
+        p.target__text
+          +long-text(text)
+
+
+  section.about
+    .container
+      .row.mx-xl-5.about__wrapper 
+        each post in posts 
+          .row.mb-5 
+            .col-12.col-md-3= post.date
+            
+            a.col-12.col-md-9(href= post.url)
+          
+              .news__subtitle= post.name
+              .news__link Источник
+
+
+          
+
+

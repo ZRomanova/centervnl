@@ -7,6 +7,7 @@ const controller = require('../controllers/index');
 router.get('/', controller.getHomePage) 
 router.get('/docs', controller.getDocsPage)
 router.get('/partners', controller.getPartnersPage)
+router.get('/press', controller.getSmiPage)
 router.get('/policy', controller.getPolicyPage)
 router.post('/order/:id', controller.createOrder)
 router.use('/profile', require('./profile')) 

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle(href='/about/') О нас
+        .col-12.header__subtitle.title Наши победы
+      .row.mx-xl-5.about__wrapper
+        p.target__text
+          +long-text(text)
+      
+      .row.mx-xl-5
+        each item in wins
+          .col-12.col-lg-6 
+            a(href= item.path)
+              img.review__image(alt=item.name src=item.image)
+
+              .title-600-20.mb-3 #{staff.name}
+
+              .text-500-14.rows-4 #{staff.description}
+        

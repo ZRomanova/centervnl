@@ -8,6 +8,7 @@ const apiDocs = require('../api/controllers/docs')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
 const apiPosts = require('../api/controllers/posts')
+const apiPress = require('../api/controllers/press')
 const moment = require('moment')
 moment.locale('ru')
 
@@ -322,6 +323,49 @@ const renderPolicyPage = function(req, res, data) {
         title: 'Обработка персональных данных',
         nav_projects: data.projects,
         footer_logos: data.partners, 
+        user: req.user,
+        shops: data.shops
+    })
+}
+
+
+module.exports.getSmiPage = async function(req, res,) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        await apiPress.getDocuments(req, res, (req, res, posts) => {
+            posts.forEach(p => p.date = moment(p.date).format('DD.MM.yyyy'))
+            result.posts = posts
+        })
+        req.params.type = "SMI"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data ? data.text : ''
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderSmiPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderSmiPage = function(req, res, data) {
+    res.render('smi-list', {
+        title: 'СМИ о нас',
+        text: data.text,
+        contacts: data.contacts,
+        programs: data.programs, 
+        posts: data.posts, 
         user: req.user,
         shops: data.shops
     })
