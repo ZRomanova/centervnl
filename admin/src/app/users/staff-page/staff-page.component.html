@@ -9,12 +9,20 @@
               <h5>Фамилия:</h5>
               <input type="text" class="form-control" formControlName="surname">
 
+              <h5>Образование:</h5>
+              <input class="form-control" formControlName="education">
+
+              <h5>Учёная степень:</h5>
+              <input class="form-control" formControlName="degree">
+
               <h5>Должность:</h5>
               <input class="form-control" list="datalistOptions" formControlName="position">
               <datalist id="datalistOptions">
                 <option *ngFor="let p of positions" [value]="p">{{p}}</option>
               </datalist>
 
+              <h5>Путь:</h5>
+              <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
               <h5>Фото из файла:</h5>
               <input type="file" class="form-control" (change)="onFileUpload($event)">
               <h5>Фото по ссылке:</h5>

@@ -1,6 +1,4 @@
 const Project = require('../models/projects')
-const Post = require('../models/posts')
-const Service = require('../models/services')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')

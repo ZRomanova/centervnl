@@ -1,5 +1,20 @@
 <h3><a routerLink="..">Программы</a> Проекты</h3>
 
+<hr>
+<h3>Текст на странице гранты и субсидии</h3>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="row">
+        <div class="col">
+            <textarea class="form-control" formControlName="text" rows="3"></textarea>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-custom" type="submit">
+                Сохранить
+            </button>
+        </div>
+    </div>
+</form>
+
 <a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
     <i class="fa fa-arrow-left"></i>
 </a>

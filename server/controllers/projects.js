@@ -35,7 +35,10 @@ module.exports.getGrantListPage = async function(req, res, data = {}) {
             contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
             result.contacts = contacts
         })
-        
+        req.params.type = "GRANTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
+        })
         renderGrantListPage(req, res, result)
     } catch (e) {
         console.log(e)
@@ -49,6 +52,7 @@ const renderGrantListPage = function(req, res, data) {
         programs: data.programs, 
         contacts: data.contacts,
         user: req.user,
+        text: data.text,
         shops: data.shops
     })
 }

@@ -114,7 +114,7 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
             if (event.date.single && event.date.single.length) {
                 event.date.single.forEach(date => {
                     if (moment(date) >= start && moment(date) <= end) {
-                        results.push(moment(date).format('yyyy-MM-D'))
+                        results.push(moment(date).format('yyyy-M-D'))
                     }
                 })
             }
@@ -136,9 +136,9 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                                 startDay = new Date(startI).getDay()
                             }
 
-                            while (startI < end) {
+                            while (startI < end && startI < endP) {
                                 
-                                results.push(moment(startI).format('yyyy-MM-D'))
+                                results.push(moment(startI).format('yyyy-M-D'))
                                 startI = new Date(Date.parse(startI) + 1000 * 60 * 60 * 24 * 7)
                             }
                             

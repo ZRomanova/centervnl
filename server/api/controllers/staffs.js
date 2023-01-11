@@ -1,13 +1,21 @@
 const Staff = require('../models/staffs')
 const User = require('../models/users')
 const errorHandler = require('../utils/errorHandler')
+const cyrillicToTranslit = require('cyrillic-to-translit-js')
 
 module.exports.getStaffs = async function(req, res, next) {
     try {
         const filter = {}
-        if (req.query.visible) filter.visible = true
-        const partners = await Staff.find(filter).skip(+req.query.offset).limit(+req.query.limit).lean()
-        next(req, res, partners)
+        const fields = {}
+        for (const str in req.query) {
+            if (str.length > 7 && str.substring(0, 7) === "filter_") {
+                filter[str.slice(7)] = req.query[str]
+            } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
+                fields[str.slice(7)] = +req.query[str]
+            }
+        }
+        const team = await Staff.find(filter, fields).skip(+req.query.offset).limit(+req.query.limit).lean()
+        next(req, res, team)
     } catch (e) {
         errorHandler(res, e)
     }
@@ -25,6 +33,8 @@ module.exports.getStaffById = async function(req, res, next) {
 module.exports.createStaff = async function(req, res, next) {
     try {
         const created = req.body
+        if (!created.path) created.path = cyrillicToTranslit().transform(`${created.name}-${created.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
         const staff = await new Staff(created).save()
         next(req, res, staff)
     } catch (e) {
@@ -35,6 +45,7 @@ module.exports.createStaff = async function(req, res, next) {
 module.exports.addStaff = async function(req, res, next) {
     try {
         const created = req.body
+        created.path = cyrillicToTranslit().transform(`${created.name}-${created.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
         const staff = await new Staff(created).save()
         await User.updateOne({_id: req.params.id}, {$set: {team: staff._id}}, {new: true})
         next(req, res, staff)
@@ -55,6 +66,9 @@ module.exports.deleteStaff = async function(req, res, next) {
 module.exports.updateStaff = async function(req, res, next) {
     try {
         const updated = req.body
+        if (!updated.path) updated.path = cyrillicToTranslit().transform(`${updated.name}-${updated.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        
         const staff = await Staff.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, staff)
     } catch (e) {
@@ -77,6 +91,21 @@ module.exports.getPositions = async function(req, res, next) {
     try {
       const positions = await Staff.distinct("position", {})
       next(req, res, positions)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getStaffByPath = async function(req, res, next) {
+    try {
+        const staff = await Staff.findOne(
+            {path: req.params.path, visible: true}
+        )
+        if (staff){     
+            next(req, res, staff)
+        }
+        else 
+            next(req, res, new Error("Не найдено"))
     } catch (e) {
         errorHandler(res, e)
     }

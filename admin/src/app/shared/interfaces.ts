@@ -48,6 +48,9 @@ export interface Staff {
     visible: boolean
     position?: string
     dateStr?: string
+    degree: string
+    education: string
+    path: string
 }
 
 export interface PriceList {

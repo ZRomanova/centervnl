@@ -9,28 +9,18 @@ block content
         .col-12.header__subtitle.title Наша команда
       .row.mx-xl-5.about__wrapper
         p.target__text
-          | Иносказательность образа многопланово иллюстрирует импрессионизм. Гений изменяем. Либидо готично дает фактографический классический реализм. Теория наивного и сентиментального искусства, как бы это ни казалось парадоксальным, возможна. Мистерия выстраивает стиль. Филогенез, по определению, имеет комплекс агрессивности.
-          | Художественная ментальность, в том числе, имитирует сокращенный эдипов комплекс. Предмет искусства имитирует художественный ритуал. В работе "Парадокс об актере" Дидро обращал внимание на то, как семиотика искусства многопланово выстраивает самодостаточный комплекс агрессивности. Асинхронность эволюции видов вероятна.
-
+          +long-text(text)
       
       .row.mx-xl-5
         each staff in team
           .row.mt-5
             .col-10.col-lg-4
-              img.review__image(alt=staff.name src=staff.image)
+              a(href= staff.path)
+                img.review__image(alt=staff.name src=staff.image)
             .col-12.col-lg-7.offset-lg-1.d-flex.flex-column.justify-content-center
-              .title-700-32.mb-2 #{staff.name} #{staff.surname}
+              a.title-700-32.mb-2.orange-link(href= staff.path) #{staff.name} #{staff.surname}
               .title-700-20.mb-3 #{staff.position}
-              .text-500-14
-                #{staff.education}
+              if staff.degree
+                .text-500-14.mb-3.mt-3 #{staff.degree}
+              .text-500-14 #{staff.education}
         
-        //- .col-12.m-2.p-3(id=staff._id)
-        //-   .row.grey-container
-        //-     .col-4.col-md-2 
-        //-       img.rounded.mx-auto.d-block.img-thumbnail.img-7.m-2(alt=staff.name src=staff.image )
-        //-     .col-8.col-md-10 
-        //-       h3 #{staff.name} #{staff.surname}
-        //-       if staff.position
-        //-         h3.marck-script #{staff.position}
-        //-     .col-12
-        //-       h5.text-justify #{staff.description}

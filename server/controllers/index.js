@@ -20,11 +20,6 @@ module.exports.getHomePage = async function(req, res, data = {}) {
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
         })
-        // req.params.type = "HOME"
-        // await apiData.getByType(req, res, (req, res, home) => {
-        //     result.description = home.text
-        // })
-
 
         // req.params.type = "GALLERY"
         // await apiData.getByType(req, res, (req, res, gallery) => {
@@ -220,15 +215,24 @@ const renderProfileOrders = function(req, res, data) {
 }
 
 
-module.exports.getDocsPage = async function(req, res,) {
+module.exports.getDocsPage = async function(req, res) {
     try {
         const result = {}
-        await apiPartners.getPartners(req, res, (req, res, partners) => {
-            result.partners = partners
+
+        req.params.type = "REPORTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
         })
-        await apiProjects.getActive(req, res, (req, res, projects) => {
-            result.projects = projects
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
         })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
@@ -243,9 +247,10 @@ module.exports.getDocsPage = async function(req, res,) {
 
 const renderDocsPage = function(req, res, data) {
     res.render('docs', {
-        title: 'Уставные документы',
-        nav_projects: data.projects,
-        footer_logos: data.partners, 
+        title: 'Документы и отчеты',
+        programs: data.programs,
+        contacts: data.contacts,
+        text: data.text, 
         user: req.user,
         shops: data.shops,
         docs: data.docs,
@@ -254,29 +259,41 @@ const renderDocsPage = function(req, res, data) {
 }
 
 
-module.exports.getGeographyPage = async function(req, res,) {
+module.exports.getPartnersPage = async function(req, res,) {
     try {
         const result = {}
         await apiPartners.getPartners(req, res, (req, res, partners) => {
-            result.partners = partners
+            result.partners = partners.filter(p => p.image)
         })
-        await apiProjects.getActive(req, res, (req, res, projects) => {
-            result.projects = projects
+        req.params.type = "PARTNERS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data ? data.text : ''
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
         })
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        renderGeographyPage(req, res, result)
+        renderPartnersPage(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const renderGeographyPage = function(req, res, data) {
-    res.render('geography', {
-        title: 'География деятельности',
-        nav_projects: data.projects,
-        footer_logos: data.partners, 
+const renderPartnersPage = function(req, res, data) {
+    res.render('partners', {
+        title: 'Наши партнеры',
+        text: data.text,
+        contacts: data.contacts,
+        programs: data.programs, 
+        partners: data.partners, 
         user: req.user,
         shops: data.shops
     })

@@ -14,6 +14,13 @@ const staffSchema = new Schema({
   image: String,
   visible: Boolean,
   position: String,
+  degree: String,
+  path: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  education: String
 })
 
 module.exports = mongoose.model('staffs', staffSchema)

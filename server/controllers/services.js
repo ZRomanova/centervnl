@@ -63,6 +63,10 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
         })
+        req.params.type = "EVENTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
+        })
         renderServicesListPage(req, res, result)
     } catch (e) {
         console.log(e)
@@ -75,7 +79,7 @@ const renderServicesListPage = function(req, res, data) {
         title: 'Мероприятия',
         contacts: data.contacts,
         programs: data.programs,
-        // services: data.services,
+        text: data.text,
         user: req.user,
         shops: data.shops
     })

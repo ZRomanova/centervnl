@@ -607,7 +607,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   width: 29px;
 }
 
-.standart__text {
+.standart__text-center {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 400;
@@ -620,6 +620,14 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   display: inline-block;
 }
 
+.text-400-16 {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  /* identical to box height, or 24px */
+  color: #656973;
+}
+
 .value__text {
   height: 24px;
   vertical-align: top;
@@ -630,7 +638,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 .blue__header-48 {
   font-family: 'Montserrat';
   font-style: normal;
-  font-weight: 700;
+  
   font-size: 32px;
   line-height: 150%;
   /* identical to box height, or 48px */
@@ -782,4 +790,35 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 }
 .navbar-toggler[aria-expanded="false"] svg path:nth-child(2) {
   d: path('M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z');
+}
+
+.orange-link:hover {
+  color:#FFA556;
+}
+
+.doc-icon {
+  background: center 50% / 50% 90% no-repeat url('/img/docs/pdf.svg') #FFA556;
+  width: 80px;
+  height: 100px;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  border-radius: 8px;
+}
+
+.doc-icon:hover {
+  background: center 50% / 50% 90% no-repeat url('/img/docs/pdf.svg') #F87C0F;
+}
+
+.box_1-1 {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  border-radius: 8px;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box_1-1 img {
+  max-height: 100%;
+  max-width: 100%;
 }

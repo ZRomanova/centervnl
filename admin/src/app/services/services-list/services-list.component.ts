@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Service } from 'src/app/shared/interfaces';
+import { GeneralService } from 'src/app/shared/transport/general.service';
 import { ServiceService } from 'src/app/shared/transport/service.service';
 
 const STEP = 100
@@ -16,11 +18,11 @@ export class ServicesListComponent implements OnInit {
 
   limit = STEP
   offset = 0
-
+  form: FormGroup
   now: Date
   oSub: Subscription
   services: Service[]
-  loading = false
+  loading = 2
   noMore = false
   filter: any = {
     'fields_date': 1,
@@ -31,13 +33,18 @@ export class ServicesListComponent implements OnInit {
   }
 
   constructor( private servicesService: ServiceService,
+    private generalService: GeneralService, 
     private datePipe: DatePipe,
     private router: Router) { }
 
   ngOnInit(): void {
     this.now = new Date()
-    this.loading = true
-
+    this.generalService.fetch("EVENTS").subscribe(data => {
+      this.form = new FormGroup({
+        text: new FormControl(data ? data.text : null)
+      })
+      this.loading--
+    })
     this.fetch()
   }
 
@@ -64,7 +71,7 @@ export class ServicesListComponent implements OnInit {
         }
       })
       this.noMore = services.length < this.limit
-      this.loading = false
+      this.loading--
     })
   }
 
@@ -79,8 +86,15 @@ export class ServicesListComponent implements OnInit {
   loadMore(toEnd: boolean) {
     if (toEnd) this.offset += this.limit
     else this.offset -= this.limit
-    this.loading = true
+    this.loading = 1
     this.fetch()
+  }
+
+  onSubmit() {
+    this.form.disable()
+    this.generalService.update("EVENTS", this.form.value).subscribe(value => {
+      this.form.enable()
+    })
   }
 
   ngOnDestroy(): void {

@@ -22,6 +22,10 @@ module.exports.getTeamList = async function(req, res) {
             contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
             result.contacts = contacts
         })
+        req.params.type = "TEAM"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
+        })
         req.query.fields_name = 1
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
@@ -37,6 +41,46 @@ const renderTeamList = function(req, res, data) {
     res.render('team-list', {
         title: 'Наша команда | Ресурсный центр Вера Надежда Любовь',
         team: data.staffs,
+        text: data.text,
+        programs: data.programs, 
+        contacts: data.contacts, 
+        user: req.user,
+        shops: data.shops
+    })
+    
+}
+
+module.exports.getTeamPage = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiTeam.getStaffByPath(req, res, (req, res, staff) => {
+            result.staff = staff
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        renderTeamPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderTeamPage = function(req, res, data) {
+    res.render('team', {
+        title: `${data.staff.name} ${data.staff.surname} | Ресурсный центр Вера Надежда Любовь`,
+        staff: data.staff,
         programs: data.programs, 
         contacts: data.contacts, 
         user: req.user,

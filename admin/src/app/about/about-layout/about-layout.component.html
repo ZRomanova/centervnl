@@ -1,12 +1,12 @@
 <app-page-title title="Общий раздел" text="Здесь можно редактировать содержание главной страницы, контакты, партнёров, теги"></app-page-title>
 <div class="col" *ngIf="loading == 0; else loader">
-    <app-save-button (saveClick)="onSubmit()"></app-save-button>
+    <!-- <app-save-button (saveClick)="onSubmit()"></app-save-button> -->
     <hr>
-    <h3>Текст на главной странице <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h3>
+    <!-- <h3>Текст на главной странице <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h3>
     <form [formGroup]="textForm">
         <textarea class="form-control" formControlName="text" rows="15"></textarea>
-    </form>
-    <form [formGroup]="contactsForm">
+    </form> -->
+    <form [formGroup]="contactsForm" (ngSubmit)="onSubmitContacts()">
         <h3>Контакты</h3>
         <h5>Адрес:</h5>
         <input type="text" class="form-control" formControlName="address">
@@ -14,16 +14,33 @@
         <input type="tel" class="form-control" formControlName="phone">
         <h5>Email:</h5>
         <input type="email" class="form-control" formControlName="email">
+        <button class="btn btn-custom mt-4" type="submit">
+            Сохранить
+        </button>
     </form>
     <hr>
     <app-multi-slider page="Слайдер на главной" *ngIf="gallery" [data]="gallery" 
     (add)="createSlide($event)" (edit)="editSlide($event)" (delete)="deleteSlide($event)" (visible)="visibleSlide($event)"></app-multi-slider>
     <hr>
 
+    <h3>Текст на странице партнёры</h3>
+    <form [formGroup]="partnersForm" (ngSubmit)="onSubmitPartners()" *ngIf="!loading">
+        <div class="row">
+            <div class="col">
+                <textarea class="form-control" formControlName="text" rows="3"></textarea>
+            </div>
+            <div class="col-2">
+                <button class="btn btn-custom" type="submit">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    </form>
+
     <app-multi-slider page="Партнёры" *ngIf="partners" [data]="partners" 
     (add)="createPartner($event)" (edit)="editPartner($event)" (delete)="deletePartner($event)" (visible)="visiblePartner($event)"></app-multi-slider>
-    <hr>
-    <div class="container mb-3 mt-5">
+
+    <!-- <div class="container mb-3 mt-5">
         <div class="row">
             <div class="col-6">
                 <h3>Теги</h3>
@@ -69,56 +86,14 @@
                 </ng-container>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <hr>
-    <div class="container mb-3 mt-5">
-        <div class="row">
-            <div class="col-6">
-                <h3>Уставные документы</h3>
-            </div>
-            <div class="col-6 text-right">
-                <a class="btn btn-custom mb-3 me-2" role="button" (click)="backDocs()">
-                    <i class="fa fa-arrow-left"></i>
-                </a>
-                <a class="btn btn-custom mb-3 me-2" role="button" (click)="openDocForm('new')">
-                    <i class="fa fa-plus"></i>
-                </a>
-                <a class="btn btn-custom mb-3" role="button" (click)="nextDocs()">
-                    <i class="fa fa-arrow-right"></i>
-                </a>
-            </div>
-            <div class="col-12" *ngIf="docsSort">
-                <ng-container *ngFor="let item of docsSort; index as i">
-                    <div class="carousel-item" [ngClass]="{'active': i == activeDocsPage}" >
-                        <div class="row">
-                            <div class="col-md-4 mb-3" *ngFor="let box of item">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">{{box.name}}</h4>
-                                        <p>{{box.description}}</p>
-                                        <div *ngIf="!box.spetial">
-                                            <a class="btn btn-custom me-2" role="button" (click)="openDocForm(box._id)">
-                                                <i class="fa fa-pen"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
-            </div>
-        </div>
-    </div>
 </div>
 
-<app-add-tag (close)="closeTagForm($event)" [tag]="currentTag" *ngIf="tagForm"></app-add-tag>
+<!-- <app-add-tag (close)="closeTagForm($event)" [tag]="currentTag" *ngIf="tagForm"></app-add-tag> -->
 
-<app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
+<!-- <app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal> -->
 
 <ng-template #loader>
     <app-loader></app-loader>
 </ng-template>
-
-<!--  -->

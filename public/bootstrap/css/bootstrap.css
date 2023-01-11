@@ -6106,7 +6106,6 @@ textarea.form-control-lg {
 
 .carousel-control-prev {
   left: 0;
-  transform: scale(-1, 1);
 }
 
 .carousel-control-next {

@@ -277,17 +277,17 @@ html
                   li
                     a.dropdown-item.header__links-dropped(href='/team/') Наша команда
                   li
-                    a.dropdown-item.header__links-dropped(href='#') Документы и отчеты
+                    a.dropdown-item.header__links-dropped(href='/docs/') Документы и отчеты
                   li
-                    a.dropdown-item.header__links-dropped(href='#') Наши победы
+                    a.dropdown-item.header__links-dropped(href='/wins/') Наши победы
                   li
-                    a.dropdown-item.header__links-dropped(href='#') Наши партнеры
+                    a.dropdown-item.header__links-dropped(href='/partners/') Наши партнеры
                   li
-                    a.dropdown-item.header__links-dropped(href='#') СМИ о нас
+                    a.dropdown-item.header__links-dropped(href='/smi/') СМИ о нас
                   li
-                    a.dropdown-item.header__links-dropped(href='#') Контакты
+                    a.dropdown-item.header__links-dropped(href='/contacts/') Контакты
                   li
-                    a.dropdown-item.header__links-dropped(href='#') Фото и видео
+                    a.dropdown-item.header__links-dropped(href='/gallery/') Фото и видео
                   li
                     a.dropdown-item.header__links-dropped(href='/projects/') Гранты и субсидии
               li.nav-item
@@ -305,7 +305,7 @@ html
               li.nav-item
                 a.nav-link.header__links-list(href='#') Магазин
             .d-flex.w-auto.justify-content-between
-              .header__icons
+              .header__icons.d-none
                 a.header__icons-item(href='#')
                   img(src='/icons/header/man.svg' alt='man')
                 a.header__icons-item(href='#')
@@ -379,7 +379,7 @@ html
                 img.footer__link-image(src='/icons/footer/geo.svg' alt='geo') 
                 | #{contacts.address}
         .row
-          .col-12.col-lg-10.offset-1.offset-lg-4
+          .col-12.col-lg-10.offset-lg-3
             .footer__divider
             .footer__end © #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 

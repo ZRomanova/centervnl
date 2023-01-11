@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle(href='/about/') О нас
+        .col-12.header__subtitle.title Наши партнеры
+      .row.mx-xl-5.about__wrapper
+        p.target__text
+          +long-text(text)
+      
+      .row.mx-xl-5.about__wrapper
+        each partner in partners 
+          .col-6.col-lg-3.mt-2.mb-3 
+            a.box_1-1(href= partner.url target="_blank")
+              img(src= partner.image alt= partner.name)
