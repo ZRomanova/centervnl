@@ -128,7 +128,7 @@ body {
   justify-content:space-around;
 }
 .header .dropdown-menu {
-  width: 214px;
+  width: auto;
   left: -40px;
   padding-left: 30px;
   background-color: rgba(255, 255, 255, .9);

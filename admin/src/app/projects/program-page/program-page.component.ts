@@ -80,8 +80,8 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
       text_4: new FormArray(this.program.text_4.map(el => new FormControl(el))),
       text_5: new FormControl(this.program.text_5),
       text_6: new FormControl(this.program.text_6),
-      text_button: new FormControl(this.program.url_button),
-      url_button: new FormControl(this.program.text_button),
+      text_button: new FormControl(this.program.text_button),
+      url_button: new FormControl(this.program.url_button),
       video: new FormControl(this.program.video),
     })
   }
