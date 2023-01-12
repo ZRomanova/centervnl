@@ -214,11 +214,11 @@ body {
 }
 .slider__image {
   width: 70%;
-  border-radius: 8px;
+  /* border-radius: 8px; */
   margin: auto;
   display: block;
   aspect-ratio: 980 / 548;
-  object-fit: cover;
+  object-fit: contain;
   
 }
 .top-120 {
