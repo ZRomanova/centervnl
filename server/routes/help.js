@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const {isAuth} = require('../middleware/auth')
-const controller = require('../controllers/news');
+const controller = require('../controllers/help');
 
-router.get('/', controller.getNewsListPage) 
-router.get('/:path', controller.getNewsPage) 
+router.get('/', controller.getHelpList) 
+// router.get('/:path', controller.getNewsPage) 
 // router.post('/:id/like', isAuth, controller.toggleLike)
 
 module.exports = router;

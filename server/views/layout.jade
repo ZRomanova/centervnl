@@ -42,8 +42,7 @@ html
                     img(src='/icons/header/youtube_orange.svg' alt='youtube')
                 ul.navbar-nav.me-auto.ms-4
                   li.nav-item.dropdown
-                    a.nav-link.header__links-list(href='/about/')
-                      | О нас
+                    a.nav-link.header__links-list(href='/about/') О нас
                     ul.dropdown-menu
                       li
                         a.dropdown-item.header__links-dropped(href='/about/list') Кто мы?
@@ -63,12 +62,16 @@ html
                         a.dropdown-item.header__links-dropped(href='/gallery/') Фото и видео
                       li
                         a.dropdown-item.header__links-dropped(href='/projects/') Гранты и субсидии
+                  li.nav-item.dropdown
+                    a.nav-link.header__links-list(href='/programs/') Что мы делаем
+                    ul.dropdown-menu
+                      each item in programs
+                        li
+                          a.dropdown-item.header__links-dropped(href='/programs/'+item.path)= item.name
                   li.nav-item
-                    a.nav-link.header__links-list(aria-current='page' href='/programs/') Что мы делаем
+                    a.nav-link.header__links-list(href='/help/') Как помочь
                   li.nav-item
-                    a.nav-link.header__links-list(href='#') Как помочь
-                  li.nav-item
-                    a.nav-link.header__links-list(href='#') Родителям
+                    a.nav-link.header__links-list(href='/parents/') Родителям
                   li.nav-item
                     a.nav-link.header__links-list(href='#') База знаний
                   li.nav-item
@@ -83,7 +86,7 @@ html
                       img(src='/icons/header/man.svg' alt='man')
                     a.header__icons-item(href='#')
                       img(src='/icons/header/search.svg' alt='search')
-                  a.header__help.button.button_blue(href='#') Помочь
+                  a.header__help.button.button_blue(href='/help/') Помочь
                   
         .container.first-container
           block content

@@ -501,6 +501,14 @@ body {
   font-size: 20px;
   line-height: 24px;
 }
+.title-500-96 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 96px;
+  line-height: 117px;
+  color: #30333A;
+}
 .title-700-32 {
   font-family: 'Montserrat';
   font-style: normal;
@@ -688,7 +696,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 .blue__header-48 {
   font-family: 'Montserrat';
   font-style: normal;
-  
+  font-weight: 700;
   font-size: 32px;
   line-height: 150%;
   /* identical to box height, or 48px */
@@ -699,7 +707,12 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 }
 
 
-
+.rectangle-290-123 {
+  aspect-ratio: 290 / 123;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  border-radius: 8px;
+}
 
 .dropdown-menu {
   display: none;
@@ -911,6 +924,14 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
     font-size: 12px;
     line-height: 150%;
   }
+  .title-500-32 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .title-500-96 {
+    font-size: 48px;
+    line-height: 59px;
+  }
 }
 
 #map {
@@ -920,4 +941,33 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   background: url(image.png);
   filter: drop-shadow(0px 4px 20px rgba(60, 65, 71, 0.2));
   border-radius: 8px;
+}
+
+.img-contain {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.z-100 {
+  z-index: 100;
+}
+
+.orange-circle-bg {
+  background: left / contain no-repeat url("/img/parents/orange.svg");
+  background-clip: border-box;
+  background-size: auto 100%;
+}
+
+.blue-circle-bg {
+  background: left / contain no-repeat url("/img/parents/blue.svg");
+  background-clip: border-box;
+  background-size: auto 100%;
+}
+
+.no-breaks {
+  overflow-x: visible;
+  white-space: nowrap;
 }
