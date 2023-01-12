@@ -14,7 +14,12 @@ const shopSchema = new Schema({
     type: String,
     required: true,
     unique: true
+  },
+  shop: {
+    ref: 'shops',
+    type: mongoose.Types.ObjectId,
+    required: true
   }
 })
 
-module.exports = mongoose.model('shops', shopSchema)
+module.exports = mongoose.model('catalogs', shopSchema)

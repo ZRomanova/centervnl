@@ -162,6 +162,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
           this.iSub = this.postsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.post = result2
             this.id = this.post._id
+            this.gallery = []
             this.data()
             this.image = null
           })
@@ -177,6 +178,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
           this.iSub = this.postsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
             this.post = result2
+            this.gallery = []
             this.id = this.post._id
             this.router.navigate(['blog', result2._id])
           })

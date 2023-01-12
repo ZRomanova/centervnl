@@ -171,6 +171,7 @@ export class ProjectPageComponent implements OnInit {
             this.project = result2
             this.id = this.project._id
             this.data()
+            this.gallery = []
             this.image = null
           })
         } else {
@@ -185,6 +186,7 @@ export class ProjectPageComponent implements OnInit {
           this.iSub = this.projectsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
             this.image = null
             this.project = result2
+            this.gallery = []
             this.id = this.project._id
             this.router.navigate(['projects', result2._id])
           })
