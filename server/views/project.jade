@@ -4,12 +4,19 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        .col-12
-          a.back__subtitle.back__subtitle-root(href='/about/') О нас
+        .col-6.back__subtitle-top
+          a.back__subtitle-root(href='/about/') О нас
           svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
             path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#656973')
-          a.back__subtitle(href='/projects/') 
+          a.back__subtitle-child(href='/projects/') 
             |  Гранты и субсидии
+
+        .col-6.back__subtitle-top.text-end 
+          a(href="https://t.me/share/url?url=https://centervnl.ru/projects/"+project.path+"&text="+project.name target="_blank")
+            img.ms-4(src="/icons/share/telegram.svg")
+          a(href="https://vk.com/share.php?url=https://centervnl.ru/projects/"+project.path+"&text="+project.name target="_blank")
+            img.ms-4(src="/icons/share/vk.svg")
+
         .col-12.header__subtitle.title= project.name
         .col-12.grants__date.mt-2 #{project.date}
 

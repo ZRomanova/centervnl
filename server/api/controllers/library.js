@@ -96,7 +96,7 @@ module.exports.getLibraryByPath = async function(req, res, next) {
                 path: req.params.path, visible: true
             },
             { 
-                "created": 0, author: 0 
+                "created": 0, author: 0, lastChange: 0
             }
         ).lean()
         if (library) {

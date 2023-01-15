@@ -4,8 +4,12 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        .col-12
-          a.back__subtitle(href='/programs/') Что мы делаем
+        a.col-6.back__subtitle-top.back__subtitle-child(href='/programs/') Что мы делаем
+        .col-6.back__subtitle-top.text-end 
+          a(href="https://t.me/share/url?url=https://centervnl.ru/programs/"+program.path+"&text="+program.name target="_blank")
+            img.ms-4(src="/icons/share/telegram.svg")
+          a(href="https://vk.com/share.php?url=https://centervnl.ru/programs/"+program.path+"&text="+program.name target="_blank")
+            img.ms-4(src="/icons/share/vk.svg")
         .col-12.header__subtitle.title= program.name
 
     - gallery = (program.gallery && program.gallery.length) ? [...program.gallery] : []
