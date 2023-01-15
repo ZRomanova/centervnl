@@ -10,13 +10,13 @@ import { ProductsListComponent } from './shop/products-list/products-list.compon
 import { UsersListComponent } from './users/users-list/users-list.component';
 import { StaffsListComponent } from './users/staffs-list/staffs-list.component';
 import { UsersLayoutComponent } from './users/users-layout/users-layout.component';
-import {AdminGuard} from './shared/classes/admin.guard'
+import { AdminGuard } from './shared/classes/admin.guard'
 import { LoginPageComponent } from './login-page/login-page.component';
 import { StaffPageComponent } from './users/staff-page/staff-page.component';
 import { PartnersFormComponent } from './about/partners-form/partners-form.component';
 import { PostPageComponent } from './blog/post-page/post-page.component';
 import { ServicePageComponent } from './services/service-page/service-page.component';
-import {SlidePageComponent} from './about/slide-page/slide-page.component'
+import { SlidePageComponent } from './about/slide-page/slide-page.component'
 import { ProductPageComponent } from './shop/product-page/product-page.component';
 import { ShopsListComponent } from './shop/shops-list/shops-list.component';
 import { OrdersListComponent } from './shop/orders-list/orders-list.component';
@@ -35,6 +35,9 @@ import { WinPageComponent } from './users/win-page/win-page.component';
 import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
 import { SmiListComponent } from './blog/smi-list/smi-list.component';
 import { SmiPageComponent } from './blog/smi-page/smi-page.component';
+import { LibraryListComponent } from './library/library-list/library-list.component';
+import { LibraryPageComponent } from './library/library-page/library-page.component';
+import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
 
 const routes: Routes = [
   {
@@ -78,6 +81,10 @@ const routes: Routes = [
       {path: 'slide/:id', component: SlidePageComponent},
       {path: 'reports', component: ReportsListComponent},
       {path: 'reports/:id', component: ReportPageComponent},
+      {path: 'library', component: LibraryLayoutComponent, children: [
+        {path: '', component: LibraryListComponent},
+      ]},
+      {path: 'library/:id', component: LibraryPageComponent},
     ],
   },
   {path: 'login', component: LoginPageComponent}

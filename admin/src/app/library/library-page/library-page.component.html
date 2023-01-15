@@ -1,0 +1,74 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <h3>{{id ? 'Редактирование' : 'Добавление'}} материала в базу знаний</h3>
+        <h5>Название:</h5>
+        <input type="text" class="form-control" formControlName="name">
+
+        <h5>Дата публикации:</h5>
+        <input class="form-control" type="date" formControlName="date">
+        
+        <h5>Путь:</h5>
+        <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
+        <h5>Обложка из файла:</h5>
+        <input type="file" class="form-control" (change)="onFileUpload($event)">
+        <h5>Обложка по ссылке:</h5>
+        <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
+        placeholder="Добавляйте только общедоступные ссылки">
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">
+      </div>
+    </div>
+
+    <h5>Описание:</h5>
+    <textarea class="form-control" formControlName="description" rows="5"></textarea>
+  
+    <!-- <h5>Добавить в галерею из файлов:</h5>
+    <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple> -->
+    <!-- <app-horizontal-gallery [data]="galleryPreview"  (delete)="deletePhotoByIndex($event)"></app-horizontal-gallery> -->
+    <h5>Добавить материалы:</h5>
+    <div formArrayName="content">
+      <div class="col-12 mb-3" *ngFor="let item of form.controls.content.controls; index as i">
+        <div [formGroupName]="i" class="row">
+          <div class="col-3">
+            <select class="form-select form-select-lg" formControlName="type">
+              <option [value]="null">Выберите</option>
+              <option value="ПРЕЗЕНТАЦИЯ">ПРЕЗЕНТАЦИЯ</option>
+              <option value="ТЕКСТ">ТЕКСТ</option>
+              <option value="ВИДЕО">ВИДЕО</option>
+            </select>
+          </div>
+          <div class="col-7 col-sm-8">
+            <input class="form-control" formControlName="url" placeholder="Добавляйте только общедоступные ссылки">
+          </div>
+          <span class="btn btn-custom col-2 col-sm-1" (click)="deleteContentByIndex(i)">
+            <i class="fa fa-trash"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusToContent()">
+      <i class="fa fa-plus"></i>
+    </button>
+    <!-- <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery> -->
+
+    <div class="form-check form-switch mt-2">
+      <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="visible">
+      <h5>Отображать на сайте</h5>
+    </div>
+    <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+      Назад
+    </button>
+    <button class="btn btn-custom mt-3 mb-3" type="submit">
+      {{id ? 'Сохранить' : 'Создать'}}
+    </button>
+  </form>
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+

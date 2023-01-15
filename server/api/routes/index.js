@@ -19,6 +19,7 @@ router.use('/documents', require('./docs'))
 router.use('/programs', require('./programs'))
 router.use('/press', require('./press'))
 router.use('/wins', require('./wins'))
+router.use('/library', require('./library'))
 
 
 module.exports = router;

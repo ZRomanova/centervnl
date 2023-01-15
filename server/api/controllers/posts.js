@@ -97,44 +97,6 @@ module.exports.getPostByPath = async function(req, res, next) {
             },
             { 
                 $project: { "created": 0, author: 0 }
-            },
-            {
-                $lookup:
-                {
-                    from: 'tags',
-                    localField: 'tags',
-                    foreignField: '_id',
-                    as: 'tagsObjArray'
-                }
-             },
-             {
-                $lookup:
-                {
-                    from: 'partners',
-                    localField: 'partners',
-                    foreignField: '_id',
-                    as: 'partnersObjArray'
-                }
-                
-            },
-            {
-                $lookup:
-                {
-                    from: 'projects',
-                    localField: 'projects',
-                    foreignField: '_id',
-                    as: 'projectsObjArray'
-                }
-             },
-             {
-                $lookup:
-                {
-                    from: 'services',
-                    localField: 'services',
-                    foreignField: '_id',
-                    as: 'servicesObjArray'
-                }
-                
             }
         ])
         if (posts.length){

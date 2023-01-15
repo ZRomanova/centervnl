@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle(href='/library/') База знаний
+        .col-12.header__subtitle.title= post.name
+        .col-12.news__date.mt-2= post.date
+
+    - gallery = (post.gallery && post.gallery.length) ? [...post.gallery] : []
+    if post.image
+      - gallery.unshift(post.image)
+    if gallery.length
+      .container.mt-5
+        +slider(gallery)
+
+
+    .container
+      .row.mx-xl-5
+        .mt-5 
+          +long-text(post.description)
+
+    if post.content && post.content.length
+      .container
+        .row.mx-xl-5
+          .mt-5 
+            each item in post.content 
+              if item.type == "ВИДЕО"
+                .col-12.mt-3.mb-3
+                  +video(item.url)
+
+            each item in post.content 
+              if item.type != "ВИДЕО"
+                .col-12.col-md-6.col-lg-4.mt-3 
+                  .row.d-flex.align-items-center
+                    a.doc-icon.d-inline-block(href= item.url target="_blank")
+                    .news__subtitle.col.ms-2= item.type

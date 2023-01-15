@@ -654,6 +654,7 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   color: #F78C2E;
   margin-right: 23px;
   width: 29px;
+  vertical-align: sub;
 }
 
 .standart__text-center {
@@ -688,8 +689,8 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 
 .value__text {
   height: 24px;
-  vertical-align: top;
-  margin-top: 24px;
+  vertical-align: baseline;
+  /* margin-top: -12px; */
   display: inline-block;
 }
 
@@ -931,6 +932,18 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   .title-500-96 {
     font-size: 48px;
     line-height: 59px;
+  }
+
+  .orange__header-48 {
+    font-size: 24px;
+    line-height: 150%;
+    margin-right: 12px;
+    width: 15px;
+  }
+
+  .value__text {
+    font-size: 12px;
+    line-height: 150%;
   }
 }
 

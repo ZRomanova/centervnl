@@ -1,0 +1,18 @@
+<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
+  <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
+  <i class="fa fa-arrow-right"></i>
+</a>
+<app-table (create)="edit('new')" (edit)="edit($event)" 
+*ngIf="!loading; else loader" [data]="items" [offset]="offset" [title]="['Название', 'Дата', 'Описание']"></app-table>
+<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
+  <i class="fa fa-arrow-left"></i>
+</a>
+<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
+  <i class="fa fa-arrow-right"></i>
+</a>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

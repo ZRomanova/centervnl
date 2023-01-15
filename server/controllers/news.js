@@ -10,7 +10,7 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
         req.query.filter_visible = true
-        await apiPosts.getPosts(req, res, async (req, res, posts) => {
+        await apiPosts.getPosts(req, res, (req, res, posts) => {
             posts.forEach(post => {
                 post.date = moment(post.date).format('D MMMM yyyy')
             })
@@ -51,7 +51,7 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
         req.query.filter_visible = true
-        await apiPosts.getPostByPath(req, res, async (req, res, post) => {
+        await apiPosts.getPostByPath(req, res, (req, res, post) => {
             post.date = moment(post.date).format('D MMMM yyyy')
             result.post = post
         })

@@ -52,6 +52,9 @@ import { WinPageComponent } from './users/win-page/win-page.component';
 import { SmiPageComponent } from './blog/smi-page/smi-page.component';
 import { SmiListComponent } from './blog/smi-list/smi-list.component';
 import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
+import { LibraryListComponent } from './library/library-list/library-list.component';
+import { LibraryPageComponent } from './library/library-page/library-page.component';
+import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +103,10 @@ import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
     WinPageComponent,
     SmiPageComponent,
     SmiListComponent,
-    BlogLayoutComponent
+    BlogLayoutComponent,
+    LibraryListComponent,
+    LibraryPageComponent,
+    LibraryLayoutComponent
   ],
   imports: [
     BrowserModule,

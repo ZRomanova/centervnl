@@ -265,3 +265,21 @@ export interface Report {
     updated?: Date
     _id?: string
 }
+
+
+export interface LibItem {
+    _id?: string
+    name: string
+    path: string
+    author?: any
+    description: string
+    created?: Date
+    date?: Date
+    visible: boolean
+    image: string
+    dateStr: string
+    content: [{
+        type: 'ТЕКСТ' | 'ПРЕЗЕНИТАЦИЯ' | 'ВИДЕО'
+        url: string
+    }]
+}

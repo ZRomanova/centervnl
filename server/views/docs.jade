@@ -11,9 +11,9 @@ block content
           +long-text(text)
 
         .title-500-32.mt-5 Уставные документы
-          .row.mt-5 
+          .row 
             each doc in docs 
-              .col-12.col-md-6.col-lg-4 
+              .col-12.col-md-6.col-lg-4.mt-3 
                 .row.d-flex.align-items-center
                   a.doc-icon.d-inline-block(href= doc.file target="_blank")
                   .news__subtitle.col.ms-2= doc.name

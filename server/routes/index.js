@@ -25,6 +25,7 @@ router.use('/team', require('./team'))
 router.use('/wins', require('./wins'))
 router.use('/parents', require('./parents'))
 router.use('/help', require('./help'))
+router.use('/library', require('./library'))
 
 //auth
 router.use('/auth', require('./auth'))
