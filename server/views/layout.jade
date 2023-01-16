@@ -27,12 +27,12 @@ html
               a.navbar-brand(href='/')
                 img.header__logo(src='/img/logo.svg' alt='logo')
               
-              button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarTogglerDemo02' aria-controls='navbarTogglerDemo02' aria-expanded='false')
+              button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false')
                 svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
                   path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
                   path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
 
-              .collapse.navbar-collapse
+              #navbarToggler.collapse.navbar-collapse
                 .header__social
                   a.header__social-item(href="https://vk.com/centervnl" target="_black")
                     img(src='/icons/header/vk_orange.svg' alt='vk')
