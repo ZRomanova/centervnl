@@ -27,7 +27,11 @@ const dataSchema = new Schema({
   url_button: String,
   subtitle: String,
   video: String,
-
+  phrases: [{
+    image: String,
+    name: String,
+    description: String,
+  }]
 })
 
 module.exports = mongoose.model('programs', dataSchema)

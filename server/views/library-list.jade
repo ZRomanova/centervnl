@@ -8,16 +8,4 @@ block content
 
       .row.mx-xl-5.about__wrapper
         each post in posts
-          .news__item.row.pb-2.pt-2
-            if post.image
-              a.col-12.col-lg-5.news__img(href=post.path)
-                img.news__image(src=post.image alt=post.name)
-            .col-12.col-lg.d-flex.flex-column.justify-content-between.news__text
-              .news__date= post.date
-              .news__subtitle= post.name
-              p.std__descr.rows-4= post.description
-              a.news__link(href=post.path)
-                | Подробнее
-                svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
-                  path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#FFA556')
-  
+          +post(post)

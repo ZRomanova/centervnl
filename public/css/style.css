@@ -56,12 +56,14 @@ body {
   display: none;
   position: fixed;
   right: 15%;
-  bottom: 20%}
+  bottom: 20%
+}
 .button {
   display: inline-block;
   margin: 0;
-  height: 48px;
+  height: auto;
   min-width: 80px;
+  width: auto;
   padding: 16px 40px;
   border-radius: 100px;
   border: none;
@@ -728,6 +730,13 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 
 .rectangle-290-123 {
   aspect-ratio: 290 / 123;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  border-radius: 8px;
+}
+
+.rectangle-19-14 {
+  aspect-ratio: 19 / 14;
   background: #FFFFFF;
   box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
   border-radius: 8px;

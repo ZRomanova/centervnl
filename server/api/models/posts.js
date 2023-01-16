@@ -20,26 +20,6 @@ const blogSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  services: {
-    ref: 'services',
-    type: [mongoose.Types.ObjectId]
-  },
-  projects: {
-    ref: 'projects',
-    type: [mongoose.Types.ObjectId]
-  },
-  partners: {
-    ref: 'partners',
-    type: [mongoose.Types.ObjectId]
-  },
-  tags: {
-    ref: 'tags',
-    type: [mongoose.Types.ObjectId]
-  },
-  likes: {
-    ref: 'users',
-    type: [mongoose.Types.ObjectId]
-  },
   created: {
     type: Date,
     default: Date.now

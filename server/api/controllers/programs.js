@@ -1,8 +1,9 @@
 
 const Program = require('../models/programs')
+const Project = require('../models/projects')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
-const moment = require('moment')
+// const moment = require('moment')
 
 module.exports.getProgramByPath = async function(req, res, next) {
     try {
@@ -15,6 +16,17 @@ module.exports.getProgramByPath = async function(req, res, next) {
             }
         )
         if (program){
+            const projects = await Project.find(
+                {"programs.program": program._id, visible: true}, 
+                {programs: 1, name: 1, path: 1, description: 1, image: 1}
+            ).lean()
+            projects.forEach(project => {
+                const currProj = project.programs.find(p => String(p.program) == String(program._id))
+                if (currProj && currProj.description) {
+                    project.description = currProj.description
+                }
+            })
+            program.projects = projects
             next(req, res, program)
         }
         else 
@@ -23,6 +35,26 @@ module.exports.getProgramByPath = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
+
+// module.exports.getProgramNameByPath = async function(req, res, next) {
+//     try {
+//         const program = await Program.findOne(
+//             {
+//                 path: req.params.path, visible: true
+//             },
+//             { 
+//                "_id": 1, name: 1
+//             }
+//         )
+//         if (program){
+//             next(req, res, program)
+//         }
+//         else 
+//             next(req, res, new Error("Программа не найдена"))
+//     } catch (e) {
+//         errorHandler(res, e)
+//     }
+// }
 
 module.exports.getProgramById = async function(req, res, next) {
     try {

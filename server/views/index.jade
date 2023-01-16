@@ -118,30 +118,8 @@ block content
   section.top-120
     .container
       .row.review__wrapper
-        .col-12.col-md-6.col-lg-3.review__item.mb-4
-          .review__img
-            img.review__image(src='img/review/review_1.jpg' alt='review')
-          .review__descr «Я занимаюсь вязанием. Вяжу ковры»
-          .review__name Вова Ж., 24 года
-        .col-12.col-md-6.col-lg-3.review__item.mb-4
-          .review__img
-            img.review__image(src='img/review/review_2.jpg' alt='review')
-          .review__descr
-            | «Мне здесь очень нравится. Я хотел бы ходить только сюда на уроки и на работу. Хочу ходить только в Доброколледж»
-          .review__name Артём, 20 года
-        .col-12.col-md-6.col-lg-3.review__item.mb-4
-          .review__img
-            img.review__image(src='img/review/review_3.jpg' alt='review')
-          .review__descr
-            | «Я занимаюсь в типографии. Мне с первого дня здесь все очень нравится. Хочу, чтобы моя работа пошла и денюжек, чтобы у меня было
-            | побольше»
-          .review__name Света Я, 23 года
-        .col-12.col-md-6.col-lg-3.review__item.mb-4
-          .review__img
-            img.review__image(src='img/review/review_4.jpg' alt='review')
-          .review__descr
-            | «Я хочу, чтобы у меня все было хорошо, денег побольше зарабатывать. Хочу, чтобы все были здоровы»
-          .review__name Женя С, 25 лет
+        each item in gallery 
+          +phrase(item)
 
   section.top-120
     .container
@@ -151,11 +129,11 @@ block content
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
             img.principles__image(src='img/principles/principles_1.svg' alt='principle')
-          p.col-8.principles__credo Самостоятельности столько, сколько возможно, помощи столько сколько необходимо.
+          p.col-8.principles__credo Самостоятельности столько, сколько возможно, помощи столько сколько необходимо
         p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
           | Мы предоставляем возможность ребенку или молодому взрослому с ментальными нарушениями выполнить действие самому, соблюдаем паузы во
           | взаимодействии, оказываем помощь, начиная с минимального объема или косвенной подсказки. Самостоятельность – это не только выполнение
-          | действия, но его планирование и оценка результата.
+          | действия, но его планирование и оценка результата
       .row.principles__wrapper
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
@@ -205,54 +183,10 @@ block content
         .col.news__title.title Наши новости
       .row.news__wrapper
         each post in posts
-          .news__item.row.pb-2.pt-2
-            if post.image
-              .col-12.col-lg-5.news__img
-                img.news__image(src=post.image alt=post.name)
-            .col-12.col-lg.d-flex.flex-column.justify-content-between.news__text
-              .news__date= post.date
-              .news__subtitle= post.name
-              p.std__descr.rows-4= post.description
-              a.news__link(href= '/news/'+post.path)
-                | Подробнее
-                svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
-                  path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#FFA556')
+          +post(post, 'news/')
           
         .col-4
           a.news__button.button.button_blue(href='/news/') Все новости
 
 
-
-    //- script.
-    //-   ymaps.ready(function () {
-    //-     var location = coords.innerText.split(',')
-    //-     var myMap = new ymaps.Map('map', {
-    //-             center: location,
-    //-             zoom: 13
-    //-         }, {
-    //-             searchControlProvider: 'yandex#search'
-    //-         }),
-
-    //-         // Создаём макет содержимого.
-    //-         MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-    //-             '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
-    //-         ),
-
-    //-         myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-    //-             hintContent: 'Мы здесь',
-    //-             iconContent: '12'
-    //-         }, {
-    //-             // Опции.
-    //-             // Необходимо указать данный тип макета.
-    //-             iconLayout: 'default#imageWithContent',
-    //-             // Своё изображение иконки метки.
-    //-             iconImageHref: '/images/map.svg',
-    //-             // Размеры метки.
-    //-             iconImageSize: [50, 50],
-    //-             // Смещение левого верхнего угла иконки относительно
-    //-             // её "ножки" (точки привязки).
-    //-             iconImageOffset: [-22, -50]
-    //-         })
-    //-     myMap.geoObjects.add(myPlacemark);
-    //-   });
 

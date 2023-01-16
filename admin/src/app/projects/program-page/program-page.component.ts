@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Program } from 'src/app/shared/interfaces';
+import { Phrase, Program } from 'src/app/shared/interfaces';
 import { ProgramService } from 'src/app/shared/transport/program.service';
 
 @Component({
@@ -50,6 +50,7 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
         image: new FormControl(''),
         icon: new FormControl(''),
         gallery: new FormArray([]),
+        phrases: new FormArray([]),
         text_1: new FormControl(''),
         text_2: new FormControl(''),
         text_3: new FormControl(''),
@@ -74,6 +75,11 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
       description: new FormControl(this.program.description),
       icon: new FormControl(this.program.icon),
       gallery: new FormArray(this.program.gallery.map(el => new FormControl(el))),
+      phrases: new FormArray(this.program.phrases.map(el => new FormGroup({
+        name: new FormControl(el.name, Validators.required),
+        description: new FormControl(el.description, Validators.required),
+        image: new FormControl(el.image, Validators.required),
+      }))),
       text_1: new FormControl(this.program.text_1),
       text_2: new FormControl(this.program.text_2),
       text_3: new FormControl(this.program.text_3),
@@ -111,6 +117,15 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
   plusToFormArray(type: string) {
     const gallery = this.form.get(type) as FormArray
     gallery.push(new FormControl(''))
+  }
+
+  plusToPhrases() {
+    const gallery = this.form.get("phrases") as FormArray
+    gallery.push(new FormGroup({
+      name: new FormControl(null, Validators.required),
+      description: new FormControl(null, Validators.required),
+      image: new FormControl(null, Validators.required),
+    }))
   }
 
   photoURL() {

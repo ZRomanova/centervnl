@@ -22,10 +22,11 @@ module.exports.getHomePage = async function(req, res, data = {}) {
             result.contacts = contacts
         })
 
-        // req.params.type = "GALLERY"
-        // await apiData.getByType(req, res, (req, res, gallery) => {
-        //     result.gallery = gallery.filter(el => el.image && el.visible)
-        // })
+        req.params.type = "GALLERY"
+        await apiData.getByType(req, res, (req, res, gallery) => {
+            result.gallery = gallery.filter(el => el.image && el.visible)
+            result.gallery = gallery.filter((el, index) => index < 4)
+        })
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
@@ -55,6 +56,7 @@ const renderHomePage = function(req, res, data) {
         text: data.description,
         contacts: data.contacts,
         programs: data.programs,
+        gallery: data.gallery,
         posts: data.posts,
         user: data.user,
         shops: data.shops

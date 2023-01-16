@@ -6,10 +6,7 @@ block content
       .row.mx-xl-5
         a.col-6.back__subtitle-top.back__subtitle-child(href='/news/') Новости
         .col-6.back__subtitle-top.text-end 
-          a(href="https://t.me/share/url?url=https://centervnl.ru/news/"+post.path+"&text="+post.name target="_blank")
-            img.ms-4(src="/icons/share/telegram.svg")
-          a(href="https://vk.com/share.php?url=https://centervnl.ru/news/"+post.path+"&text="+post.name target="_blank")
-            img.ms-4(src="/icons/share/vk.svg")
+          +share("/news/"+post.path, post.name)
 
         .col-12.header__subtitle.title= post.name
         .col-12.news__date.mt-2= post.date

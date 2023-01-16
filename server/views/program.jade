@@ -6,17 +6,15 @@ block content
       .row.mx-xl-5
         a.col-6.back__subtitle-top.back__subtitle-child(href='/programs/') Что мы делаем
         .col-6.back__subtitle-top.text-end 
-          a(href="https://t.me/share/url?url=https://centervnl.ru/programs/"+program.path+"&text="+program.name target="_blank")
-            img.ms-4(src="/icons/share/telegram.svg")
-          a(href="https://vk.com/share.php?url=https://centervnl.ru/programs/"+program.path+"&text="+program.name target="_blank")
-            img.ms-4(src="/icons/share/vk.svg")
+          +share("/programs/"+program.path, program.name)
+
         .col-12.header__subtitle.title= program.name
 
     - gallery = (program.gallery && program.gallery.length) ? [...program.gallery] : []
       if program.image
         - gallery.unshift(program.image)
       if gallery.length
-        .container.mt-5
+        .container.mt-5.mb-3
           +slider(gallery)
 
     if program.text_1
@@ -81,7 +79,23 @@ block content
           .target__text.mt-3
             +long-text(program.text_6)
 
-
     .container
       .mx-xl-5
         a.button.button_orange.mb-3(href=program.url_button || "/services/")= program.text_button || "Записаться"
+
+
+    if program.phrases && program.phrases.length
+      .container.mt-5
+        .row.mx-xl-5
+          .target__text.mt-3
+            each item in program.phrases
+              +phrase(item)
+
+    if program.projects && program.projects.length
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Проекты в рамках программы
+      .container.mt-5
+        .row.mx-xl-5
+          each item in program.projects
+            +program-project(item)

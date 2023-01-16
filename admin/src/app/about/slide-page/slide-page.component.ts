@@ -34,7 +34,7 @@ export class SlidePageComponent implements OnInit {
         this.form = new FormGroup({
           name: new FormControl(this.slide.name),
           description: new FormControl(this.slide.description),
-          url: new FormControl(this.slide.url),
+          // url: new FormControl(this.slide.url),
           visible: new FormControl(this.slide.visible),
           image: new FormControl(this.slide.image),
         })
@@ -44,7 +44,7 @@ export class SlidePageComponent implements OnInit {
       this.form = new FormGroup({
         name: new FormControl(''),
         description: new FormControl(''),
-        url: new FormControl(''),
+        // url: new FormControl(''),
         visible: new FormControl(true),
         image: new FormControl(''),
       })

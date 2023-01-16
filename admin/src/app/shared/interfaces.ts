@@ -92,6 +92,12 @@ export interface Project {
     // partners?: string[],
 }
 
+export interface Phrase {
+    image: string
+    description: string
+    name: string
+}
+
 export interface Program {
     _id?: string,
     name: string
@@ -105,12 +111,13 @@ export interface Program {
     text_6: string,
     text_button: string,
     url_button: string,
-    video: string,
-    description: String,
-    visible: boolean,
-    image: string,
-    icon: string,
+    video: string
+    description: string
+    visible: boolean
+    image: string
+    icon: string
     gallery: string[]
+    phrases: Phrase[]
 }
 
 export interface Service {
