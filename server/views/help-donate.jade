@@ -93,6 +93,73 @@ block content
         
         .col-12.mt-5.d-block.donate-content 
           p С помощью банковской карты. Раздел находится в разработке, скоро всё заработает
+          form(action="") 
+            .row
+              .col-6
+                input#regularity1.btn-check(type='radio' name='regularity' autocomplete='off' checked=true)
+                label.btn.donate-form-button(for='regularity1') Разовое
+              .col-6
+                input#regularity2.btn-check(type='radio' name='regularity' autocomplete='off')
+                label.btn.donate-form-button(for='regularity2') Ежемесячное
+
+            .d-block 
+              .d-inline-block.me-2.mt-3
+                input#sum1.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' checked=true)
+                label.btn.donate-form-button.donate-form-btn-small(for='sum1') 100 руб
+              .d-inline-block.me-2.mt-3
+                input#sum2.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                label.btn.donate-form-button.donate-form-btn-small(for='sum2') 200 руб
+              .d-inline-block.me-2.mt-3
+                input#sum3.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                label.btn.donate-form-button.donate-form-btn-small(for='sum3') 500 руб
+              .d-inline-block.me-2.mt-3
+                input#sum4.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                label.btn.donate-form-button.donate-form-btn-small(for='sum4') 750 руб
+              .d-inline-block.me-2.mt-3
+                input#sum5.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                label.btn.donate-form-button.donate-form-btn-small(for='sum5') 1000 руб
+              .d-inline-block.me-2.mt-3
+                input.d-inline-block#sumText(type='number' name='sum' autocomplete='off' min="1" placeholder="Сумма")
+                .d-inline-block
+                  .d-flex.align-items-center.ms-2 руб
+
+              .row.mt-3
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Имя
+                  input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван")
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Фамилия
+                  input.text-input.mt-2(type='text' name='lastname' autocomplete='family-name' placeholder="Например, Федоров")
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Email
+                  input.text-input.mt-2(type='email' name='name' autocomplete='email' placeholder="Например, example@mail.ru")
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Телефон
+                  input.text-input.mt-2(type='tel' name='lastname' autocomplete='tel' placeholder="Например, +7 916 953 83 38")
+
+              .mt-4 
+                .form-check.col-12.mt-2
+                  input#defaultCheck1.form-check-input(type='checkbox' value='')
+                  label.form-check-label(for='defaultCheck1')
+                    | Я принимаю условия договора-оферты
+
+                .form-check.col-12.mt-2
+                  input#defaultCheck2.form-check-input(type='checkbox' value='')
+                  label.form-check-label(for='defaultCheck2')
+                    | Я соглашаюсь на обработку моих персональных данных
+
+              .mt-4
+                button.button.button_blue(disabled) Помочь
+
+              .mt-5.col-12.col-md-8
+                .text-400-14.text-400-14-dark Пожертвование осуществляется с помощью банковской карты через защищённую систему приёма платежей CloudPayments
+                .d-flew.flex-row.mt-3.align-items-center
+                  img.system-logo.me-2(src="/img/help/mastercard.svg")
+                  img.system-logo.me-2(src="/img/help/visa.svg")
+                  img.system-logo.me-2(src="/img/help/mir.svg")
 
 
         .col-12.mt-5.d-none.donate-content 

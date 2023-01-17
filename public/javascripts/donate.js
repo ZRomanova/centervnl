@@ -16,3 +16,16 @@ const clickDonate = function(element) {
   $($('.donate-content')[index]).addClass('d-block')
   $($('.donate-content')[index]).removeClass('d-none')
 }
+
+$('#sumText').on("input", function(e) {
+  if (this.value > 0) {
+    $('.sumCheckButton').prop('checked', false);
+  }
+  if (this.value == 0) {
+    $($('.sumCheckButton')[0]).prop('checked', true);
+  }
+})
+
+$('.sumCheckButton').click(function(e) {
+  $('#sumText').prop('value', "");
+})

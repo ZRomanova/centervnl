@@ -737,6 +737,10 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   color: #656973;
 }
 
+.text-400-14-dark {
+  color: #1E2639;
+}
+
 .value__text {
   height: 24px;
   vertical-align: baseline;
@@ -952,65 +956,7 @@ a.rectangle-290-123.hover-blue:hover {
   max-width: 100%;
 }
 
-@media (max-width: 767px) {
-  .title {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 29px;
-  }
-  .header__subtitle {
-    margin-top: 20px;
-  }
-  .result__count-max {
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 150%;
-  }
-  .result__count-max::after {
-    width: 42px;
-    height: 42px;
-  }
-  
-  .principles__credo {
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
-  }
-  .principles__descr {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 150%;
-  }
-  .program__text {
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 150%;
-  }
-  .title-500-32 {
-    font-size: 16px;
-    line-height: 20px;
-  }
-  .title-500-96 {
-    font-size: 48px;
-    line-height: 59px;
-  }
 
-  .orange__header-48 {
-    font-size: 24px;
-    line-height: 150%;
-    margin-right: 12px;
-    width: 15px;
-  }
-
-  .value__text {
-    font-size: 12px;
-    line-height: 150%;
-  }
-}
 
 #map {
   padding: 0; margin: 0;
@@ -1091,4 +1037,179 @@ a.rectangle-290-123.hover-blue:hover {
   height: 1px;
   width: 100%;
   margin-bottom: 60px;
+}
+
+.donate-form-button {
+  border: 1px solid #FFA556;
+  border-radius: 8px;
+  width: 100%;
+  padding: 20px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+}
+.donate-form-button:hover {
+  background: #FDE1C8;
+}
+
+.donate-form-btn-small {
+  padding: 18px;
+}
+
+.btn-check:checked + .donate-form-button, .btn-check:active + .donate-form-button, .donate-form-button:active, .donate-form-button.active, .show > .donate-form-button.dropdown-toggle {
+  background: #FFA556;
+  color: #fff;
+  box-shadow: none;
+}
+
+.text-input {
+  border: 1px solid #FFEDDD;
+  background: #FFEDDD;
+  border-radius: 8px;
+  outline: 0;
+  padding: 15px 20px;
+  width: 100%;
+}
+
+#sumText {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 22px;
+  gap: 10px;
+  max-width: 128px;
+  width: 100%;
+  height: 58px;
+  top: 0px;
+  border: 1px solid #FFEDDD;
+  background: #FFEDDD;
+  border-radius: 8px;
+  outline: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
+}
+
+.form-check-input {
+  background: #FFEDDD;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  width: 24px;
+  height: 24px;
+}
+
+.form-check-input:checked {
+  background-color: #FFA556;
+  border-color: #FFA556;
+  box-shadow: none;
+  border: 0;
+  outline: 0;
+}
+.form-check-input:focus {
+  box-shadow: none;
+  border: 0;
+  outline: 0;
+}
+.form-check-input:checked[type=checkbox] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+.form-check-label {
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.system-logo {
+  display: inline-block;
+  max-width: 80px;
+}
+
+.button_blue[disabled] {
+
+}
+
+
+
+
+@media (max-width: 767px) {
+  .title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+  }
+  .header__subtitle {
+    margin-top: 20px;
+  }
+  .result__count-max {
+    font-weight: 700;
+    font-size: 48px;
+    line-height: 150%;
+  }
+  .result__count-max::after {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .principles__credo {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+  }
+  .principles__descr {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+  }
+  .program__text {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+  }
+  .title-500-32 {
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .title-500-96 {
+    font-size: 48px;
+    line-height: 59px;
+  }
+
+  .orange__header-48 {
+    font-size: 24px;
+    line-height: 150%;
+    margin-right: 12px;
+    width: 15px;
+  }
+
+  .value__text {
+    font-size: 12px;
+    line-height: 150%;
+  }
+
+  .donate-form-button {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .text-input {
+    font-size: 11px;
+    padding: 13px;
+  }
+
+  #sumText {
+    height: 35px;
+    max-width: 70px;
+    padding: 10px;
+    font-size: 11px;
+  }
 }
