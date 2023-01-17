@@ -529,6 +529,10 @@ body {
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
+  color: #000;
+}
+a.news__subtitle:hover {
+  color: #FFA556;
 }
 .title-500-96 {
   font-family: 'Montserrat';
@@ -1130,8 +1134,8 @@ input::-webkit-inner-spin-button {
   max-width: 80px;
 }
 
-.button_blue[disabled] {
-
+.button[disabled] {
+  opacity: 0.5;
 }
 
 

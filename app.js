@@ -11,6 +11,7 @@ const passport = require('passport')
 const indexRouter = require('./server/routes/index');
 const apiRouter = require('./server/api/routes');
 const authContr = require('./server/controllers/auth');
+const { getErrorPage } = require('./server/controllers');
 
 const app = express();
 app.locals.moment = require('moment');
@@ -104,10 +105,11 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV === 'development' ? err : {};
-
+  console.log(err.status)
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
-});
+
+  next()
+}, getErrorPage);
 
 module.exports = app

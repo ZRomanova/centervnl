@@ -29,10 +29,10 @@ mixin video(url)
     
 
 mixin share(path, text)
-  a(href="https://t.me/share/url?url=https://centervnl.ru"+path+"&text="+text target="_blank")
-    img.ms-4(src="/icons/share/telegram.svg")
-  a(href="https://vk.com/share.php?url=https://centervnl.ru"+path+"&text="+text target="_blank")
-    img.ms-4(src="/icons/share/vk.svg")
+  a.ms-4(href="https://t.me/share/url?url=https://centervnl.ru"+path+"&text="+text target="_blank")
+    img(src="/icons/share/telegram.svg")
+  a.ms-4(href="https://vk.com/share.php?url=https://centervnl.ru"+path+"&text="+text target="_blank")
+    img(src="/icons/share/vk.svg")
 
 
 mixin post(post, url='')
@@ -42,7 +42,7 @@ mixin post(post, url='')
         img.news__image(src=post.image alt=post.name)
     .col-12.col-lg.d-flex.flex-column.justify-content-between.news__text
       .news__date= post.date
-      .news__subtitle= post.name
+      a.news__subtitle(href=url+post.path)= post.name
       p.std__descr.rows-4= post.description
       a.news__link(href=url+post.path)
         | Подробнее

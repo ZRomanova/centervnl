@@ -443,3 +443,45 @@ const renderContactsPage = function(req, res, data) {
         shops: data.shops
     })
 }
+
+
+
+
+module.exports.getErrorPage = async function(req, res) {
+    try {
+        const result = {}
+        result.error = {
+            message: res.locals.message,
+            status: res.statusCode
+        }
+
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderErrorPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderErrorPage = function(req, res, data) {
+    res.render('error', {
+        title: 'Ошибка',
+        programs: data.programs,
+        contacts: data.contacts,
+        user: req.user,
+        shops: data.shops,
+        error: data.error,
+    })
+    
+}
