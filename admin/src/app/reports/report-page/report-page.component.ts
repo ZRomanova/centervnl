@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Report, ReportChapter, ReportSection } from 'src/app/shared/interfaces';
+import { Report } from 'src/app/shared/interfaces';
 import { ReportsService } from 'src/app/shared/transport/reports.service';
 
 @Component({
@@ -13,13 +13,14 @@ import { ReportsService } from 'src/app/shared/transport/reports.service';
 export class ReportPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup
-  loading = 2
+  loading = 1
   id: string
   report: Report
   oSub: Subscription
-  cSub: Subscription
-  htModal = false
   chapters: string[]
+  annualFile: File = null
+  financeFile: File = null
+  justiceFile: File = null
 
   constructor(private router: Router, 
     private activateRoute: ActivatedRoute,
@@ -37,88 +38,43 @@ export class ReportPageComponent implements OnInit, OnDestroy {
       })
     } else {
       this.report = {
-        title: '',
-        content: '',
+        finance: null,
+        justice: null,
+        annual: null,
         year: new Date().getFullYear(),
-        chapters: [],
         visible: true
       }
       this.data()
       this.loading --
     }
-    this.cSub = this.reportsService.fetchChapters().subscribe(chapters => {
-      this.chapters = chapters
-      this.loading --
-    })
+
   }
 
   data() {
     this.form = new FormGroup({
-      title: new FormControl(this.report.title, Validators.required),
-      content: new FormControl(this.report.content, Validators.required),
+      finance: new FormControl(this.report.finance),
+      justice: new FormControl(this.report.justice),
+      annual: new FormControl(this.report.annual),
       year: new FormControl(this.report.year, Validators.required),
-      visible: new FormControl(this.report.visible),
-      chapters: new FormArray(this.report.chapters.map(chapter => this.createChapterFormGroup(chapter)))
+      visible: new FormControl(this.report.visible)
     })
   }
 
-  createChapterFormGroup(item: ReportChapter) {
-    return new FormGroup({
-      title: new FormControl(item.title, Validators.required),
-      link: new FormControl(item.link),
-      content: new FormControl(item.content, Validators.required),
-      sections: new FormArray(item.sections.map(section => this.createSectionFormGroup(section)))
-    })
+  onAnnualUpload(event: any) {
+    const file = event.target.files[0]
+    this.annualFile = file
   }
-
-  createSectionFormGroup(item: ReportSection) {
-    return new FormGroup({
-      title: new FormControl(item.title, Validators.required),
-      link: new FormControl(item.link),
-      content: new FormControl(item.content, Validators.required)
-    })
+  onJusticeUpload(event: any) {
+    const file = event.target.files[0]
+    this.justiceFile = file
+  }
+  onFinanceUpload(event: any) {
+    const file = event.target.files[0]
+    this.financeFile = file
   }
 
   back() {
     this.router.navigate(['reports'])
-  }
-
-  openHtModal() {
-    this.htModal = true
-  }
-  closeHtModal(event) {
-    this.htModal = false
-  }
-
-  plusChapter() {
-    const chapter: ReportChapter = {
-      title: '',
-      content: '',
-      sections: []
-    }
-    const chapters = this.form.get('chapters') as FormArray
-    chapters.push(this.createChapterFormGroup(chapter))
-  }
-
-  deleteChapter(i) {
-    const chapters = this.form.get('chapters') as FormArray
-    chapters.removeAt(i)
-  }
-
-  plusSection(j) {
-    const section: ReportSection = {
-      title: '',
-      content: '',
-    }
-    const chapters = this.form.get('chapters') as FormArray
-    const sections = chapters.controls[j].get('sections') as FormArray
-    sections.push(this.createSectionFormGroup(section))
-  } 
-
-  deleteSection(j, i) {
-    const chapters = this.form.get('chapters') as FormArray
-    const sections = chapters.controls[j].get('sections') as FormArray
-    sections.removeAt(i)
   }
 
   onSubmit() {
@@ -128,18 +84,29 @@ export class ReportPageComponent implements OnInit, OnDestroy {
         this.report = result
         this.id = this.report._id
         this.data()
+        if (this.annualFile || this.justiceFile || this.financeFile) this.onFilesUpload()
       })
     } else {
       this.oSub = this.reportsService.create(data).subscribe(result => {
         this.report = result
         this.id = this.report._id
         this.router.navigate(['reports', result._id])
+        if (this.annualFile || this.justiceFile || this.financeFile) this.onFilesUpload()
       })
     }
   }
 
+  onFilesUpload() {
+    this.reportsService.upload(this.id, this.annualFile, this.justiceFile, this.financeFile).subscribe(result => {
+      this.report = result
+      this.annualFile = null
+      this.justiceFile = null
+      this.financeFile = null
+      this.data()
+    })
+  }
+
   ngOnDestroy(): void {
     if (this.oSub) this.oSub.unsubscribe()
-    if (this.cSub) this.cSub.unsubscribe()
   }
 }

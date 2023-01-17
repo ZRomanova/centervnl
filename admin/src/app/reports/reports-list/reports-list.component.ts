@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -25,7 +24,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   docsSort: any[] = []
   activeDocsPage = 0
 
-  constructor(private datePipe: DatePipe,
+  constructor(
     private generalService: GeneralService,
     private docsService: DocsService,  
     private reportsService: ReportsService,
@@ -35,9 +34,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 
     this.oSub = this.reportsService.fetch({}).subscribe(reports => {
       this.reports = reports
-      this.reports.forEach(report => {
-        report.dateStr = this.datePipe.transform(report.created, 'dd.MM.yyyy HH:mm')
-      })
       this.loading--
     })
 

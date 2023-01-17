@@ -7,18 +7,9 @@ const reportsSchema = new Schema({
     required: true,
     unique: true
   },
-  title: String,
-  content: String,
-  chapters: [{
-    title: String,
-    link: String,
-    content: String,
-    sections: [{
-      title: String,
-      link: String,
-      content: String
-    }]
-  }],
+  finance: String,
+  justice: String,
+  annual: String,
   created: {
     type: Date,
     default: Date.now

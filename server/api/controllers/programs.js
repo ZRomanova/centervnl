@@ -36,26 +36,6 @@ module.exports.getProgramByPath = async function(req, res, next) {
     }
 }
 
-// module.exports.getProgramNameByPath = async function(req, res, next) {
-//     try {
-//         const program = await Program.findOne(
-//             {
-//                 path: req.params.path, visible: true
-//             },
-//             { 
-//                "_id": 1, name: 1
-//             }
-//         )
-//         if (program){
-//             next(req, res, program)
-//         }
-//         else 
-//             next(req, res, new Error("Программа не найдена"))
-//     } catch (e) {
-//         errorHandler(res, e)
-//     }
-// }
-
 module.exports.getProgramById = async function(req, res, next) {
     try {
         const project = await Program.findOne({_id: req.params.id})

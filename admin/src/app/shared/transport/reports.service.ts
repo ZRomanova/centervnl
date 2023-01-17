@@ -40,4 +40,12 @@ export class ReportsService {
     const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
     return this.http.put<Report>(`${URL}/api/reports/${id}`, json, {headers: myHeaders})
   }
+
+  upload(id: string, annual?: File, justice?: File, finance?: File): Observable<Report> {
+    const fd = new FormData()
+    if (annual) fd.append('annual', annual, annual.name)
+    if (justice) fd.append('justice', justice, justice.name)
+    if (finance) fd.append('finance', finance, finance.name)
+    return this.http.patch<Report>(`${URL}/api/reports/${id}`, fd)
+  }
 }

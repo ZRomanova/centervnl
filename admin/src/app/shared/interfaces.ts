@@ -247,29 +247,14 @@ export interface Checkout {
     name?: string
 }
 
-export interface ReportSection {
-    title: string
-    link?: string
-    content: string
-}
-
-export interface ReportChapter {
-    title: string
-    link?: string
-    content: string
-    sections: ReportSection[]
-}
-
 export interface Report {
     year: number
-    title: string
-    content: string
-    chapters: ReportChapter[]
+    annual: string
+    justice: string
+    finance: string
     visible: boolean
-    dateStr?: string
     description?: string
     created?: Date
-    updated?: Date
     _id?: string
 }
 

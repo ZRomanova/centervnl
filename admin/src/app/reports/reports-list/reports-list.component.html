@@ -57,9 +57,11 @@
     <table class="table table-striped">
         <thead>
             <tr class="table-primary">
-                <th class="col-1 text-center"><h4>Год</h4></th>
-                <th class="col-2 text-center"><h4>Создан</h4></th>
-                <th class="col-8 text-center"><h4>Название</h4></th>
+                <th class="col-2 text-center"><h4>Год</h4></th>
+                <th class="col-3 text-center"><h4>Создан</h4></th>
+                <th class="col-2 text-center"><h4>Годовой отчёт</h4></th>
+                <th class="col-2 text-center"><h4>Отчёт в минюст</h4></th>
+                <th class="col-2 text-center"><h4>Отчёт в минфин</h4></th>
                 <th class="col-1 text-center">
                   <a class="btn btn-custom" role="button" (click)="edit('new')">
                     <i class="fa fa-plus"></i>
@@ -69,14 +71,23 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of reports" [ngClass]="{'table-success': item.visible, 'table-danger': !item.visible}">
-                <td class="col-1 text-center">
+                <td class="col-2 text-center">
                     <p class="desc-text">{{item.year}}</p>
                 </td>
-                <td class="col-2 text-center">
-                  <p class="desc-text">{{item.dateStr}}</p>
+                <td class="col-3 text-center">
+                  <p class="desc-text">{{item.created | date:"dd.MM.yyyy HH:mm"}}</p>
                 </td>
-                <td class="col-8 text-center">
-                  <p class="desc-text">{{item.title}}</p>
+                <td class="col-2 text-center">
+                  <i class="fa-solid fa-check text-success mark-size" *ngIf="item.annual"></i>
+                  <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.annual"></i>
+                </td>
+                <td class="col-2 text-center">
+                  <i class="fa-solid fa-check text-success mark-size" *ngIf="item.justice"></i>
+                  <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.justice"></i>
+                </td>
+                <td class="col-2 text-center">
+                  <i class="fa-solid fa-check text-success mark-size" *ngIf="item.finance"></i>
+                  <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="!item.finance"></i>
                 </td>
                 <td class="col-1 text-center">
                     <a class="btn btn-custom" role="button" (click)="edit(item._id)">

@@ -1,71 +1,28 @@
 <div class="col" *ngIf="loading == 0; else loader">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <h3>{{id ? 'Редактирование' : 'Добавление'}} годового отчёта</h3>
-    <h5>Название:</h5>
-    <input type="text" class="form-control" formControlName="title">
-    <h5>Год:</h5>
+    <h3>{{id ? 'Редактирование' : 'Добавление'}} отчёта</h3>
+
+    <h4>Год:</h4>
     <input type="number" class="form-control" formControlName="year" placeholder="Будет указана на карточке товаре">
 
-    <h5>Текст без раздела: <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
-    <textarea class="form-control" formControlName="content" rows="5"></textarea>
+    <h4>Годовой отчёт:</h4>
+    <div class="d-flex flex-row mb-3">
+      <input type="file" class="form-control col-4" (change)="onAnnualUpload($event)">
+      <input type="text" class="form-control col-8" formControlName="annual" placeholder="Добавить ссылку">
+    </div>
+    
+    <h4>Отчёт в минюст:</h4>
+    <div class="d-flex flex-row mb-3">
+      <input type="file" class="form-control col-4" (change)="onJusticeUpload($event)">
+      <input type="text" class="form-control col-8" formControlName="justice" placeholder="Добавить ссылку">
+    </div>
 
-    <h3>Главы:</h3>
-    <ng-container formArrayName="chapters">
-        <div *ngFor="let chapter of form.controls.chapters.controls; index as j">
-        
-          <div [formGroupName]="j">
-            <h4>Название главы {{j + 1}}: </h4>
-            <input class="form-control" list="datalistOptions" formControlName="title" placeholder="Название главы">
-            <datalist id="datalistOptions">
-              <option *ngFor="let item of chapters" [value]="item">{{item}}</option>
-            </datalist>
-
-            <h5>Ссылка: </h5>
-            <input class="form-control" list="datalistOptions" formControlName="link" placeholder="Ссылка по названию главы">
-            <h5>Текст без раздела: <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
-            <textarea class="form-control" formControlName="content" rows="5"></textarea>
-            
-
-            <div formArrayName="sections">
-              <h4>Разделы главы {{j + 1}}:</h4>
-              <ng-container *ngFor="let section of this.form.controls.chapters.controls[j].controls.sections.controls; index as i">
-                <div class="form-row" [formGroupName]="i">
-                  <h5>Название раздела {{i + 1}}: </h5>
-                  <div class="form-group col-11">
-                    <input type="text" class="form-control" formControlName="title" placeholder="Название раздела">
-                  </div>
-                  <div class="col-1">
-                      <button class="btn btn-custom col-12" type="button" (click)="deleteSection(j, i)">
-                          <i class="fa fa-trash"></i>
-                      </button>
-                  </div>
-                  <h5>Ссылка: </h5>
-                  <input class="form-control col-12" list="datalistOptions" formControlName="link" placeholder="Ссылка по названию раздела">
-                  <h5>Текст раздела: <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
-                  <textarea class="form-control col-12" formControlName="content" rows="7"></textarea>
-              </div>
-              </ng-container>
-              <button class="btn btn-custom  me-2 mb-3 mt-3" type="button" (click)="plusSection(j)">
-                Добавить раздел
-                <i class="fa fa-plus"></i>
-              </button>
-              <button class="btn btn-custom mb-3 mt-3" type="button" (click)="deleteChapter(j)">
-                Удалить главу
-                <i class="fa fa-trash"></i>
-              </button>
-            </div>
-
-          </div>
-          <hr>
-        </div>
-        <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusChapter()">
-            Добавить главу
-            <i class="fa fa-plus"></i>
-        </button>
-    </ng-container>
-
-
+    <h4>Отчёт в минфин:</h4>
+    <div class="d-flex flex-row mb-3">
+      <input type="file" class="form-control col-4" (change)="onFinanceUpload($event)">
+      <input type="text" class="form-control col-8" formControlName="finance" placeholder="Добавить ссылку">
+    </div>
 
     <div class="form-check form-switch mt-2">
         <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
@@ -82,7 +39,6 @@
   </form>
 </div>
 
-<app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
 
 <ng-template #loader>
   <app-loader></app-loader>
