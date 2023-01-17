@@ -273,5 +273,6 @@ export interface LibItem {
     content: [{
         type: 'ТЕКСТ' | 'ПРЕЗЕНИТАЦИЯ' | 'ВИДЕО'
         url: string
+        text: string
     }]
 }

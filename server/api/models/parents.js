@@ -7,10 +7,12 @@ const dataSchema = new Schema({
     required: true,
     unique: true
   },
+  age: {
+    type: String,
+    required: true,
+  },
   gallery: [String],
   description: String,
-  image: String,
-  icon: String,
   visible: Boolean,
   path: {
     type: String,
@@ -20,25 +22,14 @@ const dataSchema = new Schema({
   text_1: String,
   text_2: String,
   text_3: String,
-  text_4: [String],
-  text_5: String,
-  text_6: String,
+  text_4: String,
   text_button: String,
   url_button: String,
-  subtitle: String,
-  video: String,
-  phrases: [{
-    image: String,
+  orgs: [{
+    url: String,
     name: String,
     description: String,
-  }],
-  lastChange: {
-    author: {
-      ref: 'users',
-      type: Schema.Types.ObjectId
-    },
-    time: Date
-  },
+  }]
 })
 
-module.exports = mongoose.model('programs', dataSchema)
+module.exports = mongoose.model('parents', dataSchema)

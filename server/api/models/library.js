@@ -28,7 +28,8 @@ const libSchema = new Schema({
       enum: ['ТЕКСТ', 'ПРЕЗЕНИТАЦИЯ', 'ВИДЕО'],
       required: true
     },
-    url: String
+    url: String,
+    text: String,
   }],
   visible: Boolean,
   lastChange: {
@@ -42,7 +43,14 @@ const libSchema = new Schema({
     type: String,
     required: true,
     unique: true
-  }
+  },
+  lastChange: {
+    author: {
+      ref: 'users',
+      type: Schema.Types.ObjectId
+    },
+    time: Date
+  },
 })
 
 module.exports = mongoose.model('library', libSchema, 'library')
