@@ -63,6 +63,7 @@ export class LibraryPageComponent implements OnInit {
           return new FormGroup({
             type: new FormControl(el.type, Validators.required),
             url: new FormControl(el.url, Validators.required),
+            text: new FormControl(el.text),
           })
         }))
       })
@@ -77,6 +78,7 @@ export class LibraryPageComponent implements OnInit {
       gallery.push(new FormGroup({
         url: new FormControl(null, Validators.required),
         type: new FormControl(null, Validators.required),
+        text: new FormControl(null),
       }))
     }
   

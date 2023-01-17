@@ -40,7 +40,10 @@
               <option value="ВИДЕО">ВИДЕО</option>
             </select>
           </div>
-          <div class="col-7 col-sm-8">
+          <div class="col-4">
+            <input class="form-control" formControlName="text" placeholder="Подпись (для презентаций и текста)">
+          </div>
+          <div class="col-4">
             <input class="form-control" formControlName="url" placeholder="Добавляйте только общедоступные ссылки">
           </div>
           <span class="btn btn-custom col-2 col-sm-1" (click)="deleteContentByIndex(i)">
