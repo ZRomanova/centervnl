@@ -1,0 +1,47 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle-top.back__subtitle-child(href='/about/') О нас
+        .col-12.header__subtitle.title.mb-5 Контакты
+        .col-12
+          #map
+        .col-12 
+          .row.mt-5 
+            .col-12.col-md-6.mt-3 
+              .title-700-20.title-700-20-light Телефон:
+              .text-400-20= contacts.phone
+            .col-12.col-md-6.mt-3 
+              .title-700-20.title-700-20-light E-mail:
+              .text-400-20= contacts.email
+            .col-12.col-md-6.mt-3 
+              .title-700-20.title-700-20-light Фактический адрес:
+              .text-400-20 
+                | 115612 г. Москва, 
+                | ул. Ключевая, д.22, корп.2
+            .col-12.col-md-6.mt-3 
+              .title-700-20.title-700-20-light Юридический адрес:
+              .text-400-20
+                | 115114 г. Москва, 
+                | ул. Дербеневская 18-1-69
+
+        .col-12.mt-5
+          .title-700-20 Реквизиты
+          .text-400-14.mt-4 Название организации: Автономная некоммерческая организация 
+          .text-400-14 «Ресурсный центр помощи людям с ментальными нарушениями «Вера. Надежда. Любовь»
+          .text-400-14.mt-3 ИНН 7725401309
+          .text-400-14.mt-3 КПП 772501001
+          .text-400-14.mt-3 ОГРН 1177700019067
+          .text-400-14.mt-3 ОКПО 20002308;
+          .text-400-14.mt-3 ОКТМО 45914000000; ОКАТО 45296559000
+          .text-400-14.mt-3 Банковские реквизиты: Отделение Сбербанка №9038/01606 в г.Москва
+          .text-400-14.mt-3 р/сч 40703810838000008526
+          .text-400-14.mt-3 к/сч 30101810400000000225
+          .text-400-14.mt-3 БИК 044525225 Тел. +7-916 612 34 71
+          .text-400-14.mt-3 Директор Романова Е.А.
+
+block scripts
+  script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
+  script(src='/javascripts/map.js')

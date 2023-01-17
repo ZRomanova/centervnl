@@ -1,100 +1,105 @@
-const apiPartners = require('../api/controllers/partners')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
+const apiPrograms = require('../api/controllers/programs')
+const apiData = require('../api/controllers/data')
 const moment = require('moment')
 
 moment.locale('ru')
 
-module.exports.getProjectListPage = async function(req, res, data = {}) {
+module.exports.getGrantListPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-            await apiProjects.getProjects(req, res, async (req, res, projects) => {
-                const arr = []
-                const active = []
-                const now = new Date()
-                projects.forEach(p => {
-                    if (p.visible && new Date(p.period.start) < now && (!p.period.end || new Date(p.period.end) > now)) {
-                        active.push(p)
-                    } else if (p.visible && p.period.end && new Date(p.period.end) < now){
-                        const year = new Date(p.period.end).getFullYear()
-                        const obj = arr.find(el => el.year == year)
-                        if (obj) obj.projects.push(p)
-                        else arr.push({year, projects: [p]})
-                    }
-                    arr.sort((a, b) => b.year - a.year)
-                })
-                result.old_projects = arr
-                result.nav_projects = active
-                
-                await apiShops.getShops(req, res, (req, res, shops) => {
-                    result.shops = shops
-                    renderProjectListPage(req, res, result)
-                })
-            })
+        req.query.filter_visible = true
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
         })
+        req.query.filter_is_grant = true
+        req.query.fields_period = 1
+        await apiProjects.getProjects(req, res, async (req, res, projects) => {
+            projects.forEach(project => {
+                if (project.period.end) {
+                    project.date = `${moment(project.period.start).format('DD.MM.yyyy')} - ${moment(project.period.end).format('DD.MM.yyyy')}`
+                } else {
+                    project.date = `c ${moment(project.period.start).format('DD.MM.yyyy')}`
+                }
+            })
+            result.projects = projects
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
+            result.contacts = contacts
+        })
+        req.params.type = "GRANTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
+        })
+        renderGrantListPage(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const renderProjectListPage = function(req, res, data) {
+const renderGrantListPage = function(req, res, data) {
     res.render('projects-list', {
-        title: 'Проекты',
-        old_projects: data.old_projects,
-        nav_projects: data.nav_projects,
-        footer_logos: data.partners, 
+        title: 'Гранты и субсидии',
+        projects: data.projects, 
+        programs: data.programs, 
+        contacts: data.contacts,
         user: req.user,
+        text: data.text,
         shops: data.shops
     })
 }
 
 
-module.exports.getProjectPage = async function(req, res, data = {}) {
+module.exports.getGrantPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                result.nav_projects = nav_projects
-                req.query.filter_visible = true
-                await apiProjects.getProjectByPath(req, res, async (req, res, data) => {
-                    const project = data.project
-                    result.services = data.services
-                    result.posts = data.posts
-                    
-                    if (project.period.end) {
-                        project.date = `${moment(project.period.start).format('LL')} - ${moment(project.period.end).format('LL')}`
-                    } else {
-                        project.date = `c ${moment(project.period.start).format('LL')}`
-                    }
-                    result.project = project
-                    
-                    await apiShops.getShops(req, res, (req, res, shops) => {
-                        result.shops = shops
-                        renderProjectPage(req, res, result)
-                    })
-                })
-            })
+        req.query.filter_visible = true
+        await apiProjects.getProjectByPath(req, res, async (req, res, project) => {
+
+            if (project.period.end) {
+                project.date = `${moment(project.period.start).format('DD.MM.yyyy')} - ${moment(project.period.end).format('DD.MM.yyyy')}`
+            } else {
+                project.date = `c ${moment(project.period.start).format('DD.MM.yyyy')}`
+            }
+            result.project = project
         })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        renderGrantPage(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const renderProjectPage = function(req, res, data) {
+const renderGrantPage = function(req, res, data) {
     res.render('project', {
         title: data.project ? data.project.name : "Не найдено",
         project: data.project,
-        nav_projects: data.nav_projects,
-        footer_logos: data.partners, 
+        contacts: data.contacts,
+        programs: data.programs, 
         user: req.user,
-        posts: data.posts,
-        services: data.services,
         shops: data.shops
     })
 }
+
 
 module.exports.toggleLike = async (req, res) => {
     try {

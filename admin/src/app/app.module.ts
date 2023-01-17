@@ -44,6 +44,17 @@ import { UsersLayoutComponent } from './users/users-layout/users-layout.componen
 import { ReportsListComponent } from './reports/reports-list/reports-list.component';
 import { ReportPageComponent } from './reports/report-page/report-page.component';
 import { DocsFormComponent } from './about/docs-form/docs-form.component';
+import { ProgramPageComponent } from './projects/program-page/program-page.component';
+import { ProgramsListComponent } from './projects/programs-list/programs-list.component';
+import { ProjectsLayoutComponent } from './projects/projects-layout/projects-layout.component';
+import { WinsListComponent } from './users/wins-list/wins-list.component';
+import { WinPageComponent } from './users/win-page/win-page.component';
+import { SmiPageComponent } from './blog/smi-page/smi-page.component';
+import { SmiListComponent } from './blog/smi-list/smi-list.component';
+import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
+import { LibraryListComponent } from './library/library-list/library-list.component';
+import { LibraryPageComponent } from './library/library-page/library-page.component';
+import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +95,18 @@ import { DocsFormComponent } from './about/docs-form/docs-form.component';
     UsersLayoutComponent,
     ReportsListComponent,
     ReportPageComponent,
-    DocsFormComponent
+    DocsFormComponent,
+    ProgramPageComponent,
+    ProgramsListComponent,
+    ProjectsLayoutComponent,
+    WinsListComponent,
+    WinPageComponent,
+    SmiPageComponent,
+    SmiListComponent,
+    BlogLayoutComponent,
+    LibraryListComponent,
+    LibraryPageComponent,
+    LibraryLayoutComponent
   ],
   imports: [
     BrowserModule,

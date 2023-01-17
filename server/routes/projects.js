@@ -4,8 +4,7 @@ const {isAuth} = require('../middleware/auth')
 
 const controller = require('../controllers/projects');
 
-router.get('/', controller.getProjectListPage) 
-router.get('/:path', controller.getProjectPage) 
-router.post('/:id/like', isAuth, controller.toggleLike)
+router.get('/', controller.getGrantListPage) 
+router.get('/:path', controller.getGrantPage) 
 
 module.exports = router;

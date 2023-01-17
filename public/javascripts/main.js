@@ -1,19 +1,4 @@
 
-const dropdowns = document.querySelectorAll('.dropdown-toggle')
-if (dropdowns) dropdowns.forEach((dd)=>{
-    dd.addEventListener('mouseover', function (e) {
-        var el = this.nextElementSibling
-        el.style.display = el.style.display==='block'?'none':'block'
-    })
-    dd.addEventListener('mouseout', function (e) {
-        var el = this.nextElementSibling
-        el.style.display = el.style.display==='block'?'block':'none'
-    })
-    dd.addEventListener('click', function (e) {
-        let url = dd.getAttribute('href')
-        location.href = url
-    })
-})
 
 const dropdownItems = document.querySelectorAll('.dropdown-item')
 
@@ -23,6 +8,9 @@ if (dropdownItems) dropdownItems.forEach((dd)=>{
         location.href = url
     })
 })
+
+
+
 
 const togglePasswordA = document.querySelector("#togglePasswordA");
 const passwordA = document.querySelector("#auth-password");

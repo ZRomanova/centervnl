@@ -1,109 +1,192 @@
 extends layout
 
 block content
-  if gallery && gallery.length
-    #homeHeadSlider.carousel.slide.home-slider(data-bs-ride='carousel')
-      if gallery.length > 1
-        .carousel-indicators
-          each item, index in gallery
-            button.item-bb(type='button' data-bs-target='#homeHeadSlider' data-bs-slide-to=index aria-current='true' aria-label='Slide '+index)
 
-      .carousel-inner
-        each item, index in gallery
-          .carousel-item.item-b(data-bs-interval='10000')
-            if item.url
-              a.slider-link.float-end(href=item.url target="_blank")
-                i.fa-solid.fa-arrow-up-right-from-square
-            .bg-blur-home-image(style="background-image: url("+item.image+");")
-            img.d-block.w-100.container-home-gallery(src=item.image alt=item.name)
-            .carousel-caption
-              h3.marck-script= item.name
-              p.mh-300.text-justify.text-ellipsis= item.description
+  section.background
+    .container
+      img.background__image(src='/img/bg_main.jpg' alt='bg')
 
-      if gallery.length > 1
-        button.carousel-control-prev(type='button' data-bs-target='#homeHeadSlider' data-bs-slide='prev')
-          span.carousel-control-prev-icon(aria-hidden='true')
-          span.visually-hidden Previous
-        button.carousel-control-next(type='button' data-bs-target='#homeHeadSlider' data-bs-slide='next')
-          span.carousel-control-next-icon(aria-hidden='true')
-          span.visually-hidden Next
+  section.top-120
+    .container
+      .row
+        img.target__image.d-md-none(src='/img/target/house.png' alt='house')
+        .col.target__title.title Наши цели
+      .row
+        .d-none.d-md-block.col-md-4
+          img.target__image-lg(src='/img/target/house.png' alt='house')
+        .col-12.col-md
+          p.target__text
+            | Ресурсный центр «Вера. Надежда. Любовь» опирается в своей деятельности на инклюзивные подходы. Мы стремимся, чтобы у человека с
+            | ментальными нарушениями не было социальных ограничений для включения в обычную жизнь. В своей работе мы используем современные методики
+            | и технологии с доказанной эффективностью.
+          p.target__text
+            | Наши усилия направлены на то, чтобы наши подопечные чувствовали себя нужными, занимали социально активную позицию, были независимы в
+            | быту, а при необходимости могли попросить поддержку.
+          p.target__text
+            | Поддерживая молодых взрослых с ментальными нарушениями, мы стремимся, чтобы ребята использовали общие для всех места обучения, работы и
+            | проведения досуга.
 
-    hr
+  section.top-120
+    .container
+      .row
+        .col.title Наши программы
+      .row.program__wrapper
+        each program in programs
+          a.col-3.p-4.program__card(href= '/programs/'+program.path)
+            .program__img
+              img.program__icon(src= program.icon alt='book')
+            .program__subtitle= program.name
+            .program__descr= program.subtitle
 
-  if anouncements.length
-    .col-xs-12.col-sm-8.float-end
-      .carousel.slide#anouncements(data-bs-ride="carousel")
-        .carousel-inner
-          each item in anouncements
-            .carousel-item.anouncement-box.item-a
-              img.d-block.img-cover.orange-border(src=item.image )
-              .carousel-caption.yellow-text.text-block-anouncement
-                .mh-300
-                  h3.marck-script= item.name
-                  .text-justify.text-ellipsis !{item.description}
-                .row
-                  .col-12
-                    a.orange-button(href='/services/' + item.path) Запись
-        if anouncements.length > 1
-          button.carousel-control-prev(type="button" data-bs-target="#anouncements" data-bs-slide="prev")
-            span.carousel-control-prev-icon(aria-hidden="true")
-            span.visually-hidden Previous
-          button.carousel-control-next(type="button" data-bs-target="#anouncements" data-bs-slide="next")
-            span.carousel-control-next-icon(aria-hidden="true")
-            span.visually-hidden Next
-  .col-12.text-420
-    .text-justify !{text}
+  section.top-120
+    .container
+      .row
+        .col.result__title.title Результаты нашей работы
+      .row.result__counter
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min
+            .result__count-max 30
+          p.result__descr
+            span
+              | молодых людей с ментальными нарушениями трудоустроены на предприятиях Москвы на свободном рынке
+            |  — в «Рено», МФЦ, «Утконос».
+            | Они самостоятельно добираются до рабочих мест
+          .result__count-mini
+          p.result__descr
+            span
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min
+            .result__count-max 11
+          p.result__descr
+            span
+              | 11 молодых людей с ментальными нарушениями работают по договорам ГПХ на адаптированных трудовых местах,
+            |  то есть там, где
+            | создана понятная для ребят среда: есть наставники, готовые оказать помощь, используются визуальные помощники.
+          .result__count-mini 150
+          p.result__descr
+            span студентов 
+            | прошли месячные стажировки на адаптированных трудовых местах.
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min
+            .result__count-max 57
+          p.result__descr
+            span
+              | 57 подростков и молодых людей с ментальными нарушениями прошли программы по освоению прикладных навыков, необходимых для
+              | самостоятельной жизни.
+            |  Например, узнали, что такое паспорт, ИНН и СНИЛС и для чего нужны эти документы, как оформить статус самозанятого. Научились
+            | расплачиваться в магазине, понимать, что такое товары по акции, как снять наличные и пополнить баланс банковской карты.
+          .result__count-mini
+          p.result__descr
+            span
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min
+            .result__count-max 10
+          p.result__descr
+            span
+              | молодых людей с ментальными нарушениями освоили индивидуальную программу и готовятся к получению социального жилья
+            |  для перехода на самостоятельное проживание.
+          .result__count-mini
+          p.result__descr
+            span
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min
+            .result__count-max 210
+          p.result__descr
+            span подростков и молодых людей с ментальными нарушениями прошли
+          .result__count-mini более 9200
+          p.result__descr
+            span развивающих, профориентационных, аттестационных занятий и практикумов, 
+            | в том числе основанных на принципе “равный-равному”.
+            | То есть ребята, освоившие какие-то навыки, переходят на продвинутый уровень и начинают помогать своим друзьям.
+        .col-12.col-lg-4.p-3.result__card.mb-2
+          .result__count
+            .result__count-min Более 
+            .result__count-max 300
+          p.result__descr
+            span молодых людей с ментальными нарушениями прошли однодневные трудовые пробы 
+            | — попробовали себя в качестве работника офиса,
+            | сотрудника клининговой компании, помощника воспитателя.
+          .result__count-mini
+          p.result__descr
+            span
+
+  section.top-120
+    .container
+      .row.review__wrapper
+        each item in gallery 
+          +phrase(item)
+
+  section.top-120
+    .container
+      .row
+        .col.principles__title.title Наши принципы
+      .row.principles__wrapper
+        .col-12.col-lg-6.align-items-center.principles__item
+          .col-4.d-flex.justify-content-center.align-items-center.principles__img
+            img.principles__image(src='img/principles/principles_1.svg' alt='principle')
+          p.col-8.principles__credo Самостоятельности столько, сколько возможно, помощи столько сколько необходимо
+        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
+          | Мы предоставляем возможность ребенку или молодому взрослому с ментальными нарушениями выполнить действие самому, соблюдаем паузы во
+          | взаимодействии, оказываем помощь, начиная с минимального объема или косвенной подсказки. Самостоятельность – это не только выполнение
+          | действия, но его планирование и оценка результата
+      .row.principles__wrapper
+        .col-12.col-lg-6.align-items-center.principles__item
+          .col-4.d-flex.justify-content-center.align-items-center.principles__img
+            img.principles__image(src='img/principles/principles_2.svg' alt='principle')
+          p.col-8.principles__credo Ничего для нас без нас
+        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
+          | Помогая ребенку и молодому взрослому включаться в различные социальные сферы, мы разрабатываем визуальные помощники и документы «на
+          | простом языке». С помощью визуальных помощников наши подопечные могут выразить свое мнение по вопросам, касающимся их жизни. Разработка
+          | визуальных помощников организуется с участием самих ребят, которые будут использовать эти документы
+      .row.principles__wrapper
+        .col-12.col-lg-6.align-items-center.principles__item
+          .col-4.d-flex.justify-content-center.align-items-center.principles__img
+            img.principles__image(src='img/principles/principles_3.svg' alt='principle')
+          p.col-8.principles__credo Мы там, где все
+        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
+          | Включение в социальные сферы - проживание в обычном доме, получение образования и включение в трудовую занятость, проведение досуга в
+          | обычных местах должно быть доступно для детей и молодых взрослых с ментальными нарушениями. При возникновении трудовых отношений люди с
+          | ментальными нарушениями наравне с другими выполняют взятые на себя обязанности и являются налогоплательщиками
+
+  section.top-120
+    .container
+      .row
+        .col.spport__title.title За 1 год поддержку получили
+      .row
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 824
+          p.support__descr ребёнка и молодых взрослых с инвалидностью
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 50
+          p.support__descr семей в кризисной ситуации
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 7
+          p.support__descr семей усыновителей
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 14
+          p.support__descr детей-сирот, а также детей, оставшиеся без попечения родителей
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 107
+          p.support__descr человек, проживающие в психоневрологических интернатах
+        .col-12.col-md-6.col-lg-4.support__card
+          .support__count 130
+          p.support__descr специалистов государственных и негосударственных профильных организаций
+
+  section.top-120
+    .container
+      .row
+        .col.news__title.title Наши новости
+      .row.news__wrapper
+        each post in posts
+          +post(post, 'news/')
+          
+        .col-4
+          a.news__button.button.button_blue(href='/news/') Все новости
 
 
-  .col-12.bg-light-blue.text-dark-blue.d-block#contacts
-    h1.text-center СВЯЖИТЕСЬ С НАМИ
-    #coords.d-none= contacts.coords
-    .row
-      .col-xs-12.col-sm-6.square-block
-        #map.square-box
-      .col-xs-12.col-sm-6
-        h5.text-center= contacts.address
-        h5.text-center= contacts.email
-        h5.text-center Телефон: #{contacts.phone}
-        .row
-          .col.text-center
-            a(href="https://vk.com/centervnl" target="_black")
-              img.contacts-images.m-1(src="images/vk.png" alt="ВКонтакте")
-            a(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
-              img.contacts-images.m-1(src="images/tg.png" alt="Telegram")
-            a(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
-              img.contacts-images.m-1(src="images/youtube.png" alt="YouTube")
-
-  script.
-    ymaps.ready(function () {
-      var location = coords.innerText.split(',')
-      var myMap = new ymaps.Map('map', {
-              center: location,
-              zoom: 13
-          }, {
-              searchControlProvider: 'yandex#search'
-          }),
-
-          // Создаём макет содержимого.
-          MyIconContentLayout = ymaps.templateLayoutFactory.createClass(
-              '<div style="color: #FFFFFF; font-weight: bold;">$[properties.iconContent]</div>'
-          ),
-
-          myPlacemark = new ymaps.Placemark(myMap.getCenter(), {
-              hintContent: 'Мы здесь',
-              iconContent: '12'
-          }, {
-              // Опции.
-              // Необходимо указать данный тип макета.
-              iconLayout: 'default#imageWithContent',
-              // Своё изображение иконки метки.
-              iconImageHref: '/images/map.svg',
-              // Размеры метки.
-              iconImageSize: [50, 50],
-              // Смещение левого верхнего угла иконки относительно
-              // её "ножки" (точки привязки).
-              iconImageOffset: [-22, -50]
-          })
-      myMap.geoObjects.add(myPlacemark);
-    });
 

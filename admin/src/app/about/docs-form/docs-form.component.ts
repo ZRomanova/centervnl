@@ -56,7 +56,7 @@ export class DocsFormComponent implements OnInit, OnDestroy {
     }
   
     back() {
-      this.router.navigate(['general'])
+      this.router.navigate(['reports'])
     }
 
     onSubmit() {

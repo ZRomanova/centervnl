@@ -48,6 +48,9 @@ export interface Staff {
     visible: boolean
     position?: string
     dateStr?: string
+    degree: string
+    education: string
+    path: string
 }
 
 export interface PriceList {
@@ -68,20 +71,53 @@ export interface Project {
     _id?: string,
     name: string
     path: string,
+    is_grant: boolean
     description: string,
     created?: Date,
     author?: any,
-    likes?: User[],
+    // likes?: User[],
     period: {
-        start: Date,
+        start?: Date,
         end?: Date
     },
     visible: boolean,
     image: string,
     gallery: string[],
     dateStr: string,
-    tags?: string[],
-    partners?: string[],
+    programs: [{
+        program: string
+        description: string
+    }]
+    // tags?: string[],
+    // partners?: string[],
+}
+
+export interface Phrase {
+    image: string
+    description: string
+    name: string
+}
+
+export interface Program {
+    _id?: string,
+    name: string
+    subtitle: string
+    path: string,
+    text_1: string,
+    text_2: string,
+    text_3: string,
+    text_4: string[],
+    text_5: string,
+    text_6: string,
+    text_button: string,
+    url_button: string,
+    video: string
+    description: string
+    visible: boolean
+    image: string
+    icon: string
+    gallery: string[]
+    phrases: Phrase[]
 }
 
 export interface Service {
@@ -211,28 +247,31 @@ export interface Checkout {
     name?: string
 }
 
-export interface ReportSection {
-    title: string
-    link?: string
-    content: string
-}
-
-export interface ReportChapter {
-    title: string
-    link?: string
-    content: string
-    sections: ReportSection[]
-}
-
 export interface Report {
     year: number
-    title: string
-    content: string
-    chapters: ReportChapter[]
+    annual: string
+    justice: string
+    finance: string
     visible: boolean
-    dateStr?: string
     description?: string
     created?: Date
-    updated?: Date
     _id?: string
+}
+
+
+export interface LibItem {
+    _id?: string
+    name: string
+    path: string
+    author?: any
+    description: string
+    created?: Date
+    date?: Date
+    visible: boolean
+    image: string
+    dateStr: string
+    content: [{
+        type: 'ТЕКСТ' | 'ПРЕЗЕНИТАЦИЯ' | 'ВИДЕО'
+        url: string
+    }]
 }

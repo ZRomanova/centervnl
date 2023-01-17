@@ -9,6 +9,7 @@ const shopSchema = new Schema({
   },
   description: String,
   visible: Boolean,
+  image: String,
   path: {
     type: String,
     required: true,

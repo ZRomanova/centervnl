@@ -5,12 +5,8 @@ html
     title= title
     link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='/bootstrap/css/amelia.bootstrap.css')
+    link(rel='stylesheet', href='/css/style.css')
     script(src='/javascripts/jquery-3.6.0.js')
-    script(src="https://kit.fontawesome.com/f3bc034a55.js" crossorigin="anonymous")
-    script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
-
     script(type='text/javascript').
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -21,248 +17,136 @@ html
       accurateTrackBounce:true,
       webvisor:true
       });
-
-
   body
-    #authModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='authModalLabel' tabindex='-1')
-      .modal-dialog
-        .modal-content
-          .modal-header
-            h5#authModalLabel.modal-title Авторизация
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body
-            form#login(action="/auth/login", method="post", role="form")
-              label.col-form-label(for='auth-email') Email:
-              .mb-3
-                input#auth-email.form-control(type='email' autocomplete="on" name="email" required)
-
-              label.col-form-label(for='auth-password') Пароль:
-              .input-group.mb-3
-                span.input-group-text.input-group-btn
-                  i.fas.fa-lock
-                input#auth-password.form-control(type='password' autocomplete="current-password" name="password" required)
-                span.input-group-text.input-group-btn
-                  i#togglePasswordA.far.fa-eye(style='cursor: pointer')
-
-          .modal-footer
-            button.btn.btn-secondary(data-bs-target='#checkRegModal' data-bs-toggle='modal' data-bs-dismiss='modal') Регистрация
-            button.btn.btn-custom(type='submit' form="login") Вход
-
-    #authEmoModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='authEmoModalLabel' tabindex='-1')
-      .modal-dialog
-        .modal-content
-          .modal-header
-            h5#authEmoModalLabel.modal-title Авторизация в ЭМО
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body
-
-              label.col-form-label(for='emo-login') Логин:
-              .mb-3
-                input#emo-login.form-control(type='text' name='loginEmo' form="registr-emo" autocomplete="off" )
-
-              label.col-form-label(for='emo-password') Пароль:
-              .mb-3
-                input#emo-password.form-control(type='text' autocomplete="off" name='passwordEmo' form="registr-emo")
-          .modal-footer
-            button.btn.btn-custom(data-bs-target='#registrEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Далее
-
-    #registrEmoModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='registrEmoModalLabel' tabindex='-1')
-      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
-        .modal-content
-          .modal-header
-            h5#registrEmoModalLabel.modal-title Регистрация
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body
-            form#registr-emo(action="/auth/registration-emo", method="post", role="form")
-              label.col-form-label(for='emo-email') Email:
-              .mb-3
-                input#emo-email.form-control(type='email' autocomplete="on" required name='email')
-
-              label.col-form-label(for='registr-emo-password') Пароль от данного сайта (придумайте):
-              .input-group.mb-3
-                span.input-group-text.input-group-btn
-                  i.fas.fa-lock
-                input#registr-emo-password.form-control(type='password' autocomplete="new-password" required name='password')
-                span.input-group-text.input-group-btn
-                  i#togglePasswordE.far.fa-eye(style='cursor: pointer')
-
-              label.col-form-label(for='registr-emo-patronymic') Отчество:
-              .mb-3
-                input#registr-emo-patronymic.form-control(type='text' name='patronymic')
-
-              input(type="checkbox" required name="policy" value="true") 
-              label !{'Согласен с <a href="https://centervnl.ru/policy" target="_blank"> политикой</a> обработки персональных данных'}
-
-          .modal-footer
-            button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
-            button.btn.btn-custom(type='submit' form="registr-emo") Регистрация
-
-    #registrModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='registrModalLabel' tabindex='-1')
-      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
-        .modal-content
-          .modal-header
-            h5#registrModalLabel.modal-title Регистрация
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body
-            form#registr(action="/registration", method="post", role="form")
-              label.col-form-label(for='registr-email') Email:
-              .mb-3
-                input#registr-email.form-control(type='email' required name='email' autocomplete="on")
-
-              label.col-form-label(for='registr-password') Пароль:
-              .input-group.mb-3
-                span.input-group-text.input-group-btn
-                  i.fas.fa-lock
-                input#registr-password.form-control(type='password' required name='password'  autocomplete="new-password")
-                span.input-group-text.input-group-btn
-                  i#togglePasswordR.far.fa-eye(style='cursor: pointer')
-
-              label.col-form-label(for='registr-surname') Фамилия:
-              .mb-3
-                input#registr-surname.form-control(type='text' required name='surname')
-              label.col-form-label(for='registr-name') Имя:
-              .mb-3
-                input#registr-name.form-control(type='text' required name='name')
-              label.col-form-label(for='registr-patronymic') Отчество:
-              .mb-3
-                input#registr-patronymic.form-control(type='text' name='patronymic')
-
-              label.col-form-label(for='registr-sex' required) Пол:
-              select#registr-sex.form-select.form-select-lg.mb-3(name='sex' required)
-                option(selected='') Выберите
-                option(value='1') Мужчина
-                option(value='2') Женщина
-
-              label.col-form-label(for='registr-info') О себе:
-              .mb-3
-                textarea#registr-info.form-control(name='info')
+    include ./includes/mixins
+    .root-wrapper
+      .wrapper
+        header.header
+          nav.navbar.navbar-expand-xl
+            .container-fluid
+              a.navbar-brand(href='/')
+                img.header__logo(src='/img/logo.svg' alt='logo')
               
-              input.form-control(type="text" name="captcha" placeholder="Решите пример на картинке")
-              .center.text-center.mt-3
-                img(src="/captcha.jpg")
+              button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false')
+                svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg')
+                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
+                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
 
-              input(type="checkbox" required name="policy" value="true") 
-              label !{'Согласен с <a href="https://centervnl.ru/policy" target="_blank"> политикой</a> обработки персональных данных'}
-          .modal-footer
-            button.btn.btn-secondary(data-bs-target='#authModal' data-bs-toggle='modal' data-bs-dismiss='modal') Вход
-            button.btn.btn-custom(type="submit" form="registr") Регистрация
+              #navbarToggler.collapse.navbar-collapse
+                .header__social
+                  a.header__social-item(href="https://vk.com/centervnl" target="_black")
+                    img(src='/icons/header/vk_orange.svg' alt='vk')
+                  a.header__social-item(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+                    img(src='/icons/header/telegram_orange.svg' alt='telegram')
+                  a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+                    img(src='/icons/header/youtube_orange.svg' alt='youtube')
+                ul.navbar-nav.me-auto.ms-4
+                  li.nav-item.dropdown
+                    a.nav-link.header__links-list(href='/about/') О нас
+                    ul.dropdown-menu
+                      li
+                        a.dropdown-item.header__links-dropped(href='/about/list') Кто мы?
+                      li
+                        a.dropdown-item.header__links-dropped(href='/team/') Наша команда
+                      li
+                        a.dropdown-item.header__links-dropped(href='/docs/') Документы и отчеты
+                      li
+                        a.dropdown-item.header__links-dropped(href='/wins/') Наши победы
+                      li
+                        a.dropdown-item.header__links-dropped(href='/partners/') Наши партнеры
+                      li
+                        a.dropdown-item.header__links-dropped(href='/press/') СМИ о нас
+                      li
+                        a.dropdown-item.header__links-dropped(href='/contacts/') Контакты
+                      li
+                        a.dropdown-item.header__links-dropped(href='/gallery/') Фото и видео
+                      li
+                        a.dropdown-item.header__links-dropped(href='/projects/') Гранты и субсидии
+                  li.nav-item.dropdown
+                    a.nav-link.header__links-list(href='/programs/') Что мы делаем
+                    ul.dropdown-menu
+                      each item in programs
+                        li
+                          a.dropdown-item.header__links-dropped(href='/programs/'+item.path)= item.name
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/help/') Как помочь
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/parents/') Родителям
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/library/') База знаний
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/news/') Новости
+                  li.nav-item
+                    a.nav-link.header__links-list(href='/services/') Мероприятия
+                  //- li.nav-item
+                    a.nav-link.header__links-list(href='#') Магазин
+                .d-flex.w-auto.justify-content-between
+                  .header__icons.d-none
+                    a.header__icons-item(href='#')
+                      img(src='/icons/header/man.svg' alt='man')
+                    a.header__icons-item(href='#')
+                      img(src='/icons/header/search.svg' alt='search')
+                  a.header__help.button.button_blue(href='/help/donate/') Помочь
+                  
+        .container.first-container
+          block content
 
-    #checkRegModal.modal.fade.fade-show(tabindex='-1' aria-labelledby='checkRegModalLabel' aria-hidden='true')
-      .modal-dialog
-        .modal-content
-          .modal-header
-            h5#checkRegModalLabel.modal-title Способ регистрации
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body Хотите использовать учётную запись ЭМО для регистрации?
-          .modal-footer
-            button.btn.btn-secondary(data-bs-target='#registrModal' data-bs-toggle='modal' data-bs-dismiss='modal') Нет
-            button.btn.btn-custom(data-bs-target='#authEmoModal' data-bs-toggle='modal' data-bs-dismiss='modal') Да
 
-    #editUserModal.modal.fade.fade-show(aria-hidden='true' aria-labelledby='editUserModalLabel' tabindex='-1')
-      .modal-dialog.modal-dialog-centered.modal-dialog-scrollable
-        .modal-content
-          .modal-header
-            h5#editUserModalLabel.modal-title Редактировать профиль
-            button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
-          .modal-body
-            form#edit-user(action="/auth/update", method="post", role="form")
-              label.col-form-label(for='edit-email') Email:
-              .mb-3
-                input#edit-email.form-control(type='email' required name='email' autocomplete="on")
+      footer.footer
+        .container
+          .row
+            .col-12.col-lg-3.text-lg-center
+              .card-group.d-flex.d-lg-none
+                a(href='/')
+                  img.footer__logo(src='/img/logo.svg' alt='logo')
+                .d-flex.d-lg-none.justify-content-around.col.align-items-center
+                  a.footer__social-link(href="https://vk.com/centervnl" target="_black")
+                    img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
+                  a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+                    img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
+                  a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+                    img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
+              a.d-none.d-lg-block(href='/')
+                img.footer__logo-lg.d-inline-block(src='/img/logo.svg' alt='logo')
+                .d-none.footer__social.d-lg-flex.justify-content-between
+                  a.footer__social-link(href="https://vk.com/centervnl" target="_black")
+                    img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
+                  a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_black")
+                    img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
+                  a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
+                    img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
+            .col-12.col-lg-3
+              .footer__title.d-block.d-lg-none
+              a.footer__title(href='/programs/') Что мы делаем
+              each program, index in programs
+                if index % 2 == 0
+                  a.footer__item(href='/programs/'+program.path)= program.name
+            .col-12.col-lg-3
+              .footer__title.d-none.d-lg-block.footer__column
+              each program, index in programs
+                if index % 2 == 1
+                  a.footer__item(href='/programs/'+program.path)= program.name
+            .col-12.col-lg-3
+              .footer__title.d-block.d-lg-none
+              a.footer__title(href='/contacts/') Контакты
+              .footer__item
+                a.footer__link
+                  img.footer__link-image(src='/icons/footer/phone.svg' alt='phone') 
+                  | #{contacts.phone}
+              .footer__item
+                a.footer__link(href='mailto:'+contacts.email)
+                  img.footer__link-image(src='/icons/footer/mail.svg' alt='mail') 
+                  | #{contacts.email}
+              .footer__item
+                .footer__link
+                  img.footer__link-image(src='/icons/footer/geo.svg' alt='geo') 
+                  | #{contacts.address}
+          .row
+            .col-12.col-lg-10.offset-lg-3
+              .footer__divider
+              .footer__end © #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
-              label.col-form-label(for='edit-password') Пароль:
-              .input-group.mb-3
-                span.input-group-text.input-group-btn
-                  i.fas.fa-lock
-                input#edit-password.form-control(type='password' required name='password'  autocomplete="current-password")
-                span.input-group-text.input-group-btn
-                  i#togglePasswordAE.far.fa-eye(style='cursor: pointer')
-
-              label.col-form-label(for='edit-surname') Фамилия:
-              .mb-3
-                input#edit-surname.form-control(type='text' required name='surname' value=user?user.surname:'')
-              label.col-form-label(for='edit-name') Имя:
-              .mb-3
-                input#edit-name.form-control(type='text' required name='name' value=user?user.name:'')
-              label.col-form-label(for='edit-patronymic') Отчество:
-              .mb-3
-                input#edit-patronymic.form-control(type='text' name='patronymic' value=user?user.patronymic:'')
-
-              label.col-form-label(for='edit-sex' required) Пол:
-              select#edit-sex.form-select.form-select-lg.mb-3(name='sex')
-                option(value=1 selected=(user && user.sex == 1)) Мужчина
-                option(value=2 selected=(user && user.sex == 2)) Женщина
-
-              label.col-form-label(for='edit-info') О себе:
-              .mb-3
-                textarea#edit-info.form-control(name='info')= user?user.info:''
-
-          .modal-footer
-            a.btn.btn-secondary(href='/auth/logout') Выход
-            button.btn.btn-custom(type="submit" form="edit-user") Coxpaнить
-
-    nav.navbar-default.navbar-fixed-top
-        .navbar-header
-          a.navbar-brand(href='/') 
-            img.nav-logo(src='/images/logo.webp')
-          button.navbar-toggle(type='button', data-bs-toggle="collapse", data-bs-target='#navbar-main')
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-        #navbar-main.navbar-collapse.collapse
-          ul.nav.navbar-nav.col-12
-            li.hover-section
-              a(href='/shop/') Магазин
-              if shops && shops.length
-                ul.dropdown-menu.hover-item
-                  each shop in shops
-                    a.dropdown-item(href='/shop/'+shop.path+'/') #{shop.name}
-            li.hover-section
-              a(href='/projects/') Проекты
-              if nav_projects && nav_projects.length
-                ul.dropdown-menu.hover-item
-                  each project in nav_projects
-                    a.dropdown-item(href='/projects/'+project.path+'/') #{project.name}
-            li.hover-section
-              a(href='/about/' ) О нас
-              ul.dropdown-menu.hover-item
-                a.dropdown-item(href="/documents") Уставные документы
-                a.dropdown-item(href="/reports") Годовые отчёты
-                a.dropdown-item(href="/geography") География деятельности
-                a.dropdown-item(href="/team") Наша команда
-                a.dropdown-item(href="/#contacts") Контакты
-            li
-              a(href='/news/') Новости
-            li
-              a(href='/services/') Запись
-            li.float-right
-              if !user
-                a(data-bs-toggle='modal' href='#authModal' role='button')
-                  i.fa-solid.fa-arrow-right-to-bracket
-              else
-                a(href="/profile/") 
-                  img.small-user-nav(src=user.photo)
-            li.float-right
-              if user && user.isAdmin
-                a(href='/admin/')
-                  i.fa-solid.fa-crown
-
-    .container.first-container
-      block content
-
-    footer.panel-footer
-      .row
-        .col-12
-          if footer_logos && footer_logos.length
-            each logo in footer_logos 
-              if logo.visible
-                a(href=logo.url target="_blank")
-                  img.footer_logo(src=logo.image)
-          div
-            small &copy; #{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
-          div
-            small 
-              a(href="/policy") Обработка персональных данных
-
+    
     script(src='/bootstrap/js/bootstrap.js')
     script(src='/javascripts/main.js')
+    block scripts

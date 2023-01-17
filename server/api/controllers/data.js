@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 module.exports.getByType = async function(req, res, next) {
     try {
         const info = await Data.findOne({type: req.params.type}, {data: 1, _id: 0}).lean()
-        next(req, res, info.data)
+        next(req, res, info ? info.data : null)
     } catch (e) {
         errorHandler(res, e)
     }

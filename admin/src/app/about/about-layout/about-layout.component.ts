@@ -15,11 +15,10 @@ import { Router } from '@angular/router';
 })
 export class AboutLayoutComponent implements OnInit, OnDestroy {
 
-  loading = 2
+  loading = 4
   contacts: any
-  homeText: string
   contactsForm: FormGroup
-  textForm: FormGroup
+  partnersForm: FormGroup
   htModal = false
   cSub: Subscription
   pSub: Subscription
@@ -29,20 +28,14 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
   dSub: Subscription
   partners: Partner[]
   team: Staff[]
-  tagForm = false
-  currentTag = null
-  tags: Tag[]
-  tagSort: any[] = []
-  docs: Doc[]
-  docsSort: any[] = []
-  activeTagsPage = 0
-  activeDocsPage = 0
+  // tagForm = false
+  // currentTag = null
+  // tags: Tag[]
+  // tagSort: any[] = []
   gallery: any[]
 
   constructor(private generalService: GeneralService, 
     private partnersService: PartnersService, 
-    private docsService: DocsService, 
-    private tagsService: TagService, 
     private router: Router) { }
 
   ngOnInit(): void {
@@ -56,26 +49,27 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
       })
       this.loading--
     })
-    this.generalService.fetch("HOME").subscribe(data => {
-      this.homeText = data.text
-      this.textForm = new FormGroup({
-        text: new FormControl(this.homeText)
+    this.generalService.fetch("PARTNERS").subscribe(data => {
+      this.partnersForm = new FormGroup({
+        text: new FormControl(data ? data.text : '')
       })
       this.loading--
     })
     this.pSub = this.partnersService.fetch().subscribe(partners => {
       this.partners = partners
+      this.loading--
     })
-    this.tSub = this.tagsService.fetch().subscribe(tags => {
-      this.tags = tags
-      this.tagSort = this.makeArray(this.tags)
-    })
-    this.dSub = this.docsService.fetch().subscribe(docs => {
-      this.docs = docs
-      this.docsSort = this.makeArray(this.docs)
-    })
+    // this.tSub = this.tagsService.fetch().subscribe(tags => {
+    //   this.tags = tags
+    //   this.tagSort = this.makeArray(this.tags)
+    // })
+    // this.dSub = this.docsService.fetch().subscribe(docs => {
+    //   this.docs = docs
+    //   this.docsSort = this.makeArray(this.docs)
+    // })
     this.gSub = this.generalService.fetch("GALLERY").subscribe(data => {
       this.gallery = data ? data : []
+      this.loading--
     })
   }
   openHtModal() {
@@ -90,16 +84,18 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     return chunkArray(arrFrom, 3)
   }
 
-  onSubmit() {
+  onSubmitContacts() {
     this.contactsForm.disable()
-    this.textForm.disable()
-    this.cSub = this.generalService.update("CONTACTS", this.contactsForm.value).subscribe(value => {
+    this.generalService.update("CONTACTS", this.contactsForm.value).subscribe(value => {
       this.contacts = value
-      this.hSub = this.generalService.update("HOME", {text: this.textForm.value.text}).subscribe(text => {
-        this.homeText = text
-        this.contactsForm.enable()
-        this.textForm.enable()
-      })
+      this.contactsForm.enable()
+    })
+  }
+  
+  onSubmitPartners() {
+    this.partnersForm.disable()
+    this.generalService.update("PARTNERS", this.partnersForm.value).subscribe(value => {
+      this.partnersForm.enable()
     })
   }
 
@@ -135,53 +131,41 @@ export class AboutLayoutComponent implements OnInit, OnDestroy {
     this.router.navigate(['slide', id])
   }
 
-  openTagForm(tag) {
-    this.currentTag = tag
-    this.tagForm = true
-  }
+  // openTagForm(tag) {
+  //   this.currentTag = tag
+  //   this.tagForm = true
+  // }
 
-  openDocForm(id) {
-    this.router.navigate(['documents', id])
-  }
+  // openDocForm(id) {
+  //   this.router.navigate(['documents', id])
+  // }
 
-  closeTagForm(tag) {
-    if (tag) {
-      if (this.currentTag) {
-        const index = this.tags.indexOf(this.tags.find(t => t._id == this.currentTag._id))
-        this.tags[index] = tag
-        this.tagSort = this.makeArray(this.tags)
-      } else {
-        this.tags.push(tag)
-        this.tagSort = this.makeArray(this.tags)
-      }
-    }
-    this.currentTag = null
-    this.tagForm = false
-  }
+  // closeTagForm(tag) {
+  //   if (tag) {
+  //     if (this.currentTag) {
+  //       const index = this.tags.indexOf(this.tags.find(t => t._id == this.currentTag._id))
+  //       this.tags[index] = tag
+  //       this.tagSort = this.makeArray(this.tags)
+  //     } else {
+  //       this.tags.push(tag)
+  //       this.tagSort = this.makeArray(this.tags)
+  //     }
+  //   }
+  //   this.currentTag = null
+  //   this.tagForm = false
+  // }
 
-  backTags() {
-    if (this.activeTagsPage == 0) this.activeTagsPage = this.tagSort.length - 1
-    else this.activeTagsPage --
-  }
+  // backTags() {
+  //   if (this.activeTagsPage == 0) this.activeTagsPage = this.tagSort.length - 1
+  //   else this.activeTagsPage --
+  // }
 
-  nextTags() {
-    if (this.activeTagsPage == this.tagSort.length - 1) this.activeTagsPage = 0
-    else this.activeTagsPage ++
-  }
-
-  backDocs() {
-    if (this.activeDocsPage == 0) this.activeDocsPage = this.docsSort.length - 1
-    else this.activeDocsPage --
-  }
-
-  nextDocs() {
-    if (this.activeDocsPage == this.docsSort.length - 1) this.activeDocsPage = 0
-    else this.activeDocsPage ++
-  }
+  // nextTags() {
+  //   if (this.activeTagsPage == this.tagSort.length - 1) this.activeTagsPage = 0
+  //   else this.activeTagsPage ++
+  // }
 
   ngOnDestroy() {
-    if (this.cSub) this.cSub.unsubscribe()
-    if (this.hSub) this.hSub.unsubscribe()
     if (this.gSub) this.gSub.unsubscribe()
     if (this.tSub) this.tSub.unsubscribe()
     if (this.cSub) this.cSub.unsubscribe()

@@ -5,6 +5,6 @@ const controller = require('../controllers/news');
 
 router.get('/', controller.getNewsListPage) 
 router.get('/:path', controller.getNewsPage) 
-router.post('/:id/like', isAuth, controller.toggleLike)
+// router.post('/:id/like', isAuth, controller.toggleLike)
 
 module.exports = router;

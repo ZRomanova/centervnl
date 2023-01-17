@@ -1,0 +1,101 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-6.back__subtitle-top.back__subtitle-child(href='/programs/') Что мы делаем
+        .col-6.back__subtitle-top.text-end 
+          +share("/programs/"+program.path, program.name)
+
+        .col-12.header__subtitle.title= program.name
+
+    - gallery = (program.gallery && program.gallery.length) ? [...program.gallery] : []
+      if program.image
+        - gallery.unshift(program.image)
+      if gallery.length
+        .container.mt-5.mb-3
+          +slider(gallery)
+
+    if program.text_1
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Кому мы помогаем?
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(program.text_1)
+
+    if program.text_2
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Как мы помогаем?
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(program.text_2)
+
+    if program.video
+      .container
+        .row.mx-xl-5
+          .col-12
+            +video(program.video)
+
+    if program.text_3
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Что меняется для наших подопечных?
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(program.text_3)
+
+    if program.text_4 && program.text_4.length
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Как работает программа?
+        .row.mx-xl-5
+          .target__text.mt-3
+            each text in program.text_4
+              .row.mt-4
+                .col-1 
+                  svg(width='6' height='6' viewBox='0 0 6 6' fill='none' xmlns='http://www.w3.org/2000/svg')
+                    circle(cx='3' cy='3' r='3' fill='#FFA556')
+                .col
+                  +long-text(text)
+
+    if program.text_5
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Бюджет программы
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(program.text_5)
+
+    .container
+      .mx-xl-5
+        a.button.button_blue.mb-3(href='/help/') Поддержите программу
+
+    if program.text_6
+      .container
+        .mx-xl-5
+          .target__text.mt-3
+            +long-text(program.text_6)
+
+    .container
+      .mx-xl-5
+        a.button.button_orange.mb-3(href=program.url_button || "/services/")= program.text_button || "Записаться"
+
+
+    if program.phrases && program.phrases.length
+      .container.mt-5
+        .row.mx-xl-5
+          .target__text.mt-3
+            each item in program.phrases
+              +phrase(item)
+
+    if program.projects && program.projects.length
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Проекты в рамках программы
+      .container.mt-5
+        .row.mx-xl-5
+          each item in program.projects
+            +program-project(item)

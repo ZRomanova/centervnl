@@ -6,31 +6,6 @@
                 <h5>Название:</h5>
                 <input type="text" class="form-control" formControlName="name">
 
-                <h5>Варианты стоимости:</h5>
-                <ng-container formArrayName="priceList">
-                    <div *ngFor="let item of form.controls.priceList.controls; index as i">
-                        <div class="form-row" [formGroupName]="i">
-                            <div class="col-lg-2 form-group" [ngClass]="{'col-11': i != 0, 'col-12': i == 0}">
-                                <input type="number" class="form-control" formControlName="price" placeholder="₽">
-                            </div>
-                            <div class="col-lg-4 form-group" [ngClass]="{'col-11': i != 0, 'col-12': i == 0}">
-                                <input type="text" class="form-control" formControlName="name" placeholder="Название">
-                            </div>
-                            <div class="form-group" [ngClass]="{'col-lg-5 col-11': i != 0, 'col-lg-6 col-12': i == 0}">
-                                <input type="text" class="form-control" formControlName="description" placeholder="Описание">
-                            </div>
-                            <div class="col-1" *ngIf="i != 0">
-                                <button class="btn btn-custom" type="button" (click)="deletePriceListItem(i)">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusToPriceList()">
-                        <i class="fa fa-plus"></i>
-                    </button>
-                </ng-container>
-
                 <h5>Максимум участников:</h5>
                 <input type="number" class="form-control" formControlName="peopleLimit" placeholder="∞">
 
@@ -127,7 +102,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-12" *ngIf="tags && tags.length">
                 <h5>Теги:</h5>
                 <button *ngFor="let tag of tags" (click)="clickTag(tag._id)" class="btn m-1" style="color: #fff"
@@ -143,7 +118,7 @@
                 <button *ngFor="let partner of partners" (click)="clickPartner(partner._id)" class="btn m-1" style="color: #fff"
                 [ngClass]="{'bg-success': partnersSelected.includes(partner._id), 'bg-danger': !partnersSelected.includes(partner._id)}">{{partner.name}}</button>
             </div>
-        </div>
+        </div> -->
 
         <h5>Добавить в галерею из файлов:</h5>
         <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple>

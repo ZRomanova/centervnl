@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.about__title.title База знаний
+
+      .row.mx-xl-5.about__wrapper
+        each post in posts
+          +post(post)

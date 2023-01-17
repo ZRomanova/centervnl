@@ -1,6 +1,4 @@
 const Project = require('../models/projects')
-const Post = require('../models/posts')
-const Service = require('../models/services')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
@@ -27,38 +25,12 @@ module.exports.getActive = async function(req, res, next) {
 
 module.exports.getProjectByPath = async function(req, res, next) {
     try {
-        const projects = await Project.aggregate([
-            {
-                $match: {path: req.params.path, visible: true}
-            },
-            { 
-                $project: { "created": 0, author: 0 }
-            },
-            {
-                $lookup:
-                {
-                    from: 'tags',
-                    localField: 'tags',
-                    foreignField: '_id',
-                    as: 'tagsObjArray'
-                }
-             },
-             {
-                $lookup:
-                {
-                    from: 'partners',
-                    localField: 'partners',
-                    foreignField: '_id',
-                    as: 'partnersObjArray'
-                }
-                
-            }
-        ])
-        if (projects.length){
-            const project = projects[0]
-            const posts = await Post.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1}).sort({date: -1}).lean()
-            const services = await Service.find({visible: true, projects: project._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1, date: 1}).sort({created: -1}).lean()
-            next(req, res, {project, posts, services})
+        const project = await Project.findOne(
+            {path: req.params.path, visible: true},
+            {created: 0, author: 0}
+        )
+        if (project){     
+            next(req, res, project)
         }
         else 
             next(req, res, new Error("Проект не найден"))

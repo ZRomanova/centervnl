@@ -50,6 +50,9 @@ export class StaffPageComponent implements OnInit, OnDestroy {
       image: new FormControl(this.user.image),
       visible: new FormControl(this.user.visible),
       description: new FormControl(this.user.description),
+      education: new FormControl(this.user.education),
+      path: new FormControl(this.user.path),
+      degree: new FormControl(this.user.degree),
     })
   }
 

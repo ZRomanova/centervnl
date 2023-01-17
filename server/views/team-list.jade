@@ -1,0 +1,26 @@
+extends layout
+
+block content
+
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle-top.back__subtitle-child(href='/about/') О нас
+        .col-12.header__subtitle.title Наша команда
+      .row.mx-xl-5.about__wrapper
+        p.target__text
+          +long-text(text)
+      
+      .row.mx-xl-5
+        each staff in team
+          .row.mt-5
+            .col-10.col-lg-4
+              a(href= staff.path)
+                img.review__image(alt=staff.name src=staff.image)
+            .col-12.col-lg-7.offset-lg-1.d-flex.flex-column.justify-content-center
+              a.title-700-32.mb-2.orange-link(href= staff.path) #{staff.name} #{staff.surname}
+              .title-700-20.title-700-20-light.mb-3 #{staff.position}
+              if staff.degree
+                .text-500-14.mb-3.mt-3 #{staff.degree}
+              .text-500-14 #{staff.education}
+        

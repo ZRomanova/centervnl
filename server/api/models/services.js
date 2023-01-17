@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
 const serviceSchema = new Schema({
   author: {
     ref: 'users',
@@ -69,12 +70,13 @@ const serviceSchema = new Schema({
     unique: true
   },
   lastChange: {
-      author: {
-          ref: 'users',
-          type: Schema.Types.ObjectId
-      },
-      time: Date
+    author: {
+        ref: 'users',
+        type: Schema.Types.ObjectId
+    },
+    time: Date
   }
 })
+
 
 module.exports = mongoose.model('services', serviceSchema)

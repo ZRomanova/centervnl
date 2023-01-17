@@ -1,0 +1,28 @@
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <h3>{{id ? 'Редактирование' : 'Добавление'}} новости в СМИ</h3>
+
+      <h5>Название:</h5>
+      <input type="text" class="form-control" formControlName="name">
+      
+      <h5>Дата публикации:</h5>
+      <input type="date" class="form-control" formControlName="date">
+      
+      <h5>Ссылка:</h5>
+      <input type="text" class="form-control" formControlName="url">
+      <div class="form-check form-switch mt-2">
+          <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="visible">
+          <h5>Отображать на сайте</h5>
+      </div>
+      <button class="btn btn-secondary mt-3 me-2" type="button" (click)="back()">
+          Назад
+      </button>
+      <button class="btn btn-custom mt-3" type="submit">
+          {{id ? 'Сохранить' : 'Создать'}}
+      </button>
+  </form>
+</div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

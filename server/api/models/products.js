@@ -8,10 +8,16 @@ const productSchema = new Schema({
         unique: true
     },
     image: String,
-    gallery: [String],
+    video: String,
+    // gallery: [String],
     description: String,
     shop: {
         ref: 'shops',
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+    catalog: {
+        ref: 'catalogs',
         type: mongoose.Types.ObjectId,
         required: true
     },
@@ -34,10 +40,10 @@ const productSchema = new Schema({
       required: true,
       unique: true
     },
-    likes: {
-      ref: 'users',
-      type: [mongoose.Types.ObjectId]
-    },
+    // likes: {
+    //   ref: 'users',
+    //   type: [mongoose.Types.ObjectId]
+    // },
     author: {
         ref: 'users',
         type: Schema.Types.ObjectId,

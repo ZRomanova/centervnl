@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-6.back__subtitle-top
+          a.back__subtitle-root(href='/programs/') Что мы делаем
+          svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
+            path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#656973')
+          a.back__subtitle-child(href='/programs/'+program.path) 
+            |  #{program.name}
+
+        .col-6.back__subtitle-top.text-end 
+          +share("/projects/"+project.path, project.name)
+
+        .col-12.header__subtitle.title= project.name
+        .col-12.grants__date.mt-2 #{project.date}
+
+    - gallery = (project.gallery && project.gallery.length) ? [...project.gallery] : []
+    if project.image
+      - gallery.unshift(project.image)
+    if gallery.length
+      .container.mt-5
+        +slider(gallery)
+
+    .container
+      .row.mx-xl-5
+        .mt-5
+          +long-text(project.description)
+
+
+
+
