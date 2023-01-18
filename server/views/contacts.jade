@@ -42,6 +42,39 @@ block content
           .text-400-14.mt-3 БИК 044525225 Тел. +7-916 612 34 71
           .text-400-14.mt-3 Директор Романова Е.А.
 
+        .col-12.mt-5
+          .title-700-20 Обратная связь
+          form#form.row(action="/form" method="post")
+            .col-12.col-md-6.mt-3
+              .text-400-16 Как вас зовут?
+              input.d-none(name="q_name" value="Как вас зовут?")
+              input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+            
+            .col-12.col-md-6.mt-3
+              .text-400-16 Телефон для связи
+              input.d-none(name="q_tel" value="Телефон для связи")
+              input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
+
+            .col-12.col-md-6.mt-3
+              .text-400-16 Ваш email
+              input.d-none(name="q_email" value="Ваш email")
+              input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+
+            
+            .col-12.col-md-6.mt-3
+              .text-400-16 Ваш вопрос
+              input.d-none(name="q_question" value="Ваш вопрос")
+              input.text-input.mt-2(type='text' name='question' autocomplete='off' placeholder="Текст вопроса" required)
+
+            .mt-4 
+              .col-12.mt-2 
+                span.text-400-16 Нажимая на кнопку, вы даете 
+                  a(href='/policy' target="_blank") согласие на обработку своих персональных данных
+
+            .mt-4
+              button.button.button_orange(type='submit') Отправить
+
 block scripts
   script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
   script(src='/javascripts/map.js')
+  script(src='/javascripts/valid-form.js')
