@@ -24,9 +24,11 @@ module.exports.getByService = async function(req, res, next) {
         ])
         for (const reg of regs) {
             if (reg.user && reg.user.length) {
-                reg.user = reg.user[0]
-            } else {
-                reg.user = null
+                const user = reg.user[0]
+                reg.name = reg.name || user.name
+                reg.surname = reg.surname || user.surname
+                reg.patronymic = reg.patronymic || user.patronymic
+                reg.email = reg.email || user.email
             }
         }
 
@@ -79,21 +81,23 @@ module.exports.getByUser = async function(req, res, next) {
 module.exports.create = async function(req, res, next) {
   try {
     const created = req.body
-    created.user = req.user.id
-    created.date = moment(req.body.date, 'D MMMM YYYY HH:mm[,] dddd').toDate();
-    let pl = ''
-    if (req.body.priceID) {
-      const service = await Service.findOne({'priceList._id': req.body.priceID}).lean()
-      if (service && service.priceList) pl = service.priceList.find(el => String(el._id) == req.body.priceID)
-    }
-    created.payment = {
-      price: req.body.price,
-      description: `${pl && pl.name ? pl.name : ''}`.trim(),
-      status: req.body.price == 0 ? 'оплачен' : req.body.statusPay,
-      method: req.body.price == 0 ? 'онлайн' : req.body.method
-    }
-    const reg = await new Registration(created).save()
-    next(req, res, reg)
+    // created.user = req.user.id
+    created.date = moment(req.body.date)?.toDate();
+    created.date_string = moment(req.body.date).format('D MMMM HH:mm')
+    console.log(created)
+    // let pl = ''
+    // if (req.body.priceID) {
+    //   const service = await Service.findOne({'priceList._id': req.body.priceID}).lean()
+    //   if (service && service.priceList) pl = service.priceList.find(el => String(el._id) == req.body.priceID)
+    // }
+    // created.payment = {
+    //   price: req.body.price,
+    //   description: `${pl && pl.name ? pl.name : ''}`.trim(),
+    //   status: req.body.price == 0 ? 'оплачен' : req.body.statusPay,
+    //   method: req.body.price == 0 ? 'онлайн' : req.body.method
+    // }
+    await new Registration(created).save()
+    next(req, res)
   } catch (e) {
     errorHandler(res, e)
   }
@@ -102,13 +106,13 @@ module.exports.create = async function(req, res, next) {
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
-        if (updated.payment.paid >= updated.payment.price) {
-            updated.payment.status = 'оплачен'
-        } else if (updated.payment.paid) {
-            updated.payment.status = 'оплачен частично'
-        } else {
-            updated.payment.status = 'не оплачен'
-        }
+        // if (updated.payment.paid >= updated.payment.price) {
+        //     updated.payment.status = 'оплачен'
+        // } else if (updated.payment.paid) {
+        //     updated.payment.status = 'оплачен частично'
+        // } else {
+        //     updated.payment.status = 'не оплачен'
+        // }
         const service = await Registration.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {
@@ -144,7 +148,15 @@ module.exports.getById = async function(req, res, next) {
 
         if (orders.length){
             const order = orders[0]
-            if (order.user.length) order.user = order.user[0]
+
+            if (order.user && order.user.length) {
+                const user = order.user[0]
+                order.name = order.name || user.name
+                order.surname = order.surname || user.surname
+                order.patronymic = order.patronymic || user.patronymic
+                order.email = order.email || user.email
+            }
+            
             if (order.service.length) order.service = order.service[0]
             next(req, res, order)
         }
@@ -157,9 +169,10 @@ module.exports.getById = async function(req, res, next) {
 
 module.exports.check = async function(user, date, service) {
   try {
-      const reg = user ? await Registration.findOne({user: user._id, date, service: service._id}, {_id: 0}).lean() : false
+    //   const reg = user ? await Registration.findOne({user: user._id, date, service: service._id}, {_id: 0}).lean() : false
       const regLen = await Registration.countDocuments({date, service: service._id, status: {$nin: ['отмена', 'ведущий']}})
-      return {isReg: reg ? true : false, count: regLen}
+      return {count: regLen}
+    //   return {isReg: reg ? true : false, count: regLen}
   } catch (e) {
       console.log(e)
   }

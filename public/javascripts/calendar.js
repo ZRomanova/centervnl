@@ -180,6 +180,7 @@ function getAnouncementsByDay(day) {
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
         element += `<div class="title-700-20 mt-3">${data[i].dateStr}</div>`
+        element += `<a type="submit" class="button button_orange mt-3" href="${data[i].path}?date=${data[i].dateStr}">Зарегистрироваться</a>`
         element += `</div>`
 
         $('#events_gallary').append(element)

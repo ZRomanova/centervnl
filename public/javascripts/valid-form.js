@@ -1,13 +1,14 @@
 $(document).ready(function(e) {
   checkForm()
-  $('#form input, #form select, #form textarea, .text-input').on('input', checkForm);
+  $('#form input, #form select, #form textarea').on('input', checkForm);
 })
 
 function checkForm(){
-  console.log(1)
+
   $("#form button[type=submit]").prop("disabled", false);
-  $('.text-input').each(function(e) {
-    let isValid = !($(this)[0].validationMessage)
+  $('#form input, #form select, #form textarea').each(function(e) {
+    console.log($(this)[0].validity.valid)
+    let isValid = $(this)[0].validity.valid
     if (!isValid) {
       $("#form button[type=submit]").prop("disabled", true);
     }

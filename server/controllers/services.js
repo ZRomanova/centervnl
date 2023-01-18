@@ -88,65 +88,23 @@ const renderServicesListPage = function(req, res, data) {
 module.exports.getServicePage = async function(req, res) {
     try {
         const result = {}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-
-            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-            result.nav_projects = nav_projects
-                await apiServices.getServiceByPath(req, res, async (req, res, data) => {
-                    const service = data.service
-                    service.dates = []
-                    result.posts = data.posts
-                    const now = new Date(new Date() - 1000 * 60 * 60 * 2)
-                    if (service.date.single && service.date.single.length) {
-                        for await (const d of service.date.single)  {
-                            if (new Date(d) > now) {
-                                let obj = await apiRegistrations.check(req.user, new Date(d), service)
-                                service.dates.push({text: moment(d).format('D MMMM YYYY HH:mm[,] dddd'), date: d, isReg: obj.isReg, count: obj.count })
-                                service.active = true
-                            } else {
-                                d.text_inactive = moment(d).format('D MMMM YYYY HH:mm[,] dddd')
-                            }
-                        }
-                    }
-                    if (!!service.date.period && service.date.period.length) {
-                        for await (const p of service.date.period)  {
-                            if ((!p.end || new Date(p.end) > now) && p.visible) {
-                                const day = week.find(el => el.ru == p.day).num
-                                let iDate = new Date(now)
-                                if (new Date(p.start) > now) iDate = new Date(p.start)
-                                iDate.setHours(0)
-                                iDate.setMinutes(0)
-                                iDate.setSeconds(0)
-                                iDate.setMilliseconds(p.time)
-                                iDate = new Date(iDate)
-                                if (iDate < now)
-                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
-                                for (let i = 0; i < 7; i++) {
-                                    if (iDate.getDay() == day) break
-                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
-                                }
-                                const end = p.end ? new Date(p.end) : new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 28))
-                                while (iDate < end) {
-                                    let obj = await apiRegistrations.check(req.user, new Date(iDate), service)
-                                    service.dates.push({text: moment(iDate).format('D MMMM YYYY HH:mm[,] dddd'), date: iDate, isReg: obj.isReg, count: obj.count})
-                                    iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 7))
-                                }
-                                service.active = true
-                            }
-                        }
-                    }
-                    service.dates = service.dates.sort((a, b) => a.date - b.date)
-                    result.service = service
-                    await apiShops.getShops(req, res, (req, res, shops) => {
-                        result.shops = shops
-                        renderServicePage(req, res, result)
-                    })
-                    
-                })
-            })
-
+        await apiServices.getServiceByPath(req, res, (req, res, service) => {
+            result.service = service 
         })
+
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        renderServicePage(req, res, result)
     } catch (e) {
         console.log(e)
     }
@@ -155,70 +113,22 @@ module.exports.getServicePage = async function(req, res) {
 const renderServicePage = function(req, res, data) {
     res.render('service', {
         title: data.service ? data.service.name : 'Не найдено',
-        nav_projects: data.nav_projects,
-        footer_logos: data.partners, 
         service: data.service,
+        user_date: req.query.date,
         user: req.user,
         posts: data.posts,
+        contacts: data.contacts,
+        programs: data.programs,
         shops: data.shops
     })
 }
 
-module.exports.toggleLike = async (req, res) => {
+module.exports.createRegistration = async (req, res) => {
     try {
-        await apiServices.toggleLike(req, res, (req, res, message) => {
+        await apiRegistrations.create(req, res, (req, res, reg) => {
             res.redirect(req.headers.referer)
         })
     } catch (e) {
         console.log(e)
     }
 }
-
-module.exports.createRegistration = async (req, res) => {
-    try {
-        await apiRegistrations.create(req, res, (req, res, reg) => {
-            res.redirect('/profile/checkout')
-        })
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-// module.exports.dkTest = async function(req, res,) {
-//     try {
-//         const result = {}
-//         await apiPartners.getPartners(req, res, (req, res, partners) => {
-//             result.partners = partners
-//         })
-//         await apiProjects.getActive(req, res, (req, res, projects) => {
-//             result.projects = projects
-//         })
-//         await apiShops.getShops(req, res, (req, res, shops) => {
-//             result.shops = shops
-//         })
-//         if (req.user)
-//             result.isRepit = !!await FormAnswer.findOne({user: req.user._id}, {_id: 1}).lean()
-//         renderDKtest(req, res, result)
-//     } catch (e) {
-//         console.log(e)
-//     }
-// }
-
-// const renderDKtest = function(req, res, data) {
-//     res.render('dk-test', {
-//         title: 'ДоброКолледж',
-//         nav_projects: data.projects,
-//         footer_logos: data.partners, 
-//         user: req.user,
-//         shops: data.shops,
-//         isRepit: data.isRepit
-//     })
-    
-// }
-
-// module.exports.dkCheck = async function (req, res) {
-//     const form = req.body
-//     form.user = req.user
-//     await new FormAnswer(form).save()
-//     res.redirect('/services')
-// }

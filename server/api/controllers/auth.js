@@ -120,8 +120,6 @@ module.exports.profile = async function(req, res, next) {
   }
 };
 
-
-
 module.exports.fillForm = async function(req) {
   try {
     const data = {

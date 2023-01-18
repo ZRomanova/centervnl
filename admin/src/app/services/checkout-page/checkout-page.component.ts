@@ -39,13 +39,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   data() {
     this.form = new FormGroup({
       status: new FormControl(this.checkout.status),
-      payment: new FormGroup({
-        paid: new FormControl(this.checkout.payment.paid),
-        price: new FormControl(this.checkout.payment.price),
-        method: new FormControl(this.checkout.payment.method),
-        status: new FormControl(this.checkout.payment.status),
-        description: new FormControl(this.checkout.payment.description),
-      })
+      info: new FormControl(this.checkout.info),
+      // payment: new FormGroup({
+      //   paid: new FormControl(this.checkout.payment.paid),
+      //   price: new FormControl(this.checkout.payment.price),
+      //   method: new FormControl(this.checkout.payment.method),
+      //   status: new FormControl(this.checkout.payment.status),
+      //   description: new FormControl(this.checkout.payment.description),
+      // })
     })
   }
 

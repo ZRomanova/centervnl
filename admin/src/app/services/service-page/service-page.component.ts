@@ -164,7 +164,7 @@ export class ServicePageComponent implements OnInit {
     private createPeriodFormGroup(period: Period): FormGroup {
       return new FormGroup({
         start: new FormControl(this.datePipe.transform(period.start, 'yyyy-MM-dd'), Validators.required),
-        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd') : null),
+        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd') : null, Validators.required),
         time: new FormControl(typeof period.time == 'number' ? this.intToStringDate(period.time) : period.time),
         visible: new FormControl(period.visible),
         day: new FormControl(period.day, Validators.required)

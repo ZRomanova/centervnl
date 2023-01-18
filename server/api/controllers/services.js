@@ -1,5 +1,5 @@
 const Service = require('../models/services')
-const Post = require('../models/posts')
+const Registration = require('../models/registrations')
 const errorHandler = require('../utils/errorHandler')
 const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const moment = require('moment')
@@ -88,8 +88,8 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
 module.exports.getAnouncementsByMonth = async function(req, res, next) {
     try {
         const queryDate = req.params.month ? new Date(req.params.month) : new Date()
-        const start = moment(queryDate).startOf('month');
-        const end = moment(queryDate).endOf('month');
+        const start = moment(queryDate).startOf('month'); //strrt of month
+        const end = moment(queryDate).endOf('month'); // end of month
         
         const events = await Service.find(
             {
@@ -100,7 +100,7 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                     'date.period': {
                         $elemMatch: {
                             start: {$lte: end}, 
-                            $or: [{end: {$gte: start}}, {end: null}, {end: {$exists: false}}], 
+                            end: {$gte: start}, 
                             time: {$exists: true},
                             day: {$exists: true},
                             visible: true
@@ -122,24 +122,24 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
             if (event.date.period && event.date.period.length) {
                 event.date.period.forEach(p =>  {
                     if (p.visible) {
-                        let startP = new Date(p.start)
-                        let endP = new Date(p.end ? p.end : new Date().parse() + 1000 * 60 * 60 * 60 * 24 * 7 * 10)
+                        let startP = new Date(p.start) //period start
+                        let endP = new Date(p.end) //period end
                         
-                        if (startP < end && endP > start) {
+                        if (startP < end && start < endP) {
 
                             let day = week.find(el => el.ru == p.day)?.num
                             let startDay = new Date(start).getDay()
 
-                            let startI = start
+                            let currI = start > startP ? start : startP
                             while (day != startDay) {
-                                startI = new Date(Date.parse(startI) + 1000 * 60 * 60 * 24)
-                                startDay = new Date(startI).getDay()
+                                currI = new Date(Date.parse(currI) + 1000 * 60 * 60 * 24)
+                                startDay = new Date(currI).getDay()
                             }
 
-                            while (startI < end && startI < endP) {
+                            while (currI < end && currI < endP) {
                                 
-                                results.push(moment(startI).format('yyyy-M-D'))
-                                startI = new Date(Date.parse(startI) + 1000 * 60 * 60 * 24 * 7)
+                                results.push(moment(currI).format('yyyy-M-D'))
+                                currI = new Date(Date.parse(currI) + 1000 * 60 * 60 * 24 * 7)
                             }
                             
                         }
@@ -219,48 +219,73 @@ module.exports.getServiceById = async function(req, res, next) {
 
 module.exports.getServiceByPath = async function(req, res, next) {
     try {
+        
+        const service = await Service.findOne(
+            {path: req.params.path, visible: true},
+            { date: 1, gallery: 1, name: 1, path: 1, peopleLimit: 1, description: 1, address: 1, image: 1}
+        ).lean()
+        
+        if (service) {
 
-        const services = await Service.aggregate([
-            {
-                $match: {path: req.params.path, visible: true}
-            },
-            { 
-                $project: { created: 0, author: 0 }
-            },
-            {
-                $lookup:
-                {
-                    from: 'tags',
-                    localField: 'tags',
-                    foreignField: '_id',
-                    as: 'tagsObjArray'
-                }
-             },
-             {
-                $lookup:
-                {
-                    from: 'partners',
-                    localField: 'partners',
-                    foreignField: '_id',
-                    as: 'partnersObjArray'
-                }
-                
-            },
-            {
-               $lookup:
-               {
-                   from: 'projects',
-                   localField: 'projects',
-                   foreignField: '_id',
-                   as: 'projectsObjArray'
-               }
-               
-           }
-        ])
-        if (services.length) {
-            const service = services[0]
-            const posts = await Post.find({visible: true, posts: service._id}, {name: 1, description: 1, image: 1, path: 1, _id: 1}).sort({date: -1}).lean()
-            next(req, res, {service, posts})
+            service.dates = []
+            const now = new Date(new Date() - 1000 * 60 * 60 * 2)
+            if (service.date.single && service.date.single.length) {
+                await service.date.single.forEach(async(d) => {
+                    if (new Date(d) > now) {
+                        let count 
+                        if (service.peopleLimit) count = await Registration.countDocuments(
+                            {date: d, service: service._id, status: {$nin: ['отмена', 'ведущий']}})
+                        if (count < service.peopleLimit || !service.peopleLimit) {
+                            service.dates.push({text: moment(d).format('D MMMM HH:mm'), date: d, count })
+                            service.active = true
+                        } else {
+                            service.dates.push({text: moment(d).format('D MMMM HH:mm (нет мест)'), date: d, count, closed: true })
+                        }
+                    }
+                })
+            }
+            if (service.date.period && service.date.period.length) {
+                await service.date.period.forEach(async(p) => {
+                    if (p.visible) {
+                        const day = week.find(el => el.ru == p.day).num
+                        let iDate = new Date(now)
+                        if (new Date(p.start) > now) iDate = new Date(p.start)
+                        iDate.setHours(0)
+                        iDate.setMinutes(0)
+                        iDate.setSeconds(0)
+                        iDate.setMilliseconds(p.time)
+                        iDate = new Date(iDate)
+                        if (iDate < now)
+                            iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
+                        for (let i = 0; i < 7; i++) {
+                            if (iDate.getDay() == day) break
+                            iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
+                        }
+                        const end = p.end ? new Date(p.end) : new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 28))
+                        const dates = []
+                        while (iDate <= end) {
+                            dates.push(iDate)
+                            iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 7))
+                        }
+                        await dates.forEach(async(iDate) => {
+                            let count 
+                            if (service.peopleLimit) count = await Registration.countDocuments(
+                                {date: iDate, service: service._id, status: {$nin: ['отмена', 'ведущий']}})
+                            if (count < service.peopleLimit || !service.peopleLimit) {
+                                service.dates.push({text: moment(iDate).format('D MMMM HH:mm'), date: iDate, count})
+                                service.active = true
+                            } else {
+                                service.dates.push({text: moment(iDate).format('D MMMM HH:mm (нет мест)'), date: iDate, count})   
+                            }
+                        })
+                        service.active = true
+                    }
+                })
+            }
+            service.dates = service.dates.sort((a, b) => a.date - b.date)
+            console.log(service.dates)
+
+            next(req, res, service)
         }
         else 
             next(req, res, new Error("Мероприятие не найдено"))

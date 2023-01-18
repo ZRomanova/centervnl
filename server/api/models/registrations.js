@@ -19,25 +19,32 @@ const registrSchema = new Schema({
     required: true,
     type: Date
   },
+  date_string: String,
+  email: String,
+  tel: String,
   info: String,
-  payment: {
-    price: Number,
-    description: String,
-    status: {
-      type: String,
-      enum: ['оплачен', 'не оплачен', 'оплачен частично'],
-      default: 'не оплачен'
-    },
-    method: {
-        type: String,
-        enum: ['на месте', 'онлайн'],
-        default: 'на месте'
-    },
-    paid: {
-      type: Number,
-      default: 0
-    }
-  },
+  name: String,
+  surname: String,
+  patronymic: String,
+  roles: [String],
+  // payment: {
+  //   price: Number,
+  //   description: String,
+  //   status: {
+  //     type: String,
+  //     enum: ['оплачен', 'не оплачен', 'оплачен частично'],
+  //     default: 'не оплачен'
+  //   },
+  //   method: {
+  //       type: String,
+  //       enum: ['на месте', 'онлайн'],
+  //       default: 'на месте'
+  //   },
+  //   paid: {
+  //     type: Number,
+  //     default: 0
+  //   }
+  // },
   created: {
     type: Date,
     default: Date.now
