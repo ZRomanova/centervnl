@@ -38,6 +38,8 @@ import { SmiPageComponent } from './blog/smi-page/smi-page.component';
 import { LibraryListComponent } from './library/library-list/library-list.component';
 import { LibraryPageComponent } from './library/library-page/library-page.component';
 import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
+import { ParentsListComponent } from './library/parents-list/parents-list.component';
+import { ParentsPageComponent } from './library/parents-page/parents-page.component';
 
 const routes: Routes = [
   {
@@ -83,8 +85,10 @@ const routes: Routes = [
       {path: 'reports/:id', component: ReportPageComponent},
       {path: 'library', component: LibraryLayoutComponent, children: [
         {path: '', component: LibraryListComponent},
+        {path: 'parents', component: ParentsListComponent},
       ]},
       {path: 'library/:id', component: LibraryPageComponent},
+      {path: 'library/parents/:id', component: ParentsPageComponent},
     ],
   },
   {path: 'login', component: LoginPageComponent}

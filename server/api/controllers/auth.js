@@ -1,6 +1,6 @@
 const request = require('request');
 const User = require('../models/users')
-const Project = require('../models/projects')
+const Form = require('../models/forms')
 const Product = require('../models/products')
 const Service = require('../models/services')
 const Post = require('../models/posts')
@@ -115,6 +115,33 @@ module.exports.profile = async function(req, res, next) {
     const projects = await Project.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
 
     next(req, res, {likes: {posts, services, products, projects}})
+  } catch (e) {
+    errorHandler(res, e)
+  }
+};
+
+
+
+module.exports.fillForm = async function(req) {
+  try {
+    const data = {
+      page: req.headers.referer,
+      answers: []
+    }
+    for (const str in req.body) {
+      if (str.length > 2 && str.substring(0, 2) === "q_") {
+        let item = str.slice(2)
+        let element = data.answers.find(el => el.code == item)
+        if (!element) {
+          data.answers.push({
+            code: item,
+            question: req.body[str],
+            answer: req.body[item]
+          })
+        }
+      }
+  }
+    await new Form(data).save()
   } catch (e) {
     errorHandler(res, e)
   }

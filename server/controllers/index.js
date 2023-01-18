@@ -218,6 +218,23 @@ const renderProfileOrders = function(req, res, data) {
 }
 
 
+
+
+
+
+
+
+module.exports.submitForm = async function(req, res) {
+    try {
+        await apiUser.fillForm(req)
+        res.redirect(req.headers.referer)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+
 module.exports.getDocsPage = async function(req, res) {
     try {
         const result = {}
@@ -305,6 +322,11 @@ const renderPartnersPage = function(req, res, data) {
 module.exports.getPolicyPage = async function(req, res,) {
     try {
         const result = {}
+        req.query.filter_visible = true
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
         await apiPartners.getPartners(req, res, (req, res, partners) => {
             result.partners = partners
         })
@@ -313,6 +335,11 @@ module.exports.getPolicyPage = async function(req, res,) {
         })
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
         })
         renderPolicyPage(req, res, result)
     } catch (e) {
@@ -323,9 +350,9 @@ module.exports.getPolicyPage = async function(req, res,) {
 const renderPolicyPage = function(req, res, data) {
     res.render('policy', {
         title: 'Обработка персональных данных',
-        nav_projects: data.projects,
-        footer_logos: data.partners, 
-        user: req.user,
+        contacts: data.contacts,
+        programs: data.programs,
+        user: data.user,
         shops: data.shops
     })
 }
@@ -443,9 +470,6 @@ const renderContactsPage = function(req, res, data) {
         shops: data.shops
     })
 }
-
-
-
 
 module.exports.getErrorPage = async function(req, res) {
     try {

@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-6.back__subtitle-top.back__subtitle-child(href='/parents/') Родителям
+        .col-6.back__subtitle-top.text-end 
+          +share("/parents/club/", "Родительский клуб")
+
+        .col-12.header__subtitle.title Родительский клуб
+        .col-12.mt-5 
+          +long-text(club.text)

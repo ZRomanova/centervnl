@@ -55,6 +55,8 @@ import { BlogLayoutComponent } from './blog/blog-layout/blog-layout.component';
 import { LibraryListComponent } from './library/library-list/library-list.component';
 import { LibraryPageComponent } from './library/library-page/library-page.component';
 import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
+import { ParentsListComponent } from './library/parents-list/parents-list.component';
+import { ParentsPageComponent } from './library/parents-page/parents-page.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { LibraryLayoutComponent } from './library/library-layout/library-layout.
     BlogLayoutComponent,
     LibraryListComponent,
     LibraryPageComponent,
-    LibraryLayoutComponent
+    LibraryLayoutComponent,
+    ParentsListComponent,
+    ParentsPageComponent
   ],
   imports: [
     BrowserModule,

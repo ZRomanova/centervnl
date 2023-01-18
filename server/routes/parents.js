@@ -4,7 +4,7 @@ const {isAuth} = require('../middleware/auth')
 const controller = require('../controllers/parents');
 
 router.get('/', controller.getParentsList) 
-// router.get('/:path', controller.getNewsPage) 
-// router.post('/:id/like', isAuth, controller.toggleLike)
+router.get('/club', controller.getParentsClub) 
+router.get('/:path', controller.getParentsPage) 
 
 module.exports = router;

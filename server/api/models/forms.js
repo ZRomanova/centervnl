@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const dataSchema = new Schema({
   page: String,
   answers: [{
+    code: String,
     question: String,
     answer: String,
   }]

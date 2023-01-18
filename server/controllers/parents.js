@@ -1,4 +1,5 @@
 const apiPrograms = require('../api/controllers/programs')
+const apiParents = require('../api/controllers/parents')
 const apiData = require('../api/controllers/data')
 const apiShops = require('../api/controllers/shops')
 const moment = require('moment')
@@ -12,6 +13,9 @@ module.exports.getParentsList = async function(req, res) {
         
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
+        })
+        await apiParents.getPages(req, res, async (req, res, pages) => {
+            result.pages = pages
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
@@ -33,6 +37,7 @@ const renderParentsList = function(req, res, data) {
         title: 'Родителям | Ресурсный центр Вера Надежда Любовь',
         programs: data.programs, 
         contacts: data.contacts, 
+        pages: data.pages, 
         user: req.user,
         shops: data.shops
     })
@@ -46,6 +51,9 @@ module.exports.getParentsPage = async function(req, res) {
         
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
+        })
+        await apiParents.getPageByPath(req, res, async (req, res, page) => {
+            result.page = page
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
@@ -63,15 +71,15 @@ module.exports.getParentsPage = async function(req, res) {
 }
 
 const renderParentsPage = function(req, res, data) {
-    res.render('team', {
-        title: `${data.staff.name} ${data.staff.surname} | Ресурсный центр Вера Надежда Любовь`,
+    res.render('parents', {
+        title: data.page ? data.page.name : "Не найдено",
         staff: data.staff,
         programs: data.programs, 
+        page: data.page, 
         contacts: data.contacts, 
         user: req.user,
         shops: data.shops
-    })
-    
+    }) 
 }
 
 module.exports.getParentsClub = async function(req, res) {
@@ -86,6 +94,10 @@ module.exports.getParentsClub = async function(req, res) {
       await apiData.getByType(req, res, (req, res, contacts) => {
           result.contacts = contacts
       })
+      req.params.type = "PARENTS_CLUB"
+      await apiData.getByType(req, res, (req, res, club) => {
+          result.club = club
+      })
       req.query.fields_name = 1
       req.query.fields_path = 1
       await apiPrograms.getPrograms(req, res, (req, res, programs) => {
@@ -98,11 +110,12 @@ module.exports.getParentsClub = async function(req, res) {
 }
 
 const renderParentsClub = function(req, res, data) {
-  res.render('team', {
-      title: `${data.staff.name} ${data.staff.surname} | Ресурсный центр Вера Надежда Любовь`,
+  res.render('parents-club', {
+      title: `Родительский клуб | Ресурсный центр Вера Надежда Любовь`,
       staff: data.staff,
       programs: data.programs, 
       contacts: data.contacts, 
+      club: data.club, 
       user: req.user,
       shops: data.shops
   })

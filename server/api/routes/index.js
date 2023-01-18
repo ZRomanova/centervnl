@@ -20,6 +20,7 @@ router.use('/programs', require('./programs'))
 router.use('/press', require('./press'))
 router.use('/wins', require('./wins'))
 router.use('/library', require('./library'))
+router.use('/parents', require('./parents'))
 
 
 module.exports = router;

@@ -9,8 +9,9 @@ const dataSchema = new Schema({
   },
   age: {
     type: String,
-    required: true,
+    // required: true,
   },
+  age_text: String,
   gallery: [String],
   description: String,
   visible: Boolean,
@@ -19,12 +20,11 @@ const dataSchema = new Schema({
     required: true,
     unique: true
   },
-  text_1: String,
-  text_2: String,
-  text_3: String,
-  text_4: String,
-  text_button: String,
-  url_button: String,
+  text_help: String,
+  text_form: String,
+  text_library: String,
+  text_orgs: String,
+  url_library: String,
   orgs: [{
     url: String,
     name: String,

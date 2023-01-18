@@ -8,39 +8,16 @@ block content
       
 
       .row.mx-xl-5.about__wrapper
-        .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg
-            .d-flex.flex-column.justify-content-center
-              .title-500-32.z-100 Ранний возраст
-              .title-500-96.z-100.no-breaks 0-3 лет
-
-        .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg
-            .d-flex.flex-column.justify-content-center
-              .title-500-32.z-100 Дошкольники
-              .title-500-96.z-100.no-breaks 4-7 лет
-
-        .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg
-            .d-flex.flex-column.justify-content-center
-              .title-500-32.z-100 Школьники
-              .title-500-96.z-100.no-breaks 8-15 лет
-
-        .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg
-            .d-flex.flex-column.justify-content-center
-              .title-500-32.z-100 Подростки
-              .title-500-96.z-100.no-breaks 16-17 лет
-
-        .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg
-            .d-flex.flex-column.justify-content-center
-              .title-500-32.z-100 Молодые взрослые
-              .title-500-96.z-100.no-breaks 18+
+        each page in pages
+          .col-12.col-lg-6.mb-4
+            a.rectangle-290-123.d-flex.flex-column.justify-content-center.p-4.orange-circle-bg(href="/parents/"+page.path)
+              .d-flex.flex-column.justify-content-center
+                .title-500-32.z-100= page.name
+                .title-500-96.z-100.no-breaks= page.age
                 
 
         .col-12.col-lg-6.mb-4
-          a.rectangle-290-123.hover-blue.d-flex.flex-column.justify-content-center.p-4.blue-circle-bg
+          a.rectangle-290-123.hover-blue.d-flex.flex-column.justify-content-center.p-4.blue-circle-bg(href="/parents/club/")
             .d-flex.flex-column.justify-content-center
               .title-500-32.z-100 Родительский
               .title-500-96.z-100.no-breaks клуб

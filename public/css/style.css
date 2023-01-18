@@ -570,6 +570,9 @@ a.news__subtitle:hover {
 .title-700-20-dark{
   color: #1E2639;
 }
+.title-700-20 a {
+  color: #FFA556;
+}
 .title-700-16 {
   font-family: 'Montserrat';
   font-style: normal;
@@ -577,6 +580,9 @@ a.news__subtitle:hover {
   font-size: 16px;
   line-height: 150%;
   color: #656973;
+}
+.title-700-16 a {
+  color: #FFA556;
 }
 .text-500-14 {
   font-family: 'Montserrat';
@@ -732,6 +738,11 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   color: #656973;
 }
 
+.text-400-16 a {
+  color: #F78C2E;
+  text-decoration: underline;
+}
+
 .text-400-14 {
   font-family: 'Montserrat';
   font-style: normal;
@@ -776,6 +787,10 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 a.rectangle-290-123:hover {
   background: #FFA556;
 }
+
+/* a.rectangle-290-123:hover div{
+  color: #FFFFFF;
+} */
 
 a.rectangle-290-123.hover-blue:hover {
   background: #02B2B6;

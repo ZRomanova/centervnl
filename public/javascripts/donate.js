@@ -1,4 +1,3 @@
-
 $('.donate-circle').click(function() {
   clickDonate(this)
 })

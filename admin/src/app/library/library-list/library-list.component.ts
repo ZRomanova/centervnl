@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LibItem } from 'src/app/shared/interfaces';
@@ -17,7 +16,6 @@ export class LibraryListComponent implements OnInit {
 
   limit = STEP
   offset = 0
-  form: FormGroup
   oSub: Subscription
   items: LibItem[]
   loading = 1

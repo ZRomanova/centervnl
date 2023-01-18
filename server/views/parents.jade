@@ -1,0 +1,96 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-6.back__subtitle-top.back__subtitle-child(href='/parents/') Родителям
+        .col-6.back__subtitle-top.text-end 
+          +share("/parents/"+page.path, page.name)
+
+        .col-12.header__subtitle.title= (page.age_text ? (page.age_text  + ' ') : '') + page.name
+
+    - gallery = (page.gallery && page.gallery.length) ? [...page.gallery] : []
+    if page.image
+      - gallery.unshift(page.image)
+    if gallery.length
+      .container.mt-5
+        +slider(gallery)
+
+    if page.description
+      .container
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(page.description)
+
+    if page.text_help
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Как мы можем помочь?
+        .row.mx-xl-5
+          .target__text.mt-3
+            +long-text(page.text_help)
+
+    
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.subtitle Как получить помощь? 
+    
+    .container
+      .row.mx-xl-5
+        .target__text.mt-3
+          +long-text(page.text_form)
+
+
+      form#form.row.mx-xl-5(action="/form" method="post")
+        .col-12.col-md-6.mt-3
+          .text-400-16 Имя
+          input.d-none(name="q_name" value="Имя")
+          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+        
+        .col-12.col-md-6.mt-3
+          .text-400-16 Телефон
+          input.d-none(name="q_tel" value="Телефон")
+          input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
+
+        .col-12.col-md-6.mt-3
+          .text-400-16 Email для связи
+          input.d-none(name="q_email" value="Email для связи")
+          input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+
+        
+        .col-12.col-md-6.mt-3
+          .text-400-16 Возраст вашего ребенка
+          input.d-none(name="q_age" value="Возраст вашего ребенка")
+          input.text-input.mt-2(type='text' name='age' autocomplete='off' placeholder="Например, 3 года" required)
+
+        .col-12.mt-3
+          .text-400-16 Опишите проблему
+          input.d-none(name="q_problem" value="Опишите проблему")
+          textarea.text-input.mt-2(name='problem' autocomplete='off' placeholder="Проблема")
+
+        .mt-4 
+          .col-12.mt-2 
+            span.text-400-16 Нажимая на кнопку, вы даете 
+              a(href='/policy' target="_blank") согласие на обработку своих персональных данных
+
+        .mt-4
+          button.button.button_orange(type='submit') Отправить
+
+      .row.mx-xl-5.mt-5
+        span.title-700-20= page.text_library + ' '
+          a(href=page.url_library target="_blank") можно здесь
+
+
+      .row.mx-xl-5.mt-5
+        .col-12.title-700-20= page.text_orgs
+        each org in page.orgs 
+          .col-12.mt-3
+            span.title-700-20
+              a(href=org.url target="_blank")= org.name 
+            span.text-500-16= " "
+            span.text-500-16= org.description
+
+
+block scripts
+  script(src='/javascripts/valid-form.js')
