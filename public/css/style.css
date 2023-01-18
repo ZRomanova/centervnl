@@ -573,6 +573,9 @@ a.news__subtitle:hover {
 .title-700-20 a {
   color: #FFA556;
 }
+.hover-orange:hover {
+  color: #FFA556;
+}
 .title-700-16 {
   font-family: 'Montserrat';
   font-style: normal;

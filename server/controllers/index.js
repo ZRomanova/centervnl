@@ -5,6 +5,7 @@ const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
 const apiDocs = require('../api/controllers/docs')
+const apiReports = require('../api/controllers/reports')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
 const apiPosts = require('../api/controllers/posts')
@@ -238,7 +239,7 @@ module.exports.submitForm = async function(req, res) {
 module.exports.getDocsPage = async function(req, res) {
     try {
         const result = {}
-
+        req.query.filter_visible = 1
         req.params.type = "REPORTS"
         await apiData.getByType(req, res, (req, res, data) => {
             result.text = data.text
@@ -247,17 +248,22 @@ module.exports.getDocsPage = async function(req, res) {
         await apiData.getByType(req, res, (req, res, data) => {
             result.contacts = data
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
-        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
-            result.programs = programs
+        await apiReports.getReports(req, res, (req, res, docs) => {
+            result.reports = docs
         })
+        
 
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
         await apiDocs.getDocuments(req, res, (req, res, docs) => {
             result.docs = docs.filter(doc => doc.visible && doc.name && doc.file)
+        })
+        req.query.fields_name = 1
+        
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
         })
         renderDocsPage(req, res, result)
     } catch (e) {
@@ -274,6 +280,7 @@ const renderDocsPage = function(req, res, data) {
         user: req.user,
         shops: data.shops,
         docs: data.docs,
+        reports: data.reports,
     })
     
 }
