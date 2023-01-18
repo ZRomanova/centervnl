@@ -278,7 +278,6 @@ module.exports.getServiceByPath = async function(req, res, next) {
                                 service.dates.push({text: moment(iDate).format('D MMMM HH:mm (нет мест)'), date: iDate, count})   
                             }
                         })
-                        service.active = true
                     }
                 })
             }
