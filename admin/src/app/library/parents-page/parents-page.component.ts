@@ -147,6 +147,7 @@ export class ParentsPageComponent implements OnInit {
       this.page = result
       this.id = this.page._id
       this.gallery = []
+      this.galleryPreview = []
       this.router.navigate(['library', 'parents', result._id])
     })
   }

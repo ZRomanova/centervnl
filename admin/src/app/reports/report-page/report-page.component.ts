@@ -103,7 +103,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
       this.justiceFile = null
       this.financeFile = null
       this.data()
-    })
+    }, error => console.log(error))
   }
 
   ngOnDestroy(): void {

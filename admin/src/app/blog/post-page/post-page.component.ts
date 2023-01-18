@@ -163,6 +163,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
             this.post = result2
             this.id = this.post._id
             this.gallery = []
+            this.galleryPreview = []
             this.data()
             this.image = null
           })
@@ -179,6 +180,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
             this.image = null
             this.post = result2
             this.gallery = []
+            this.galleryPreview = []
             this.id = this.post._id
             this.router.navigate(['blog', result2._id])
           })

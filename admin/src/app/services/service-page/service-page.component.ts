@@ -289,6 +289,7 @@ export class ServicePageComponent implements OnInit {
               this.service = result2
               this.id = this.service._id
               this.gallery = []
+              this.galleryPreview = []
               this.data()
               this.image = null
             })
@@ -304,6 +305,7 @@ export class ServicePageComponent implements OnInit {
             this.iSub = this.servicesService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
               this.image = null
               this.gallery = []
+              this.galleryPreview = []
               this.service = result2
               this.id = this.service._id
               this.router.navigate(['services', result1._id])

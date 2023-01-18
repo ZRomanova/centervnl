@@ -70,9 +70,10 @@ module.exports.getYears = async function(req, res, next) {
 module.exports.uploadFilesReport = async function(req, res, next) {
     try {
         const updated = {}
-        if (req.files && req.files.finance) updated['$set'] = {finance: 'https://centervnl.ru/uploads/' + req.files.finance[0].filename}
-        if (req.files && req.files.justice) updated['$set'] = {justice: 'https://centervnl.ru/uploads/' + req.files.justice[0].filename}
-        if (req.files && req.files.annual) updated['$set'] = {annual: 'https://centervnl.ru/uploads/' + req.files.annual[0].filename}
+        // console.log('files')
+        if (req.files && req.files.finance) updated.finance = 'https://centervnl.ru/uploads/' + req.files.finance[0].filename
+        if (req.files && req.files.justice) updated.justice = 'https://centervnl.ru/uploads/' + req.files.justice[0].filename
+        if (req.files && req.files.annual) updated.annual = 'https://centervnl.ru/uploads/' + req.files.annual[0].filename
 
         const report = await Report.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, report)

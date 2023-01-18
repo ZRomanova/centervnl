@@ -172,6 +172,7 @@ export class ProjectPageComponent implements OnInit {
             this.id = this.project._id
             this.data()
             this.gallery = []
+            this.galleryPreview = []
             this.image = null
           })
         } else {
@@ -187,6 +188,7 @@ export class ProjectPageComponent implements OnInit {
             this.image = null
             this.project = result2
             this.gallery = []
+            this.galleryPreview = []
             this.id = this.project._id
             this.router.navigate(['projects', result2._id])
           })

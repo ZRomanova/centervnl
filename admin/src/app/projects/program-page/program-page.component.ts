@@ -152,6 +152,7 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
             this.id = this.program._id
             this.data()
             this.gallery = []
+            this.galleryPreview = []
             this.image = null
           })
         } else {
@@ -168,6 +169,7 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
             this.program = result2
             this.id = this.program._id
             this.gallery = []
+            this.galleryPreview = []
             this.router.navigate(['programs', result2._id])
           })
         } else {
