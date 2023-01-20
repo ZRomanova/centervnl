@@ -18,6 +18,9 @@ export class ShopsListComponent implements OnInit, OnDestroy {
   currentShop = null
   shopID: string
   private subscription: Subscription;
+  filter: any = {
+    'fields_name': 1
+  }
 
   constructor(private shopsService: ShopsService, 
     private activateRoute: ActivatedRoute,
@@ -30,14 +33,13 @@ export class ShopsListComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
-    this.oSub = this.shopsService.fetch().subscribe(shops => {
+    this.oSub = this.shopsService.fetch(this.filter).subscribe(shops => {
       this.shops = shops
     })
   }
 
   openForm(shop) {
-    this.currentShop = shop
-    this.shopForm = true
+    this.router.navigate(['shop', shop])
   }
 
   closeForm(shop) {

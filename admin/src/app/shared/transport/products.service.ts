@@ -25,9 +25,9 @@ export class ProductsService {
     return this.http.get<Product>(`${URL}/api/products/${id}`)
   }
 
-  delete(id: string): Observable<any> {
-    return this.http.delete<any>(`${URL}/api/products/${id}`)
-  }
+  // delete(id: string): Observable<any> {
+  //   return this.http.delete<any>(`${URL}/api/products/${id}`)
+  // }
 
   create(data: any): Observable<Product> {
     let json = JSON.stringify(data)

@@ -1,26 +1,70 @@
-<div class="modal d-block" tabindex="-1">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">{{shop ? 'Редактирование' : 'Добавление'}} раздела магазина</h5>
-              <button type="button" class="btn-close" (click)="finish(false)"></button>
+
+<div class="col" *ngIf="loading == 0; else loader">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+
+    <h3>{{id ? 'Редактирование' : 'Добавление'}} раздела магазина</h3>
+    <h5>Название:</h5>
+    <input type="text" class="form-control" formControlName="name">
+
+    <h5>Путь:</h5>
+    <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
+
+    <h5>Обложка по ссылке:</h5>
+    <input type="text" class="form-control" formControlName="icon" (change)="photoURL()"
+    placeholder="Добавляйте только общедоступные ссылки">
+
+    <h5>Описание:</h5>
+    <textarea class="form-control" formControlName="description" rows="7"></textarea>
+
+    <h4 class="mt-5">Разделы:</h4>
+
+    <div formArrayName="groups">
+      <div class="col-12 mb-5 mt-5" *ngFor="let item of form.controls.groups.controls; index as i" [formGroupName]="i" >
+        <div class="row mb-3">
+          <div class="col-3">
+            <input class="form-control" formControlName="name" placeholder="Название">
           </div>
-      <div class="modal-body">
-          <form [formGroup]="form">
-              <p class="col-form-label">Название:</p>
-              <div class="mb-3">
-                <input class="form-control" formControlName="name"/>
-              </div>
-              <p class="col-form-label">Путь:</p>
-              <div class="mb-3">
-                <input class="form-control" formControlName="path" placeholder="Необязательно"/>
-              </div>
-          </form>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"  (click)="finish(false)">Отмена</button>
-          <button type="button" class="btn btn-custom" (click)="finish(true)" >{{shop ? 'Сохранить' : 'Создать'}}</button>
+          <div class="col-3">
+            <input class="form-control" formControlName="path" placeholder="Путь (Необязательно)">
+          </div>
+          <div class="col-3">
+            <input class="form-control" formControlName="image" placeholder="Ссылка на обложку">
+          </div>
+          <div class="col-3">
+            <div class="form-check form-switch mt-2">
+              <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
+              <h5>Отображать на сайте</h5>
+            </div>
+          </div>
+          
+        </div>
+        <textarea class="form-control col-12" formControlName="description" rows="3" placeholder="Описание"></textarea>
+
+        <button class="btn btn-custom mb-3 mt-3" (click)="deleteGroupByIndex(i)" *ngIf="!form.controls.groups.controls[i].controls._id.value">
+          <i class="fa fa-trash"></i>
+        </button>
       </div>
     </div>
-  </div>
+    <button class="btn btn-custom mb-3 mt-3" type="button" (click)="addGroup()">
+      <i class="fa fa-plus"></i>
+    </button>
+
+    <div class="form-check form-switch mt-2">
+      <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
+      <h5>Отображать на сайте</h5>
+    </div>
+
+
+    <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+        Назад
+    </button>
+    <button class="btn btn-custom mt-3 mb-3" type="submit">
+        {{id ? 'Сохранить' : 'Создать'}}
+    </button>
+  </form>
 </div>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

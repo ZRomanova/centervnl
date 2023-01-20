@@ -13,21 +13,25 @@ export class ShopsService {
 
   constructor(private http: HttpClient) { }
 
-  fetch(): Observable<Shop[]> {
-    return this.http.get<Shop[]>(`${URL}/api/shops`)
+  fetch(params: any = {}): Observable<Shop[]> {
+    return this.http.get<Shop[]>(`${URL}/api/shops`, {
+      params: new HttpParams({
+        fromObject: params
+      })
+    })
   }
 
   fetchById(id: string): Observable<Shop> {
     return this.http.get<Shop>(`${URL}/api/shops/${id}`)
   }
 
-  fetchGroups(shop: string): Observable<string[]> {
-    return this.http.get<string[]>(`${URL}/api/shops/groups/${shop}`)
-  }
+  // fetchGroups(shop: string): Observable<string[]> {
+  //   return this.http.get<string[]>(`${URL}/api/shops/groups/${shop}`)
+  // }
 
-  delete(id: string): Observable<any> {
-    return this.http.delete<any>(`${URL}/api/shops/${id}`)
-  }
+  // delete(id: string): Observable<any> {
+  //   return this.http.delete<any>(`${URL}/api/shops/${id}`)
+  // }
 
   create(data: any): Observable<Shop> {
     let json = JSON.stringify(data)

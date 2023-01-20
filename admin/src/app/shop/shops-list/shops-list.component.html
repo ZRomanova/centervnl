@@ -1,6 +1,4 @@
-<app-page-title title="Магазин" text="Здесь можно работать с товарами и заказами"></app-page-title>
-
-<h3>Разделы магазина</h3>
+<h1>Разделы магазина</h1>
 
 <div >
   <button class="btn btn-custom me-5" role="button" (click)="openForm(null)">
@@ -11,7 +9,7 @@
       <button class="btn me-2" role="button" (click)="openShop(shop._id)" [ngClass]="{'btn-warning': shopID == shop._id, 'btn-custom': shopID != shop._id}">
         {{shop.name}}
       </button>
-      <button class="btn btn-custom me-5" role="button" (click)="openForm(shop)">
+      <button class="btn btn-custom me-5" role="button" (click)="openForm(shop._id)">
         <i class="fa fa-pen"></i>
       </button>
     </ng-container>

@@ -9,11 +9,11 @@
               <h5>Путь:</h5>
               <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
 
-              <h5>Подраздел:</h5>
+              <!-- <h5>Подраздел:</h5>
               <input class="form-control" list="datalistOptions" formControlName="group">
               <datalist id="datalistOptions">
                 <option *ngFor="let group of groups" [value]="group">{{group}}</option>
-              </datalist>
+              </datalist> -->
               <h5>Обложка из файла:</h5>
               <input type="file" class="form-control" (change)="onFileUpload($event)">
               <h5>Обложка по ссылке:</h5>
@@ -77,13 +77,13 @@
             </button>
         </ng-container>
 
-        <h5>Описание <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
-        <textarea class="form-control" formControlName="description" rows="10"></textarea>
+        <h5>Описание: </h5>
+        <textarea class="form-control" formControlName="description" rows="7"></textarea>
 
 
-      <h5>Добавить в галерею из файлов:</h5>
+      <!-- <h5>Добавить в галерею из файлов:</h5>
       <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple>
-      <app-horizontal-gallery [data]="galleryPreview"  (delete)="deletePhotoByIndex($event)"></app-horizontal-gallery>
+      <app-horizontal-gallery [data]="galleryPreview"  (delete)="deletePhotoByIndex($event)"></app-horizontal-gallery> -->
 
       <h5>Добавить в галерею по ссылке:</h5>
       <div formArrayName="gallery">
@@ -100,10 +100,10 @@
       </button>
       <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery>
 
-      <h5>Перенести в другой раздел</h5>
+      <!-- <h5>Перенести в другой раздел</h5>
       <select class="form-select" formControlName="shop">
         <option *ngFor="let shop of shops" [value]="shop._id">{{shop.name}}</option>
-      </select>
+      </select> -->
 
       <div class="form-check form-switch mt-2">
           <input class="form-check-input mt-1" type="checkbox" formControlName="visible">
@@ -120,7 +120,7 @@
   </form>
 </div>
 
-<app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal>
+<!-- <app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal> -->
 
 <ng-template #loader>
   <app-loader></app-loader>

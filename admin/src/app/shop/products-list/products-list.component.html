@@ -1,19 +1,13 @@
 <hr>
-<a class="btn btn-custom mt-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
-  <i class="fa fa-arrow-left"></i>
-</a>
-<a class="btn btn-custom mt-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
-  <i class="fa fa-arrow-right"></i>
-</a>
-<app-table (create)="create($event)" (edit)="edit($event)" 
-*ngIf="!loading; else loader" [data]="products" [offset]="offset" [title]="['Название', 'Цена', 'Описание']" [columns]="[3, 1, 5]"></app-table>
 
-<a class="btn btn-custom mb-3 me-2" role="button" (click)="loadMore(false)" *ngIf="offset > 0 && !loading">
-  <i class="fa fa-arrow-left"></i>
-</a>
-<a class="btn btn-custom mb-3" role="button" (click)="loadMore(true)" *ngIf="!noMore && !loading">
-  <i class="fa fa-arrow-right"></i>
-</a>
+<select class="form-select form-select-lg" [(ngModel)]="group" *ngIf="!loading && groups && groups.length" (change)="loadNewGroup()">
+  <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
+</select>
+
+<app-table (create)="create($event)" (edit)="edit($event)" [noAdd]="!(groups && groups.length)"
+*ngIf="!loading; else loader" [data]="products" [offset]="0" [title]="['Название', 'Цена', 'Описание']" [columns]="[3, 1, 5]"></app-table>
+
+
 
 <ng-template #loader>
   <app-loader></app-loader>

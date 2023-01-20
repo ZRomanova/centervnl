@@ -2,3 +2,4 @@ public/uploads
 uploads
 node_modules
 server/config/keys.dev.js
+import-shop.js

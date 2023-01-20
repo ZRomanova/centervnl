@@ -14,34 +14,33 @@ import { ShopsService } from 'src/app/shared/transport/shops.service';
 export class ProductPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup
-  loading = 3
+  loading = 1
   id: string
-  product: Product
+  product: any
   oSub: Subscription
-  sSub: Subscription
-  iSub: Subscription
+  // sSub: Subscription
+  // iSub: Subscription
   gSub: Subscription
   image: File
   imagePreview: string
   gallery: File[] = []
   galleryPreview: string[] = []
-  htModal = false
-  shop: string
-  shops: Shop[]
-  groups: string[]
+  // htModal = false
+  // shop: string
+  shops: Shop[] = []
+  groups: string[] = []
 
   constructor(private router: Router, 
     private activateRoute: ActivatedRoute,
     private shopsService: ShopsService,
     private productsService: ProductsService,) { 
       this.id = this.activateRoute.snapshot.params['id']
-      this.shop = this.activateRoute.snapshot.params['shop'];
     }
 
   ngOnInit(): void {
     if (this.id == 'new') this.id = null
     if (this.id) {
-      this.productsService.fetchById(this.id).subscribe(product => {
+      this.productsService.fetchById(this.id).subscribe((product: any) => {
         this.product = product
         this.imagePreview = this.product.image
         this.data()
@@ -54,22 +53,22 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         price: new FormControl('', Validators.required),
         visible: new FormControl(true),
         image: new FormControl(''),
-        group: new FormControl(''),
+        // group: new FormControl(''),
         gallery: new FormArray([]),
         description: new FormControl(''),
-        shop: new FormControl(this.shop, Validators.required),
+        // shop: new FormControl(null, Validators.required),
         options: new FormArray([])
       })
       this.loading --
     }
-    this.sSub = this.shopsService.fetch().subscribe(shops => {
-      this.shops = shops
-      this.loading --
-    })
-    this.gSub = this.shopsService.fetchGroups(this.shop).subscribe(groups => {
-      this.groups = groups
-      this.loading --
-    })
+    // this.sSub = this.shopsService.fetch().subscribe(shops => {
+    //   this.shops = shops
+    //   this.loading --
+    // })
+    // this.gSub = this.shopsService.fetchGroups(this.shop).subscribe(groups => {
+    //   this.groups = groups
+    //   this.loading --
+    // })
   }
 
   data() {
@@ -79,8 +78,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
       price: new FormControl(this.product.price, Validators.required),
       visible: new FormControl(this.product.visible),
       image: new FormControl(this.product.image),
-      group: new FormControl(this.product.group),
-      shop: new FormControl(typeof this.product.shop == 'object' ? this.product.shop._id : this.product.shop, Validators.required),
+      // group: new FormControl(this.product.group),
+      // shop: new FormControl(null, Validators.required),
       gallery: new FormArray(this.product.gallery ? this.product.gallery.map(el => new FormControl(el)) : []),
       description: new FormControl(this.product.description),
       options: new FormArray(this.product.options ? this.product.options.map(opt => this.createOptionFormGroup(opt)) : []),
@@ -102,14 +101,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['products', this.shop])
-  }
-
-  openHtModal() {
-    this.htModal = true
-  }
-  closeHtModal(event) {
-    this.htModal = false
+    if (this.product) this.router.navigate(['products', this.product.shop_id])
+    else this.router.navigate(['products'])
   }
 
   plusToGallery() {
@@ -186,44 +179,30 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     const data = {...this.form.value}
     if (this.id) {
-      this.oSub = this.productsService.update(this.id, data).subscribe(result1 => {
+      this.oSub = this.productsService.update(this.id, data).subscribe(result => {
+        this.product = result
         if (this.image || this.gallery.length) {
-          this.iSub = this.productsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
-            this.product = result2
-            this.id = this.product._id
-            this.data()
-            this.image = null
-          })
-        } else {
-          this.product = result1
-          this.id = this.product._id
-          this.product.shop = this.shops.find((el: Shop) => el._id == result1.shop)
-          this.data()
-        }
-      })
-    } else {
-      this.oSub = this.productsService.create(data).subscribe(result1 => {
-        if (this.image || this.gallery.length) {
-          this.iSub = this.productsService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
-            this.image = null
-            this.product = result2
-            this.id = this.product._id
-            this.router.navigate(['products', result1._id])
-          })
-        } else {
-          this.product = result1
-          this.id = this.product._id
-          this.router.navigate(['products', result1._id])
-        }
-      })
-    }
+          this.onFilesUpload()
+        } else this.data()
+      }, error => console.log(error.error.message))
+    } 
   }
+
+  onFilesUpload() {
+    this.productsService.upload(this.id, this.image, this.gallery).subscribe(result => {
+      this.product = result
+      this.image = null
+      this.gallery = null
+      this.galleryPreview = []
+      if (result.image) this.product.image = result.image
+      if (result.gallery && result.gallery.length) this.product.gallery = this.product.gallery.concat(result.gallery)
+      this.data()
+    }, error => console.log(error))
+  }
+
 
   ngOnDestroy(): void {
     if (this.oSub) this.oSub.unsubscribe()
-    if (this.iSub) this.iSub.unsubscribe()
-    if (this.sSub) this.sSub.unsubscribe()
-    if (this.gSub) this.gSub.unsubscribe()
   }
 
 }

@@ -9,7 +9,7 @@ const productSchema = new Schema({
     },
     image: String,
     video: String,
-    // gallery: [String],
+    gallery: [String],
     description: String,
     shop: {
         ref: 'shops',
@@ -40,10 +40,6 @@ const productSchema = new Schema({
       required: true,
       unique: true
     },
-    // likes: {
-    //   ref: 'users',
-    //   type: [mongoose.Types.ObjectId]
-    // },
     author: {
         ref: 'users',
         type: Schema.Types.ObjectId,

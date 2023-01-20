@@ -40,6 +40,7 @@ import { LibraryPageComponent } from './library/library-page/library-page.compon
 import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
 import { ParentsListComponent } from './library/parents-list/parents-list.component';
 import { ParentsPageComponent } from './library/parents-page/parents-page.component';
+import { ShopPageComponent } from './shop/shop-page/shop-page.component';
 
 const routes: Routes = [
   {
@@ -49,7 +50,8 @@ const routes: Routes = [
         {path: ':shop', component: ProductsListComponent},
         {path: '', component: OrdersListComponent},
       ]},
-      {path: 'products/:shop/:id', component: ProductPageComponent},
+      {path: 'shop/:id', component: ShopPageComponent},
+      {path: 'product/:id', component: ProductPageComponent},
       {path: 'orders/:id', component: OrderPageComponent},
       {path: 'users', component: UsersLayoutComponent, children: [
         {path: '', component: UsersListComponent},
