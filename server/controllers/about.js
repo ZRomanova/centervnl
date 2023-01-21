@@ -29,7 +29,7 @@ const renderAboutList = function(req, res, data) {
         title: 'О нас',
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -61,7 +61,7 @@ const renderAboutPage = function(req, res, data) {
         title: 'О нас',
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }

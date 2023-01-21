@@ -16,7 +16,7 @@ moment.locale('ru')
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
         if (data.user) req.user = data.user
-        const result = {user: req.user}
+        const result = {session: req.session}
         req.query.filter_visible = true
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
@@ -96,7 +96,7 @@ const renderProfilePage = function(req, res, data) {
         title: req.user.name + ' ' + req.user.surname,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: req.user,
+        session: req.session,
         profile: data.profile,
         shops: data.shops
     })
@@ -129,7 +129,7 @@ const renderCreateOrder = function(req, res, data) {
         title: 'Новый заказ',
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: req.user,
+        session: req.session,
         bin: data.bin,
         shops: data.shops
     })
@@ -171,7 +171,7 @@ const renderProfileCheckouts = function(req, res, data) {
         title: req.user.name + ' ' + req.user.surname,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: req.user,
+        session: req.session,
         checkouts: data.checkouts,
         shops: data.shops
     })
@@ -213,7 +213,7 @@ const renderProfileOrders = function(req, res, data) {
         title: req.user.name + ' ' + req.user.surname,
         nav_projects: data.projects,
         footer_logos: data.partners, 
-        user: req.user,
+        session: req.session,
         orders: data.orders,
         shops: data.shops
     })
@@ -277,7 +277,7 @@ const renderDocsPage = function(req, res, data) {
         programs: data.programs,
         contacts: data.contacts,
         text: data.text, 
-        user: req.user,
+        session: req.session,
         shops: data.shops,
         docs: data.docs,
         reports: data.reports,
@@ -321,7 +321,7 @@ const renderPartnersPage = function(req, res, data) {
         contacts: data.contacts,
         programs: data.programs, 
         partners: data.partners, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -404,7 +404,7 @@ const renderSmiPage = function(req, res, data) {
         contacts: data.contacts,
         programs: data.programs, 
         posts: data.posts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -439,7 +439,7 @@ const renderGalleryPage = function(req, res, data) {
         contacts: data.contacts,
         programs: data.programs, 
         // posts: data.posts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -475,7 +475,7 @@ const renderContactsPage = function(req, res, data) {
         contacts: data.contacts,
         programs: data.programs, 
         // posts: data.posts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -512,7 +512,7 @@ const renderErrorPage = function(req, res, data) {
         title: 'Ошибка',
         programs: data.programs,
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops,
         error: data.error,
     })

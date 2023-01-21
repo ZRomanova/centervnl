@@ -52,7 +52,7 @@ const renderGrantListPage = function(req, res, data) {
         projects: data.projects, 
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         text: data.text,
         shops: data.shops
     })
@@ -97,7 +97,7 @@ const renderGrantPage = function(req, res, data) {
         project: data.project,
         contacts: data.contacts,
         programs: data.programs, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }

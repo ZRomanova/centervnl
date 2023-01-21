@@ -37,7 +37,7 @@ const renderShopPage = function(req, res, data) {
         shops: data.shops,
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user
+        session: req.session
     })
 }
 
@@ -77,7 +77,7 @@ const renderCatalogsList = function(req, res, data) {
         shop: data.shop,
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user
+        session: req.session
     })
 }
 
@@ -110,7 +110,6 @@ module.exports.getProductPage = async function(req, res, data = {}) {
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
- 
         renderProductPage(req, res, result)
         
     } catch (e) {
@@ -127,7 +126,7 @@ const renderProductPage = function(req, res, data) {
         product: data.product,
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user
+        session: req.session
     })
 }
 
@@ -178,6 +177,6 @@ const renderCatalogPage = function(req, res, data) {
         products: data.products,
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user
+        session: req.session
     })
 }

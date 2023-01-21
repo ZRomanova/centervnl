@@ -45,7 +45,7 @@ const renderWinsList = function(req, res, data) {
         text: data.text,
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     
@@ -87,7 +87,7 @@ const renderWinPage = function(req, res, data) {
         win: data.win,
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     

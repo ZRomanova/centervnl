@@ -34,7 +34,7 @@ const renderHelpList = function(req, res, data) {
         title: 'Как помочь | Ресурсный центр Вера Надежда Любовь',
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     
@@ -69,7 +69,7 @@ const renderHelpDonate  = function(req, res, data) {
         title: 'Сделать пожертвование | Ресурсный центр Вера Надежда Любовь',
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     

@@ -67,7 +67,7 @@ block content
             .row 
               each date, index in service.dates
                 .col-12.col-sm-6.col-md-3.mt-2
-                  input.form-check-input(type='radio' name='date' value=date.date id='defaultRadio'+index disabled=(service.peopleLimit<=date.count) checked=(user_date==date.text) required=true)
+                  input.form-check-input(type='radio' name='date' value=String(date.date) id='defaultRadio'+index disabled=(service.peopleLimit<=date.count) checked=(user_date==date.text) required=true)
                   label.form-check-label.d-inline(for='defaultRadio'+index)= date.text
 
           .col-12.mt-3

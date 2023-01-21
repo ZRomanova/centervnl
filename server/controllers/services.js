@@ -43,7 +43,7 @@ const renderServicesListPage = function(req, res, data) {
         contacts: data.contacts,
         programs: data.programs,
         text: data.text,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -79,7 +79,7 @@ const renderServicePage = function(req, res, data) {
         title: data.service ? data.service.name : 'Не найдено',
         service: data.service,
         user_date: req.query.date,
-        user: req.user,
+        session: req.session,
         posts: data.posts,
         contacts: data.contacts,
         programs: data.programs,

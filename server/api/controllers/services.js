@@ -61,14 +61,14 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                 event.date.period.forEach(p =>  {
                     if (p.visible && p.day == dayStr) {
                         let startP = moment(p.start).startOf('day');
-                        let endP = moment(p.end ? p.end : new Date().parse() + 1000 * 60 * 60 * 60 * 24 * 7 * 10).endOf('day')
+                        let endP = moment(p.end ? p.end : (Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 30)).endOf('day')
                         if (startP <= start && endP >= end) {
                             let time = intToStringTime(p.time)
                             let dateTime = new Date(queryDate).setHours(time[0], time[1])
                             results.push({
                                 ...event,
                                 dateStr: moment(dateTime).format('D MMMM HH:mm'),
-                                dateObj: dateTime,
+                                dateObj: Date.parse(dateTime),
                             })
                         }
                     }
@@ -80,7 +80,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
 
         next(req, res, results)
     } catch (e) {
-        // console.log(e)
+        console.log(e)
         errorHandler(res, e)
     }
 }
@@ -100,7 +100,7 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                     'date.period': {
                         $elemMatch: {
                             start: {$lte: end}, 
-                            end: {$gte: start}, 
+                            $or: [{end: {$gte: start}}, {end: null}, {end: {$exists: false}}], 
                             time: {$exists: true},
                             day: {$exists: true},
                             visible: true
@@ -123,10 +123,11 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                 event.date.period.forEach(p =>  {
                     if (p.visible) {
                         let startP = new Date(p.start) //period start
-                        let endP = new Date(p.end) //period end
+                        let endP = p.end ? new Date(p.end) : new Date(Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 30) //period end
+                        
                         
                         if (startP < end && start < endP) {
-
+ 
                             let day = week.find(el => el.ru == p.day)?.num
                             let startDay = new Date(start).getDay()
 
@@ -261,7 +262,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
                             if (iDate.getDay() == day) break
                             iDate = new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24))
                         }
-                        const end = p.end ? new Date(p.end) : new Date(Date.parse(iDate) + (1000 * 60 * 60 * 24 * 28))
+                        const end = p.end ? new Date(p.end) : new Date(Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 30)
                         const dates = []
                         while (iDate <= end) {
                             dates.push(iDate)
@@ -272,6 +273,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
                             if (service.peopleLimit) count = await Registration.countDocuments(
                                 {date: iDate, service: service._id, status: {$nin: ['отмена', 'ведущий']}})
                             if (count < service.peopleLimit || !service.peopleLimit) {
+
                                 service.dates.push({text: moment(iDate).format('D MMMM HH:mm'), date: iDate, count})
                                 service.active = true
                             } else {
@@ -281,7 +283,9 @@ module.exports.getServiceByPath = async function(req, res, next) {
                     }
                 })
             }
-            service.dates = service.dates.sort((a, b) => a.date - b.date)
+            service.dates = service.dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
+
+            console.log(service)
 
             next(req, res, service)
         }

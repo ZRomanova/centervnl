@@ -29,14 +29,13 @@ const orderSchema = new Schema({
         },
         status: {
             type: String,
-            enum: ['оплачен', 'не оплачен', 'оплачен частично'],
+            enum: ['оплачен', 'не оплачен'],
             default: 'не оплачен'
         },
         method: {
             type: String,
             enum: ['на месте', 'онлайн']
-        },
-        paid: Number
+        }
     },
     created: {
         type: Date,

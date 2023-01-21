@@ -40,7 +40,7 @@ const renderListPage = function(req, res, data) {
         title: 'База знаний',
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         posts: data.posts,
         shops: data.shops
     })
@@ -78,7 +78,7 @@ const renderPostPage = function(req, res, data) {
         title: data.post.name,
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         post: data.post,
         shops: data.shops
     })

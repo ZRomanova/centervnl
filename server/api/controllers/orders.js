@@ -58,7 +58,7 @@ module.exports.getOrders = async function(req, res, next) {
 module.exports.getByUser = async function(req, res, next) {
   try {
       const orders = await Order
-      .find({user: req.user._id})
+      .find({session: req.session._id})
       .sort({send: -1})
       .lean()
 

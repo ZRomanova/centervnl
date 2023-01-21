@@ -45,7 +45,7 @@ const renderTeamList = function(req, res, data) {
         text: data.text,
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     
@@ -84,7 +84,7 @@ const renderTeamPage = function(req, res, data) {
         staff: data.staff,
         programs: data.programs, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     

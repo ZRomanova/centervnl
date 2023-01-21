@@ -39,7 +39,7 @@ const renderParentsList = function(req, res, data) {
         programs: data.programs, 
         contacts: data.contacts, 
         pages: data.pages, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
     
@@ -78,7 +78,7 @@ const renderParentsPage = function(req, res, data) {
         programs: data.programs, 
         page: data.page, 
         contacts: data.contacts, 
-        user: req.user,
+        session: req.session,
         shops: data.shops
     }) 
 }
@@ -116,7 +116,7 @@ const renderParentsClub = function(req, res, data) {
       programs: data.programs, 
       contacts: data.contacts, 
       club: data.club, 
-      user: req.user,
+      session: req.session,
       shops: data.shops
   })
   

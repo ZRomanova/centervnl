@@ -51,12 +51,12 @@ module.exports.getByUser = async function(req, res, next) {
   try {
       const now = moment().format()
       const regsActive = await Registration
-      .find({user: req.user._id, date: {$gt: new Date(now)}})
+      .find({session: req.session._id, date: {$gt: new Date(now)}})
       .sort({date: 1})
       .lean()
 
       const regsInactive = await Registration
-      .find({user: req.user._id, date: {$lte: Date(now)}})
+      .find({session: req.session._id, date: {$lte: Date(now)}})
       .sort({date: -1})
       .lean()
 

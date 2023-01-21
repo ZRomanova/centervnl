@@ -19,10 +19,11 @@ block content
 
 
       .row.mx-xl-5.mt-5 
-        .col-12.col-md-6
-          img.product__image(src= product.image alt='icon' loading="lazy")
+        if product.image
+          .col-12.col-md-6
+            img.product__image(src=product.image alt=product.name loading="lazy")
 
         
         .col-12.col-md-6
-          .mt-5.ms-md-3 
+          .mt-5 
             +long-text(product.description)

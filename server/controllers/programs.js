@@ -32,7 +32,7 @@ const renderProgramsList = function(req, res, data) {
         title: 'Наши программы',
         programs: data.programs, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -84,7 +84,7 @@ const renderProgramProjectPage = function(req, res, data) {
         program: data.program, 
         project: data.project, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }
@@ -123,7 +123,7 @@ const renderProgramPage = function(req, res, data) {
         programs: data.programs, 
         program: data.program, 
         contacts: data.contacts,
-        user: req.user,
+        session: req.session,
         shops: data.shops
     })
 }

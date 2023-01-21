@@ -59,8 +59,8 @@ app.use(session({
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
-      sameSite: "lax", 
-      maxAge: 1000 * 60 * 60 * 24 // 1 day 
+    sameSite: "lax", 
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
   }
 }));
 
