@@ -85,57 +85,99 @@ const renderCatalogsList = function(req, res, data) {
 
 module.exports.getProductPage = async function(req, res, data = {}) {
     try {
-        const result = {...data}
-        await apiPartners.getPartners(req, res, async (req, res, partners) => {
-            result.partners = partners
-            await apiProjects.getActive(req, res, async (req, res, nav_projects) => {
-                result.nav_projects = nav_projects
-                await apiShops.getShops(req, res, async (req, res, shops) => {
-                    result.shops = shops
-                    await apiProducts.getProductOne(req, res, async (req, res, product) => {
-                        if (product.visible) {
-                            result.product = product
-                            await apiOrders.addToBin(req, res, (req, res, bin) => {
-                                result.bin = bin
-                                renderProductPage(req, res, result)
-                            })
-                            
-                        }
-                        else {
-                            res.status(404).json({massage: "Товар не найден"})
-                        }
-                        
-                    })
-                })
-            })
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
         })
+        req.params.id = req.params.product
+        await apiProducts.getProductById(req, res, (req, res, product) => {
+            result.product = product
+        })
+        req.params.id = req.params.shop
+        await apiShops.getShopById(req, res, (req, res, shop) => {
+            result.shop = shop
+            result.catalog = shop.groups.find(item => item.path == req.params.group)
+        })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+ 
+        renderProductPage(req, res, result)
+        
     } catch (e) {
         console.log(e)
     }
 }
 
 const renderProductPage = function(req, res, data) {
-    res.render('product', {
-        title: data.product.name,
-        product: data.product,
+    res.render('shop-product', {
+        title: data.catalog ? data.catalog.name : "Не найдено",
         shops: data.shops,
-        nav_projects: data.nav_projects,
-        footer_logos: data.partners, 
-        user: req.user,
-        bin: data.bin
+        shop: data.shop,
+        catalog: data.catalog,
+        product: data.product,
+        programs: data.programs, 
+        contacts: data.contacts,
+        user: req.user
     })
 }
 
 
 
-module.exports.redirectToShop = async (req, res) => {
+module.exports.getCatalogPage = async (req, res) => {
     try {
-        await apiShops.getShopById(req, res, (req, res, shop) => {
-            res.redirect('/shop/' + shop.path)
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
         })
+        req.params.id = req.params.shop
+        await apiShops.getShopById(req, res, (req, res, shop) => {
+            result.shop = shop
+            result.catalog = shop.groups.find(item => item.path == req.params.group)
+        })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        req.query["fields_groups.$"] = 1
+        req.query.filter__id = result.shop._id
+        req.query["filter_groups._id"] = result.catalog._id
+        await apiProducts.getProducts(req, res, (req, res, products) => {
+            result.products = products
+        })
+        renderCatalogPage(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
 
+const renderCatalogPage = function(req, res, data) {
+    res.render('shop-catalog', {
+        title: data.catalog ? data.catalog.name : "Не найдено",
+        shops: data.shops,
+        shop: data.shop,
+        catalog: data.catalog,
+        products: data.products,
+        programs: data.programs, 
+        contacts: data.contacts,
+        user: req.user
+    })
+}

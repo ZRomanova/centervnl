@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12.back__subtitle-top
+          a.back__subtitle-root(href='/shop/') Магазин
+          svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
+            path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#656973')
+          a.back__subtitle-child(href='/shop/'+shop.path) 
+            |  #{shop.name}
+
+        .col-12.header__subtitle.title= catalog.name          
+
+
+      .row.mx-xl-5         
+        each product in products
+          .col-12.col-md-6.col-lg-3.mt-3.mt-lg-5
+            a.product__box.d-flex.flex-row.flex-md-column(href="/shop/"+shop.path+"/"+catalog.path+"/"+product.path)  
+              if product.image
+                .col-3.col-md-12
+                  img.product__image(src= product.image alt='icon' loading="lazy")
+              else
+                .product__image
+
+              .col-9.col-md-12
+                .p-3.product__name.h-100.d-flex.flex-column.justify-content-between
+                  .text-400-16.product__name= product.name 
+                  .program__subtitle.product__name= product.price + " руб"

@@ -11,7 +11,8 @@ block content
       .row.mx-xl-5 
         each program in programs 
           .col-12.col-lg-6.mt-3.mb-3
-            img.program__image.mb-3(src=program.image alt=program.name)
+            a(href='/programs/'+program.path)
+              img.program__image.mb-3(src=program.image alt=program.name)
             .row 
               .col-4.col-md-3
                   img.d-block(src= program.icon alt='book')

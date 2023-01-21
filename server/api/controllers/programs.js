@@ -19,7 +19,7 @@ module.exports.getProgramByPath = async function(req, res, next) {
             const projects = await Project.find(
                 {"programs.program": program._id, visible: true}, 
                 {programs: 1, name: 1, path: 1, description: 1, image: 1}
-            ).lean()
+            ).sort({'period.start': -1, created: -1}).lean()
             projects.forEach(project => {
                 const currProj = project.programs.find(p => String(p.program) == String(program._id))
                 if (currProj && currProj.description) {

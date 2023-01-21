@@ -90,30 +90,30 @@ module.exports.updateShop = async function(req, res, next) {
     } 
 }
 
-module.exports.getGroups = async function(req, res, next) {
-    try {
-      const groups = await Product.distinct("group", {shop: req.params.shop, group: {$ne: ""}})
-      next(req, res, groups)
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
+// module.exports.getGroups = async function(req, res, next) {
+//     try {
+//       const groups = await Product.distinct("group", {shop: req.params.shop, group: {$ne: ""}})
+//       next(req, res, groups)
+//     } catch (e) {
+//         errorHandler(res, e)
+//     }
+// }
 
-module.exports.getProductsInShop = async function(req, res, next) {
-    try {
-        const skip = req.query.offset ? +req.query.offset * 20 : 0
-        const limit = 20
-        const shop = await Shop.findOne({path: req.params.shop}).lean()
-        const products = await Product.aggregate([
-            { $match: {shop: shop._id, visible: true} },
-            { "$sort": { "name": 1 } },
-            { "$skip": skip },
-            { "$limit": limit },
-        ])
+// module.exports.getProductsInShop = async function(req, res, next) {
+//     try {
+//         const skip = req.query.offset ? +req.query.offset * 20 : 0
+//         const limit = 20
+//         const shop = await Shop.findOne({path: req.params.shop}).lean()
+//         const products = await Product.aggregate([
+//             { $match: {shop: shop._id, visible: true} },
+//             { "$sort": { "name": 1 } },
+//             { "$skip": skip },
+//             { "$limit": limit },
+//         ])
 
-        next(req, res, {shop, products})
+//         next(req, res, {shop, products})
 
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
+//     } catch (e) {
+//         errorHandler(res, e)
+//     }
+// }

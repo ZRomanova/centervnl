@@ -335,6 +335,28 @@ body {
   border-radius: 8px;
   object-fit: cover;
 }
+.product__image {
+  position: relative;
+  display: block;
+  left: 0;
+  width: 100%;
+  top: 0;
+  aspect-ratio: 280 / 320;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.product__box {
+  height: 100%;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.product__name {
+  flex-grow: 1;
+}
 .program__subtitle {
   font-weight: 700;
   font-size: 20px;
@@ -425,6 +447,10 @@ body {
   font-size: 16px;
   line-height: 150%;
   color: #02b2b6;
+}
+.b-0 {
+  position: relative;
+  bottom: 0;
 }
 
 .principles__title {
