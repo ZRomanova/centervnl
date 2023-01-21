@@ -10,10 +10,7 @@ module.exports.getTeamList = async function(req, res) {
     try {
         const result = {}
         req.query.filter_visible = true
-        
-        await apiShops.getShops(req, res, async (req, res, shops) => {
-            result.shops = shops
-        })
+
         await apiTeam.getStaffs(req, res, (req, res, staffs) => {
             result.staffs = staffs
         })
@@ -28,8 +25,12 @@ module.exports.getTeamList = async function(req, res) {
         })
         req.query.fields_name = 1
         req.query.fields_path = 1
+        
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderTeamList(req, res, result)
     } catch (e) {
@@ -55,9 +56,6 @@ module.exports.getTeamPage = async function(req, res) {
         const result = {}
         req.query.filter_visible = true
         
-        await apiShops.getShops(req, res, async (req, res, shops) => {
-            result.shops = shops
-        })
         await apiTeam.getStaffByPath(req, res, (req, res, staff) => {
             result.staff = staff
         })
@@ -70,6 +68,9 @@ module.exports.getTeamPage = async function(req, res) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderTeamPage(req, res, result)
     } catch (e) {

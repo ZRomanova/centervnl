@@ -7,9 +7,7 @@ module.exports.getProgramsList = async function(req, res, data = {}) {
     try {
         const result = {...data}
         req.query.filter_visible = true
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
+        
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
@@ -17,6 +15,11 @@ module.exports.getProgramsList = async function(req, res, data = {}) {
         })
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
         })
         renderProgramsList(req, res, result)
     } catch (e) {
@@ -41,10 +44,6 @@ module.exports.getProgramProjectPage = async function(req, res, data = {}) {
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        // req.params.path = req.params.program
-        // await apiPrograms.getProgramByPath(req, res, (req, res, program) => {
-        //     result.program = program
-        // })
         
 
         req.params.type = "CONTACTS"
@@ -54,6 +53,9 @@ module.exports.getProgramProjectPage = async function(req, res, data = {}) {
         })
         req.query.fields_name = 1
         req.query.fields_path = 1
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
         req.query.fields_description = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs

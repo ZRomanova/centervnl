@@ -16,11 +16,12 @@ module.exports.getLibsListPage = async function(req, res, data = {}) {
             })
             result.posts = posts
         })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })
@@ -53,12 +54,12 @@ module.exports.getLibPage = async function(req, res, data = {}) {
         post.date = moment(post.date).format('D MMMM yyyy')
         result.post = post
       })
-      await apiShops.getShops(req, res, (req, res, shops) => {
-        result.shops = shops
-      })
 
       req.query.fields_name = 1
       req.query.fields_path = 1
+      await apiShops.getShops(req, res, (req, res, shops) => {
+        result.shops = shops
+    })
       await apiPrograms.getPrograms(req, res, (req, res, programs) => {
         result.programs = programs
       })

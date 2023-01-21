@@ -11,9 +11,7 @@ module.exports.getWinsList = async function(req, res) {
         const result = {}
         req.query.filter_visible = true
         
-        await apiShops.getShops(req, res, async (req, res, shops) => {
-            result.shops = shops
-        })
+        
         await apiWins.getWins(req, res, (req, res, items) => {
             result.wins = items
         })
@@ -30,6 +28,9 @@ module.exports.getWinsList = async function(req, res) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderWinsList(req, res, result)
     } catch (e) {
@@ -70,6 +71,9 @@ module.exports.getWinPage = async function(req, res) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderWinPage(req, res, result)
     } catch (e) {

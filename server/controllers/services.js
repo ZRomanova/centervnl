@@ -8,56 +8,19 @@ const apiData = require('../api/controllers/data')
 const moment = require('moment')
 moment.locale('ru')
 
-const week = [
-    {
-        num: 1,
-        en:'monday',
-        ru: 'ПН'
-    },
-    {
-        num: 2,
-        en: 'tuesday',
-        ru: 'ВТ'
-    },
-    {
-        num: 3,
-        en: 'wednesday',
-        ru: 'СР'
-    },
-    {
-        num: 4,
-        en: 'thursday',
-        ru: 'ЧТ'
-    },
-    {
-        num: 5,
-        db: 'friday',
-        ru: 'ПТ'
-    },
-    {
-        num: 6,
-        en: 'saturday',
-        ru: 'СБ'
-    },
-    {
-        num: 0,
-        en: 'sunday',
-        ru: 'ВС'
-    }
-]
-
 module.exports.getServicesListPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
 
         req.query.filter_visible = true
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
+        
         req.query.fields_name = 1
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
@@ -88,6 +51,7 @@ const renderServicesListPage = function(req, res, data) {
 module.exports.getServicePage = async function(req, res) {
     try {
         const result = {}
+        req.query.filter_visible = true
         await apiServices.getServiceByPath(req, res, (req, res, service) => {
             result.service = service 
         })

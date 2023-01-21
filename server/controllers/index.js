@@ -28,11 +28,12 @@ module.exports.getHomePage = async function(req, res, data = {}) {
             result.gallery = gallery.filter(el => el.image && el.visible)
             result.gallery = gallery.filter((el, index) => index < 4)
         })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
         req.query.fields_icon = 1
         req.query.fields_subtitle = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
@@ -251,17 +252,16 @@ module.exports.getDocsPage = async function(req, res) {
         await apiReports.getReports(req, res, (req, res, docs) => {
             result.reports = docs
         })
-        
 
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
         await apiDocs.getDocuments(req, res, (req, res, docs) => {
             result.docs = docs.filter(doc => doc.visible && doc.name && doc.file)
         })
         req.query.fields_name = 1
         
         req.query.fields_path = 1
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })
@@ -326,7 +326,7 @@ const renderPartnersPage = function(req, res, data) {
     })
 }
 
-module.exports.getPolicyPage = async function(req, res,) {
+module.exports.getPolicyPage = async function(req, res,) { 
     try {
         const result = {}
         req.query.filter_visible = true
@@ -340,11 +340,13 @@ module.exports.getPolicyPage = async function(req, res,) {
         await apiProjects.getActive(req, res, (req, res, projects) => {
             result.projects = projects
         })
+
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })

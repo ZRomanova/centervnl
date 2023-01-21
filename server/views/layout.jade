@@ -78,8 +78,14 @@ html
                     a.nav-link.header__links-list(href='/news/') Новости
                   li.nav-item
                     a.nav-link.header__links-list(href='/services/') Мероприятия
-                  //- li.nav-item
-                    a.nav-link.header__links-list(href='#') Магазин
+                  li.nav-item.dropdown
+                    a.nav-link.header__links-list(href='/shop/') Магазин
+                    ul.dropdown-menu
+                      each item in shops
+                        li
+                          a.dropdown-item.header__links-dropped(href='/shop/'+item.path)= item.name
+
+
                 .d-flex.w-auto.justify-content-between
                   .header__icons.d-none
                     a.header__icons-item(href='#')

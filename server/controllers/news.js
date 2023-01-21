@@ -16,11 +16,12 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
             })
             result.posts = posts
         })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })
@@ -55,14 +56,14 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
             post.date = moment(post.date).format('D MMMM yyyy')
             result.post = post
         })
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
 
         req.query.fields_name = 1
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
         })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
@@ -84,14 +85,4 @@ const renderPostPage = function(req, res, data) {
         post: data.post,
         shops: data.shops
     })
-}
-
-module.exports.toggleLike = async (req, res) => {
-    try {
-        await apiPosts.toggleLike(req, res, (req, res, message) => {
-            res.redirect(req.headers.referer)
-        })
-    } catch (e) {
-        console.log(e)
-    }
 }

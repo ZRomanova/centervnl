@@ -15,6 +15,9 @@ module.exports.getGrantListPage = async function(req, res, data = {}) {
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
         req.query.filter_is_grant = true
         req.query.fields_period = 1
         await apiProjects.getProjects(req, res, async (req, res, projects) => {
@@ -27,9 +30,7 @@ module.exports.getGrantListPage = async function(req, res, data = {}) {
             })
             result.projects = projects
         })
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
+        
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
@@ -71,11 +72,12 @@ module.exports.getGrantPage = async function(req, res, data = {}) {
             }
             result.project = project
         })
+        
+        req.query.fields_name = 1
+        req.query.fields_path = 1
         await apiShops.getShops(req, res, (req, res, shops) => {
             result.shops = shops
         })
-        req.query.fields_name = 1
-        req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
         })

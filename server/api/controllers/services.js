@@ -282,7 +282,6 @@ module.exports.getServiceByPath = async function(req, res, next) {
                 })
             }
             service.dates = service.dates.sort((a, b) => a.date - b.date)
-            console.log(service.dates)
 
             next(req, res, service)
         }

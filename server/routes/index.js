@@ -15,7 +15,7 @@ router.post('/form', controller.submitForm)
 // router.post('/order/:id', controller.createOrder)
 // router.use('/profile', require('./profile')) 
 
-// router.use('/shop', require('./shop'))
+router.use('/shop', require('./shop'))
 // router.use('/product', require('./product'))
 router.use('/projects', require('./projects'))
 router.use('/programs', require('./programs'))

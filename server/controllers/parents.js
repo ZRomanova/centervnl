@@ -11,9 +11,7 @@ module.exports.getParentsList = async function(req, res) {
         const result = {}
         req.query.filter_visible = true
         
-        await apiShops.getShops(req, res, async (req, res, shops) => {
-            result.shops = shops
-        })
+        
         await apiParents.getPages(req, res, async (req, res, pages) => {
             result.pages = pages
         })
@@ -25,6 +23,9 @@ module.exports.getParentsList = async function(req, res) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderParentsList(req, res, result)
     } catch (e) {
@@ -49,9 +50,6 @@ module.exports.getParentsPage = async function(req, res) {
         const result = {}
         req.query.filter_visible = true
         
-        await apiShops.getShops(req, res, async (req, res, shops) => {
-            result.shops = shops
-        })
         await apiParents.getPageByPath(req, res, async (req, res, page) => {
             result.page = page
         })
@@ -63,6 +61,9 @@ module.exports.getParentsPage = async function(req, res) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderParentsPage(req, res, result)
     } catch (e) {
@@ -86,10 +87,6 @@ module.exports.getParentsClub = async function(req, res) {
   try {
       const result = {}
       req.query.filter_visible = true
-      
-      await apiShops.getShops(req, res, async (req, res, shops) => {
-          result.shops = shops
-      })
       req.params.type = "CONTACTS"
       await apiData.getByType(req, res, (req, res, contacts) => {
           result.contacts = contacts
@@ -103,6 +100,9 @@ module.exports.getParentsClub = async function(req, res) {
       await apiPrograms.getPrograms(req, res, (req, res, programs) => {
           result.programs = programs
       })
+      await apiShops.getShops(req, res, async (req, res, shops) => {
+        result.shops = shops
+    })
       renderParentsClub(req, res, result)
   } catch (e) {
       console.log(e)

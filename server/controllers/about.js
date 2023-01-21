@@ -5,9 +5,6 @@ const apiData = require('../api/controllers/data')
 module.exports.getAboutList = async function(req, res, data = {}) {
     try {
         const result = {...data}
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
@@ -17,6 +14,9 @@ module.exports.getAboutList = async function(req, res, data = {}) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderAboutList(req, res, result)
     } catch (e) {
@@ -37,9 +37,6 @@ const renderAboutList = function(req, res, data) {
 module.exports.getAboutPage = async function(req, res, data = {}) {
     try {
         const result = {...data}
-        await apiShops.getShops(req, res, (req, res, shops) => {
-            result.shops = shops
-        })
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             // contacts.tel = contacts.phone.replace('+7', '8').replaceAll(/\D/g, '')
@@ -49,6 +46,9 @@ module.exports.getAboutPage = async function(req, res, data = {}) {
         req.query.fields_path = 1
         await apiPrograms.getPrograms(req, res, (req, res, programs) => {
             result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
         })
         renderAboutPage(req, res, result)
     } catch (e) {

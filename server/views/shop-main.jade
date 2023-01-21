@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.about__title.title Магазин
+
+      .row.mx-xl-5.about__wrapper
+        .container
+          img.background__image(src='/img/bg_about.jpg' alt='bg')
+        .about__wrapper
+          p.target__text.
+            Уважаемые покупатели! В этом разделе представлены товары, которые изготовили ребята с ментальными нарушениями в инклюзивных мастерских «Обычное дело».
+          p.
+            Если в вашей семье есть ребёнок или молодой взрослый с ментальными нарушениями, вы всегда можете прийти в мастерские, чтобы изготовить для себя пособия - визуальные помощники. Это можно сделать, предварительно записавшись на День открытых дверей, который проходит каждый второй вторник в нашем Центре. 
+        
+      .container
+        .mx-xl-5.mt-3
+          a.button.button_orange.mb-3(href='/services/') Записаться
+
+          p.target__text.mt-3.
+            Если вы представитель компании, мы будем рады корпоративным заказам! Наш дизайнер разработает продукцию с логотипом компании или фото.
+
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12.mt-5.title Наши товары           
+        each shop in shops 
+          .col-12.col-md-4.mt-3
+            a.rectangle-19-14.d-flex.flex-column.justify-content-center.p-4(href="/shop/"+shop.path)   
+              .program__img
+                img.program__icon(src= shop.icon alt='icon')
+              .program__subtitle= shop.name  
+  
+
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.mt-5.title Как заказать     
+
+
+  section.about
+    .container
+      .row.mx-xl-5
+        .col.mt-5.title Условия оплаты
