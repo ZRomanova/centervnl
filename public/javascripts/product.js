@@ -1,73 +1,71 @@
 function changeOptionSelect() {
-  var price = +$('#price')[0].innerText
+  var price = +($('#price-start')[0].innerText)
   $('#priceSelects select').each(function(index){
     price *= this.value
   })
-  var result = Math.ceil(price) + ' ₽'
-  $('#priceBox')[0].innerText = result
+  var count = $('#count-products')[0].value ? +($('#count-products')[0].value) : 1
+  if (count < 1) {
+    $('#count-products')[0].value = 1
+    count = 1
+  }
+  var result = Math.ceil(price)
+  result *= count
+  $('#price')[0].innerText = result
 }
 
-function addToBin() {
-  const body = {description: ''}
+function addToBasket() {
+  const basket = {options: []}
+  basket.product = $('#product-id')[0].innerText
   $('#priceSelects select').each(function(i){
     $('.price-option', this).each(function(index) {
       if (this.selected) {
-        body.description += this.innerText + '; '
+        basket.options.push(this.id)
       }
     })
   })
-  body.name = $('#product-name')[0].innerText
-  body.count = +$('#count-control')[0].value
-  body.price = +$('#priceBox')[0].innerText.split(' ')[0]
+  var count = +($('#count-products')[0].value)
+  basket.count = (count && count > 0) ? count : 1
 
   $.ajax({
     type: "POST",
     dataType: 'json',
     url: '/api/orders',
-    data: body,
+    data: basket,
     success: function(data) {
-      $('#order-bin')[0].innerText = ' ' + data.products.length
-      let binHTML = `
-      <div class="col-12">
-        <ul class="list-group">
-          <li class="list-group-item col-12">
-      `
-      let total = 0
-      for (let item of data.products) {
-        if (total > 0) binHTML += `<hr class="m-4" >`
-        total += item.price * item.count
-        binHTML += (`
-        <div class="row">
-          <div class="col-11">
-            <div class="row p-2">
-              <div class="col-8">${item.name}</div>
-              <div class="col-4">${item.price} ₽ x ${item.count}</div>
-              <div class="col-12">${item.description}</div>
-            </div>
-          </div>
-          <div class="col-1"> 
-            <a class="col-12" onclick="updateInBin('${item._id}', 1)">
-              <i class="fa-solid fa-plus"></i>
-            </a>
-            <a class="col-12" onclick="updateInBin('${item._id}', -1)">
-              <i class="fa-solid fa-minus"></i>
-            </a>
-            <a class="col-12" onclick="updateInBin('${item._id}')">
-              <i class="fa-solid fa-trash"></i>
-            </a>
-          </div>
-        </div>
-        `)
-      }
-      binHTML +=  `
-          </li>
-          <h3>Итого: ${total} ₽</h3>
-        </ul>
-      </div>
-      `
-      $('#order-list')[0].innerHTML = binHTML
-      $('#add-to-bin')[0].click()
+      const basket = basketFormat(data)
+      $('#basket-lg .basket-text .text-600-12')[0].innerText = basket.count + ' ' + basket.text
+      $('#basket-lg .basket-text .text-600-12-orange')[0].innerText = basket.price + ' руб'
+      $('#basket-sm .basket-circle .basket-sm-text')[0].innerText = basket.count
     },
   });
 }
 
+const basketFormat = (basket) => {
+  let products = []
+  if (basket && basket.products && basket.products.length) {
+      products = basket.products
+  } 
+  let price_all = 0
+  let count_all = 0
+  products.forEach(item => {
+      count_all += item.count
+      price_all += item.price * item.count
+  })
+
+  let product_text = 'товар'
+  let count_text = String(count_all)
+
+  if  ( ['11', '12', '13', '14'].includes(count_text.slice(-2))) {
+      product_text+= 'ов'
+  } 
+  else if (['1'].includes(count_text.slice(-1))) {
+
+  } else if (['2', '3', '4'].includes(count_text.slice(-2))) {
+      product_text+= 'а'
+  } else {
+      product_text+= 'ов'
+  }
+  return {
+      text: product_text, price: price_all, count: count_all
+  }
+}

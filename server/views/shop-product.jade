@@ -16,7 +16,7 @@ block content
             |  #{catalog.name}
 
         .col-12.header__subtitle.title= product.name   
-
+        #product-id.d-none= product._id
 
       .row.mx-xl-5.mt-5 
         if product.image
@@ -27,3 +27,29 @@ block content
         .col-12.col-md-6
           .mt-5 
             +long-text(product.description)
+          
+          if product.options
+            .mt-5#priceSelects 
+              each option in product.options
+                if option.variants && option.variants.length
+                  .text-400-16.mt-3.mb-1= option.name
+                  select.form-select(onchange="changeOptionSelect()" id=option._id)
+                    each variant in option.variants
+                      option.price-option(value=variant.price id=variant._id)=variant.name
+            
+            .text-400-16.mt-3.mb-1 Количество
+            input.num-input#count-products(type='number' name='sum' autocomplete='off' min="1" value='1' oninput="changeOptionSelect()")
+            
+            #price-start.d-none #{product.price} 
+            .title-700-48.mt-3 
+              span#price #{product.price} 
+              span= ' руб'
+
+            
+            button.button.button_blue.mt-4(onclick="addToBasket()" type="button") В корзину
+
+
+  include includes/bin
+
+block scripts
+  script(src='/javascripts/product.js')

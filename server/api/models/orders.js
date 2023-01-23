@@ -6,14 +6,30 @@ const orderSchema = new Schema({
         ref: 'users',
         type: Schema.Types.ObjectId,
     },
+    session: String,
+
+    email: String, 
+    tel: String, 
+    name: String, 
+    surname: String, 
+    patronymic: String, 
+
+    org_name: String,
+    org_actual_address: String,
+    org_legal_address: String,
+    org_activity: String,
+    org_email: String, 
+    org_tel: String, 
+
     status: {
         type: String,
-        enum: ['в корзине', 'в работе', 'выполнен', 'доставлен', 'отменен'],
+        enum: ['в корзине', 'в работе', 'в доставке', 'доставлен', 'получен', 'отменен'],
         default: 'в корзине'
     },
-    comment: String, //комментарий клиента
     address: String, //адрес доставки
     products:[{
+        id: Schema.Types.ObjectId,
+        options: [Schema.Types.ObjectId],
         name: String,
         price: Number,
         count: Number,
@@ -23,10 +39,10 @@ const orderSchema = new Schema({
         price: Number,
         delivery: Number,
         total: Number,
-        discount: {
-            type: String,
-            value: String
-        },
+        // discount: {
+        //     type: String,
+        //     value: String
+        // },
         status: {
             type: String,
             enum: ['оплачен', 'не оплачен'],
@@ -34,7 +50,7 @@ const orderSchema = new Schema({
         },
         method: {
             type: String,
-            enum: ['на месте', 'онлайн']
+            enum: ['Банковский перевод', 'Банковская карта', 'Наличные при получении']
         }
     },
     created: {

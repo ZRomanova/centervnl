@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+const { randomUUID } = require('crypto');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
@@ -55,10 +56,14 @@ const captcha = require('svg-captcha-express').create({
 
 app.use(session({
   secret: keys.jwt,
+  genid: function(req) {
+    return randomUUID() // use UUIDs for session IDs
+  },
   resave: false,
   saveUninitialized: true,
   store: sessionStore,
   cookie: {
+    secure: 'auto',
     sameSite: "lax", 
     maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
   }

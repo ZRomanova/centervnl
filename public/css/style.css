@@ -578,6 +578,14 @@ a.news__subtitle:hover {
   line-height: 117px;
   color: #30333A;
 }
+.title-700-48 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 59px;
+  color: #30333A;
+}
 .title-700-32 {
   font-family: 'Montserrat';
   font-style: normal;
@@ -643,6 +651,32 @@ a.news__subtitle:hover {
 }
 .text-500-16-dark {
   color: #1E2639;
+}
+.text-600-12 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+  
+  display: flex;
+  align-items: center;
+  
+  color: #30333A;
+}
+.text-600-12-orange {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  /* identical to box height */
+  
+  display: flex;
+  align-items: center;
+  
+  color: #FFA556;
 }
 .title-600-20 {
   font-family: 'Montserrat';
@@ -1133,7 +1167,7 @@ a.rectangle-19-14:hover {
   width: 100%;
 }
 
-#sumText {
+#sumText, .num-input {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1154,6 +1188,23 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0; 
+}
+
+.form-select {
+  /* background: ; */
+  border-radius: 8px;
+  height: 52px;
+  color: #fff;
+  background-color: #FFA556;
+  background-image: url(/icons/select.svg);
+  outline: 0;
+  box-shadow: none;
+  border: 0;
+}
+.form-select:focus {
+  outline: 0;
+  box-shadow: none;
+  border: 0;
 }
 
 .form-check-input {
@@ -1194,6 +1245,70 @@ input::-webkit-inner-spin-button {
 
 .button[disabled] {
   opacity: 0.5;
+}
+
+.basket-xl {
+  position: fixed;
+  width: 210px;
+  height: 60px;
+  right: 0px;
+  top: 100px;
+
+  background: #FFFFFF;
+  box-shadow: 0px 4px 20px rgba(60, 65, 71, 0.2);
+  border-radius: 8px;
+}
+
+.basket-xl .basket-circle {
+  position: absolute;
+  left: 4.76%;
+  right: 72.38%;
+  top: 10%;
+  bottom: 10%;
+  background: #FFA556;
+  border-radius: 50%;
+}
+
+.basket-text {
+  position: absolute;
+  /* width: 45px; */
+  height: 35px;
+  left: 78px;
+  top: 14px;
+}
+
+.basket-sm {
+  position: absolute;
+  top: 31px;
+  right: 74px;
+  height: 24px;
+  width: 25px;
+}
+
+.basket-sm svg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.basket-sm .basket-circle  {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 8px;
+  width: 8px;
+  border-radius: 50%;
+  background: #FFA556;
+}
+
+.basket-sm-text {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 5px;
+  line-height: 6px;
+
+  color: #30333A;
 }
 
 
@@ -1268,7 +1383,7 @@ input::-webkit-inner-spin-button {
     padding: 13px;
   }
 
-  #sumText {
+  #sumText, .num-input {
     height: 35px;
     max-width: 70px;
     padding: 10px;

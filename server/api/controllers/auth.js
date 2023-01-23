@@ -1,9 +1,9 @@
 const request = require('request');
 const User = require('../models/users')
 const Form = require('../models/forms')
-const Product = require('../models/products')
-const Service = require('../models/services')
-const Post = require('../models/posts')
+// const Product = require('../models/products')
+// const Service = require('../models/services')
+// const Post = require('../models/posts')
 const errorHandler = require('../utils/errorHandler')
 const { genPassword, validPassword } = require('../../middleware/password');
 const randomNumber = require('../utils/randomNumber');
@@ -107,18 +107,21 @@ module.exports.login = async (req, res) => {
   
 }
 
-module.exports.profile = async function(req, res, next) {
-  try {
-    const posts = await Post.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
-    const services = await Service.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
-    const products = await Product.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
-    const projects = await Project.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
+// module.exports.profile = async function(req, res, next) {
+//   try {
+//     // const posts = await Post.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
+//     // const services = await Service.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
+//     // const products = await Product.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
+//     // const projects = await Project.find({likes: req.user._id}, {name: 1, description: 1, date: 1, path: 1, image: 1}).lean()
 
-    next(req, res, {likes: {posts, services, products, projects}})
-  } catch (e) {
-    errorHandler(res, e)
-  }
-};
+//     next(req, res, {likes: {posts, services, products, projects}})
+//   } catch (e) {
+//     errorHandler(res, e)
+//   }
+// };
+
+
+
 
 module.exports.fillForm = async function(req) {
   try {

@@ -54,6 +54,7 @@ export interface Staff {
 }
 
 export interface PriceList {
+    _id?: string
     name?: string,
     description?: string,
     price: number,
@@ -164,6 +165,7 @@ export interface Post {
 }
 
 export interface ProductVariant {
+    _id?: string
     name: string,
     variants: PriceList[]
 }

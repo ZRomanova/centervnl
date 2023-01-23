@@ -1,4 +1,5 @@
 const Order = require('../models/orders')
+const Shop = require('../models/shops')
 const errorHandler = require('../utils/errorHandler')
 const mongoose = require('mongoose')
 const moment = require('moment')
@@ -75,39 +76,78 @@ module.exports.getByUser = async function(req, res, next) {
 
 module.exports.addToBin = async function(req, res, next) {
   try {
-    const user = req.user ? req.user.id : null
-    if (!user) {
-        next(req, res, null)
-        return
+    const isArrEq = (first, second) => {
+        if (first.length !== second.length) return false
+        return first.every((value) => second.includes(String(value)))
+    }
+    // const user = req.user ? req.user.id : null
+    // if (!user) {
+    //     next(req, res, null)
+    //     return
+    // }
+    // console.log(req.body)
+
+    const shop = await Shop.findOne(
+        {"groups.products._id": req.body.product}, 
+        {"groups.products.$": 1}
+    ).lean()
+
+    const product = shop.groups[0].products.find(item => (item._id == req.body.product))
+
+    let order = await Order.findOne({session: req.sessionID, status: 'в корзине'}).lean()
+    
+    const ordCurProd = order.products.find(item => item.id == req.body.product && isArrEq(item.options, req.body.options))
+    
+    let desc_arr = []
+    let price = product.price
+    product.options.forEach(option => {
+        option.variants.forEach(variant => {
+            if (req.body.options.includes(String(variant._id))) {
+                desc_arr.push(variant.name)
+                price *= variant.price
+            }
+        })
+    })
+
+
+    if (ordCurProd) {
+        order = await Order.findOneAndUpdate(
+            {session: req.sessionID, status: 'в корзине'},
+            {   
+                "$set": {
+                    "products.$[product].name": product.name,
+                    "products.$[product].description": desc_arr.join(' '),
+                    "products.$[product].price": Math.ceil(price),
+                },
+                "$inc": {
+                    "products.$[product].count": Number(req.body.count)
+                }
+            },
+            {
+                "arrayFilters": [{ "product.id": req.body.product, "product.options":  ordCurProd.options}],
+                new: true
+            }
+        )
+    } else {
+        order = await Order.findOneAndUpdate(
+            {session: req.sessionID, status: 'в корзине'},
+            {"$push": 
+                {"products": {
+                    id: req.body.product,
+                    options: req.body.options,
+                    name: product.name,
+                    description: desc_arr.join(' '),
+                    count: Number(req.body.count),
+                    price: Math.ceil(price)
+                }
+            }},
+            {new: true}
+        )
     }
 
-    const product = req.body && req.body.name ? req.body : null
-    let reg
-    const order = await Order.findOne({user, status: 'в корзине'}).lean()
-    if (product)
-        if (order) {
-            const curProd = order.products.find(prod => prod.name == product.name && prod.description == product.description)
-            if (curProd) {
-                const index = order.products.indexOf(curProd)
-                reg = await Order.findOneAndUpdate({user, status: 'в корзине'}, {$inc: {["products." + index + ".count"]: product.count}}, {new: true}).lean()
-                console.log(reg)
-            } else {
-                reg = await Order.findOneAndUpdate({user, status: 'в корзине'}, {$addToSet: {products: product}}, {new: true}).lean()
-            }
-        } else {
-            const created = {
-                user,
-                products: [product]
-            }
-            reg = await new Order(created).save()
-        }
-    else {
-        if (order) reg = order
-        else reg = await new Order({user}).save()
-    }
-
-    next(req, res, reg)
+    next(req, res, order)
   } catch (e) {
+    console.log(e)
     errorHandler(res, e)
   }
 }
@@ -159,28 +199,12 @@ module.exports.update = async function(req, res, next) {
 
 module.exports.getById = async function(req, res, next) {
     try {
-        const orders = await Order.aggregate([
-            {
-                $match: {_id: mongoose.Types.ObjectId(req.params.id)}
-            },
-            {
-                $lookup:
-                {
-                    from: 'users',
-                    localField: 'user',
-                    foreignField: '_id',
-                    as: 'user'
-                }
-            }
-        ])
+        const filters = {_id: req.params.id}
+        if (req.query.basket == 'only') filters.status = 'в корзине'
+        const order = await Order.findOne(filters).lean()
 
-        if (orders.length){
-            const order = orders[0]
-            if (order.user.length) order.user = order.user[0]
-            next(req, res, order)
-        }
-        else 
-            next(req, res, new Error("Заказ не найден"))
+        next(req, res, order)
+
     } catch (e) {
         errorHandler(res, e)
     }
@@ -207,6 +231,22 @@ module.exports.toggleStatus = async function(req, res, next) {
             )
 
         next(req, res, {message: "Обновлено."})
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+
+module.exports.getBasketById = async function(req, res, next) {
+    try {
+        let order = await Order.findOne({session: req.sessionID, status: 'в корзине'}).lean()
+
+        if (!order) {
+            order = new Order({session: req.sessionID}).save()
+        }
+
+        next(req, res, order)
+
     } catch (e) {
         errorHandler(res, e)
     }

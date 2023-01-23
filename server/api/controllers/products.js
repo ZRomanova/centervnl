@@ -1,4 +1,3 @@
-const Product = require('../models/products')
 const Shop = require('../models/shops')
 const errorHandler = require('../utils/errorHandler')
 const mongoose = require('mongoose')
@@ -19,8 +18,7 @@ module.exports.getProductById = async function(req, res, next) {
         ).lean()
 
         const product = shop.groups[0].products.find(item => (item._id == req.params.id || item.path == req.params.id))
-        // console.log(req.params.id)
-        // console.log(shop)
+
 
         if (product){
             product.shop_id = shop._id
@@ -117,8 +115,6 @@ module.exports.updateProduct = async function(req, res, next) {
         errorHandler(res, e)
     }
 }
-
-
 
 module.exports.uploadImagesProduct = async function(req, res, next) {
     try {

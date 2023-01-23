@@ -34,22 +34,6 @@ const serviceSchema = new Schema({
     required: true,
     unique: true
   },
-  partners: {
-    ref: 'partners',
-    type: [mongoose.Types.ObjectId]
-  },
-  tags: {
-    ref: 'tags',
-    type: [mongoose.Types.ObjectId]
-  },
-  projects: {
-    ref: 'projects',
-    type: [mongoose.Types.ObjectId]
-  },
-  likes: {
-    ref: 'users',
-    type: [Schema.Types.ObjectId]
-  }, 
   date: {
       single: [Date],
       period: [{

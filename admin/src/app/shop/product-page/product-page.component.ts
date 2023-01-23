@@ -88,6 +88,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   createOptionFormGroup(item: ProductVariant) {
     return new FormGroup({
+      _id: new FormControl({value: item._id, disabled: !item._id}),
       name: new FormControl(item.name, Validators.required),
       variants: new FormArray(item.variants.map(variant => this.createVariantFormGroup(variant))),
     })
@@ -95,6 +96,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   createVariantFormGroup(item: PriceList) {
     return new FormGroup({
+      _id: new FormControl({value: item._id, disabled: !item._id}),
       name: new FormControl(item.name, Validators.required),
       price: new FormControl(item.price, Validators.required),
     })
