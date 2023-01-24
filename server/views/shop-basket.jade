@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a.col-12.back__subtitle-top.back__subtitle-child(href='/shop/') Магазин
+        .col-12.header__subtitle.title Корзина
+
+        include includes/basket-block
+
+        .col-6.mt-3.d-none.d-md-block 
+          a.button.button_orange(href=back) Вернуться в магазин
+
+        .col-6.text-md-end.mt-3
+          button.button.button_blue.me-3#do-order(disabled= !basket.total onclick="location.href = '/shop/order/'") оформить заказ

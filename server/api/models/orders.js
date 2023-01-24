@@ -31,6 +31,7 @@ const orderSchema = new Schema({
         id: Schema.Types.ObjectId,
         options: [Schema.Types.ObjectId],
         name: String,
+        image: String,
         price: Number,
         count: Number,
         description: String

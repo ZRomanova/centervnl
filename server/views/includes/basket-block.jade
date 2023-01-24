@@ -1,0 +1,56 @@
+.row.mt-5 
+  .d-none.d-lg-block.col-12 
+    .orange-hr.mb-3
+  .d-none.d-lg-block.col-6 
+    .text-500-16 Наименование
+  .d-none.d-lg-block.col-2
+    .text-500-16 Стоимость
+  .d-none.d-lg-block.col-2
+    .text-500-16 Кол-во
+  .d-none.d-lg-block.col-2
+    .text-500-16 Итого
+  .d-none.d-lg-block.col-12 
+    .orange-hr.mt-3.mb-3
+
+
+  #basket-list
+    each product in basket.products 
+      
+      .row.mt-4.mb-4
+        .col-12.col-lg-6
+          .d-flex.flex-row
+            if product.image
+              img.basket-product-image.me-4(src= product.image)
+
+            .d-flex.flex-column.justify-content-center.align-items-start
+              .text-500-16= product.name
+              if product.description
+                .text-500-16.mt-2= product.description
+
+        .col-2.d-flex.flex-column.justify-content-center
+          .d-none.d-lg-block.title-700-20= product.price + ' руб'
+        .col-lg-4.mt-2.mt-lg-0.d-flex.flex-row.flex-lg-column.justify-content-center
+          .row
+            .col.d-flex.flex-row.align-items-center(data-product= String(product.id) data-options=((product.options && product.options.length) ? product.options.join(',') : "null"))
+              .basket-counter.me-3(onclick='incrementItem(this, -1)') −
+              .text-500-16.me-3= product.count
+              .basket-counter(onclick='incrementItem(this, 1)') +
+            .col
+              .title-700-20= (product.price * product.count) + ' руб'
+
+
+  .col-12 
+    .orange-hr.mt-3.mb-3
+
+  .col-6.col-lg-10
+    .title-700-16 Итого
+
+  .col-6.col-lg-2
+    .title-700-20.text-end.text-lg-start
+      .title-700-16#basket-total= basket.total + ' руб'
+
+  .col-12 
+    .orange-hr.mt-3.mb-3
+
+block scripts
+  script(src='/javascripts/basket.js')

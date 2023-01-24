@@ -147,9 +147,6 @@ const renderCatalogPage = function(req, res, data) {
     })
 }
 
-
-
-
 module.exports.getProductPage = async function(req, res, data = {}) {
     try {
         const result = {}
@@ -202,8 +199,6 @@ const renderProductPage = function(req, res, data) {
     })
 }
 
-
-
 const basketFormat = (basket) => {
     let products = []
     if (basket && basket.products && basket.products.length) {
@@ -232,4 +227,113 @@ const basketFormat = (basket) => {
     return {
         text: product_text, price: price_all, count: count_all
     }
+}
+
+module.exports.getBasketPage = async function(req, res, data = {}) {
+    try {
+        const result = {...data}
+
+        await apiOrders.getBasketById(req, res, (req, res, basket) => {
+            if (!basket && basket.products && basket.products.lenght) {
+                basket = {products: []}
+            }
+            basket.total = basket.products.reduce((prev, curr) => {
+                return prev += (curr.count * curr.price)
+            }, 0)
+            result.basket = basket
+        })
+
+        req.query.filter_visible = true
+
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        let back = req.headers.referer
+        if (!back || back.indexOf("centervnl.ru/shop") == -1) back = "/shop/"
+        result.back = back
+
+        renderBasketPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderBasketPage = function(req, res, data) {
+    res.render('shop-basket', {
+        title: "Корзина",
+        shops: data.shops,
+        basket: data.basket,
+        programs: data.programs, 
+        contacts: data.contacts,
+        back: data.back,
+        session: req.session
+    })
+}
+
+
+
+
+
+
+
+
+module.exports.getOrderPage = async function(req, res, data = {}) {
+    try {
+        const result = {...data}
+
+        await apiOrders.getBasketById(req, res, (req, res, basket) => {
+            if (!basket && basket.products && basket.products.lenght) {
+                basket = {products: []}
+            }
+            basket.total = basket.products.reduce((prev, curr) => {
+                return prev += (curr.count * curr.price)
+            }, 0)
+            if (!basket.total) res.redirect('/shop/basket/')
+            result.basket = basket
+        })
+
+        req.query.filter_visible = true
+
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+
+        renderOrderPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+
+const renderOrderPage = function(req, res, data) {
+    res.render('shop-order', {
+        title: "Оформление заказа",
+        shops: data.shops,
+        basket: data.basket,
+        programs: data.programs, 
+        contacts: data.contacts,
+        session: req.session
+    })
 }

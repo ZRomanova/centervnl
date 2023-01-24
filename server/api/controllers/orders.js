@@ -76,7 +76,7 @@ module.exports.getByUser = async function(req, res, next) {
 
 module.exports.addToBin = async function(req, res, next) {
   try {
-    const isArrEq = (first, second) => {
+    const isArrEq = (first = [], second = []) => {
         if (first.length !== second.length) return false
         return first.every((value) => second.includes(String(value)))
     }
@@ -110,12 +110,14 @@ module.exports.addToBin = async function(req, res, next) {
     })
 
 
-    if (ordCurProd) {
+    if (ordCurProd && (ordCurProd.count + Number(req.body.count) > 0)) {
+        // console.log('set')
         order = await Order.findOneAndUpdate(
             {session: req.sessionID, status: 'в корзине'},
             {   
                 "$set": {
                     "products.$[product].name": product.name,
+                    "products.$[product].image": product.image,
                     "products.$[product].description": desc_arr.join(' '),
                     "products.$[product].price": Math.ceil(price),
                 },
@@ -128,12 +130,25 @@ module.exports.addToBin = async function(req, res, next) {
                 new: true
             }
         )
-    } else {
+    } else if (ordCurProd && (ordCurProd.count + Number(req.body.count) <= 0)) {
+        order = await Order.findOneAndUpdate(
+            {session: req.sessionID, status: 'в корзине'},
+            {"$pull": 
+                {"products": {
+                    id: req.body.product,
+                    options: ordCurProd.options
+                }
+            }},
+            {new: true}
+        )
+    } else if (!ordCurProd) {
+        // console.log('push')
         order = await Order.findOneAndUpdate(
             {session: req.sessionID, status: 'в корзине'},
             {"$push": 
                 {"products": {
                     id: req.body.product,
+                    image: product.image,
                     options: req.body.options,
                     name: product.name,
                     description: desc_arr.join(' '),

@@ -1,0 +1,65 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12.back__subtitle-top
+          a.back__subtitle-root(href='/shop/') Магазин
+          svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
+            path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#656973')
+          a.back__subtitle-child(href='/shop/basket/') 
+            |  Корзина
+
+        .col-12.header__subtitle.title Оформление заказа
+
+        include includes/basket-block
+
+
+        .col-12.mt-5
+          .title-700-20 Получатель
+          form#form.row(action="/form" method="post")
+            .col-12.mt-3.mb-3
+              input.form-check-input(type='radio' name='date' value="Individual" id='defaultRadio1' checked)
+              label.form-check-label.me-5(for='defaultRadio1') Физическое лицо
+
+              input.form-check-input(type='radio' name='date' value="Entity" id='defaultRadio2')
+              label.form-check-label(for='defaultRadio2') Юридическое лицо
+
+            .col-12.col-md-4.mt-3
+              .text-400-16 Имя
+              input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+
+            .col-12.col-md-4.mt-3
+              .text-400-16 Фамилия
+              input.text-input.mt-2(type='text' name='surname' autocomplete='family-name' placeholder="Например, Федоров" required)
+          
+            .col-12.col-md-4.mt-3
+              .text-400-16 Отчество
+              input.text-input.mt-2(type='text' name='patronymic' autocomplete='additional-name' placeholder="Например, Сергеевич")
+            
+            .col-12.col-md-4.mt-3
+              .text-400-16 Телефон
+              input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
+
+            .col-12.col-md-4.mt-3
+              .text-400-16 Email
+              input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+
+            
+
+
+            .mt-4 
+                .form-check.col-12.mt-2
+                  input#defaultCheck1.form-check-input(type='checkbox' value='')
+                  label.form-check-label(for='defaultCheck1')
+                    | Я принимаю условия договора-оферты
+
+                .form-check.col-12.mt-2
+                  input#defaultCheck2.form-check-input(type='checkbox' value='')
+                  label.form-check-label(for='defaultCheck2')
+                    span.text-400-16 Я соглашаюсь 
+                      a(href='/policy' target="_blank") на обработку своих персональных данных
+
+            .mt-4
+              //- button.button.button_orange(type='submit') Отправить
