@@ -1172,7 +1172,7 @@ a.rectangle-19-14:hover {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 18px 22px;
+  padding: 15px 20px;
   gap: 10px;
   max-width: 128px;
   width: 100%;
@@ -1423,7 +1423,7 @@ input::-webkit-inner-spin-button {
   #sumText, .num-input {
     height: 35px;
     max-width: 70px;
-    padding: 10px;
+    padding: 13px;
     font-size: 11px;
   }
 }

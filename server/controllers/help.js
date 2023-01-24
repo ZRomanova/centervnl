@@ -70,6 +70,7 @@ const renderHelpDonate  = function(req, res, data) {
         programs: data.programs, 
         contacts: data.contacts, 
         session: req.session,
+        ip: req.ip,
         shops: data.shops
     })
     

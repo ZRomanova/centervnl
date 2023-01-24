@@ -5,12 +5,12 @@ $(document).ready(function(e) {
 
 function checkForm(){
 
-  $("#form button[type=submit]").prop("disabled", false);
+  $("#form button[type=submit], #form button.submit").prop("disabled", false);
   $('#form input, #form select, #form textarea').each(function(e) {
     // console.log($(this)[0].validity.valid)
     let isValid = $(this)[0].validity.valid
     if (!isValid) {
-      $("#form button[type=submit]").prop("disabled", true);
+      $("#form button[type=submit], #form button.submit").prop("disabled", true);
     }
   })
   

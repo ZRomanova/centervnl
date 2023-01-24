@@ -95,30 +95,31 @@ block content
         
         .col-12.mt-5.d-block.donate-content 
           p Раздел находится в разработке, скоро всё заработает
-          form(action="") 
+          form#form
             .row
+              input.d-none(name='ip' value=ip)
               .col-6
-                input#regularity1.btn-check(type='radio' name='regularity' autocomplete='off' checked=true)
+                input#regularity1.btn-check(type='radio' name='regularity' autocomplete='off' checked=true required)
                 label.btn.donate-form-button(for='regularity1') Разовое
               .col-6
-                input#regularity2.btn-check(type='radio' name='regularity' autocomplete='off')
+                input#regularity2.btn-check(type='radio' name='regularity' autocomplete='off' required)
                 label.btn.donate-form-button(for='regularity2') Ежемесячное
 
             .d-block 
               .d-inline-block.me-2.mt-3
-                input#sum1.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' checked=true)
+                input#sum1.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' checked=true value='100')
                 label.btn.donate-form-button.donate-form-btn-small(for='sum1') 100 руб
               .d-inline-block.me-2.mt-3
-                input#sum2.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                input#sum2.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' value='200')
                 label.btn.donate-form-button.donate-form-btn-small(for='sum2') 200 руб
               .d-inline-block.me-2.mt-3
-                input#sum3.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                input#sum3.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' value='500')
                 label.btn.donate-form-button.donate-form-btn-small(for='sum3') 500 руб
               .d-inline-block.me-2.mt-3
-                input#sum4.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                input#sum4.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' value='750')
                 label.btn.donate-form-button.donate-form-btn-small(for='sum4') 750 руб
               .d-inline-block.me-2.mt-3
-                input#sum5.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off')
+                input#sum5.btn-check.sumCheckButton(type='radio' name='sum' autocomplete='off' value='1000')
                 label.btn.donate-form-button.donate-form-btn-small(for='sum5') 1000 руб
               .d-inline-block.me-2.mt-3
                 input.d-inline-block#sumText(type='number' name='sum' autocomplete='off' min="1" placeholder="Сумма")
@@ -128,34 +129,56 @@ block content
               .row.mt-3
                 .col-12.col-md-6.mt-3
                   .text-400-16 Имя
-                  input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван")
+                  input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
 
                 .col-12.col-md-6.mt-3
                   .text-400-16 Фамилия
-                  input.text-input.mt-2(type='text' name='lastname' autocomplete='family-name' placeholder="Например, Федоров")
+                  input.text-input.mt-2(type='text' name='lastname' autocomplete='family-name' placeholder="Например, Федоров" required)
 
                 .col-12.col-md-6.mt-3
                   .text-400-16 Email
-                  input.text-input.mt-2(type='email' name='name' autocomplete='email' placeholder="Например, example@mail.ru")
+                  input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
 
                 .col-12.col-md-6.mt-3
                   .text-400-16 Телефон
-                  input.text-input.mt-2(type='tel' name='lastname' autocomplete='tel' placeholder="Например, +7 916 953 83 38")
+                  input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
 
-              .mt-4 
+                
+                .col-12.mt-5
+                  .text-400-16 Номер банковской карты
+                  input.text-input.mt-2#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" required data-cp="cardNumber" autocomplete="off")
+
+                .col-6.mt-3
+                  .text-400-16 Владелец карты
+                  input.text-input.mt-2#nameOwner(type='text' placeholder="Например, Ivan Fedorov" required data-cp="name" autocomplete="off")
+
+                .col-6.mt-3
+                  .d-flex.flex-row
+                    .me-1
+                      .text-400-16 Дата
+                      input.num-input.mt-2#dateCard(type='text' placeholder="MM / ГГ" required data-cp="expDateMonthYear" autocomplete="off") 
+
+
+                    .ms-2
+                      .text-400-16 CVV
+                      input.num-input.mt-2.card__field#cvvCard(type='text' placeholder="CVV" required maxlength="3" data-cp="cvv" autocomplete="off")
+
+
+
+              .mt-5 
                 .form-check.col-12.mt-2
-                  input#defaultCheck1.form-check-input(type='checkbox' value='')
+                  input#defaultCheck1.form-check-input(type='checkbox' value='' required)
                   label.form-check-label(for='defaultCheck1')
                     span.text-400-16 Я принимаю условия договора-оферты
 
                 .form-check.col-12.mt-2
-                  input#defaultCheck2.form-check-input(type='checkbox' value='')
+                  input#defaultCheck2.form-check-input(type='checkbox' value='' required)
                   label.form-check-label(for='defaultCheck2')
                     span.text-400-16 Я соглашаюсь 
                       a(href='/policy' target="_blank") на обработку своих персональных данных
 
               .mt-4
-                button.button.button_blue(disabled) Помочь
+                button.button.button_blue.submit(type="button") Помочь
 
               .mt-5.col-12.col-md-8
                 .text-400-14.text-400-14-dark Пожертвование осуществляется с помощью банковской карты через защищённую систему приёма платежей CloudPayments
@@ -199,4 +222,8 @@ block content
           img.col-12.col-lg-10(src="/img/help/card.png")
 
 block scripts
+  script(src="https://checkout.cloudpayments.ru/checkout.js")
+  script(src='/javascripts/mask-plugin.js')
+  script(src='/javascripts/card-masks.js')
+  script(src='/javascripts/valid-form.js')
   script(src='/javascripts/donate.js')
