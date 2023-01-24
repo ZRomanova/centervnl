@@ -147,7 +147,7 @@ const renderCatalogPage = function(req, res, data) {
     })
 }
 
-module.exports.getProductPage = async function(req, res, data = {}) {
+module.exports.getProductPage = async function(req, res) {
     try {
         const result = {}
         await apiOrders.getBasketById(req, res, (req, res, basket) => {
@@ -234,7 +234,7 @@ module.exports.getBasketPage = async function(req, res, data = {}) {
         const result = {...data}
 
         await apiOrders.getBasketById(req, res, (req, res, basket) => {
-            if (!basket || !basket.products || !basket.products.lenght) {
+            if (!basket || !basket.products || !basket.products.length) {
                 basket = {products: []}
             }
             basket.total = basket.products.reduce((prev, curr) => {
@@ -293,7 +293,7 @@ module.exports.getOrderPage = async function(req, res, data = {}) {
         const result = {...data}
 
         await apiOrders.getBasketById(req, res, (req, res, basket) => {
-            if (!basket || !basket.products || !basket.products.lenght) {
+            if (!basket || !basket.products || !basket.products.length) {
                 basket = {products: []}
             }
             basket.total = basket.products.reduce((prev, curr) => {
