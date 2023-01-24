@@ -15,11 +15,12 @@ const orderSchema = new Schema({
     patronymic: String, 
 
     org_name: String,
-    org_actual_address: String,
-    org_legal_address: String,
+    org_actual_address: String, //фактический адрес
+    org_legal_address: String, //Юридический адрес
     org_activity: String,
     org_email: String, 
     org_tel: String, 
+    addressee_type: String, 
 
     status: {
         type: String,

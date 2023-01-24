@@ -17,13 +17,13 @@ block content
 
 
         .col-12.mt-5
-          .title-700-20 Получатель
-          form#form.row(action="/form" method="post")
+          .title-500-32 Получатель
+          form#form.row()
             .col-12.mt-3.mb-3
-              input.form-check-input(type='radio' name='date' value="Individual" id='defaultRadio1' checked)
+              input.form-check-input(type='radio' name='addressee_type' value="Individual" id='defaultRadio1' checked onchange="addresseeChange(this)")
               label.form-check-label.me-5(for='defaultRadio1') Физическое лицо
 
-              input.form-check-input(type='radio' name='date' value="Entity" id='defaultRadio2')
+              input.form-check-input(type='radio' name='addressee_type' value="Entity" id='defaultRadio2' onchange="addresseeChange(this)")
               label.form-check-label(for='defaultRadio2') Юридическое лицо
 
             .col-12.col-md-4.mt-3
@@ -46,20 +46,62 @@ block content
               .text-400-16 Email
               input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
 
+            .col-12#organization-block.d-none
+              .title-700-20.mt-5 Сведения об организации
+              .row
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Полное название организации
+                  input.text-input.mt-2.org_ctrl(type='text' name='org_name' autocomplete='off' placeholder="Например, ООО “Организация”" disabled)
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Деятельность организации
+                  input.text-input.mt-2.org_ctrl(type='text' name='org_activity' autocomplete='off' placeholder="Например, консультационные юридические услуги" disabled)
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Юридический адрес организации
+                  input.text-input.mt-2.org_ctrl(type='text' name='org_actual_address' autocomplete='off' placeholder="Например, г. Тверь, ул. Тверская 27" disabled)
+
+                .col-12.col-md-6.mt-3
+                  .text-400-16 Фактический адрес организации
+                  input.text-input.mt-2.org_ctrl(type='text' name='org_legal_address' autocomplete='off' placeholder="Например, г. Тверь, ул. Тверская 27" disabled)
+
+                
+                .col-12.col-md-4.mt-3
+                  .text-400-16 Телефон организации
+                  input.text-input.mt-2.org_ctrl(type='tel' name='org_tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" disabled)
+
+                .col-12.col-md-4.mt-3
+                  .text-400-16 Email организации
+                  input.text-input.mt-2.org_ctrl(type='email' name='org_email' autocomplete='email' placeholder="Например, example@mail.ru" disabled)
+
+            .title-500-32.mt-5 Доставка
+              .col-12.col-md-8.col-lg-4
+                select.form-select.mt-3(name="")
+                  option.price-option(value="Самовывоз")="Самовывоз"
+                  option.price-option(value="Доставка")="Доставка"
+
+            .title-500-32.mt-5 Оплата
+              .col-12.col-md-8.col-lg-4
+                select.form-select.mt-3(name="")
+                  option.price-option(value="Наличные при получении")="Наличные при получении"
+                  option.price-option(value="Банковская карта")="Банковская карта"
+                  option.price-option(value="Банковский перевод")="Банковский перевод"
             
+            
+            .mt-5 
+              .form-check.col-12.mt-2
+                input#defaultCheck1.form-check-input(type='checkbox' value='' required)
+                label.form-check-label(for='defaultCheck1')
+                  span.text-400-16 Я принимаю условия договора-оферты
 
-
-            .mt-4 
-                .form-check.col-12.mt-2
-                  input#defaultCheck1.form-check-input(type='checkbox' value='')
-                  label.form-check-label(for='defaultCheck1')
-                    | Я принимаю условия договора-оферты
-
-                .form-check.col-12.mt-2
-                  input#defaultCheck2.form-check-input(type='checkbox' value='')
-                  label.form-check-label(for='defaultCheck2')
-                    span.text-400-16 Я соглашаюсь 
-                      a(href='/policy' target="_blank") на обработку своих персональных данных
+              .form-check.col-12.mt-2
+                input#defaultCheck2.form-check-input(type='checkbox' value='' required)
+                label.form-check-label(for='defaultCheck2')
+                  span.text-400-16 Я соглашаюсь 
+                    a(href='/policy' target="_blank") на обработку своих персональных данных
 
             .mt-4
-              //- button.button.button_orange(type='submit') Отправить
+              button.button.button_blue(type='submit') Отправить
+
+block scripts
+  script(src='/javascripts/valid-form.js')
