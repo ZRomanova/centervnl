@@ -18,7 +18,8 @@ block content
 
         .col-12.mt-5
           .title-500-32 Получатель
-          form#form.row()
+          form#form.row
+            input.d-none(name='ip' value=ip)
             .col-12.mt-3.mb-3
               input.form-check-input(type='radio' name='addressee_type' value="Individual" id='defaultRadio1' checked onchange="addresseeChange(this)")
               label.form-check-label.me-5(for='defaultRadio1') Физическое лицо
@@ -75,33 +76,81 @@ block content
                   input.text-input.mt-2.org_ctrl(type='email' name='org_email' autocomplete='email' placeholder="Например, example@mail.ru" disabled)
 
             .title-500-32.mt-5 Доставка
-              .col-12.col-md-8.col-lg-4
-                select.form-select.mt-3(name="")
-                  option.price-option(value="Самовывоз")="Самовывоз"
-                  option.price-option(value="Доставка")="Доставка"
+              .row.mt-3
+                .col-12.col-md-8.col-lg-4
+                  select.form-select
+                    option.price-option(value="Самовывоз")="Самовывоз"
+                    //- option.price-option(value="Доставка")="Доставка"
+
+                .col-12.col-lg-8 
+                  .text-400-16 Забрать заказ можно будет по адресу ул. Ключевая, д. 22, к.2. Мы пришлём уведомление о готовности.
 
             .title-500-32.mt-5 Оплата
-              .col-12.col-md-8.col-lg-4
-                select.form-select.mt-3(name="")
-                  option.price-option(value="Наличные при получении")="Наличные при получении"
-                  option.price-option(value="Банковская карта")="Банковская карта"
-                  option.price-option(value="Банковский перевод")="Банковский перевод"
+              .row
+                .col-12.col-md-8.col-lg-4.mt-3
+                  select.form-select(name="payment[method]" onchange="changePayMethod(this)")
+                    option.price-option#pay-method-1(selected value="Наличные при получении")="Наличные при получении"
+                    option.price-option#pay-method-2(value="Банковская карта")="Банковская карта"
+                    option.price-option#pay-method-3(value="Банковский перевод")="Банковский перевод"
+
+                .col-12.col-lg-8.mt-3 
+                  .text-400-16.d-none.text-method-3 Ваш заказ можно будет забрать после того, как мы получим оплату. Мы сообщим об этом вам на почту. 
             
-            
+                .col-12.mt-3.d-none.text-method-3
+                  .title-700-20 Реквизиты
+                  .text-400-14.mt-4 Название организации: Автономная некоммерческая организация 
+                  .text-400-14 «Ресурсный центр помощи людям с ментальными нарушениями «Вера. Надежда. Любовь»
+                  .text-400-14.mt-3 ИНН 7725401309
+                  .text-400-14.mt-3 КПП 772501001
+                  .text-400-14.mt-3 ОГРН 1177700019067
+                  .text-400-14.mt-3 ОКПО 20002308;
+                  .text-400-14.mt-3 ОКТМО 45914000000; ОКАТО 45296559000
+                  .text-400-14.mt-3 Банковские реквизиты: Отделение Сбербанка №9038/01606 в г.Москва
+                  .text-400-14.mt-3 р/сч 40703810838000008526
+                  .text-400-14.mt-3 к/сч 30101810400000000225
+                  .text-400-14.mt-3 БИК 044525225 Тел. +7-916 612 34 71
+                  .text-400-14.mt-3 Директор Романова Е.А.
+
+                .col-12.col-lg-8.mt-3.d-none.text-method-2
+                  .row
+                    .col-12
+                      .text-400-16 Номер банковской карты
+                      input.text-input.mt-2.card__field#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" disabled data-cp="cardNumber" autocomplete="off" value="4242424242424242")
+
+                    .col-6.mt-3
+                      .text-400-16 Владелец карты
+                      input.text-input.mt-2.card__field#nameOwner(type='text' placeholder="Например, Ivan Fedorov" disabled data-cp="name" autocomplete="off" value="Zoya Rom")
+
+                    .col-6.mt-3
+                      .d-flex.flex-row
+                        .me-1
+                          .text-400-16 Дата
+                          input.num-input.mt-2.card__field#dateCard(type='text' placeholder="MM / ГГ" disabled data-cp="expDateMonthYear" autocomplete="off" value="12 / 34") 
+
+                        .ms-2
+                          .text-400-16 Код
+                          input.num-input.mt-2.card__field#cvvCard(type='text' placeholder="CVV" disabled maxlength="3" data-cp="cvv" autocomplete="off" value="000")
+ 
             .mt-5 
               .form-check.col-12.mt-2
-                input#defaultCheck1.form-check-input(type='checkbox' value='' required)
+                input#defaultCheck1.form-check-input(type='checkbox' value='' required checked)
                 label.form-check-label(for='defaultCheck1')
                   span.text-400-16 Я принимаю условия договора-оферты
 
               .form-check.col-12.mt-2
-                input#defaultCheck2.form-check-input(type='checkbox' value='' required)
+                input#defaultCheck2.form-check-input(type='checkbox' value='' required checked)
                 label.form-check-label(for='defaultCheck2')
                   span.text-400-16 Я соглашаюсь 
                     a(href='/policy' target="_blank") на обработку своих персональных данных
 
             .mt-4
-              button.button.button_blue(type='submit') Отправить
+              button.button.button_blue.submit(type='button') Заказать
+            
+            .mt-4.error-text.text-400-16#error-text= error
 
 block scripts
+  script(src="https://checkout.cloudpayments.ru/checkout.js")
+  script(src='/javascripts/mask-plugin.js')
+  script(src='/javascripts/card-masks.js')
   script(src='/javascripts/valid-form.js')
+  script(src='/javascripts/pay.js')

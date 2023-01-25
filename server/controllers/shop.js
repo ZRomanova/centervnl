@@ -331,9 +331,46 @@ const renderOrderPage = function(req, res, data) {
     res.render('shop-order', {
         title: "Оформление заказа",
         shops: data.shops,
+        ip: req.ip,
         basket: data.basket,
         programs: data.programs, 
         contacts: data.contacts,
         session: req.session
     })
+}
+
+
+module.exports.getOrderFinishPage = async function(req, res, data = {}) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        renderOrderFinish(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderOrderFinish  = function(req, res, data) {
+    res.render('shop-finish', {
+        title: 'Спасибо',
+        programs: data.programs, 
+        contacts: data.contacts, 
+        session: req.session,
+        // ip: req.ip,
+        shops: data.shops
+    })
+    
 }

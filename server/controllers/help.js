@@ -146,7 +146,7 @@ module.exports.getDonateFinish = async function(req, res) {
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
         })
-        renderDonateFinish (req, res, result)
+        renderDonateFinish(req, res, result)
     } catch (e) {
         console.log(e)
     }

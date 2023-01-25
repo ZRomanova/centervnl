@@ -13,11 +13,9 @@ function checkForm(){
       $("#form button[type=submit], #form button.submit").prop("disabled", true);
     }
   })
-  
 }
 
 function addresseeChange(ctrl){
-  
   if (ctrl.value == 'Entity') {
     $('#organization-block').removeClass('d-none')
     $('#organization-block').addClass('d-block')
@@ -29,6 +27,41 @@ function addresseeChange(ctrl){
     $('#organization-block').addClass('d-none')
     $("#form .org_ctrl").prop("required", false);
     $("#form .org_ctrl").prop("disabled", true);
+  }
+  checkForm()
+}
+
+
+function changePayMethod(select) {
+  $('.text-method-3, .text-method-2').each(function() {
+    $(this).removeClass('d-block')
+  })
+  $('.text-method-3, .text-method-2').each(function() {
+    $(this).addClass('d-none')
+  })
+
+  $("#form .card__field").prop("required", false);
+  $("#form .card__field").prop("disabled", true);
+
+  if (select.value == "Банковская карта") {
+    $('.text-method-2').each(function() {
+      $(this).removeClass('d-none')
+    })
+
+    $('.text-method-2').each(function() {
+      $(this).addClass('d-block')
+    })
+    $("#form .card__field").prop("required", true);
+    $("#form .card__field").prop("disabled", false);
+    
+  } else if (select.value == "Банковский перевод") {
+    $('.text-method-3').each(function() {
+      $(this).removeClass('d-none')
+    })
+
+    $('.text-method-3').each(function() {
+      $(this).addClass('d-block')
+    })
   }
   checkForm()
 }

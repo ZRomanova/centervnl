@@ -2,6 +2,7 @@ const Order = require('../models/orders')
 const Shop = require('../models/shops')
 const errorHandler = require('../utils/errorHandler')
 const mongoose = require('mongoose')
+const request = require('request');
 const moment = require('moment')
 moment.locale('ru')
 
@@ -167,33 +168,33 @@ module.exports.addToBin = async function(req, res, next) {
   }
 }
 
-module.exports.updateBin = async function (req, res, next) {
-    try {
-        let order
-        if (req.body.count) {
-            order = await Order.findOneAndUpdate(
-                {'products._id': req.params.id}, 
-                {$inc: {'products.$.count': +req.body.count}}, 
-                {new: true})
-                .lean()
-            orderDel = await Order.findOneAndUpdate(
-                {'products._id': req.params.id}, 
-                {$pull: {'products': {'count': 0}}},
-                {new: true}
-                ).lean()
-            if (orderDel) order = orderDel
-            }
-        else 
-            order = await Order.findOneAndUpdate(
-                {'products._id': req.params.id}, 
-                {$pull: {'products': {_id: req.params.id}}},
-                {new: true}
-                )
-        next(req, res, order)
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
+// module.exports.updateBin = async function (req, res, next) {
+//     try {
+//         let order
+//         if (req.body.count) {
+//             order = await Order.findOneAndUpdate(
+//                 {'products._id': req.params.id}, 
+//                 {$inc: {'products.$.count': +req.body.count}}, 
+//                 {new: true})
+//                 .lean()
+//             orderDel = await Order.findOneAndUpdate(
+//                 {'products._id': req.params.id}, 
+//                 {$pull: {'products': {'count': 0}}},
+//                 {new: true}
+//                 ).lean()
+//             if (orderDel) order = orderDel
+//             }
+//         else 
+//             order = await Order.findOneAndUpdate(
+//                 {'products._id': req.params.id}, 
+//                 {$pull: {'products': {_id: req.params.id}}},
+//                 {new: true}
+//                 )
+//         next(req, res, order)
+//     } catch (e) {
+//         errorHandler(res, e)
+//     }
+// }
 
 module.exports.update = async function(req, res, next) {
     try {
@@ -225,31 +226,31 @@ module.exports.getById = async function(req, res, next) {
     }
 }
 
-module.exports.toggleStatus = async function(req, res, next) {
-    try {
-        const lastOrder = await Order.findOne({number: {$exists: true}}).sort({number: -1}).lean()
-        await Order.updateOne(
-            {_id: req.params.id}, 
-            {$set: {
-                status: 'в работе',
-                address: req.body.address ? req.body.address : req.body['custom-address'],
-                send: moment(),
-                'payment.delivery': req.body.delivery,
-                'payment.price': req.body.total,
-                'payment.total': req.body.total,
-                'payment.method': req.body.method,
-                'payment.paid': 0,
-                comment: req.body.comment,
-                number: lastOrder ? lastOrder.number + 1 : 1
-            }}, 
-            {new: true}
-            )
+// module.exports.toggleStatus = async function(req, res, next) {
+//     try {
+//         const lastOrder = await Order.findOne({number: {$exists: true}}).sort({number: -1}).lean()
+//         await Order.updateOne(
+//             {_id: req.params.id}, 
+//             {$set: {
+//                 status: 'в работе',
+//                 address: req.body.address ? req.body.address : req.body['custom-address'],
+//                 send: moment(),
+//                 'payment.delivery': req.body.delivery,
+//                 'payment.price': req.body.total,
+//                 'payment.total': req.body.total,
+//                 'payment.method': req.body.method,
+//                 'payment.paid': 0,
+//                 comment: req.body.comment,
+//                 number: lastOrder ? lastOrder.number + 1 : 1
+//             }}, 
+//             {new: true}
+//             )
 
-        next(req, res, {message: "Обновлено."})
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
+//         next(req, res, {message: "Обновлено."})
+//     } catch (e) {
+//         errorHandler(res, e)
+//     }
+// }
 
 
 module.exports.getBasketById = async function(req, res, next) {
@@ -265,4 +266,174 @@ module.exports.getBasketById = async function(req, res, next) {
     } catch (e) {
         errorHandler(res, e)
     }
+}
+
+module.exports.orderNotPay = async function(req, res, data = {}) {
+    try {
+        const lastOrder = await Order.findOne({number: {$exists: true}}).sort({number: -1}).lean()
+
+        let order = await Order.findOneAndUpdate(
+            {session: req.sessionID, status: 'в корзине', "products.0": {"$exists": true}},
+            {"$set": {
+                // ...req.body,
+                send: moment(),
+                number: lastOrder ? lastOrder.number + 1 : 1
+            }},
+            {new: true}
+        ).lean()
+
+        if (!order) res.status(404).json({message: "Заказ не найден"})
+        
+        const total = order.products.reduce((prev, curr) => {
+            return prev += (curr.count * curr.price)
+        }, 0)
+
+        order = await Order.findOneAndUpdate(
+            {number: order.number},
+            {"$set": {
+                ...req.body,
+                "payment.total": total,
+                "status": "принят"
+            }},
+            {new: true}
+        ).lean()
+
+        res.status(200).json({next: "finish"})
+         
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports.orderPay = async function(req, res, data = {}) {
+    try {
+        const lastOrder = await Order.findOne({number: {$exists: true}}).sort({number: -1}).lean()
+
+        let order = await Order.findOneAndUpdate(
+            {session: req.sessionID, status: 'в корзине', "products.0": {"$exists": true}},
+            {"$set": {
+                ...req.body["Order"],
+                send: moment(),
+                number: lastOrder ? lastOrder.number + 1 : 1
+            }},
+            {new: true}
+        ).lean()
+
+        if (!order) res.status(404).json({message: "Заказ не найден"})
+        
+        const total = order.products.reduce((prev, curr) => {
+            return prev += (curr.count * curr.price)
+        }, 0)
+
+        request.post('https://api.cloudpayments.ru/payments/cards/charge', {
+            headers: {
+                "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
+            },
+            json: {
+                "Amount": total,
+                "Currency":req.body["Currency"],
+                "IpAddress": req.body["IpAddress"],
+                "Description":req.body["Description"],
+                "AccountId":req.body["AccountId"],
+                "Email": req.body["Email"],
+                "CardCryptogramPacket": req.body["CardCryptogramPacket"],
+                "Payer": req.body["Payer"],
+                "InvoiceId": order.number
+            },
+        }, function (error, response, body) {
+            let data = {}
+            if (!error) {
+                let model = body["Model"]
+                if (!body["Success"] && body["Model"] && body["Model"]["AcsUrl"]) {
+
+                    Order.updateOne(
+                        {session: req.sessionID, status: 'в корзине'},
+                        {"$set": {
+                            "payment.total": total,
+                        }}
+                    )
+
+                    data = {
+                    "MD": model["TransactionId"],
+                    "PaReq": model["PaReq"],
+                    "AcsUrl": model["AcsUrl"],
+                    "next": "3D"
+                    };
+                } else if (body["Success"]) {
+                    Order.updateOne(
+                        {session: req.sessionID, status: 'в корзине'},
+                        {"$set": {
+                            "payment.status": "оплачен",
+                            "payment.total": total,
+                            status: 'принят',
+                        }}
+                    )
+                    data = {
+                        "next": "finish",
+                        "Token": model["Token"]
+                    }
+                } else {
+                    data = {
+                        "next": "error",
+                        "message": model["CardHolderMessage"]
+                    }
+                }
+
+            } else {
+                data = {
+                    ...error,
+                    next: "error"
+                }
+            }
+          res.status(200).json(data)
+        })
+
+        // res.status(200).json({message: "test"})
+         
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports.orderPayFinish = async function(req, res) {
+    try {
+        request.post('https://api.cloudpayments.ru/payments/cards/post3ds', {
+            headers: {
+                "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
+            },
+            json: {
+                "TransactionId": req.body["MD"],
+                "PaRes": req.body["PaRes"]
+            },
+        }, function (error, response, body) {
+            let data = {}
+            if (!error) {
+                let model = body["Model"]
+                if (body["Success"]) {
+                    
+                    Order.updateOne(
+                        {session: req.sessionID, status: 'в корзине'},
+                        {"$set": {
+                            "payment.status": "оплачен",
+                            status: 'принят',
+                        }}
+                    )
+
+                    res.redirect("/shop/order/finish")
+                } else {
+                    res.redirect("/shop/order?error="+model["CardHolderMessage"]+'#error-text')
+                }
+
+            } else {
+                data = {
+                    ...error,
+                    next: "error"
+                }
+                res.status(200).json(data)
+            }
+          
+        })
+      } catch(e) {
+        console.log(e)
+      }
 }

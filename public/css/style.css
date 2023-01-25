@@ -1172,6 +1172,9 @@ a.rectangle-19-14:hover {
   outline: 0;
   padding: 15px 20px;
   width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
 }
 
 #sumText, .num-input {
@@ -1189,6 +1192,9 @@ a.rectangle-19-14:hover {
   background: #FFEDDD;
   border-radius: 8px;
   outline: 0;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
 }
 
 input::-webkit-outer-spin-button,
