@@ -30,6 +30,7 @@ $('.sumCheckButton').click(function(e) {
 })
 
 $('.submit').click(function(e) {
+  console.log('start')
   var formData = new FormData(form);
   if (formData.get('regularity') == "false") {
     singlePay(formData)
