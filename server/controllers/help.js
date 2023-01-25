@@ -86,7 +86,7 @@ module.exports.createDonation = async function(req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/charge', {
             headers: {
-                "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
+                "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
             },
             json: req.body,
         }, function (error, response, body) {
@@ -171,7 +171,7 @@ module.exports.createDonationFinish = async function(req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/post3ds', {
             headers: {
-                "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
+                "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
             },
             json: {
                 "TransactionId": req.body["MD"],
@@ -209,7 +209,7 @@ module.exports.createSubscription = async function(req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/post3ds', {
             headers: {
-                "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
+                "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
             },
             json: {
                 "TransactionId": req.body["MD"],
@@ -222,7 +222,7 @@ module.exports.createSubscription = async function(req, res) {
                 if (body["Success"]) {
                     request.post('https://api.cloudpayments.ru/subscriptions/create', {
                         headers: {
-                            "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
+                            "Authorization": "Basic " + Buffer.from("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba").toString('base64')
                         },
                         json: {
                             "Token": model["Token"],
