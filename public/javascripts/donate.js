@@ -61,48 +61,32 @@ $('.submit').click(function(e) {
           "Phone":formData.get('tel')
         }
       }
-      // console.log(data)
       $.ajax({
         type: "POST",
         dataType: 'json',
-        headers: {
-          "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
-        },
-        url: 'https://api.cloudpayments.ru/payments/cards/charge',
+        url: '/help/donate/',
         data,
         success: function(data) {
-          console.log(data)
-          if (!data["Success"] && data["Model"] && data["Model"]["AcsUrl"]) {
-            let model = data["Model"]
-            Secure3D({
-              "TerminalUrl": 'https://centervnl.ru/help/donate/',
-              "MD": model["TransactionId"],
-              "PaReq": model["PaReq"]
-            }, model["AcsUrl"])
-           
+          if (data.next == "3D") {
+            const form = `
+            <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
+              <input hidden name="PaReq" value="${data["PaReq"]}">
+              <input hidden name="MD" value="${data["MD"]}">
+              <input hidden name="TermUrl" value="http://centervnl.ru/help/donate/finish/"> 
+            </form>
+            `
+            $(document.body).append($(form));
+            document.forms['downloadForm'].submit()
+          } else if (data.next == "finish") {
+            location.href = "/help/donate/finish/"
+          } else {
+            $('#error-text')[0].innerText = data["message"]
           }
-        
         }
       })
-      
+
     }).catch((errors) => {
         console.log(errors)
     });
 })
 
-
-function Secure3D(data, url) {
-  $.ajax({
-    type: "POST",
-    dataType: 'json',
-    // headers: {
-    //   "Authorization": "Basic " + btoa("pk_af1616eb150356d4911c1f2a80aaa:23151917b5eaf785f055bcc8eb4ac3ba")
-    // },
-    url,
-    data,
-    success: function(data) {
-      console.log(data)
-    
-    }
-  })
-}

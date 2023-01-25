@@ -89,6 +89,7 @@ body {
   background: #f87c0f;
 }
 
+
 .title {
   font-weight: 500;
   font-size: 48px;
@@ -825,6 +826,12 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
   color: #656973;
 }
 
+.text-400-14 a {
+  color: #F78C2E;
+  font-weight: 700;
+  /* text-decoration: underline; */
+}
+
 .text-400-14-dark {
   color: #1E2639;
 }
@@ -1337,6 +1344,10 @@ input::-webkit-inner-spin-button {
 .basket-counter.disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+.error-text {
+  color: red;
 }
 
 

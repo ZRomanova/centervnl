@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a(href='/help/')
+          .back__subtitle-top.back__subtitle-child Как помочь
+        //- .col-6.back__subtitle-top.text-end 
+        //-   +share("/parents/club/", "Родительский клуб")
+
+        .col-12.header__subtitle.title От всего сердца благодарим Вас за пожертвование!
+        .col-12.mt-5 
+          +long-text(`
+          Все полученные средства мы направляем на программы поддержки подростков 
+          и молодых людей с ментальными нарушениями.
+
+          Спасибо за ваше доверие и неравнодушие к особым людям!
+
+
+          Елизавета Романова,
+          Директор «АНО Ресурсный центр помощи людям с ментальными нарушениями
+          «Вера. Надежда. Любовь»
+          `)
+
+          .mt-5.text-400-14 По всем вопросам вы можете написать нам по адресу 
+            a(href="mailto:"+contacts.email)= contacts.email

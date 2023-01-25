@@ -146,39 +146,39 @@ block content
                 
                 .col-12.mt-5
                   .text-400-16 Номер банковской карты
-                  input.text-input.mt-2#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" required data-cp="cardNumber" autocomplete="off")
+                  input.text-input.mt-2#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" required data-cp="cardNumber" autocomplete="off" value="	4012 8888 8888 1881")
 
                 .col-6.mt-3
                   .text-400-16 Владелец карты
-                  input.text-input.mt-2#nameOwner(type='text' placeholder="Например, Ivan Fedorov" required data-cp="name" autocomplete="off")
+                  input.text-input.mt-2#nameOwner(type='text' placeholder="Например, Ivan Fedorov" required data-cp="name" autocomplete="off" )
 
                 .col-6.mt-3
                   .d-flex.flex-row
                     .me-1
                       .text-400-16 Дата
-                      input.num-input.mt-2#dateCard(type='text' placeholder="MM / ГГ" required data-cp="expDateMonthYear" autocomplete="off") 
+                      input.num-input.mt-2#dateCard(type='text' placeholder="MM / ГГ" required data-cp="expDateMonthYear" autocomplete="off" value="12 / 34") 
 
 
                     .ms-2
                       .text-400-16 CVV
-                      input.num-input.mt-2.card__field#cvvCard(type='text' placeholder="CVV" required maxlength="3" data-cp="cvv" autocomplete="off")
-
-
+                      input.num-input.mt-2.card__field#cvvCard(type='text' placeholder="CVV" required maxlength="3" data-cp="cvv" autocomplete="off" value="111")
 
               .mt-5 
                 .form-check.col-12.mt-2
-                  input#defaultCheck1.form-check-input(type='checkbox' value='' required)
+                  input#defaultCheck1.form-check-input(type='checkbox' value='' required checked)
                   label.form-check-label(for='defaultCheck1')
                     span.text-400-16 Я принимаю условия договора-оферты
 
                 .form-check.col-12.mt-2
-                  input#defaultCheck2.form-check-input(type='checkbox' value='' required)
+                  input#defaultCheck2.form-check-input(type='checkbox' value='' required checked)
                   label.form-check-label(for='defaultCheck2')
                     span.text-400-16 Я соглашаюсь 
                       a(href='/policy' target="_blank") на обработку своих персональных данных
 
-              .mt-4
+              .mt-5
                 button.button.button_blue.submit(type="button") Помочь
+
+              .mt-4.error-text.text-400-16#error-text= error
 
               .mt-5.col-12.col-md-8
                 .text-400-14.text-400-14-dark Пожертвование осуществляется с помощью банковской карты через защищённую систему приёма платежей CloudPayments
