@@ -6,10 +6,8 @@ block content
       .row.mx-xl-5
         a(href='/help/')
           .back__subtitle-top.back__subtitle-child Как помочь
-        //- .col-6.back__subtitle-top.text-end 
-        //-   +share("/parents/club/", "Родительский клуб")
 
-        .col-12.header__subtitle.title От всего сердца благодарим Вас за пожертвование!
+        .col-12.header__subtitle.title= header
         .col-12.mt-5 
           +long-text(`
           Все полученные средства мы направляем на программы поддержки подростков 
@@ -23,5 +21,5 @@ block content
           «Вера. Надежда. Любовь»
           `)
 
-          .mt-5.text-400-14 По всем вопросам вы можете написать нам по адресу 
+          .mt-5.text-400-14= footer
             a(href="mailto:"+contacts.email)= contacts.email

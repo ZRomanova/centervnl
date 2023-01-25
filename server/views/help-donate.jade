@@ -99,10 +99,10 @@ block content
             .row
               input.d-none(name='ip' value=ip)
               .col-6
-                input#regularity1.btn-check(type='radio' name='regularity' autocomplete='off' checked=true required)
+                input#regularity1.btn-check(type='radio' name='regularity' value="false" autocomplete='off' checked=true required)
                 label.btn.donate-form-button(for='regularity1') Разовое
               .col-6
-                input#regularity2.btn-check(type='radio' name='regularity' autocomplete='off' required)
+                input#regularity2.btn-check(type='radio' name='regularity' value="true" autocomplete='off' required)
                 label.btn.donate-form-button(for='regularity2') Ежемесячное
 
             .d-block 
@@ -146,7 +146,7 @@ block content
                 
                 .col-12.mt-5
                   .text-400-16 Номер банковской карты
-                  input.text-input.mt-2#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" required data-cp="cardNumber" autocomplete="off" value="	4012 8888 8888 1881")
+                  input.text-input.mt-2#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" required data-cp="cardNumber" autocomplete="off" value="4242 4242 4242 4242")
 
                 .col-6.mt-3
                   .text-400-16 Владелец карты

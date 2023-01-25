@@ -8,6 +8,9 @@ router.get('/donate', controller.getHelpDonate)
 router.get('/donate/finish', controller.getDonateFinish) 
 router.post('/donate', controller.createDonation) 
 router.post('/donate/finish', controller.createDonationFinish)
+
+router.post('/donate/subscribe', controller.createSubscription)
+router.get('/donate/subscribe', controller.getSubscriptionFinish)
 // router.get('/:path', controller.getNewsPage) 
 // router.post('/:id/like', isAuth, controller.toggleLike)
 
