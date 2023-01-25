@@ -21,6 +21,7 @@ router.use('/press', require('./press'))
 router.use('/wins', require('./wins'))
 router.use('/library', require('./library'))
 router.use('/parents', require('./parents'))
+router.use('/pay', require('./pay'))
 
 
 module.exports = router;
