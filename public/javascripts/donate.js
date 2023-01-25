@@ -30,18 +30,17 @@ $('.sumCheckButton').click(function(e) {
 })
 
 $('.submit').click(function(e) {
-  const formData = new FormData(form);
+  var formData = new FormData(form);
   if (formData.get('regularity') == "false") {
-    singlePay()
+    singlePay(formData)
   } else {
-    recurringPay()
+    recurringPay(formData)
   }
 })
 
 
-function singlePay () {
+function singlePay(formData) {
 
-  const formData = new FormData(form);
   const checkout = new cp.Checkout({
     publicId: 'pk_af1616eb150356d4911c1f2a80aaa',
     container: document.getElementById("#form")
@@ -98,8 +97,7 @@ function singlePay () {
     });
 }
 
-function recurringPay() {
-  const formData = new FormData(form);
+function recurringPay(formData) {
   const checkout = new cp.Checkout({
     publicId: 'pk_af1616eb150356d4911c1f2a80aaa',
     container: document.getElementById("#form")
