@@ -340,13 +340,13 @@ module.exports.orderPay = async function(req, res, data = {}) {
                 "Payer": req.body["Payer"],
                 "InvoiceId": order.number
             },
-        }, function (error, response, body) {
+        }, async function (error, response, body) {
             let data = {}
             if (!error) {
                 let model = body["Model"]
                 if (!body["Success"] && body["Model"] && body["Model"]["AcsUrl"]) {
 
-                    Order.updateOne(
+                    await Order.updateOne(
                         {session: req.sessionID, status: 'в корзине'},
                         {"$set": {
                             "payment.total": total,
@@ -360,7 +360,7 @@ module.exports.orderPay = async function(req, res, data = {}) {
                     "next": "3D"
                     };
                 } else if (body["Success"]) {
-                    Order.updateOne(
+                    await Order.updateOne(
                         {session: req.sessionID, status: 'в корзине'},
                         {"$set": {
                             "payment.status": "оплачен",
@@ -405,13 +405,13 @@ module.exports.orderPayFinish = async function(req, res) {
                 "TransactionId": req.body["MD"],
                 "PaRes": req.body["PaRes"]
             },
-        }, function (error, response, body) {
+        }, async function (error, response, body) {
             let data = {}
             if (!error) {
                 let model = body["Model"]
                 if (body["Success"]) {
                     
-                    Order.updateOne(
+                    await Order.updateOne(
                         {session: req.sessionID, status: 'в корзине'},
                         {"$set": {
                             "payment.status": "оплачен",

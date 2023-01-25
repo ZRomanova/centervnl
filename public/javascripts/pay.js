@@ -58,7 +58,7 @@ function payByCard(formData) {
           <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
             <input hidden name="PaReq" value="${data["PaReq"]}">
             <input hidden name="MD" value="${data["MD"]}">
-            <input hidden name="TermUrl" value="http://localhost:5001/api/orders/pay/finish"> 
+            <input hidden name="TermUrl" value="https://centervnl.ru/api/orders/pay/finish"> 
           </form>
           `
           $(document.body).append($(form));
