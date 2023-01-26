@@ -300,12 +300,10 @@ module.exports.getServiceByPath = async function(req, res, next) {
                             }
                         })
                     }
-                })
+                }) 
             }
             // console.log(service.dates)
-            service.dates = service.dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
-
-            // console.log(service)
+            // await service.dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
 
             next(req, res, service)
         }
