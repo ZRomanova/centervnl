@@ -277,7 +277,8 @@ body {
 }
 .target__image {
   width: 59px;
-  height: 59px;
+  height: auto;
+  object-fit: contain;
   opacity: .2;
 }
 .target__text {
