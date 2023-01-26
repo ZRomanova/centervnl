@@ -6,7 +6,7 @@ html(lang='ru')
     meta(name="author" content="centervnl")
     title= title
     link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css' media="print" onload="this.media='all'; this.onload=null;")
     link(rel='stylesheet', href='/css/style.css')
     script(type='text/javascript').
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -90,10 +90,10 @@ html(lang='ru')
                 .d-flex.w-auto.justify-content-between
                   .header__icons.d-none
                     a.header__icons-item(href='#')
-                      img(src='/icons/header/man.svg' alt='man')
+                      img(src='/icons/header/man.svg' alt='Профиль')
                     a.header__icons-item(href='#')
-                      img(src='/icons/header/search.svg' alt='search')
-                  a.header__help.button.button_blue(href='/help/donate/') Помочь
+                      img(src='/icons/header/search.svg' alt='Поиск')
+                  a.header__help.button.button_blue(href='https://centervnl.ru/help/donate/') Помочь
                   
         .container.first-container
           block content
@@ -137,7 +137,8 @@ html(lang='ru')
               .footer__title.d-block.d-lg-none
               a.footer__title(href='https://centervnl.ru/contacts/') Контакты
               .footer__item
-                a.footer__link
+                - var tel = contacts.phone.replace(/[^0-9+]/gi,'')
+                a.footer__link(href='tel:'+tel)
                   img.footer__link-image(src='/icons/footer/phone.svg' alt='Телефон') 
                   | #{contacts.phone}
               .footer__item
