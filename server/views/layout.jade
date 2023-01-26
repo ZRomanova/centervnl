@@ -1,12 +1,13 @@
 doctype html
-html
+html(lang='ru')
   head
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name="keywords" content="вера надежда любовь, ано, ресурсный центр, ментальные нарушения, фонд, благотворительный фонд, москва")
+    meta(name="author" content="centervnl")
     title= title
     link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
-    link(rel='stylesheet', href='/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/style.css')
-    script(src='/javascripts/jquery-3.6.0.js')
     script(type='text/javascript').
       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
@@ -24,7 +25,7 @@ html
         header.header
           nav.navbar.navbar-expand-xl
             .container-fluid
-              a.navbar-brand(href='/')
+              a.navbar-brand(href='https://centervnl.ru/')
                 img.header__logo(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом')
               
               button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false')
@@ -103,8 +104,8 @@ html
           .row
             .col-12.col-lg-3.text-lg-center
               .card-group.d-flex.d-lg-none
-                a(href='/')
-                  img.footer__logo(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом')
+                a(href='https://centervnl.ru/')
+                  img.footer__logo(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом' loading="lazy")
                 .d-flex.d-lg-none.justify-content-around.col.align-items-center
                   a.footer__social-link(href="https://vk.com/centervnl" target="_black")
                     img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
@@ -112,8 +113,8 @@ html
                     img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram')
                   a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_black")
                     img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube')
-              a.d-none.d-lg-block(href='/')
-                img.footer__logo-lg.d-inline-block(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом')
+              a.d-none.d-lg-block(href='https://centervnl.ru/')
+                img.footer__logo-lg.d-inline-block(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом' loading="lazy")
                 .d-none.footer__social.d-lg-flex.justify-content-between
                   a.footer__social-link(href="https://vk.com/centervnl" target="_black")
                     img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk')
@@ -152,7 +153,7 @@ html
               .footer__divider
               .footer__end © 2017-#{moment().format('YYYY')} АНО "Ресурсный центр "Вера. Надежда. Любовь"
 
-    
-    script(src='/bootstrap/js/bootstrap.js')
+    script(src='/javascripts/jquery-3.6.3.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js' async="true")
     script(src='/javascripts/main.js')
     block scripts
