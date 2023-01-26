@@ -1,6 +1,6 @@
 const Document = require('../models/wins')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
+const translit = require('../utils/translit')
 
 module.exports.getWins = async function(req, res, next) {
     try {
@@ -32,8 +32,8 @@ module.exports.getWinById = async function(req, res, next) {
 module.exports.createWin = async function(req, res, next) {
     try {
         const created = req.body
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!created.path) created.path = translit(created.name)
+        else created.path = translit(created.path)
         const doc = await new Document(created).save()
         next(req, res, doc)
     } catch (e) {
@@ -53,8 +53,8 @@ module.exports.deleteWin = async function(req, res, next) {
 module.exports.updateWin = async function(req, res, next) {
     try {
         const updated = req.body
-        if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!updated.path) updated.path = translit(updated.name)
+        else updated.path = translit(updated.path)
         const doc = await Document.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, doc)
     } catch (e) {

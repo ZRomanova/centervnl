@@ -4,16 +4,16 @@ block content
 
   section.background
     .container
-      img.background__image(src='/img/bg_main.jpg' alt='bg')
+      img.background__image(src='/img/bg_main.jpg' alt='Ярморка изделий из дерева, два человека за прилавком улыбаются')
 
   section.top-120
     .container
       .row
-        img.target__image.d-md-none(src='/img/target/house.png' alt='house')
+        img.target__image.d-md-none(src='/img/target/house.png' alt='Схематичный дом')
         .col.target__title.title Наши цели
       .row
         .d-none.d-md-block.col-md-4
-          img.target__image-lg(src='/img/target/house.png' alt='house')
+          img.target__image-lg(src='/img/target/house.png' alt='Схематичный дом')
         .col-12.col-md
           p.target__text
             | Ресурсный центр «Вера. Надежда. Любовь» опирается в своей деятельности на инклюзивные подходы. Мы стремимся, чтобы у человека с
@@ -32,9 +32,9 @@ block content
         .col.title Наши программы
       .row.program__wrapper
         each program in programs
-          a.col-3.p-4.program__card(href= '/programs/'+program.path)
+          a.col-3.p-4.program__card(href= 'https://centervnl.ru/programs/'+program.path)
             .program__img
-              img.program__icon(src= program.icon alt='book')
+              img.program__icon(src= program.icon alt=program.name)
             .program__subtitle= program.name
             .program__descr= program.subtitle
 
@@ -128,7 +128,7 @@ block content
       .row.principles__wrapper
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_1.svg' alt='principle')
+            img.principles__image(src='img/principles/principles_1.svg' alt='Три горы и флаг')
           p.col-8.principles__credo Самостоятельности столько, сколько возможно, помощи столько сколько необходимо
         p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
           | Мы предоставляем возможность ребенку или молодому взрослому с ментальными нарушениями выполнить действие самому, соблюдаем паузы во
@@ -137,7 +137,7 @@ block content
       .row.principles__wrapper
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_2.svg' alt='principle')
+            img.principles__image(src='img/principles/principles_2.svg' alt='Три человека и шестерёнка')
           p.col-8.principles__credo Ничего для нас без нас
         p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
           | Помогая ребенку и молодому взрослому включаться в различные социальные сферы, мы разрабатываем визуальные помощники и документы «на
@@ -146,7 +146,7 @@ block content
       .row.principles__wrapper
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_3.svg' alt='principle')
+            img.principles__image(src='img/principles/principles_3.svg' alt='Планета с людьми')
           p.col-8.principles__credo Мы там, где все
         p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
           | Включение в социальные сферы - проживание в обычном доме, получение образования и включение в трудовую занятость, проведение досуга в
@@ -186,7 +186,7 @@ block content
           +post(post, 'news/')
           
         .col-4
-          a.news__button.button.button_blue(href='/news/') Все новости
+          a.news__button.button.button_blue(href='https://centervnl.ru/news/') Все новости
 
 
 

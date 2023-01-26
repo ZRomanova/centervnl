@@ -4,7 +4,7 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-12.back__subtitle-top.back__subtitle-child(href='/shop/') Магазин
+        a.col-12.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/shop/') Магазин
         .col-12.header__subtitle.title= shop.name
 
       .row.mx-xl-5.about__wrapper
@@ -14,9 +14,9 @@ block content
       .row.mx-xl-5         
         each catalog in shop.groups
           .col-12.col-md-4.mt-5
-            a.rectangle-19-14.d-flex.flex-column.justify-content-center.hover-blue(href="/shop/"+shop.path+"/"+catalog.path)  
+            a.rectangle-19-14.d-flex.flex-column.justify-content-center.hover-blue(href="https://centervnl.ru/shop/"+shop.path+"/"+catalog.path)  
               if catalog.image
-                img.catalog__image(src= catalog.image alt='icon')
+                img.catalog__image(src= catalog.image alt=catalog.name)
               else
                 .catalog__image
               .program__subtitle.p-4.pt-0= catalog.name 

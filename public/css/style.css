@@ -734,13 +734,14 @@ a.news__subtitle:hover {
 }
 .about__item {
   position: relative;
-  height: 320px;
-  /* width: 100%; */
+  display: block;
+  height: 300px;
+  width: 100%;
   padding-left: 30px;
   background: #fff;
   box-shadow: 0 4px 20px rgba(60, 65, 71, .2);
   border-radius: 8px;
-  margin: 10px;
+  /* margin: 10px; */
 }
 .about__item:hover {
   background: #FFA556;

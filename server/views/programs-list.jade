@@ -11,11 +11,11 @@ block content
       .row.mx-xl-5 
         each program in programs 
           .col-12.col-lg-6.mt-3.mb-3
-            a(href='/programs/'+program.path)
+            a(href='https://centervnl.ru/programs/'+program.path)
               img.program__image.mb-3(src=program.image alt=program.name)
             .row 
               .col-4.col-md-3
-                  img.d-block(src= program.icon alt='book')
+                  img.d-block(src= program.icon alt=program.name)
               .col-8.col-md-9.d-flex.flex-column.justify-content-between
                 .program__subtitle= program.name
                 .program__descr= program.subtitle
@@ -23,7 +23,7 @@ block content
               .col-12.program__text.mt-3.mb-2
                 +long-text(program.description)
 
-            a.button.button_orange.mb-3(href='/programs/'+program.path) Подробнее
+            a.button.button_orange.mb-3(href='https://centervnl.ru/programs/'+program.path) Подробнее
 
 
           

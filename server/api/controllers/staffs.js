@@ -1,7 +1,6 @@
 const Staff = require('../models/staffs')
 const User = require('../models/users')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
 
 module.exports.getStaffs = async function(req, res, next) {
     try {
@@ -33,8 +32,8 @@ module.exports.getStaffById = async function(req, res, next) {
 module.exports.createStaff = async function(req, res, next) {
     try {
         const created = req.body
-        if (!created.path) created.path = cyrillicToTranslit().transform(`${created.name}-${created.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!created.path) created.path = translit(`${created.name}-${created.surname}`)
+        else created.path = translit(created.path)
         const staff = await new Staff(created).save()
         next(req, res, staff)
     } catch (e) {
@@ -45,7 +44,7 @@ module.exports.createStaff = async function(req, res, next) {
 module.exports.addStaff = async function(req, res, next) {
     try {
         const created = req.body
-        created.path = cyrillicToTranslit().transform(`${created.name}-${created.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        created.path = translit(`${created.name}-${created.surname}`)
         const staff = await new Staff(created).save()
         await User.updateOne({_id: req.params.id}, {$set: {team: staff._id}}, {new: true})
         next(req, res, staff)
@@ -66,8 +65,8 @@ module.exports.deleteStaff = async function(req, res, next) {
 module.exports.updateStaff = async function(req, res, next) {
     try {
         const updated = req.body
-        if (!updated.path) updated.path = cyrillicToTranslit().transform(`${updated.name}-${updated.surname}`, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!updated.path) updated.path = translit(`${updated.name}-${updated.surname}`)
+        else updated.path = translit(updated.path)
         
         const staff = await Staff.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, staff)

@@ -9,7 +9,7 @@ mixin slider(gallery)
     .carousel-inner
       each item in gallery
         .carousel-item.item-a 
-          img.slider__image(src= item alt='bg')
+          img.slider__image(src= item alt='Картинка')
           
     if gallery.length > 1
       button.carousel-control-prev(type='button' data-bs-target='#slider' data-bs-slide='prev')
@@ -38,13 +38,13 @@ mixin share(path, text)
 mixin post(post, url='')
   .news__item.row.pb-2.pt-2
     if post.image
-      a.col-12.col-lg-5.news__img(href=url+post.path)
+      a.col-12.col-lg-5.news__img(href='https://centervnl.ru/'+url+post.path)
         img.news__image(src=post.image alt=post.name)
     .col-12.col-lg.d-flex.flex-column.justify-content-between.news__text
       .news__date= post.date
-      a.news__subtitle(href=url+post.path)= post.name
+      a.news__subtitle(href='https://centervnl.ru/'+url+post.path)= post.name
       p.std__descr.rows-4= post.description
-      a.news__link(href=url+post.path)
+      a.news__link(href='https://centervnl.ru/'+url+post.path)
         | Подробнее
         svg.news__link-image(width='20' height='5' viewBox='0 0 20 5' fill='none' xmlns='http://www.w3.org/2000/svg')
           path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#FFA556')
@@ -53,13 +53,13 @@ mixin post(post, url='')
 mixin phrase(item)
   .col-12.col-md-6.col-lg-3.review__item.mb-4
     .review__img
-      img.review__image(src=item.image alt='review')
+      img.review__image(src=item.image alt=item.dascription)
     .review__descr= "«"+item.description+"»"
     .review__name= item.name
 
 
 mixin program-project(item)
-  a.col-12.col-lg-6.mb-3(href='/programs/'+program.path+'/'+item.path)
+  a.col-12.col-lg-6.mb-3(href='https://centervnl.ru/programs/'+program.path+'/'+item.path)
     if item.image
       img.program__image.mb-3(src=item.image alt=item.name)
     .row 

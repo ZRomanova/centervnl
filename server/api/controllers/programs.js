@@ -2,7 +2,7 @@
 const Program = require('../models/programs')
 const Project = require('../models/projects')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
+const translit = require('../utils/translit')
 // const moment = require('moment')
 
 module.exports.getProgramByPath = async function(req, res, next) {
@@ -73,8 +73,8 @@ module.exports.createProgram = async function(req, res, next) {
     try {
         const created = req.body
         created.author = req.user.id
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!created.path) created.path = translit(created.name)
+        else created.path = translit(created.path)
         const project = await new Program(created).save()
         next(req, res, project)
     } catch (e) {
@@ -89,8 +89,8 @@ module.exports.updateProgram = async function(req, res, next) {
             author: req.user.id,
             time: new Date()
         }
-        if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!updated.path) updated.path = translit(updated.name)
+        else updated.path = translit(updated.path)
         const project = await Program.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, project)
     } catch (e) {

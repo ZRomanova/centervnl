@@ -17,7 +17,7 @@ block content
         
       .container
         .mx-xl-5.mt-3
-          a.button.button_orange.mb-3(href='/services/') Записаться
+          a.button.button_orange.mb-3(href='https://centervnl.ru/services/') Записаться
 
           p.target__text.mt-3.
             Если вы представитель компании, мы будем рады корпоративным заказам! Наш дизайнер разработает продукцию с логотипом компании или фото.
@@ -28,9 +28,9 @@ block content
         .col-12.mt-5.title Наши товары           
         each shop in shops 
           .col-12.col-md-4.mt-3
-            a.rectangle-19-14.d-flex.flex-column.justify-content-center.p-4(href="/shop/"+shop.path)   
+            a.rectangle-19-14.d-flex.flex-column.justify-content-center.p-4(href="https://centervnl.ru/shop/"+shop.path)   
               .program__img
-                img.program__icon(src= shop.icon alt='icon')
+                img.program__icon(src= shop.icon alt=shop.name)
               .program__subtitle= shop.name  
   
 

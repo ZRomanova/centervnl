@@ -1,6 +1,6 @@
 const Post = require('../models/posts')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
+const translit = require('../utils/translit')
 
 module.exports.getPosts = async function(req, res, next) {
     try {
@@ -39,8 +39,8 @@ module.exports.createPost = async function(req, res, next) {
     try {
         const created = req.body
         created.author = req.user.id
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!created.path) created.path = translit(created.name, "-")
+        else created.path = translit(created.path, "-")
         const post = await new Post(created).save()
         next(req, res, post)
     } catch (e) {
@@ -51,8 +51,8 @@ module.exports.createPost = async function(req, res, next) {
 module.exports.updatePost = async function(req, res, next) {
     try {
         const updated = req.body
-        if (!updated.path) updated.path = cyrillicToTranslit().transform(updated.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else updated.path = cyrillicToTranslit().transform(updated.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!updated.path) updated.path = translit(updated.name)
+        else updated.path = translit(updated.path)
         updated.lastChange = {
             author: req.user.id,
             time: new Date()

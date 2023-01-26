@@ -1,6 +1,5 @@
 const Shop = require('../models/shops')
 const errorHandler = require('../utils/errorHandler')
-const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const mongoose = require('mongoose')
 const translit = require('../utils/translit')
 
@@ -42,8 +41,8 @@ module.exports.getShopById = async function(req, res, next) {
 module.exports.createShop = async function(req, res, next) {
     try {
         const created = req.body
-        if (!created.path) created.path = cyrillicToTranslit().transform(created.name, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
-        else created.path = cyrillicToTranslit().transform(created.path, "-").toLowerCase().replace(/[^a-z0-9-]/gi,'').replace(/\s+/gi,', ')
+        if (!created.path) created.path = translit(created.name)
+        else created.path = translit(created.path)
         const shop = await new Shop(created).save()
         next(req, res, shop)
     } catch (e) {
