@@ -106,7 +106,6 @@ Cal.prototype.showMonth = function(y, m) {
     var chkY = chk.getFullYear();
     var chkM = chk.getMonth();
     if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
-      // getAnouncementsByDay(new Date(this.currYear, this.currMonth, this.currDay))
       html += `<div id="${chkY}-${chkM+1}-${i}" class="calendar-item calendar-item-today" onclick="getAnouncementsByDay('${chkY}-${chkM+1}-${i}')"><div class="calendar-child" id="${chkY}-${chkM+1}-${i}-child">` + i + '</div></div>';
     } else {
       html += `<div id="${this.currYear}-${this.currMonth+1}-${i}" class="calendar-item" onclick="getAnouncementsByDay('${this.currYear}-${this.currMonth+1}-${i}')"><div class="calendar-child" id="${this.currYear}-${this.currMonth+1}-${i}-child">` + i + '</div></div>';
@@ -150,6 +149,11 @@ window.onload = function() {
   getId('btnPrev').onclick = function() {
     c.previousMonth();
   };
+
+  let d = new Date();
+  let today = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
+
+  getAnouncementsByDay(today)
 }
 
 // Получить элемент по id
@@ -179,8 +183,11 @@ function getAnouncementsByDay(day) {
         element += `<div class="program__subtitle">${data[i].name}</div>`
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
-        element += `<div class="title-700-20 mt-3">${data[i].dateStr}</div>`
-        element += `<a type="submit" class="button button_orange mt-3" href="${data[i].path}?date=${data[i].dateStr}">Зарегистрироваться</a>`
+        data[i].dates.forEach(date => {
+          element += `<div class="title-700-20 mt-3">${date}</div>`
+        })
+        
+        element += `<a type="submit" class="button button_orange mt-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
         element += `</div>`
 
         $('#events_gallary').append(element)

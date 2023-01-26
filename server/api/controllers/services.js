@@ -46,13 +46,20 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
         results = []
         for (let event of events) {
             if (event.date.single && event.date.single.length) {
+                let len = results.push({
+                    ...event,
+                    firstDate: null,
+                    firstSort: null,
+                    dates: []
+                })
+                event.date.single.sort()
                 event.date.single.forEach(date => {
                     if (moment(date) > start && moment(date) < end) {
-                        results.push({
-                            ...event,
-                            dateStr: moment(date).format('D MMMM HH:mm'),
-                            dateObj: Date.parse(date),
-                        })
+                        results[len-1].dates.push(moment(date).format('D MMMM HH:mm'))
+                        if (results[len-1].dates.length == 1) {
+                            results[len-1].firstSort = Date.parse(date)
+                            results[len-1].firstDtae = moment(date).format('D MMMM HH:mm')
+                        }
                     }
                 })
             }
@@ -60,23 +67,35 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
             if (event.date.period && event.date.period.length) {
                 event.date.period.forEach(p =>  {
                     if (p.visible && p.day == dayStr) {
+                        let item = results.find(el => el._id == event._id)
+                        let index = !item ? results.push({
+                            ...event,
+                            firstDate: null,
+                            firstSort: null,
+                            dates: []
+                        }) - 1  : results.indexOf(item)
+
                         let startP = moment(p.start).startOf('day');
                         let endP = moment(p.end ? p.end : (Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 30)).endOf('day')
+
                         if (startP <= start && endP >= end) {
                             let time = intToStringTime(p.time)
                             let dateTime = new Date(queryDate).setHours(time[0], time[1])
-                            results.push({
-                                ...event,
-                                dateStr: moment(dateTime).format('D MMMM HH:mm'),
-                                dateObj: Date.parse(dateTime),
-                            })
+
+                            results[index].dates.push(moment(dateTime).format('D MMMM HH:mm'))
+                            if (results[index].dates.length == 1) {
+                                results[index].firstSort = dateTime
+                                results[index].firstDate = moment(dateTime).format('D MMMM HH:mm')
+                            }
+                            
                         }
+
                     }
                 })
             }
         }
 
-        results.sort((a, b) => a.dateObj - b.dateObj)
+        results.sort((a, b) => a.firstSort - b.firstSort)
 
         next(req, res, results)
     } catch (e) {
@@ -283,9 +302,10 @@ module.exports.getServiceByPath = async function(req, res, next) {
                     }
                 })
             }
+            // console.log(service.dates)
             service.dates = service.dates.sort((a, b) => Date.parse(a.date) - Date.parse(b.date))
 
-            console.log(service)
+            // console.log(service)
 
             next(req, res, service)
         }
