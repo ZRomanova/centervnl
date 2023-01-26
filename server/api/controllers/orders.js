@@ -199,13 +199,6 @@ module.exports.addToBin = async function(req, res, next) {
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
-        if (updated.payment.paid >= updated.payment.total) {
-            updated.payment.status = 'оплачен'
-        } else if (updated.payment.paid) {
-            updated.payment.status = 'оплачен частично'
-        } else {
-            updated.payment.status = 'не оплачен'
-        }
         const item = await Order.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, item)
     } catch (e) {
@@ -314,7 +307,8 @@ module.exports.orderPay = async function(req, res, data = {}) {
             {"$set": {
                 ...req.body["Order"],
                 send: moment(),
-                number: lastOrder ? lastOrder.number + 1 : 1
+                number: lastOrder ? lastOrder.number + 1 : 1,
+                "payment.method": 'Банковская карта'
             }},
             {new: true}
         ).lean()
@@ -365,7 +359,8 @@ module.exports.orderPay = async function(req, res, data = {}) {
                         {"$set": {
                             "payment.status": "оплачен",
                             "payment.total": total,
-                            status: 'принят',
+                            "payment.method": 'Банковская карта',
+                            "status": 'принят',
                         }}
                     )
                     data = {
@@ -409,13 +404,14 @@ module.exports.orderPayFinish = async function(req, res) {
             let data = {}
             if (!error) {
                 let model = body["Model"]
+
                 if (body["Success"]) {
                     
                     await Order.updateOne(
-                        {session: req.sessionID, status: 'в корзине'},
+                        {number: +model["InvoiceId"]},
                         {"$set": {
                             "payment.status": "оплачен",
-                            status: 'принят',
+                            "status": 'принят',
                         }}
                     )
 

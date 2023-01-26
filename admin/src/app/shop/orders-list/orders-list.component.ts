@@ -24,20 +24,20 @@ export class OrdersListComponent implements OnInit, OnDestroy {
   loading = false
   noMore = false
   filter: any = {
-    'fields_user': 1,
+    'fields_email': 1,
     'fields_number': 1,
     'filter_number': true,
     'fields_send': 1,
-    'fields_comment': 1,
     'fields_payment': 1,
     'fields_status': 1,
   }
 
   colorStatuses = {
-    "в корзине":  'primary',
-    "в работе": 'danger', 
-    "выполнен": 'warning',
-    "доставлен": 'success', 
+    "принят":  'danger',
+    "в работе": 'warning', 
+    "в доставке": 'warning',
+    "доставлен": 'primary',  
+    'получен': 'success',
     "отменен": 'secondary'
   }
 
@@ -59,13 +59,7 @@ export class OrdersListComponent implements OnInit, OnDestroy {
 
     this.oSub = this.ordersService.fetch(params).subscribe(orders => {
       this.orders = orders
-      this.orders.forEach(item => {
-        item.dateStr = `${this.datePipe.transform(item.send, 'dd.MM.yyyy')} | ${item.payment.total} ₽ | ${item.payment.status}  | ${item.status}`
-        item.image = item.user.photo
-        item.description = item.comment
-        item.name = item.user.email
-        item.statusColor = this.colorStatuses[item.status]
-      })
+
       this.noMore = orders.length < this.limit
       this.loading = false
     })

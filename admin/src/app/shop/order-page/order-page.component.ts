@@ -17,8 +17,9 @@ export class OrderPageComponent implements OnInit, OnDestroy {
   id: string
   order: Order
   oSub: Subscription
-  statuses = ['в работе', 'выполнен', 'доставлен', 'отменен']
-  methods = ['на месте', 'онлайн']
+  statuses = ["принят", 'в работе', "в доставке", 'доставлен', 'получен', 'отменен']
+  methods = ['Банковский перевод', 'Банковская карта', 'Наличные при получении']
+  paids = ['оплачен', 'не оплачен']
 
   constructor(private router: Router, 
     private activateRoute: ActivatedRoute,
@@ -40,7 +41,7 @@ export class OrderPageComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       status: new FormControl(this.order.status),
       payment: new FormGroup({
-        paid: new FormControl(this.order.payment.paid),
+        // paid: new FormControl(this.order.payment.paid),
         delivery: new FormControl(this.order.payment.delivery),
         total: new FormControl(this.order.payment.total),
         price: new FormControl(this.order.payment.price),

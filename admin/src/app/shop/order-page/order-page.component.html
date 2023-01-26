@@ -3,6 +3,26 @@
     <h3>Заказ № {{order.number}}</h3>
     <hr>
     <div class="row col-12">
+      <div class="col-6">
+        <h4>Покупатель</h4>
+        <h5>{{order.surname}}</h5>
+        <h5>{{order.name}}</h5>
+        <h5>{{order.patronymic}}</h5>
+        <h5>{{order.tel}}</h5>
+        <h5>{{order.email}}</h5>
+      </div>
+      <div class="col-6">
+        <h4>Организация</h4>
+        <h5>{{order.org_name}}</h5>
+        <h5>{{order.org_activity}}</h5>
+        <h5>{{order.org_actual_address}}</h5>
+        <h5>{{order.org_legal_address}}</h5>
+        <h5>{{order.org_tel}}</h5>
+        <h5>{{order.org_email}}</h5>
+      </div>
+    </div>
+    <hr>
+    <div class="row col-12">
       <div class="col-4">
         <h4>Название товара</h4>
       </div>
@@ -54,7 +74,7 @@
         <h4>Способ оплаты:</h4>
       </div>
       <div class="col-3">
-        <h4>Оплачено:</h4>
+        <h4>Сумма:</h4>
       </div>
     </div>
     <div class="row col-12">
@@ -63,8 +83,10 @@
           <option *ngFor="let sts of statuses" [value]="sts">{{sts}}</option>
         </select>
       </div>
-      <div class="col-3">
-        <h4>{{order.payment.status}}</h4>
+      <div class="col-3" formGroupName="payment">
+        <select class="form-select form-select-lg" formControlName="status">
+          <option *ngFor="let meth of paids" [value]="meth">{{meth}}</option>
+        </select>
       </div>
       <div class="col-3" formGroupName="payment">
         <select class="form-select form-select-lg" formControlName="method">
@@ -72,11 +94,8 @@
         </select>
       </div>
       <div class="col-3 row">
-        <div class="col-6" formGroupName="payment">
-          <input type="number" class="form-control" formControlName="paid">
-        </div>
         <div class="col-6">
-          <h4>из {{order.payment.total}} руб.</h4>
+          <h4>{{order.payment.total}} руб.</h4>
         </div>
       </div>
     </div>

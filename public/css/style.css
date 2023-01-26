@@ -887,18 +887,19 @@ a.rectangle-19-14:hover {
   background: #FFA556;
 }
 
-.dropdown-menu {
-  display: none;
-}
+@media (min-width:1200px){
+  .dropdown-menu {
+    display: none;
+  }
 
-.dropdown-menu a {
-  display: block;
-}
+  .dropdown-menu a {
+    display: block;
+  }
 
-.dropdown:hover .dropdown-menu {
-  display: block;
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
 }
-
 
 
 .circle-grey-button:hover {

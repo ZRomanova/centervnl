@@ -82,7 +82,7 @@ function payByCard(formData) {
 function noPayOrder(formData) {
 
   let data = {
-
+    "payment.method": formData.get("payment[method]"),
     addressee_type: formData.get('addressee_type'),
     name: formData.get('name'),
     surname: formData.get('surname'),

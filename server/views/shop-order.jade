@@ -117,11 +117,11 @@ block content
                       .text-400-16 Номер банковской карты
                       input.text-input.mt-2.card__field#numCard(type='text' placeholder="Например, 1111  2222  3333  4444" disabled data-cp="cardNumber" autocomplete="off")
 
-                    .col-6.mt-3
+                    .col-12.col-md-6.mt-3
                       .text-400-16 Владелец карты
                       input.text-input.mt-2.card__field#nameOwner(type='text' placeholder="Например, Ivan Fedorov" disabled data-cp="name" autocomplete="off")
 
-                    .col-6.mt-3
+                    .col-12.col-md-6.mt-3
                       .d-flex.flex-row
                         .me-1
                           .text-400-16 Дата
@@ -133,12 +133,12 @@ block content
  
             .mt-5 
               .form-check.col-12.mt-2
-                input#defaultCheck1.form-check-input(type='checkbox' value='' required checked)
+                input#defaultCheck1.form-check-input(type='checkbox' value='' required)
                 label.form-check-label(for='defaultCheck1')
                   span.text-400-16 Я принимаю условия договора-оферты
 
               .form-check.col-12.mt-2
-                input#defaultCheck2.form-check-input(type='checkbox' value='' required checked)
+                input#defaultCheck2.form-check-input(type='checkbox' value='' required)
                 label.form-check-label(for='defaultCheck2')
                   span.text-400-16 Я соглашаюсь 
                     a(href='/policy' target="_blank") на обработку своих персональных данных
