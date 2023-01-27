@@ -9,7 +9,7 @@ mixin slider(gallery)
     .carousel-inner
       each item in gallery
         .carousel-item.item-a 
-          img.slider__image(src= item alt='Картинка' loading="lazy")
+          img.slider__image(src= item alt='Картинка' style='width: 70%; aspect-ratio: 980 / 548;')
           
     if gallery.length > 1
       button.carousel-control-prev(type='button' data-bs-target='#slider' data-bs-slide='prev')
