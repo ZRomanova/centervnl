@@ -8,7 +8,7 @@ body {
   overflow: hidden !important;
   overflow-y: auto !important;
 }
-@font-face {
+/* @font-face {
   font-family: Montserrat;
   src: url(../fonts/Montserrat-Regular.woff) format("woff");
   font-weight: 400;
@@ -35,7 +35,7 @@ body {
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-}
+} */
 * {
   box-sizing: border-box;
   color: #30333a;

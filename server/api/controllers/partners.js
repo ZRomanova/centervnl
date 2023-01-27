@@ -3,7 +3,16 @@ const errorHandler = require('../utils/errorHandler')
 
 module.exports.getPartners = async function(req, res, next) {
     try {
-        const partners = await Partner.find().sort({name: 1}).lean()
+        const filter = {}
+        const fields = {}
+        for (const str in req.query) {
+            if (str.length > 7 && str.substring(0, 7) === "filter_") {
+                filter[str.slice(7)] = req.query[str]
+            } else if (str.length > 7 && str.substring(0, 7) === "fields_" && (+req.query[str] == 1 || +req.query[str] == 0)) {
+                fields[str.slice(7)] = +req.query[str]
+            }
+        }
+        const partners = await Partner.find(filter, fields).sort({name: 1}).lean()
         next(req, res, partners)
     } catch (e) {
         errorHandler(res, e)

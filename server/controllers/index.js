@@ -289,8 +289,10 @@ const renderDocsPage = function(req, res, data) {
 module.exports.getPartnersPage = async function(req, res,) {
     try {
         const result = {}
+        req.query.filter_visible = true
+        req.query.filter_image = {"$exists": true, "$nin": [null, '']}
         await apiPartners.getPartners(req, res, (req, res, partners) => {
-            result.partners = partners.filter(p => p.image)
+            result.partners = partners
         })
         req.params.type = "PARTNERS"
         await apiData.getByType(req, res, (req, res, data) => {
@@ -487,7 +489,7 @@ module.exports.getErrorPage = async function(req, res) {
             message: res.locals.message,
             status: res.statusCode
         }
-
+        req.query.filter_visible = true
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, data) => {
             result.contacts = data
