@@ -101,13 +101,6 @@ body {
   line-height: 39px;
   
 }
-.header__social {
-  width: 8vw;
-  min-width: 148px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 .header__links {
   display: flex;
   justify-content: space-between;
