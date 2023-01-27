@@ -72,6 +72,7 @@ svg {
 }
 
 #navbarToggler {
+  position: relative;
   box-sizing: border-box;
   color: #30333a;
   font-family: Montserrat;
@@ -79,4 +80,15 @@ svg {
   align-items: center;
   display: flex!important;
   flex-basis: auto;
+}
+
+.header__links-list {
+  color: #30333a;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.d-none {
+  display: none;
 }

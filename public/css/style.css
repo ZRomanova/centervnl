@@ -111,6 +111,13 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
+.header__social {
+  width: 8vw;
+  min-width: 148px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .header__links-dropped:hover, .header__links-list:hover, 
 .header__links-dropped:focus, .header__links-list:focus {
   color: #F78C2E;
