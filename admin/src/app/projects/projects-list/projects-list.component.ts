@@ -55,7 +55,7 @@ export class ProjectsListComponent implements OnInit, OnDestroy {
     this.oSub = this.projectsService.fetch(params).subscribe(projects => {
       this.projects = projects
       this.projects.forEach(project => {
-        project.dateStr = `${project.period.end ? '' : 'c '}${this.datePipe.transform(project.period.start, 'dd.MM.yyyy')} ${project.period.end ? '- ' + this.datePipe.transform(project.period.end, 'dd.MM.yyyy') : ''}`
+        project.dateStr = `${this.datePipe.transform(project.period.start, 'dd.MM.yyyy') + ' - ' + this.datePipe.transform(project.period.end, 'dd.MM.yyyy')}`
       })
       this.noMore = projects.length < this.limit
       this.loading--

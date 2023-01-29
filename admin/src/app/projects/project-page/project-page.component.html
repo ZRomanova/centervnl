@@ -71,8 +71,13 @@
                     <span class="btn btn-custom col-2 col-sm-1" (click)="deleteProgramByIndex(i)">
                         <i class="fa fa-trash"></i>
                     </span>
-                    <h5 class="mt-2">Описание на страницы программы:</h5>
+                    <h5 class="mt-2">Описание на странице проекта в рамках программы программы:</h5>
                     <textarea class="form-control" formControlName="description" rows="5"></textarea>
+
+                    <div class="form-check form-switch mt-2">
+                        <input class="form-check-input mt-1" type="checkbox" formControlName="form">
+                        <h5>Показывать форму записи в проект на странице проекта</h5>
+                    </div>
                 </div>
             </div>
         </ng-container>
@@ -93,7 +98,6 @@
     </form>
 </div>
 
-<!-- <app-hypertext-modal *ngIf="htModal" (close)="closeHtModal($event)"></app-hypertext-modal> -->
 
 <ng-template #loader>
     <app-loader></app-loader>

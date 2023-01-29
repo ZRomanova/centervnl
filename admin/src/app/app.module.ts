@@ -57,6 +57,8 @@ import { LibraryPageComponent } from './library/library-page/library-page.compon
 import { LibraryLayoutComponent } from './library/library-layout/library-layout.component';
 import { ParentsListComponent } from './library/parents-list/parents-list.component';
 import { ParentsPageComponent } from './library/parents-page/parents-page.component';
+import { FormsListComponent } from './users/forms-list/forms-list.component';
+import { FormsPageComponent } from './users/forms-page/forms-page.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,9 @@ import { ParentsPageComponent } from './library/parents-page/parents-page.compon
     LibraryPageComponent,
     LibraryLayoutComponent,
     ParentsListComponent,
-    ParentsPageComponent
+    ParentsPageComponent,
+    FormsListComponent,
+    FormsPageComponent
   ],
   imports: [
     BrowserModule,

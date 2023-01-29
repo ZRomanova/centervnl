@@ -1063,7 +1063,14 @@ a.rectangle-19-14:hover {
   max-width: 100%;
 }
 
-
+.grey-style-img {
+  -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(100%);
+}
+.grey-style-img:hover {
+  -webkit-filter: grayscale(0%); /* Safari 6.0 - 9.0 */
+  filter: grayscale(0%);
+}
 
 #map {
   padding: 0; margin: 0;

@@ -4,6 +4,7 @@ const apiPrograms = require('../api/controllers/programs')
 const apiProjects = require('../api/controllers/projects')
 const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
+const apiForms = require('../api/controllers/forms')
 const apiDocs = require('../api/controllers/docs')
 const apiReports = require('../api/controllers/reports')
 const apiRegistrations = require('../api/controllers/registrations')
@@ -12,6 +13,8 @@ const apiPosts = require('../api/controllers/posts')
 const apiPress = require('../api/controllers/press')
 const moment = require('moment')
 moment.locale('ru')
+
+
 
 module.exports.getHomePage = async function(req, res, data = {}) {
     try {
@@ -65,10 +68,6 @@ const renderHomePage = function(req, res, data) {
     })
     
 }
-
-
-
-
 
 module.exports.getProfilePage = async function(req, res,) {
     try {
@@ -220,15 +219,9 @@ const renderProfileOrders = function(req, res, data) {
 }
 
 
-
-
-
-
-
-
 module.exports.submitForm = async function(req, res) {
     try {
-        await apiUser.fillForm(req)
+        await apiForms.fillForm(req)
         res.redirect(req.headers.referer)
     } catch (e) {
         console.log(e)

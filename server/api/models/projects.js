@@ -23,14 +23,14 @@ const projectSchema = new Schema({
       type: Date
     },
   },
-  tags: {
-    ref: 'tags',
-    type: [mongoose.Types.ObjectId]
-  },
-  partners: {
-    ref: 'partners',
-    type: [mongoose.Types.ObjectId]
-  },
+  // tags: {
+  //   ref: 'tags',
+  //   type: [mongoose.Types.ObjectId]
+  // },
+  // partners: {
+  //   ref: 'partners',
+  //   type: [mongoose.Types.ObjectId]
+  // },
   created: {
     type: Date,
     default: Date.now
@@ -58,7 +58,8 @@ const projectSchema = new Schema({
       ref: 'programs',
       type: Schema.Types.ObjectId
     },
-    description: String
+    description: String,
+    form: Boolean
   }]
 })
 

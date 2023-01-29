@@ -41,6 +41,8 @@ import { LibraryLayoutComponent } from './library/library-layout/library-layout.
 import { ParentsListComponent } from './library/parents-list/parents-list.component';
 import { ParentsPageComponent } from './library/parents-page/parents-page.component';
 import { ShopPageComponent } from './shop/shop-page/shop-page.component';
+import { FormsListComponent } from './users/forms-list/forms-list.component';
+import { FormsPageComponent } from './users/forms-page/forms-page.component';
 
 const routes: Routes = [
   {
@@ -57,10 +59,13 @@ const routes: Routes = [
         {path: '', component: UsersListComponent},
         {path: 'team', component: StaffsListComponent},
         {path: 'wins', component: WinsListComponent},
+        {path: 'forms', component: FormsListComponent},
       ]},
       {path: 'users/:id', component: UserPageComponent},
+      {path: 'users/forms/:id', component: FormsPageComponent},
       {path: 'users/team/:id', component: StaffPageComponent},
       {path: 'users/wins/:id', component: WinPageComponent},
+      {path: 'users/forms/:id', component: FormsPageComponent},
       {path: 'programs', component: ProjectsLayoutComponent, children: [
         {path: '', component: ProgramsListComponent},
         {path: 'projects', component: ProjectsListComponent},

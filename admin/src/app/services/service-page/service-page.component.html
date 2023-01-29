@@ -25,7 +25,7 @@
             </div>
         </div>
         
-        <h5>Описание <i class="fa-solid fa-circle-info text-blue-hover" (click)="openHtModal()"></i></h5>
+        <h5>Описание</h5>
         <textarea class="form-control" formControlName="description" rows="15"></textarea>
 
         <div class="row" formGroupName="date">
@@ -137,7 +137,7 @@
         <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusToGallery()">
             <i class="fa fa-plus"></i>
         </button>
-        <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery>
+        <!-- <app-horizontal-gallery [data]="form.value.gallery" (delete)="deleteURLByIndex($event)"></app-horizontal-gallery> -->
 
         <div class="form-check form-switch mt-2">
             <input class="form-check-input mt-1" type="checkbox" id="flexSwitchCheckChecked" formControlName="visible">

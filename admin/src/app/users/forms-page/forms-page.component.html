@@ -1,0 +1,35 @@
+<div class="col" *ngIf="loading == 0; else loader">
+
+  <h3>Ответ на контактную форму</h3>
+
+  <div class="row mt-5">
+
+    <h4 class="col-4">Страница, с которой отправлен ответ</h4>
+    
+    <h4 class="col-8">
+      <a [href]="item.page" target="_blank">{{item.page}}</a>
+    </h4>
+  </div>
+  <hr>
+  <div class="row">
+    <ng-container *ngFor="let q of item.answers">
+      <div class="col-4">
+        <h4>{{q.question}}</h4>
+      </div>
+      <div class="col-8">
+        <h5>{{q.answer}}</h5>
+      </div>
+
+    </ng-container>
+  </div>
+  <hr>
+  <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
+      Назад
+  </button>
+
+</div>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

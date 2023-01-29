@@ -65,6 +65,7 @@ module.exports.getProgramProjectPage = async function(req, res, data = {}) {
 
         await apiProjects.getProjectByPath(req, res, (req, res, project) => {
             let currProj = project.programs.find(item => String(item.program) == String(result.program._id))
+            project.form = currProj ? currProj.form : false
             if (currProj && currProj.description) {
                 project.description = currProj.description
             }

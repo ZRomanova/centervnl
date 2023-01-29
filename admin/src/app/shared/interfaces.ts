@@ -88,6 +88,7 @@ export interface Project {
     programs: [{
         program: string
         description: string
+        form: boolean
     }]
     // tags?: string[],
     // partners?: string[],
