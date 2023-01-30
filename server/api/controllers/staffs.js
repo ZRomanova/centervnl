@@ -1,5 +1,6 @@
 const Staff = require('../models/staffs')
 const User = require('../models/users')
+const translit = require('../utils/translit')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.getStaffs = async function(req, res, next) {

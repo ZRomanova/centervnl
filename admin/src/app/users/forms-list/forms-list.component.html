@@ -30,16 +30,16 @@
               <a [href]="item.page" target="_blank">{{item.page}}</a>
             </td>
             <td class="col-2 text-center">
-              <p>{{item.email}}</p>
+              <p class="desc-text">{{item.email}}</p>
             </td>
             <td class="col-2 text-center">
-              <p>{{item.tel}}</p>
+              <p class="desc-text">{{item.tel}}</p>
             </td>
             <td class="col-2 text-center">
-              <p>{{item.name}}</p>
+              <p class="desc-text">{{item.name}}</p>
             </td>
             <td class="col-2 text-center">
-              <p>{{item.created | date:"dd.MM.yyyy"}}</p>
+              <p class="desc-text">{{item.created | date:"dd.MM.yyyy"}}</p>
             </td>
             <td class="col-1 text-center">
               <a class="btn btn-custom" role="button" (click)="goToItem(item._id)">

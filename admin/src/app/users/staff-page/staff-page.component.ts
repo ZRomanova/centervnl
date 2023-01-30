@@ -30,12 +30,28 @@ export class StaffPageComponent implements OnInit, OnDestroy {
      }
 
   ngOnInit(): void {
-    this.teamService.fetchById(this.id).subscribe(user => {
-      this.user = user
-      this.imagePreview = this.user.image
-      this.data()
+    if (this.id === 'new') this.id = null
+    if (this.id) {
+      this.teamService.fetchById(this.id).subscribe(user => {
+        this.user = user
+        this.imagePreview = this.user.image
+        this.data()
+        this.loading --
+      })
+    } else {
+      this.form = new FormGroup({
+        name: new FormControl(null, Validators.required),
+        surname: new FormControl(null, Validators.required),
+        position: new FormControl(null),
+        image: new FormControl(null),
+        visible: new FormControl(true),
+        description: new FormControl(null),
+        education: new FormControl(null),
+        path: new FormControl(null),
+        degree: new FormControl(null),
+      })
       this.loading --
-    })
+    }
     this.teamService.fetchPositions().subscribe(positions => {
       this.positions = positions
       this.loading --
@@ -72,19 +88,34 @@ export class StaffPageComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     const data = {...this.form.value}
-
-    this.oSub = this.teamService.update(this.id, data).subscribe(result1 => {
-      if (this.image) {
-        this.iSub = this.teamService.upload(this.id, this.image).subscribe(result2 => {
-          this.user = result2
+    if (this.id) {
+      this.oSub = this.teamService.update(this.id, data).subscribe(result1 => {
+        if (this.image) {
+          this.iSub = this.teamService.upload(this.id, this.image).subscribe(result2 => {
+            this.user = result2
+            this.data()
+            this.image = null
+          })
+        } else {
+          this.user = result1
           this.data()
-          this.image = null
-        })
-      } else {
-        this.user = result1
-        this.data()
-      }
-    })
+        }
+      })
+    } else {
+      this.oSub = this.teamService.create(data).subscribe(result1 => {
+        this.id = result1._id
+        if (this.image) {
+          this.iSub = this.teamService.upload(this.id, this.image).subscribe(result2 => {
+            this.user = result2
+            this.image = null
+            this.router.navigate(['users', 'team', this.id])
+          })
+        } else {
+          this.user = result1
+          this.router.navigate(['users', 'team', this.id])
+        }
+      })
+    }
   }
 
 
