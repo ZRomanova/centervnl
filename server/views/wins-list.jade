@@ -14,9 +14,9 @@ block content
       .row.mx-xl-5.about__wrapper
         each item in wins
           .col-12.col-lg-6 
-            a(href= item.path)
+            a(href= 'https://centervnl.ru/wins/'+item.path)
               if item.image
-                img.review__image.mb-3.mt-2(alt=item.name src=item.image)
+                img.review__image.mb-3.mt-2(alt='https://centervnl.ru/wins/'+item.name src=item.image)
               else 
                 .review__image.mb-3.mt-2.d-none.d-lg-block
               .title-600-20.mb-3= item.name
