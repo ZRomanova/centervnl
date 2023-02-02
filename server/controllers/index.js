@@ -361,6 +361,45 @@ const renderPolicyPage = function(req, res, data) {
     })
 }
 
+module.exports.getDonorOfferPage = async function(req, res,) { 
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        await apiPartners.getPartners(req, res, (req, res, partners) => {
+            result.partners = partners
+        })
+        await apiProjects.getActive(req, res, (req, res, projects) => {
+            result.projects = projects
+        })
+
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        renderDonorOfferPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderDonorOfferPage = function(req, res, data) {
+    res.render('offer-donor', {
+        title: 'Публичная оферта',
+        contacts: data.contacts,
+        programs: data.programs,
+        user: data.user,
+        shops: data.shops
+    })
+}
 
 module.exports.getSmiPage = async function(req, res,) {
     try {

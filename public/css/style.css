@@ -655,6 +655,18 @@ a.news__subtitle:hover {
 .text-500-16-dark {
   color: #1E2639;
 }
+.text-500-20 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  /* or 21px */
+  color: #656973;
+}
+.text-500-20-dark {
+  color: #1E2639;
+}
 .text-600-12 {
   font-family: 'Montserrat';
   font-style: normal;
@@ -667,6 +679,24 @@ a.news__subtitle:hover {
   align-items: center;
   
   color: #30333A;
+}
+.text-700-16-dark {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  /* or 21px */
+  color: #1E2639;
+}
+.text-700-16-blue {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  /* or 21px */
+  color: #02B2B6;
 }
 .text-600-12-orange {
   font-family: 'Montserrat';
@@ -1265,6 +1295,7 @@ input::-webkit-inner-spin-button {
 .system-logo {
   display: inline-block;
   max-width: 80px;
+  max-height: 25px;
 }
 
 .button[disabled] {
