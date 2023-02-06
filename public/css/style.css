@@ -8,34 +8,6 @@ body {
   overflow: hidden !important;
   overflow-y: auto !important;
 }
-/* @font-face {
-  font-family: Montserrat;
-  src: url(../fonts/Montserrat-Regular.woff) format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: Montserrat;
-  src: url(../fonts/Montserrat-Medium.woff) format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: Montserrat;
-  src: url(../fonts/Montserrat-SemiBold.woff) format("woff");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: Montserrat;
-  src: url(../fonts/Montserrat-Bold.woff) format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-} */
 * {
   box-sizing: border-box;
   color: #30333a;
@@ -861,6 +833,10 @@ a, a:visited, a:link, a:focus, a:hover, a:active {
 
 .text-400-14 a {
   color: #F78C2E;
+}
+
+.link-bold a {
+  color: #F78C2E;
   font-weight: 700;
   /* text-decoration: underline; */
 }
@@ -1295,7 +1271,7 @@ input::-webkit-inner-spin-button {
 .system-logo {
   display: inline-block;
   max-width: 80px;
-  max-height: 25px;
+  height: 25px;
 }
 
 .button[disabled] {
