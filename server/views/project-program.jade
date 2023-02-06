@@ -12,7 +12,7 @@ block content
             |  #{program.name}
 
         .col-6.back__subtitle-top.text-end 
-          +share("/projects/"+project.path, project.name)
+          +share("/programs/"+program.path+"/"+project.path, project.name)
 
         .col-12.header__subtitle.title= project.name
         .col-12.grants__date.mt-2 #{project.date}
