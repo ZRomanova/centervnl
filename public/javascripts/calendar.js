@@ -163,6 +163,12 @@ function getId(id) {
 
 function getAnouncementsByDay(day) {
 
+  let date = new Date(day)
+  let d = date.getDate()
+  let m = date.getMonth()
+
+  let months =['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
+
   $.ajax({ 
     url: `/api/services/day/${day}`,  
     dataType: 'json',
@@ -178,7 +184,7 @@ function getAnouncementsByDay(day) {
         $('#slider_buttons').addClass("d-none")
       }
       let many = data.length > 2? 'col-lg-4' : ''
-      let list = ''
+      let list = `<div class="title-500-32 mb-3">Расписание на ${d} ${months[m]}</div>`
       let list_arr =[]
       let element = ``
       for (let i = 0; i < data.length; i++) {
@@ -188,7 +194,7 @@ function getAnouncementsByDay(day) {
         element += `<div class="mt-3">${data[i].description}</div>`
         data[i].dates.forEach(date => {
           list_arr.push({name: data[i].name, path: data[i].path, ...date})
-          element += `<div class="title-700-20 mt-3">${date.str}</div>`
+          element += `<div class="title-700-20 mt-3">${date.dateStr} ${date.timeStr}</div>`
         })
         
         element += `<a type="submit" class="button button_orange mt-3 mb-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
@@ -197,9 +203,9 @@ function getAnouncementsByDay(day) {
       }
       list_arr.sort((a, b) => a.num - b.num)
       list_arr.forEach(date => {
-        list += `<a href="${date.path}?date=${date.str}">
+        list += `<a href="${date.path}?date=${date.dateStr} ${date.timeStr}">
         <div class="title-700-20 mb-1">${date.name}</div>
-        <div class="title-700-16 mb-4">${date.str}</div></a>`
+        <div class="title-700-16 mb-4">${date.timeStr}</div></a>`
       })
 
       $('#events_gallary')[0].innerHTML = element
