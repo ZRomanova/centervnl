@@ -1,6 +1,75 @@
 extends layout
 
 block content
+  style(type='text/css').
+    @media (min-width: 768px) {
+    /* show 3 items */
+    .carousel-inner .active,
+    .carousel-inner .active + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
+    display: block;
+    }
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+    transition: none;
+    }
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev {
+    position: relative;
+    transform: translate3d(0, 0, 0);
+    }
+    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: absolute;
+    top: 0;
+    right: -25%;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+    }
+    /* left or forward direction */
+    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+    }
+    /* farthest right hidden item must be abso position for animations */
+    .carousel-inner .carousel-item-prev.carousel-item-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    visibility: visible;
+    }
+    /* right or prev direction */
+    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    position: relative;
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+    display: block;
+    visibility: visible;
+    }
+    }
+    /* Bootstrap Lightbox using Modal */
+    #profile-grid { overflow: auto; white-space: normal; }
+    #profile-grid .profile { padding-bottom: 40px; }
+    #profile-grid .panel { padding: 0 }
+    #profile-grid .panel-body { padding: 15px }
+    #profile-grid .profile-name { font-weight: bold; }
+    #profile-grid .thumbnail {margin-bottom:6px;}
+    #profile-grid .panel-thumbnail { overflow: hidden; }
+    #profile-grid .img-rounded { border-radius: 4px 4px 0 0;}
   section.about
     .container
       .row.mx-xl-5
@@ -26,20 +95,13 @@ block content
           .d-flex.justify-content-between.col-12.calendar-container#divCal
 
 
-        .col-12.col-lg
-          .row
-            .col-12#slider_buttons.d-none
-              svg.circle-grey-button(data-bs-target='#slider' data-bs-slide='prev' width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
-                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
-                path(d="M16 23.5L28.75 16.1388L28.75 30.8612L16 23.5Z" fill="#656973")
-
-              svg.circle-grey-button.ms-2(data-bs-target='#slider' data-bs-slide='next' width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg")
-                circle(cx="24" cy="24" r="24" fill="#E7E6E6")
-                path(d="M32 23.5L19.25 30.8612L19.25 16.1388L32 23.5Z" fill="#656973")
-
-          .carousel.slide(data-bs-touch='false' data-bs-interval='false' id='slider')
-            .carousel-inner#events_gallary
+        .col-12.col-lg#events_list
+          
               
+        .col-12
+          .row#events_gallary
+
 
 block scripts
+
   script(src='/javascripts/calendar.js')

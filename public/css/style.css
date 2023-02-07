@@ -518,6 +518,8 @@ body {
   width: -moz-fit-content;
   width: fit-content;
   width: 100%;
+  object-fit: cover;
+  aspect-ratio: 5 / 3;
   border-radius: 8px;
 }
 .rows-4 {
@@ -603,7 +605,7 @@ a.news__subtitle:hover {
   line-height: 150%;
   color: #656973;
 }
-.title-700-16 a {
+.title-700-16 a, .text-500-16 a {
   color: #FFA556;
 }
 .text-500-14 {

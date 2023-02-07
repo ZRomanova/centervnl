@@ -177,22 +177,33 @@ function getAnouncementsByDay(day) {
         $('#slider_buttons').removeClass("d-block")
         $('#slider_buttons').addClass("d-none")
       }
+      let many = data.length > 2? 'col-lg-4' : ''
+      let list = ''
+      let list_arr =[]
+      let element = ``
       for (let i = 0; i < data.length; i++) {
-        let active = i == 0 ? "active" : ''
-        let element = `<div class="carousel-item ${active}">`
+        element += `<div class="col-12 col-md-6 ${many} mt-3">`
         element += `<div class="program__subtitle">${data[i].name}</div>`
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
         data[i].dates.forEach(date => {
-          element += `<div class="title-700-20 mt-3">${date}</div>`
+          list_arr.push({name: data[i].name, path: data[i].path, ...date})
+          element += `<div class="title-700-20 mt-3">${date.str}</div>`
         })
         
-        element += `<a type="submit" class="button button_orange mt-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
+        element += `<a type="submit" class="button button_orange mt-3 mb-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
         element += `</div>`
 
-        $('#events_gallary').append(element)
       }
+      list_arr.sort((a, b) => a.num - b.num)
+      list_arr.forEach(date => {
+        list += `<a href="${date.path}?date=${date.str}">
+        <div class="title-700-20 mb-1">${date.name}</div>
+        <div class="title-700-16 mb-4">${date.str}</div></a>`
+      })
 
+      $('#events_gallary')[0].innerHTML = element
+      $('#events_list')[0].innerHTML = list
     }
   });
 }
@@ -209,3 +220,6 @@ function getAnouncementsByMonth(date) {
     }
   });
 }
+
+
+

@@ -90,9 +90,42 @@ const renderServicePage = function(req, res, data) {
 module.exports.createRegistration = async (req, res) => {
     try {
         await apiRegistrations.create(req, res, (req, res, reg) => {
-            res.redirect(req.headers.referer)
+            res.redirect("/services/finish")
         })
     } catch (e) {
         console.log(e)
     }
+}
+
+module.exports.getRegistrationFinish = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        renderRegistrationFinish(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderRegistrationFinish  = function(req, res, data) {
+    res.render('service-finish', {
+        title: 'Вы зарегистрированы!',
+        programs: data.programs, 
+        contacts: data.contacts, 
+        session: req.session,
+        shops: data.shops
+    })  
 }

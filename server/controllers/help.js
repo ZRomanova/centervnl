@@ -162,8 +162,7 @@ const renderDonateFinish  = function(req, res, data) {
         session: req.session,
         // ip: req.ip,
         shops: data.shops
-    })
-    
+    })  
 }
 
 
