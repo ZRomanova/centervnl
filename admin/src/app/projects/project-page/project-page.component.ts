@@ -83,8 +83,8 @@ export class ProjectPageComponent implements OnInit {
       gallery: new FormArray(this.project.gallery.map(el => new FormControl(el))),
       description: new FormControl(this.project.description),
       period: new FormGroup({
-        start: new FormControl(this.project.period.start ? this.datePipe.transform(this.project.period.start, 'yyyy-MM-dd') : null),
-        end: new FormControl(this.project.period.end ? this.datePipe.transform(this.project.period.end, 'yyyy-MM-dd') : null)
+        start: new FormControl(this.project.period.start ? this.datePipe.transform(this.project.period.start, 'yyyy-MM-dd', 'UTC +3') : null),
+        end: new FormControl(this.project.period.end ? this.datePipe.transform(this.project.period.end, 'yyyy-MM-dd', 'UTC +3') : null)
       }),
       programs: new FormArray(!this.project.programs ? [] : this.project.programs.map(program => {
         return new FormGroup({

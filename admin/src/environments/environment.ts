@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  // url: 'https://centervnl.ru'
   url: 'http://localhost:5001'
 };
 

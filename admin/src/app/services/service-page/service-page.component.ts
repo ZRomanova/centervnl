@@ -1,13 +1,9 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Partner, Period, PriceList, Project, Service, Tag } from 'src/app/shared/interfaces';
-import { PartnersService } from 'src/app/shared/transport/partners.service';
-import { ProjectService } from 'src/app/shared/transport/project.service';
-import { ServiceService } from 'src/app/shared/transport/service.service';
-import { TagService } from 'src/app/shared/transport/tag.service';
+import { Partner, Period, PriceList, Project, Service, Tag } from 'src/app/shared/interfaces';import { ServiceService } from 'src/app/shared/transport/service.service';
 
 @Component({
   selector: 'app-service-page',
@@ -58,22 +54,9 @@ export class ServicePageComponent implements OnInit {
     }
   ]
 
-  projects: Project[]
-  projectsSelected: string[] = []
-  tags: Tag[]
-  tagsSelected: string[] = []
-  partners: Partner[]
-  partnersSelected: string[] = []
-
-  pSub: Subscription
-  ptSub: Subscription
-  tSub: Subscription
 
   constructor(private activateRoute: ActivatedRoute,
-    private projectsService: ProjectService,
-    private tagsService: TagService,
     private servicesService: ServiceService,
-    private partnersService: PartnersService,
     private datePipe: DatePipe,
     private router: Router ) { 
     this.id = this.activateRoute.snapshot.params['id']; }
@@ -83,11 +66,9 @@ export class ServicePageComponent implements OnInit {
       if (this.id) {
         this.servicesService.fetchById(this.id).subscribe(service => {
           this.service = service
+          console.log(service)
           this.imagePreview = this.service.image
           this.data()
-          // this.tagsSelected = this.service.tags ? this.service.tags : []
-          // this.partnersSelected = this.service.partners ? this.service.partners : []
-          // this.projectsSelected = this.service.projects ? this.service.projects: []
           this.loading --
         })
       } else {
@@ -108,15 +89,6 @@ export class ServicePageComponent implements OnInit {
         })
         this.loading --
       }
-      // this.pSub = this.projectsService.fetch({'fields_name': 1, 'filter_visible': 1}).subscribe(result => {
-      //   this.projects = result
-      // })
-      // this.tSub = this.tagsService.fetch().subscribe(result => {
-      //   this.tags = result
-      // })
-      // this.ptSub = this.partnersService.fetch().subscribe(result => {
-      //   this.partners = result
-      // })
     }
   
     data() {
@@ -131,7 +103,7 @@ export class ServicePageComponent implements OnInit {
         address: new FormControl(this.service.address),
         priceList: new FormArray(this.service.priceList.map(pl => this.createPriceListFormGroup(pl))),
         date: new FormGroup({
-          single: new FormArray(this.service.date.single.map(d => new FormControl(this.datePipe.transform(d, 'yyyy-MM-ddTHH:mm'), Validators.required))),
+          single: new FormArray(this.service.date.single.map(d => new FormControl(this.datePipe.transform(d, 'yyyy-MM-ddTHH:mm', 'UTC +3'), Validators.required))),
           period: new FormArray(this.service.date.period.map(p => this.createPeriodFormGroup(p)))
         })
       })
@@ -163,8 +135,8 @@ export class ServicePageComponent implements OnInit {
 
     private createPeriodFormGroup(period: Period): FormGroup {
       return new FormGroup({
-        start: new FormControl(this.datePipe.transform(period.start, 'yyyy-MM-dd'), Validators.required),
-        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd') : null, Validators.required),
+        start: new FormControl(this.datePipe.transform(period.start, 'yyyy-MM-dd', 'UTC +3'), Validators.required),
+        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd', 'UTC +3') : null, Validators.required),
         time: new FormControl(typeof period.time == 'number' ? this.intToStringDate(period.time) : period.time),
         visible: new FormControl(period.visible),
         day: new FormControl(period.day, Validators.required)
@@ -258,22 +230,6 @@ export class ServicePageComponent implements OnInit {
       this.galleryPreview.splice(i, 1)
       this.gallery.splice(i, 1)
     }
-
-    // clickTag(id) {
-    //   let index = this.tagsSelected.indexOf(id)
-    //   if (index > -1) this.tagsSelected.splice(index, 1)
-    //   else this.tagsSelected.push(id)
-    // }
-    // clickProject(id) {
-    //   let index = this.projectsSelected.indexOf(id)
-    //   if (index > -1) this.projectsSelected.splice(index, 1)
-    //   else this.projectsSelected.push(id)
-    // }
-    // clickPartner(id) {
-    //   let index = this.partnersSelected.indexOf(id)
-    //   if (index > -1) this.partnersSelected.splice(index, 1)
-    //   else this.partnersSelected.push(id)
-    // }
   
     onSubmit() {
       const dateFG = this.form.controls.date as FormGroup
@@ -281,7 +237,7 @@ export class ServicePageComponent implements OnInit {
       for (let item of periods.value) {
         item.time = this.stringToIntDate(item.time)
       }
-      const data = {...this.form.value, tags: this.tagsSelected, projects: this.projectsSelected, partners: this.partnersSelected}
+      const data = {...this.form.value}
       if (this.id) {
         this.oSub = this.servicesService.update(this.id, data).subscribe(result1 => {
           if (this.image || this.gallery.length) {
@@ -326,9 +282,6 @@ export class ServicePageComponent implements OnInit {
     ngOnDestroy(): void {
       if (this.oSub) this.oSub.unsubscribe()
       if (this.iSub) this.iSub.unsubscribe()
-      if (this.pSub) this.pSub.unsubscribe()
-      if (this.ptSub) this.ptSub.unsubscribe()
-      if (this.tSub) this.tSub.unsubscribe()
     }
 
 }

@@ -163,12 +163,6 @@ function getId(id) {
 
 function getAnouncementsByDay(day) {
 
-  let date = new Date(day)
-  let d = date.getDate()
-  let m = date.getMonth()
-
-  let months =['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря']
-
   $.ajax({ 
     url: `/api/services/day/${day}`,  
     dataType: 'json',
@@ -184,7 +178,8 @@ function getAnouncementsByDay(day) {
         $('#slider_buttons').addClass("d-none")
       }
       let many = data.length > 2? 'col-lg-4' : ''
-      let list = `<div class="title-500-32 mb-3">Расписание на ${d} ${months[m]}</div>`
+      console.log(data)
+      let list = `<div class="title-500-32 mb-3">Расписание на ${data[0].dates[0].dateStr}</div>`
       let list_arr =[]
       let element = ``
       for (let i = 0; i < data.length; i++) {

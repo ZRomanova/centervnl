@@ -71,13 +71,6 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
     this.oSub = this.checkoutsService.fetch(this.id, this.date, params).subscribe(checkouts => {
       this.checkouts = checkouts
       this.checkouts.forEach((item: any) => {
-        // item.image = item.user.photo
-        // item.description = item.info
-        // item.dateStr = item.status
-        // item.email =  item.email
-        // item.name =  `${item.email} | ${item.surname} ${item.name} ${item.patronymic}`
-        // item.name =  `${item.email} | ${item.surname} ${item.name} ${item.patronymic}`
-        // item.name =  `${item.email} | ${item.surname} ${item.name} ${item.patronymic}`
         item.statusColor = this.colorStatuses[item.status]
       })
       this.noMore = this.checkouts.length < this.limit

@@ -4,7 +4,7 @@
   <ng-container *ngIf="dates && dates.length; else noDates">
     <ng-container *ngFor="let chd of dates">
       <button class="btn me-2" role="button" (click)="newDate(chd)" [ngClass]="{'btn-warning': chd == date, 'btn-custom': chd != date}">
-        {{chd | date:"dd.MM.yyyy HH:mm"}}
+        {{chd | date:"dd.MM.yyyy HH:mm":"UTC +3"}}
       </button>
     </ng-container>
   </ng-container>

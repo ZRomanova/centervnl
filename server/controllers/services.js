@@ -1,5 +1,3 @@
-const apiPartners = require('../api/controllers/partners')
-const apiProjects = require('../api/controllers/projects')
 const apiServices = require('../api/controllers/services')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiShops = require('../api/controllers/shops')
