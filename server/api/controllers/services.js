@@ -55,7 +55,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                 event.date.single.sort()
                 event.date.single.forEach(date => {
                     if (moment(date) > start && moment(date) < end) {
-                        results[len-1].dates.push({dateStr: moment(date).format('D MMMM'), num: Date.parse(date), timeStr: moment(date).format('HH:mm')})
+                        results[len-1].dates.push({num: Date.parse(date), timeStr: moment(date).format('HH:mm')})
                         if (results[len-1].dates.length == 1) {
                             results[len-1].firstSort = Date.parse(date)
                             results[len-1].firstDate = moment(date).format('D MMMM HH:mm')
@@ -82,7 +82,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                             let time = intToStringTime(p.time)
                             let dateTime = new Date(queryDate).setHours(time[0], time[1])
 
-                            results[index].dates.push({dateStr: moment(dateTime).format('D MMMM'), num: dateTime, timeStr: moment(dateTime).format('HH:mm')})
+                            results[index].dates.push({num: dateTime, timeStr: moment(dateTime).format('HH:mm')})
                             if (results[index].dates.length == 1) {
                                 results[index].firstSort = dateTime
                                 results[index].firstDate = moment(dateTime).format('D MMMM HH:mm')
@@ -97,7 +97,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
 
         results.sort((a, b) => a.firstSort - b.firstSort)
 
-        next(req, res, results)
+        next(req, res, {date: moment(queryDate).format('D MMMM'), events: results})
     } catch (e) {
         console.log(e)
         errorHandler(res, e)

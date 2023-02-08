@@ -166,7 +166,9 @@ function getAnouncementsByDay(day) {
   $.ajax({ 
     url: `/api/services/day/${day}`,  
     dataType: 'json',
-    success: function(data) {
+    success: function(results) {
+      let data = results.events ? results.events : []
+
       $('.calendar-item').removeClass("calendar-item-checked")
       $('#'+day).addClass('calendar-item-checked')
       $( ".carousel-item" ).remove();
@@ -178,8 +180,10 @@ function getAnouncementsByDay(day) {
         $('#slider_buttons').addClass("d-none")
       }
       let many = data.length > 2? 'col-lg-4' : ''
-      console.log(data)
-      let list = `<div class="title-500-32 mb-3">Расписание на ${data[0].dates[0].dateStr}</div>`
+      let list = `<div class="title-500-32 mb-3">Расписание на ${results.date}</div>`
+      if (!data.length)  {
+        list += `<div class="title-700-20 mb-1">Мероприятий нет</div>`
+      }
       let list_arr =[]
       let element = ``
       for (let i = 0; i < data.length; i++) {
@@ -189,7 +193,7 @@ function getAnouncementsByDay(day) {
         element += `<div class="mt-3">${data[i].description}</div>`
         data[i].dates.forEach(date => {
           list_arr.push({name: data[i].name, path: data[i].path, ...date})
-          element += `<div class="title-700-20 mt-3">${date.dateStr} ${date.timeStr}</div>`
+          element += `<div class="title-700-20 mt-3">${results.date} ${date.timeStr}</div>`
         })
         
         element += `<a type="submit" class="button button_orange mt-3 mb-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
@@ -198,7 +202,7 @@ function getAnouncementsByDay(day) {
       }
       list_arr.sort((a, b) => a.num - b.num)
       list_arr.forEach(date => {
-        list += `<a href="${date.path}?date=${date.dateStr} ${date.timeStr}">
+        list += `<a href="${date.path}?date=${results.date} ${date.timeStr}">
         <div class="title-700-20 mb-1">${date.name}</div>
         <div class="title-700-16 mb-4">${date.timeStr}</div></a>`
       })
