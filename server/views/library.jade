@@ -25,15 +25,15 @@ block content
 
     if post.content && post.content.length
       .container
-        .row.mx-xl-5
-          .mt-5 
-            each item in post.content 
-              if item.type == "ВИДЕО"
-                .col-12.mt-3.mb-3
-                  +video(item.url)
+        .row.mx-xl-5.mt-5 
+          
+          each item in post.content 
+            if item.type == "ВИДЕО"
+              .col-12.mt-3.mb-3
+                +video(item.url)
 
-              if item.type != "ВИДЕО"
-                .col-12.col-md-6.col-lg-4.mt-3 
-                  .row.d-flex.align-items-center
-                    a.doc-icon.d-inline-block(href= item.url target="_blank")
-                    a.news__subtitle.col.ms-2(href= item.url target="_blank")= item.text || item.type
+            if item.type != "ВИДЕО"
+              .col-12.col-md-6.col-lg-4.mt-3 
+                .row.d-flex.align-items-center
+                  a.doc-icon.d-inline-block(href= item.url target="_blank")
+                  a.news__subtitle.col.ms-2(href= item.url target="_blank")= item.text || item.type
