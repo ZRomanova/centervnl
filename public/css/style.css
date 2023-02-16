@@ -524,10 +524,18 @@ body {
 }
 .rows-4 {
   overflow: hidden;
+  position: relative;
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+}
+.relative {
+  position: relative;
+}
+.relative a, .relative a:hover {
+  position: relative;
+  color: #FFA556;
 }
 .news__text {
   padding: 20px 20px 20px 20px;

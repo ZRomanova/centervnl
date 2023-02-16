@@ -21,5 +21,6 @@ block content
                 .review__image.mb-3.mt-2.d-none.d-lg-block
               .title-600-20.mb-3= item.name
 
-              .text-500-14.rows-4.mb-5= item.description
+              .text-500-14.mb-5
+                +rows-4(item.description)
         
