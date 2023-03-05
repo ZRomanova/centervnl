@@ -12,4 +12,6 @@ router.post('/donate/finish', controller.createDonationFinish)
 router.post('/donate/subscribe', controller.createSubscription)
 router.get('/donate/subscribe', controller.getSubscriptionFinish)
 
+router.get('/volunteer', controller.getHelpVolunteer)
+
 module.exports = router;

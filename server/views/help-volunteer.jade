@@ -1,0 +1,113 @@
+extends layout
+
+block content
+
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/help/') Как помочь
+        .col-12.header__subtitle.title Стать волонтёром
+
+        .col-12.mt-5
+          | Приглашаем Вас стать волонтером Центра "Вера. Надежда. Любовь". 
+          br
+          | Мы предлагаем нашим волонтерам:
+          br
+          | - выступить партнерами по общению для молодых людей с ментальными нарушениями с помощью коммуникатора ЭМО;
+          br
+          | - поделиться с ними своими супер навыками;
+          br
+          | - принять участие в системных программах;
+          br
+          | - помочь технической команде и многое другое.
+          br
+          | Подробнее о волонтерской программе можно почитать <a href="https://centervnl.ru/programs/volontyori">здесь</a>.
+          br
+          | Если вы хотите присоединиться к команде волонтеров, заполните, пожалуйста, анкету ниже. 
+          br
+          | Если у вас есть вопросы, задайте их <a href="https://centervnl.ru/contacts">здесь</a>. 
+          br
+          | Мы обязательно с вами свяжемся!
+ 
+
+      form#form.row.mx-xl-5.mt-5(action="/form" method="post")
+        .col-12.col-md-6.mt-3
+          .text-400-16 Имя
+          input.d-none(name="q_name" value="Имя")
+          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+
+        .col-12.col-md-6.mt-3
+          .text-400-16 Ваш возраст
+          input.d-none(name="q_age" value="Ваш возраст")
+          input.text-input.mt-2(type='text' name='age' autocomplete='off' placeholder="Например, 25 лет" required)
+        
+        .col-12.col-md-6.mt-3
+          .text-400-16 Телефон
+          input.d-none(name="q_tel" value="Телефон")
+          input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
+
+        .col-12.col-md-6.mt-3
+          .text-400-16 Email для связи
+          input.d-none(name="q_email" value="Email для связи")
+          input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+
+        .col-12.mt-3
+          .text-400-16 Ссылки на социальные сети, если есть
+          input.d-none(name="q_networks" value="Ссылки на социальные сети, если есть")
+          textarea.text-input.mt-2(name='networks' autocomplete='off' placeholder="Укажите основные")
+
+        .col-12.mt-3
+          .text-400-16 Текущий род деятельности (отметьте одну или несколько строчек)
+          input.d-none(name="q_roles" value="Текущий род деятельности (отметьте одну или несколько строчек)")
+          .row 
+            .col-12.col-sm-6.col-md-3.mt-2
+              input#defaultCheck1.form-check-input(type='checkbox' value='Школьник' name='roles')
+              label.form-check-label(for='defaultCheck1') Школьник
+
+            .col-12.col-sm-6.col-md-3.mt-2
+              input#defaultCheck2.form-check-input(type='checkbox' value='Студент' name='roles')
+              label.form-check-label(for='defaultCheck2') Студент
+
+            .col-12.col-sm-6.mt-2
+              input#defaultCheck3.form-check-input(type='checkbox' value='Работаю' name='roles')
+              label.form-check-label(for='defaultCheck3') Работаю
+
+            .col-12.col-sm-6.col-md-3.mt-2
+              input#defaultCheck4.form-check-input(type='checkbox' value='Пенсионер' name='roles')
+              label.form-check-label(for='defaultCheck4') Пенсионер
+
+            .col-12.col-sm-6.mt-2
+              input#defaultCheck6.form-check-input(type='checkbox' value='Другое' name='roles')
+              label.form-check-label(for='defaultCheck6') Другое
+
+        .col-12.mt-3
+          .text-400-16 Есть ли опыт волонтерской деятельности?
+          input.d-none(name="q_experience" value="Есть ли опыт волонтерской деятельности?")
+          textarea.text-input.mt-2(name='experience' autocomplete='off' placeholder="Если да, укажите, какой" required)
+
+        .col-12.mt-3
+          .text-400-16 Почему вы решили стать волонтёром, что хотели бы получить от волонтёрства?
+          input.d-none(name="q_motivation" value="Почему вы решили стать волонтёром или что хотели бы получить от волонтерства?")
+          textarea.text-input.mt-2(name='motivation' autocomplete='off' placeholder="Укажите мотивацию" required)
+
+        - var forces = ['Фотографирую', 'Снимаю и монтрую видео', 'Есть машина и я её вожу', 'Люблю читать и писать тексты', 'Умею вязать', 'Хорошо рисую', 'Имею опыт работы в столярной мастерской', 'Имею опыт работы в типографии', 'Умею шить', 'Владею дизайнерскими программами', 'Программирую', 'Играю музыкальных инструментах', 'Знаю рецепт суперблюда', 'Готов рассказать о своей профессии', 'Работаю в Сбере', 'Свой вариант, расскажу']
+        .col-12.mt-3
+          .text-400-16 Ваша «Суперсила»
+          input.d-none(name="q_force" value="Ваша «Суперсила»")
+          .row 
+            each item, i in forces
+              .col-12.col-md-6.mt-2
+                input.form-check-input(type='checkbox' value=item name='force' id='forceCheck'+i)
+                label.form-check-label.d-inline(for='forceCheck'+i)= item
+
+        .mt-4 
+          .col-12.mt-2 
+            span.text-400-16 Нажимая на кнопку, вы даете 
+              a(href='/policy' target="_blank") согласие на обработку своих персональных данных
+
+        .mt-4
+          button.button.button_orange(type='submit') Отправить
+
+block scripts
+  script(src='/javascripts/valid-form.js')

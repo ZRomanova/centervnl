@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        .col-12.header__subtitle.title Спасибо за заполненную анкету!
+        .col-12.mt-5.text-500-16 
+          | Мы обязательно с вами свяжемся. Если появятся какие-то вопросы, просим написать нам на 
+          a(href="mailto:"+contacts.email)= contacts.email
+        .text-500-16.mt-3
+
+        .col-12.mt-5
+          button.news__button.button.button_orange(onclick="history.back();") Вернуться назад

@@ -144,13 +144,13 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                         let startP = new Date(p.start) //period start
                         let endP = p.end ? new Date(p.end) : new Date(Date.parse(new Date()) + 1000 * 60 * 60 * 24 * 30) //period end
                         
-                        
-                        if (startP < end && start < endP) {
+                        // console.log(startP, endP)
+                        if (startP <= end && start <= endP) {
  
                             let day = week.find(el => el.ru == p.day)?.num
                             let startDay = new Date(start).getDay()
-
                             let currI = start > startP ? start : startP
+
                             while (day != startDay) {
                                 currI = new Date(Date.parse(currI) + 1000 * 60 * 60 * 24)
                                 startDay = new Date(currI).getDay()
@@ -167,6 +167,8 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
                 })
             }
         }
+
+        // console.log('month', results)
 
         next(req, res, results)
     } catch (e) {

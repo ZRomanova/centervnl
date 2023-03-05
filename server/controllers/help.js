@@ -304,3 +304,39 @@ const renderSubscriptionFinish  = function(req, res, data) {
     })
     
 }
+
+
+module.exports.getHelpVolunteer = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        renderHelpVolunteer (req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderHelpVolunteer  = function(req, res, data) {
+    res.render('help-volunteer', {
+        title: 'Стать волонтером | Ресурсный центр Вера Надежда Любовь',
+        programs: data.programs, 
+        contacts: data.contacts, 
+        session: req.session,
+        error: req.query.error,
+        shops: data.shops
+    })
+    
+}

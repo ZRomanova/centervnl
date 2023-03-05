@@ -222,12 +222,45 @@ const renderProfileOrders = function(req, res, data) {
 module.exports.submitForm = async function(req, res) {
     try {
         await apiForms.fillForm(req)
-        res.redirect(req.headers.referer)
+        res.redirect('/form-sent')
     } catch (e) {
         console.log(e)
     }
 }
 
+module.exports.finishForm = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderFinishForm(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderFinishForm = function(req, res, data) {
+    res.render('form-finish', {
+        title: 'Ошибка',
+        programs: data.programs,
+        contacts: data.contacts,
+        session: req.session,
+        shops: data.shops
+    })
+    
+}
 
 
 module.exports.getDocsPage = async function(req, res) {
