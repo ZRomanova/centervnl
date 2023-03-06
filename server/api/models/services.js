@@ -59,7 +59,9 @@ const serviceSchema = new Schema({
         type: Schema.Types.ObjectId
     },
     time: Date
-  }
+  },
+  url: String,
+  is_partner: Boolean
 })
 
 

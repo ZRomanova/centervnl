@@ -40,7 +40,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                     }
                 }]
             },{
-                name: 1, path: 1, image: 1, description: 1, date: 1
+                name: 1, path: 1, image: 1, description: 1, date: 1, is_partner: 1, url: 1
             }).lean()
             
         results = []
@@ -94,6 +94,10 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                 })
             }
         }
+
+        // console.log(results)
+
+        results = results.filter(item => item.dates && item.dates.length)
 
         results.sort((a, b) => a.firstSort - b.firstSort)
 

@@ -184,27 +184,31 @@ function getAnouncementsByDay(day) {
       if (!data.length)  {
         list += `<div class="title-700-20 mb-1">Мероприятий нет</div>`
       }
-      let list_arr =[]
+      let list_arr = []
       let element = ``
       for (let i = 0; i < data.length; i++) {
         element += `<div class="col-12 col-md-6 ${many} mt-3">`
         element += `<div class="program__subtitle">${data[i].name}</div>`
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
+        let url = data[i].is_partner ? data[i].url : `https://centervnl.ru/services/${data[i].path}?date=${data[i].firstDate}`
+        
         data[i].dates.forEach(date => {
-          list_arr.push({name: data[i].name, path: data[i].path, ...date})
+          list_arr.push({name: data[i].name, path: url, is_partner: data[i].is_partner, ...date})
           element += `<div class="title-700-20 mt-3">${results.date} ${date.timeStr}</div>`
         })
         
-        element += `<a type="submit" class="button button_orange mt-3 mb-3" href="${data[i].path}?date=${data[i].firstDate}">Зарегистрироваться</a>`
+        element += `<a type="button" class="button button_${data[i].is_partner ? 'blue' : 'orange'} mt-3 mb-3" href="${url}">Зарегистрироваться</a>`
         element += `</div>`
 
       }
       list_arr.sort((a, b) => a.num - b.num)
       list_arr.forEach(date => {
-        list += `<a href="${date.path}?date=${results.date} ${date.timeStr}">
-        <div class="title-700-20 mb-1">${date.name}</div>
-        <div class="title-700-16 mb-4">${date.timeStr}</div></a>`
+        console.log(date)
+        list += `<a href="${date.path}?date=${results.date} ${date.timeStr}">`
+        if (date.is_partner) list += `<div class="text-700-16-blue mb-1">Партнёрское мероприятие</div>`
+        list += `<div class="title-700-20 mb-1">${date.name}</div>`
+        list += `<div class="title-700-16 mb-4">${date.timeStr}</div></a>`
       })
 
       $('#events_gallary')[0].innerHTML = element
