@@ -253,7 +253,7 @@ module.exports.finishForm = async function(req, res) {
 
 const renderFinishForm = function(req, res, data) {
     res.render('form-finish', {
-        title: 'Ошибка',
+        title: 'Форма отправлена',
         programs: data.programs,
         contacts: data.contacts,
         session: req.session,

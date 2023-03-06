@@ -1,4 +1,5 @@
 const Form = require('../models/forms')
+const errorHandler = require('../utils/errorHandler')
 
 
 module.exports.fillForm = async function(req) {
@@ -15,11 +16,11 @@ module.exports.fillForm = async function(req) {
           data.answers.push({
             code: item,
             question: req.body[str],
-            answer: req.body[item]
+            answer: String(req.body[item])
           })
         }
       }
-  }
+    }
     await new Form(data).save()
   } catch (e) {
     errorHandler(res, e)
