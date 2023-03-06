@@ -12,9 +12,7 @@ module.exports.getOrders = async function(req, res, next) {
         const fields = {}
         for (const str in req.query) {
             if (str.length > 7 && str.substring(0, 7) === "filter_") {
-                if (str.slice(-4) == 'user') {
-                    filter.user = mongoose.Types.ObjectId(req.query[str])
-                } else if (str.slice(-6) == 'number') {
+                if (str.slice(-6) == 'number') {
                     if (req.query[str] == 'true') {
                         filter.number = {$exists: true}
                     } else {
@@ -28,29 +26,13 @@ module.exports.getOrders = async function(req, res, next) {
                 fields[str.slice(7)] = +req.query[str]
             }
         }
-
-        const products = await Order.aggregate([
-            { $match: filter },
-            { $project: fields },
-            { $sort: {group: 1, name: 1}},
-            { $skip:  +req.query.offset},
-            { $limit:  +req.query.limit},
-            { $lookup:
-                {
-                    from: 'users',
-                    localField: 'user',
-                    foreignField: '_id',
-                    as: 'user'
-                }
-            },
-        ])
-        for (const product of products) {
-            if (product.user && product.user.length) {
-                product.user = product.user[0]
-            } else {
-                product.user = null
-            }
-        }
+        
+        const products = await Order.find(filter, fields)
+        .skip(+req.query.offset)
+        .limit(+req.query.limit)
+        .sort({number: -1})
+        .lean()
+        
         next(req, res, products)
     } catch (e) {
         errorHandler(res, e)
