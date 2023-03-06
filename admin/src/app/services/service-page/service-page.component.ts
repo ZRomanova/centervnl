@@ -66,7 +66,6 @@ export class ServicePageComponent implements OnInit {
       if (this.id) {
         this.servicesService.fetchById(this.id).subscribe(service => {
           this.service = service
-          console.log(service)
           this.imagePreview = this.service.image
           this.data()
           this.loading --
@@ -75,6 +74,8 @@ export class ServicePageComponent implements OnInit {
         this.form = new FormGroup({
           name: new FormControl('', Validators.required),
           path: new FormControl(''),
+          is_partner: new FormControl(false),
+          url: new FormControl(''),
           visible: new FormControl(true),
           image: new FormControl(''),
           peopleLimit: new FormControl(null),
@@ -95,6 +96,8 @@ export class ServicePageComponent implements OnInit {
       this.form = new FormGroup({
         name: new FormControl(this.service.name, Validators.required),
         path: new FormControl(this.service.path),
+        is_partner: new FormControl(this.service.is_partner),
+        url: new FormControl(this.service.url),
         visible: new FormControl(this.service.visible),
         image: new FormControl(this.service.image),
         peopleLimit: new FormControl(this.service.peopleLimit),
@@ -107,6 +110,8 @@ export class ServicePageComponent implements OnInit {
           period: new FormArray(this.service.date.period.map(p => this.createPeriodFormGroup(p)))
         })
       })
+
+      // console.log(this.form.controls.is_partner.value)
     }
 
     private createPriceListFormGroup(item: PriceList): FormGroup {
@@ -136,7 +141,7 @@ export class ServicePageComponent implements OnInit {
     private createPeriodFormGroup(period: Period): FormGroup {
       return new FormGroup({
         start: new FormControl(this.datePipe.transform(period.start, 'yyyy-MM-dd', 'UTC +3'), Validators.required),
-        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd', 'UTC +3') : null, Validators.required),
+        end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd', 'UTC +3') : null),
         time: new FormControl(typeof period.time == 'number' ? this.intToStringDate(period.time) : period.time),
         visible: new FormControl(period.visible),
         day: new FormControl(period.day, Validators.required)
@@ -264,12 +269,12 @@ export class ServicePageComponent implements OnInit {
               this.galleryPreview = []
               this.service = result2
               this.id = this.service._id
-              this.router.navigate(['services', result1._id])
+              this.router.navigate(['services', this.id])
             })
           } else {
             this.service = result1
             this.id = this.service._id
-            this.router.navigate(['services', result1._id])
+            this.router.navigate(['services', this.id])
           }
         })
       }

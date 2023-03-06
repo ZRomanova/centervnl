@@ -134,16 +134,15 @@ export interface Service {
     created?: Date,
     likes?: User[],
     date: {
-        single: Date[],
+        single: Date[]
         period: Period[]
     },
     visible: boolean,
-    image: string,
-    tags?: string[],
-    dateStr: string,
-    gallery: string[],
-    projects?: string[],
-    partners?: string[],
+    image: string
+    dateStr: string
+    gallery: string[]
+    is_partner: boolean
+    url?: string
 }
 
 export interface Post {

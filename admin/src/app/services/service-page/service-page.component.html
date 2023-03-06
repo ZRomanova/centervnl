@@ -14,6 +14,18 @@
 
                 <h5>Путь:</h5>
                 <input type="text" class="form-control" formControlName="path" placeholder="Необязательно">
+
+                <h5>Отметьте, если регистрация на внешнем сайте</h5>
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input mt-1" type="checkbox" id="switchCheckChecked1" formControlName="is_partner">
+                    <div>Партнерское мероприятие</div>
+                </div>
+                <ng-container *ngIf="form.controls.is_partner.value">
+                    <h5>Ссылка на регистрацию:</h5>
+                    <input type="text" class="form-control" formControlName="url"
+                    placeholder="На внешний сайт">
+                </ng-container>
+
                 <h5>Обложка из файла:</h5>
                 <input type="file" class="form-control" (change)="onFileUpload($event)">
                 <h5>Обложка по ссылке:</h5>
@@ -102,23 +114,6 @@
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-12" *ngIf="tags && tags.length">
-                <h5>Теги:</h5>
-                <button *ngFor="let tag of tags" (click)="clickTag(tag._id)" class="btn m-1" style="color: #fff"
-                [ngClass]="{'bg-success': tagsSelected.includes(tag._id), 'bg-danger': !tagsSelected.includes(tag._id)}">{{tag.name}}</button>
-            </div>
-            <div class="col-12" *ngIf="tags && tags.length">
-                <h5>Проекты:</h5>
-                <button *ngFor="let tag of projects" (click)="clickProject(tag._id)" class="btn m-1" style="color: #fff"
-                [ngClass]="{'bg-success': projectsSelected.includes(tag._id), 'bg-danger': !projectsSelected.includes(tag._id)}">{{tag.name}}</button>
-            </div>
-            <div class="col-12" *ngIf="tags && tags.length">
-                <h5>Партнёры:</h5>
-                <button *ngFor="let partner of partners" (click)="clickPartner(partner._id)" class="btn m-1" style="color: #fff"
-                [ngClass]="{'bg-success': partnersSelected.includes(partner._id), 'bg-danger': !partnersSelected.includes(partner._id)}">{{partner.name}}</button>
-            </div>
-        </div> -->
 
         <h5>Добавить в галерею из файлов:</h5>
         <input type="file" class="form-control" (change)="onGalleryUpload($event)" multiple>

@@ -191,12 +191,12 @@ export class ProjectPageComponent implements OnInit {
             this.gallery = []
             this.galleryPreview = []
             this.id = this.project._id
-            this.router.navigate(['projects', result2._id])
+            this.router.navigate(['projects', this.id])
           })
         } else {
           this.project = result1
           this.id = this.project._id
-          this.router.navigate(['projects', result1._id])
+          this.router.navigate(['projects', this.id])
         }
       })
     }
