@@ -13,5 +13,6 @@ router.post('/donate/subscribe', controller.createSubscription)
 router.get('/donate/subscribe', controller.getSubscriptionFinish)
 
 router.get('/volunteer', controller.getHelpVolunteer)
+router.get('/million-prizov', controller.getHelpMillionPrizov)
 
 module.exports = router;
