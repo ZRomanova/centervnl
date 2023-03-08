@@ -46,7 +46,11 @@ module.exports.getFilesServer = async function(req, res) {
 
 module.exports.getFilesGallery = async function(req, res) {
   try {
-    let files = await Gallery.find().lean()
+    let files = await Gallery
+    .find()
+    .limit(+req.query.limit)
+    .skip(+req.query.limit * +req.query.page)
+    .lean()
     res.status(200).json(files)
   } catch (e) {
       errorHandler(res, e)
