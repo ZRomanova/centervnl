@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const Gallery = require('../models/gallery')
 const errorHandler = require('../utils/errorHandler')
-const GALLERY_TYPES = ['jpeg', 'jpg', 'png']
+const GALLERY_TYPES = ['jpeg', 'jpg', 'png', 'webp']
 
 module.exports.getFilesServer = async function(req, res) {
   try {
