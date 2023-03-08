@@ -1,5 +1,6 @@
 var block_show = false;
 const limit = 12
+var no_more = false
 
 function scrollMore(){
 	var $target = $('#showmore_triger');
@@ -8,12 +9,13 @@ function scrollMore(){
 		return false;
 	}
  
+  
 	var wt = $(window).scrollTop();
 	var wh = $(window).height();
 	var et = $target.offset()?.top;
 	var eh = $target.outerHeight();
 	var dh = $(document).height();   
-	if (wt + wh >= et || wh + wt == dh || eh + et < wh){
+	if (!no_more && !block_show && (wt + wh >= et || wh + wt == dh || eh + et < wh)){
     var page = $target.attr('data-page');	
 		
 		block_show = true;
@@ -23,7 +25,7 @@ function scrollMore(){
 			dataType: 'json',
 			success: function(data) {
 				block_show = false;
-        console.log(data)
+        // console.log(data)
         for (const item of data) {
           $('#gallery_container').append(
           `<div class="col-12 col-md-6 col-lg-4 col-xl-3">
@@ -37,6 +39,7 @@ function scrollMore(){
         $target.attr('data-page', page)
 
         if (data.length < limit) {
+          no_more = true
           $target.remove();
         }
 			}
