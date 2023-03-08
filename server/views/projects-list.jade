@@ -15,7 +15,7 @@ block content
     .container
       .row.mx-xl-5 
         each project in projects 
-          a.mt-3.mb-3(href= project.path)
+          a.mt-3.mb-3(href= 'https://centervnl.ru/projects/'+ project.path)
             .news__subtitle= project.name
             .grants__date #{project.date}
 
