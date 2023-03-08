@@ -59,6 +59,9 @@ import { ParentsListComponent } from './library/parents-list/parents-list.compon
 import { ParentsPageComponent } from './library/parents-page/parents-page.component';
 import { FormsListComponent } from './users/forms-list/forms-list.component';
 import { FormsPageComponent } from './users/forms-page/forms-page.component';
+import { FilesListComponent } from './files/files-list/files-list.component';
+import { GalleryListComponent } from './files/gallery-list/gallery-list.component';
+import { FilesLayoutComponent } from './files/files-layout/files-layout.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +117,10 @@ import { FormsPageComponent } from './users/forms-page/forms-page.component';
     ParentsListComponent,
     ParentsPageComponent,
     FormsListComponent,
-    FormsPageComponent
+    FormsPageComponent,
+    FilesListComponent,
+    GalleryListComponent,
+    FilesLayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -43,6 +43,9 @@ import { ParentsPageComponent } from './library/parents-page/parents-page.compon
 import { ShopPageComponent } from './shop/shop-page/shop-page.component';
 import { FormsListComponent } from './users/forms-list/forms-list.component';
 import { FormsPageComponent } from './users/forms-page/forms-page.component';
+import { FilesLayoutComponent } from './files/files-layout/files-layout.component';
+import { FilesListComponent } from './files/files-list/files-list.component';
+import { GalleryListComponent } from './files/gallery-list/gallery-list.component';
 
 const routes: Routes = [
   {
@@ -75,6 +78,10 @@ const routes: Routes = [
       {path: 'blog', component: BlogLayoutComponent, children: [
         {path: '', component: PostsListComponent},
         {path: 'smi', component: SmiListComponent},
+      ]},
+      {path: 'files', component: FilesLayoutComponent, children: [
+        {path: '', component: FilesListComponent},
+        {path: 'gallery', component: GalleryListComponent},
       ]},
       {path: 'blog/:id', component: PostPageComponent},
       {path: 'blog/smi/:id', component: SmiPageComponent},

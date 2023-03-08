@@ -23,6 +23,7 @@ router.use('/library', require('./library'))
 router.use('/parents', require('./parents'))
 router.use('/pay', require('./pay'))
 router.use('/forms', require('./forms'))
+router.use('/files', require('./files'))
 
 
 module.exports = router;

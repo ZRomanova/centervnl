@@ -1,0 +1,41 @@
+<div class="container mb-3 mt-5 col-12">
+  <table class="table table-striped">
+      <thead>
+          <tr class="table-primary">
+              <th class="col-1 text-center"><h4>Копировать</h4></th>
+              <th class="col-8"><h4>Путь</h4></th>
+
+              <th class="col-2 text-center"><h4>В галерее</h4></th>
+              <th class="col-1 text-center">
+                <input hidden type="file" multiple #uploads (change)="uploadFiles($event)">
+                <a class="btn btn-custom" role="button">
+                  <i class="fa fa-plus" (click)="clickUploadButton()"></i>
+                </a>
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of files; index as i" class="table-light">
+            <td class="col-1 text-center">
+              <a class="btn btn-custom" role="button" (click)="copyPath(item.url)">
+                <i class="fa-solid fa-copy"></i>
+              </a>
+            </td>
+            <td class="col-8">
+              <a [href]="item.url" target="_blank">{{item.url}}</a>
+            </td>
+            <td class="col-2 text-center">
+              <i class="fa-solid fa-xmark text-danger mark-size" *ngIf="item.gallery === null"></i>
+              <a class="btn btn-custom" role="button" *ngIf="item.gallery !== null" (click)="toggleGallery(item)">
+                <i class="fa fa-eye{{item.gallery ? '' : '-slash'}}"></i>
+              </a>
+            </td>
+            <td class="col-1 text-center">
+              <a class="btn btn-custom" role="button" (click)="deleteFile(item)">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 row-cols-xxxl-6 g-4" *ngIf="files && files.length">
+  <div class="card h-100 m-3" *ngFor="let card of files">
+    <img *ngIf="card.type == 'ФОТО'" [src]="card.path" class="card-img">
+    <h4 *ngIf="card.type == 'ВИДЕО'">
+      <a [href]="card.path" target="_blank">{{card.path}}</a>
+    </h4>
+    <div class="card-body">
+      <p class="card-text" *ngIf="!currentItem || card._id != currentItem._id">{{card.text}}</p>
+      <textarea *ngIf="currentItem && card._id == currentItem._id" [(ngModel)]="currentItem.text" class="form-control"></textarea>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-custom" role="button" (click)="copyPath(card.path)">
+        <i class="fa-solid fa-copy"></i>
+      </a>
+
+      <a class="btn btn-custom ms-2" role="button" (click)="toggleEdit(card)">
+        <i class="fa-solid fa-{{card == currentItem ? 'floppy-disk' : 'pen'}}"></i>
+      </a>
+
+      <a class="btn btn-custom ms-2" role="button" (click)="deleteItem(card)">
+        <i class="fa-solid fa-trash"></i>
+      </a>
+    </div>
+  </div>
+</div>
