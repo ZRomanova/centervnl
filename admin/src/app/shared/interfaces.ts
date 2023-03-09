@@ -69,14 +69,13 @@ export interface Period {
 }
 
 export interface Project {
-    _id?: string,
+    _id?: string
     name: string
-    path: string,
+    path: string
     is_grant: boolean
-    description: string,
-    created?: Date,
-    author?: any,
-    // likes?: User[],
+    description: string
+    created?: Date
+    author?: any
     period: {
         start?: Date,
         end?: Date
@@ -90,8 +89,10 @@ export interface Project {
         description: string
         form: boolean
     }]
-    // tags?: string[],
-    // partners?: string[],
+    content: [{
+        url: string
+        text: string
+    }]
 }
 
 export interface Phrase {
@@ -101,18 +102,18 @@ export interface Phrase {
 }
 
 export interface Program {
-    _id?: string,
+    _id?: string
     name: string
     subtitle: string
-    path: string,
-    text_1: string,
-    text_2: string,
-    text_3: string,
-    text_4: string[],
-    text_5: string,
-    text_6: string,
-    text_button: string,
-    url_button: string,
+    path: string
+    text_1: string
+    text_2: string
+    text_3: string
+    text_4: string[]
+    text_5: string
+    text_6: string
+    text_button: string
+    url_button: string
     video: string
     description: string
     visible: boolean

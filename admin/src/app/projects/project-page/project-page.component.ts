@@ -64,7 +64,8 @@ export class ProjectPageComponent implements OnInit {
           start: new FormControl(null),
           end: new FormControl(null)
         }),
-        programs: new FormArray([])
+        programs: new FormArray([]),
+        content: new FormArray([])
       })
       this.loading --
     }
@@ -91,6 +92,12 @@ export class ProjectPageComponent implements OnInit {
           program: new FormControl(program.program, Validators.required),
           description: new FormControl(program.description),
           form: new FormControl(!!program.form),
+        })
+      })),
+      content: new FormArray(!this.project.content ? [] : this.project.content.map(el => {
+        return new FormGroup({
+          url: new FormControl(el.url, Validators.required),
+          text: new FormControl(el.text),
         })
       }))
     })
@@ -160,6 +167,19 @@ export class ProjectPageComponent implements OnInit {
 
   deleteProgramByIndex(i) {
     const array = this.form.get('programs') as FormArray
+    array.removeAt(i)
+  }
+
+  plusToContent() {
+    const gallery = this.form.get('content') as FormArray
+    gallery.push(new FormGroup({
+      url: new FormControl(null, Validators.required),
+      text: new FormControl(null),
+    }))
+  }
+
+  deleteContentByIndex(i) {
+    const array = this.form.get('content') as FormArray
     array.removeAt(i)
   }
 

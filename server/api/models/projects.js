@@ -23,14 +23,10 @@ const projectSchema = new Schema({
       type: Date
     },
   },
-  // tags: {
-  //   ref: 'tags',
-  //   type: [mongoose.Types.ObjectId]
-  // },
-  // partners: {
-  //   ref: 'partners',
-  //   type: [mongoose.Types.ObjectId]
-  // },
+  content: [{
+    url: String,
+    text: String,
+  }],
   created: {
     type: Date,
     default: Date.now

@@ -35,5 +35,16 @@ block content
         .mt-4
           a.button.button_orange(href="https://centervnl.ru/contacts#form") Задать вопрос
 
+    if project.content && project.content.length
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Документы проекта
+        .row.mx-xl-5.mt-3
+          each item in project.content 
+            .col-12.col-md-6.col-lg-4.mt-3 
+              .row.d-flex.align-items-center
+                a.doc-icon.d-inline-block(href= item.url target="_blank")
+                a.news__subtitle.col.ms-2(href= item.url target="_blank")= item.text || 'Документ'
+
 
 

@@ -57,6 +57,26 @@
             <ng-container *ngIf="form.value.is_grant">
                 <h5>Грантовое описание</h5>
                 <textarea class="form-control" formControlName="description" rows="15"></textarea>
+
+                <h5>Документы и отчёты по гранту</h5>
+                <div formArrayName="content">
+                    <div class="col-12 mb-3" *ngFor="let item of form.controls.content.controls; index as i">
+                      <div [formGroupName]="i" class="row">
+                        <div class="col-6">
+                          <input class="form-control" formControlName="text" placeholder="Подпись">
+                        </div>
+                        <div class="col-5">
+                          <input class="form-control" formControlName="url" placeholder="Ссылка на файл">
+                        </div>
+                        <span class="btn btn-custom col-1" (click)="deleteContentByIndex(i)">
+                          <i class="fa fa-trash"></i>
+                        </span>
+                      </div>
+                    </div>
+                </div>
+                <button class="btn btn-custom mb-3 mt-3" type="button" (click)="plusToContent()">
+                    <i class="fa fa-plus"></i>
+                </button>
             </ng-container>
         </div>
 
@@ -75,7 +95,7 @@
                     <textarea class="form-control" formControlName="description" rows="5"></textarea>
 
                     <div class="form-check form-switch mt-2">
-                        <input class="form-check-input mt-1" type="checkbox" formControlName="form">
+                        <input class="form-check-input mt-3" type="checkbox" formControlName="form">
                         <h5>Показывать форму записи в проект на странице проекта</h5>
                     </div>
                 </div>

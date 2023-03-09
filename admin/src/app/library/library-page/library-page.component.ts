@@ -129,18 +129,17 @@ export class LibraryPageComponent implements OnInit {
         })
       } else {
         this.oSub = this.libraryService.create(this.form.value).subscribe(result1 => {
+          this.item = result1
+          this.id = this.item._id
           if (this.image) {
             this.libraryService.upload(result1._id, this.image).subscribe(result2 => {
               this.image = null
               this.item = result2
               // this.gallery = []
-              this.id = this.item._id
-              this.router.navigate(['library', result2._id])
+              this.router.navigate(['library', this.id])
             })
           } else {
-            this.item = result1
-            this.id = this.item._id
-            this.router.navigate(['library', result1._id])
+            this.router.navigate(['library', this.id])
           }
         })
       }
