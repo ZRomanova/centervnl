@@ -1475,3 +1475,7 @@ input::-webkit-inner-spin-button {
     font-size: 11px;
   }
 }
+
+.form-check-label.d-inline {
+  vertical-align: sub;
+}
