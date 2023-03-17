@@ -32,6 +32,7 @@ const projectSchema = new Schema({
     default: Date.now
   },
   visible: Boolean,
+  video: String,
   path: {
     type: String,
     required: true,

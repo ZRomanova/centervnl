@@ -24,6 +24,8 @@
                 <h5>Обложка по ссылке:</h5>
                 <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
                 placeholder="Добавляйте только общедоступные ссылки">
+                <h5>Ссылка на видео:</h5>
+                <input type="text" class="form-control" formControlName="video">
             </div>
             <div class="col-xs-12 col-sm-6">
                 <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">

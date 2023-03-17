@@ -65,7 +65,8 @@ export class ProjectPageComponent implements OnInit {
           end: new FormControl(null)
         }),
         programs: new FormArray([]),
-        content: new FormArray([])
+        content: new FormArray([]),
+        video: new FormControl(null),
       })
       this.loading --
     }
@@ -94,6 +95,7 @@ export class ProjectPageComponent implements OnInit {
           form: new FormControl(!!program.form),
         })
       })),
+      video: new FormControl(this.project.video),
       content: new FormArray(!this.project.content ? [] : this.project.content.map(el => {
         return new FormGroup({
           url: new FormControl(el.url, Validators.required),

@@ -72,6 +72,7 @@ export interface Project {
     _id?: string
     name: string
     path: string
+    video: string
     is_grant: boolean
     description: string
     created?: Date

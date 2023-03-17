@@ -29,6 +29,16 @@ block content
         .mt-5
           +long-text(project.description)
 
+    if project.video
+      .container
+        .row.mx-xl-5
+          .col-12.header__subtitle.subtitle Видео о проекте
+        .row.mx-xl-5.m-3
+          .col-12.mt-3
+            +video(project.video)
+
+    .container
+      .row.mx-xl-5        
         .mt-3 
           +long-text('Если у вас возникли вопросы, вы можете задать их нам в разделе контакты.')
 

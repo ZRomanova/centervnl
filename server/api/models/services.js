@@ -31,8 +31,7 @@ const serviceSchema = new Schema({
   },
   name: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   date: {
       single: [Date],
