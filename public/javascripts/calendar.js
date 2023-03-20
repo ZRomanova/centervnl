@@ -191,7 +191,7 @@ function getAnouncementsByDay(day) {
         element += `<div class="program__subtitle">${data[i].name}</div>`
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
-        let url = data[i].is_partner ? data[i].url : `https://centervnl.ru/services/${data[i].path}?date=${data[i].firstDate}`
+        let url = data[i].is_partner ? data[i].url : `https://centervnl.ru/services/${data[i].path}`
         
         data[i].dates.forEach(date => {
           list_arr.push({name: data[i].name, path: url, is_partner: data[i].is_partner, ...date})
@@ -204,9 +204,10 @@ function getAnouncementsByDay(day) {
       }
       list_arr.sort((a, b) => a.num - b.num)
       list_arr.forEach(date => {
-        console.log(date)
-        list += `<a href="${date.path}?date=${results.date} ${date.timeStr}">`
-        if (date.is_partner) list += `<div class="text-700-16-blue mb-1">Партнёрское мероприятие</div>`
+        if (date.is_partner) 
+          list += `<a href="${date.path}"><div class="text-700-16-blue mb-1">Партнёрское мероприятие</div>`
+        else 
+          list += `<a href="${date.path}?date=${results.date} ${date.timeStr}">`
         list += `<div class="title-700-20 mb-1">${date.name}</div>`
         list += `<div class="title-700-16 mb-4">${date.timeStr}</div></a>`
       })
