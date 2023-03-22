@@ -4,20 +4,24 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-12.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/about/') О нас
-        .col-12.header__subtitle.title Гранты и субсидии
+        .col-12.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
+        h1.col-12.header__subtitle.title Гранты и субсидии
+      
       .row.mx-xl-5.about__wrapper
         p.target__text
           +long-text(text)
 
 
-  section.about
+  section.about.about__wrapper
     .container
       .row.mx-xl-5 
         each project in projects 
-          a.mt-3.mb-3(href= 'https://centervnl.ru/projects/'+ project.path)
-            .news__subtitle= project.name
-            .grants__date #{project.date}
+          .mt-3.mb-3
+            a(href= 'https://centervnl.ru/projects/'+ project.path)
+              .news__subtitle= project.name
+            a(href= 'https://centervnl.ru/projects/'+ project.path)
+              .grants__date #{project.date}
 
 
           

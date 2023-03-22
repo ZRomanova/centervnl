@@ -4,13 +4,14 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-12.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/about/') О нас
-        .col-12.header__subtitle.title Документы и отчеты
+        .col-12.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
+        h1.col-12.header__subtitle.title Документы и отчеты
       .row.mx-xl-5.about__wrapper
         p.target__text
           +long-text(text)
 
-        .title-500-32.mt-5 Уставные документы
+        h2.title-500-32.mt-5 Уставные документы
           .row 
             each doc in docs 
               .col-12.col-md-6.col-lg-4.mt-3 
@@ -19,7 +20,7 @@ block content
                   a.news__subtitle.col.ms-2(href= doc.file target="_blank")= doc.name
 
 
-        .title-500-32.mt-5 Отчёты
+        h2.title-500-32.mt-5 Отчёты
           .row 
             each report in reports
               if report.annual

@@ -4,11 +4,12 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-6.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/parents/') Родителям
+        .col-6.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/parents/') Родителям
         .col-6.back__subtitle-top.text-end 
           +share("/parents/"+page.path, page.name)
 
-        .col-12.header__subtitle.title= (page.age_text ? (page.age_text  + ' ') : '') + page.name
+        h1.col-12.header__subtitle.title= (page.age_text ? (page.age_text  + ' ') : '') + page.name
 
     - gallery = (page.gallery && page.gallery.length) ? [...page.gallery] : []
     if page.image
@@ -26,7 +27,7 @@ block content
     if page.text_help
       .container
         .row.mx-xl-5
-          .col-12.header__subtitle.subtitle Как мы можем помочь?
+          h2.col-12.header__subtitle.subtitle Как мы можем помочь?
         .row.mx-xl-5
           .target__text.mt-3
             +long-text(page.text_help)
@@ -34,7 +35,7 @@ block content
     
     .container
       .row.mx-xl-5
-        .col-12.header__subtitle.subtitle Как получить помощь? 
+        h2.col-12.header__subtitle.subtitle Как получить помощь? 
     
     .container
       .row.mx-xl-5

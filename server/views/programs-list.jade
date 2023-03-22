@@ -4,9 +4,9 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        .col.about__title.title Что мы делаем
+        h1.col.about__title.title Что мы делаем
 
-  section.about
+  section.about.mt-5
     .container
       .row.mx-xl-5 
         each program in programs 
@@ -17,8 +17,8 @@ block content
               .col-4.col-md-3
                   img.d-block(src= program.icon alt=program.name)
               .col-8.col-md-9.d-flex.flex-column.justify-content-between
-                .program__subtitle= program.name
-                .program__descr= program.subtitle
+                h2.program__subtitle= program.name
+                h3.program__descr= program.subtitle
 
               .col-12.program__text.mt-3.mb-2
                 +long-text(program.description)

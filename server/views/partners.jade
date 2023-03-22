@@ -4,13 +4,14 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-12.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/about/') О нас
-        .col-12.header__subtitle.title Наши партнеры
+        .col-12.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
+        h1.col-12.header__subtitle.title Наши партнеры
       .row.mx-xl-5.about__wrapper
         p.target__text
           +long-text(text)
       
-      .row.mx-xl-5.about__wrapper
+      .row.mx-xl-5
         each partner in partners 
           .col-6.col-lg-3.mt-2.mb-3 
             a.box_1-1.grey-style-img(href= partner.url target="_blank")

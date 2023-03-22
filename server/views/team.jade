@@ -11,14 +11,14 @@ block content
             path.news__link-image(fill-rule='evenodd' clip-rule='evenodd' d='M17.1044 5L19.6044 2.5L17.1044 0V2H0V3H17.1044V5Z' fill='#656973')
           a.back__subtitle-child(href='https://centervnl.ru/team/') 
             |  Наша команда
-        .col-12.header__subtitle.title= `${staff.name} ${staff.surname}`
-        .col-12.title-700-20.title-700-20-light.mt-2= staff.position
-        .col-12.text-400-16.mt-3= staff.education
+        h1.col-12.header__subtitle.title= `${staff.name} ${staff.surname}`
+        h2.col-12.title-700-20.title-700-20-light.mt-2= staff.position
+        h3.col-12.text-400-16.mt-3= staff.education
         if staff.degree 
-          .col-12.text-400-16.mt-3= staff.degree 
+          h4.col-12.text-400-16.mt-3= staff.degree 
         
         if staff.image
-          .col-12.mt-4
+          .col-12.col-md-6.mt-4
             img.review__image(src= staff.image alt= staff.name)
 
         .mt-4 

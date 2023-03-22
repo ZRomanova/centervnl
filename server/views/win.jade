@@ -14,8 +14,11 @@ block content
         .col-12.header__subtitle.title= win.name
 
         if win.image
-          .col-12.mt-4
+          .col-12.col-md-6.mt-4
             img.review__image(src= win.image alt= win.name)
 
         .mt-4 
           +long-text(win.description)
+
+        .col-10
+          a.button.button_blue.mt-5(href='https://centervnl.ru/help/donate/') Сделать пожертвование

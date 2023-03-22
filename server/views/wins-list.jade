@@ -5,13 +5,14 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-12.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/about/') О нас
-        .col-12.header__subtitle.title Наши победы
+        .col-12.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
+        h1.col-12.header__subtitle.title Наши победы
       .row.mx-xl-5.about__wrapper
         p.target__text
           +long-text(text)
       
-      .row.mx-xl-5.about__wrapper
+      .row.mx-xl-5
         each item in wins
           .col-12.col-lg-6 
             a(href= 'https://centervnl.ru/wins/'+item.path)
@@ -19,7 +20,7 @@ block content
                 img.review__image.mb-3.mt-2(alt='https://centervnl.ru/wins/'+item.name src=item.image)
               else 
                 .review__image.mb-3.mt-2.d-none.d-lg-block
-              .title-600-20.mb-3= item.name
+              h2.title-600-20.mb-3= item.name
 
               .text-500-14.mb-5
                 +rows-4(item.description)

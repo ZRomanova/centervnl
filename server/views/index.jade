@@ -10,7 +10,7 @@ block content
     .container
       .row
         img.target__image.d-md-none(src='/img/target/house.png' alt='Схематичный дом' loading="lazy" height="59" width="59")
-        .col.target__title.title Наши цели
+        h1.col.target__title.title Наши цели
       .row
         .d-none.d-md-block.col-md-4
           img.target__image-lg(src='/img/target/house.png' alt='Схематичный дом' loading="lazy")
@@ -29,19 +29,19 @@ block content
   section.top-120
     .container
       .row
-        .col.title Наши программы
+        h1.col.title Наши программы
       .row.program__wrapper
         each program in programs
           a.col-3.p-4.program__card(href= 'https://centervnl.ru/programs/'+program.path)
             .program__img
               img.program__icon(src= program.icon alt=program.name loading="lazy")
-            .program__subtitle= program.name
-            .program__descr= program.subtitle
+            h2.program__subtitle= program.name
+            h3.program__descr= program.subtitle
 
   section.top-120
     .container
       .row
-        .col.result__title.title Результаты нашей работы
+        h1.col.result__title.title Результаты нашей работы
       .row.result__counter
         .col-12.col-lg-4.p-3.result__card.mb-2
           .result__count
@@ -124,7 +124,7 @@ block content
   section.top-120
     .container
       .row
-        .col.principles__title.title Наши принципы
+        h1.col.principles__title.title Наши принципы
       .row.principles__wrapper
         .col-12.col-lg-6.align-items-center.principles__item
           .col-4.d-flex.justify-content-center.align-items-center.principles__img
@@ -156,7 +156,7 @@ block content
   section.top-120
     .container
       .row
-        .col.spport__title.title За 1 год поддержку получили
+        h1.col.spport__title.title За 1 год поддержку получили
       .row
         .col-12.col-md-6.col-lg-4.support__card
           .support__count 824
@@ -180,12 +180,12 @@ block content
   section.top-120
     .container
       .row
-        .col.news__title.title Наши новости
+        h1.col.news__title.title Наши новости
       .row.news__wrapper
         each post in posts
           +post(post, 'news/')
           
-        .col-4
+        .col-10
           a.button.button_blue.mt-5(href='https://centervnl.ru/news/') Все новости
 
 

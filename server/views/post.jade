@@ -4,11 +4,12 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-6.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/news/') Новости
+        .col-6.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/news/') Новости
         .col-6.back__subtitle-top.text-end 
           +share("/news/"+post.path, post.name)
 
-        .col-12.header__subtitle.title= post.name
+        h1.col-12.header__subtitle.title= post.name
         .col-12.news__date.mt-2= post.date
 
     - gallery = (post.gallery && post.gallery.length) ? [...post.gallery] : []

@@ -4,7 +4,8 @@ block content
   section.about
     .container
       .row.mx-xl-5
-        a.col-6.back__subtitle-top.back__subtitle-child(href='https://centervnl.ru/services/') Мероприятия
+        .col-6.back__subtitle-top
+          a.back__subtitle-child(href='https://centervnl.ru/services/') Мероприятия
         .col-6.back__subtitle-top.text-end 
           +share("/services/"+service.path, service.name)
 
@@ -19,7 +20,7 @@ block content
 
     .container
       .row.mx-xl-5  
-        .title-700-32.mt-5= service.name
+        h1.title-700-32.mt-5= service.name
 
       .row.mx-xl-5
         .target__text.mt-5

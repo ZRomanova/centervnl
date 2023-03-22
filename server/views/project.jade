@@ -14,7 +14,7 @@ block content
         .col-6.back__subtitle-top.text-end 
           +share("/projects/"+project.path, project.name)
 
-        .col-12.header__subtitle.title= project.name
+        h1.col-12.header__subtitle.title= project.name
         .col-12.grants__date.mt-2 #{project.date}
 
     - gallery = (project.gallery && project.gallery.length) ? [...project.gallery] : []
@@ -32,7 +32,7 @@ block content
     if project.video
       .container
         .row.mx-xl-5
-          .col-12.header__subtitle.subtitle Видео о проекте
+          h2.col-12.header__subtitle.subtitle Видео о проекте
         .row.mx-xl-5.m-3
           .col-12.mt-3
             +video(project.video)
@@ -48,7 +48,7 @@ block content
     if project.content && project.content.length
       .container
         .row.mx-xl-5
-          .col-12.header__subtitle.subtitle Документы проекта
+          h2.col-12.header__subtitle.subtitle Документы проекта
         .row.mx-xl-5.mt-3
           each item in project.content 
             .col-12.col-md-6.col-lg-4.mt-3 
