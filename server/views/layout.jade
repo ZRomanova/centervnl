@@ -48,7 +48,7 @@ html(lang='ru')
     .root-wrapper
       .wrapper
         header.header
-          nav.navbar.navbar-expand-xl
+          nav.navbar.navbar-expand-xl#up
             .container-fluid
               a.navbar-brand(href='https://centervnl.ru/')
                 img(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом' width="82" height="72")
@@ -123,6 +123,9 @@ html(lang='ru')
         .container.first-container
           block content
 
+
+          a.pageup#pageup(href="#up")
+            img.arrow__up(src="/icons/arrow_up.svg" alt="Кнопка наверх")
 
       footer.footer
         .container

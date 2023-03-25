@@ -94,7 +94,11 @@ function singlePay(formData) {
       })
 
     }).catch((errors) => {
-        console.log(errors)
+      let message = ''
+      if (errors['cardNumber'] === 'CardNumber_Invalid') message = 	"Некорректный номер карты"
+      else if (errors['expDateMonthYear'] === 'ExpDateMonthYear_Invalid') message = "Некорректная дата"
+      else if (errors['ccv'] === 'Cvv_Invalid') message = "Некорректный CVV"
+      $('#error-text')[0].innerText = message
     });
 }
 
