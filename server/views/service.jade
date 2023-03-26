@@ -33,7 +33,7 @@ block content
 
     .container
       
-      if service.active 
+      if service.active && !service.is_partner
         form#form.row.mx-xl-5(action="/services" method="post")
           .col-12.col-md-6.mt-3
             .text-400-16 Имя
@@ -106,6 +106,15 @@ block content
 
           .mt-4
             button.button.button_orange(type='submit') Зарегистрироваться
+
+      else if service.active && service.is_partner
+        .row.mx-xl-5
+          .mt-4 
+            .col-12.mt-2 
+              span.text-400-16 Внимание! Данное мероприятие проводится на нашими партнёрами, поэтому просим зарегистрироваться на их сайте. Количество мест может быть ограничено. Если вы понимаете, что не сможете прийти, просим сообщить об этом организаторам мероприятия.
+
+            .mt-4
+              a.button.button_blue(href=service.url target='_blank') Зарегистрироваться  
 
       else
         .row.mx-xl-5  

@@ -191,7 +191,7 @@ function getAnouncementsByDay(day) {
         element += `<div class="program__subtitle">${data[i].name}</div>`
         element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
-        let url = data[i].is_partner ? data[i].url : `https://centervnl.ru/services/${data[i].path}`
+        let url = `https://centervnl.ru/services/${data[i].path}`
         
         data[i].dates.forEach(date => {
           list_arr.push({name: data[i].name, path: url, is_partner: data[i].is_partner, ...date})

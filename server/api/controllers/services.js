@@ -248,7 +248,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
         
         const service = await Service.findOne(
             {path: req.params.path, visible: true},
-            { date: 1, gallery: 1, name: 1, path: 1, peopleLimit: 1, description: 1, address: 1, image: 1}
+            { date: 1, gallery: 1, name: 1, path: 1, peopleLimit: 1, description: 1, address: 1, image: 1, is_partner: 1, url: 1}
         ).lean()
         
         if (service) {
