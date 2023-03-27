@@ -187,7 +187,7 @@ module.exports.getProductPage = async function(req, res) {
 
 const renderProductPage = function(req, res, data) {
     res.render('shop-product', {
-        title: data.catalog ? data.catalog.name : "Не найдено",
+        title: data.product ? data.product.name : "Не найдено",
         shops: data.shops,
         shop: data.shop,
         basket: data.basket,
