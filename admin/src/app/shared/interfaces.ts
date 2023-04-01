@@ -51,6 +51,11 @@ export interface Staff {
     degree: string
     education: string
     path: string
+    publications: string
+    networks: {
+        vk: string
+        tg: string
+    }
 }
 
 export interface PriceList {

@@ -49,6 +49,11 @@ export class StaffPageComponent implements OnInit, OnDestroy {
         education: new FormControl(null),
         path: new FormControl(null),
         degree: new FormControl(null),
+        networks: new FormGroup({
+          vk: new FormControl(null),
+          tg: new FormControl(null),
+        }),
+        publications: new FormControl(null)
       })
       this.loading --
     }
@@ -69,6 +74,11 @@ export class StaffPageComponent implements OnInit, OnDestroy {
       education: new FormControl(this.user.education),
       path: new FormControl(this.user.path),
       degree: new FormControl(this.user.degree),
+      networks: new FormGroup({
+        vk: new FormControl(this.user.networks ? this.user.networks.vk : null),
+        tg: new FormControl(this.user.networks ? this.user.networks.tg : null),
+      }),
+      publications: new FormControl(this.user.publications)
     })
   }
 

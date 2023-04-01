@@ -20,7 +20,12 @@ const staffSchema = new Schema({
     required: true,
     unique: true
   },
-  education: String
+  education: String,
+  networks: {
+    vk: String,
+    tg: String
+  },
+  publications: String
 })
 
 module.exports = mongoose.model('staffs', staffSchema)

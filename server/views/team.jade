@@ -23,3 +23,16 @@ block content
 
         .mt-4 
           +long-text(staff.description)
+
+        if staff.publications
+          .col-10
+            a.button.button_orange.mt-5(href=staff.publications target="_blank") Научные публикации
+
+        if staff.networks && Object.keys(staff.networks).length
+          .text-400-16.mt-5= `${staff.name} в социальных сетях:` 
+            if staff.networks.vk
+              a.ms-4(href=staff.networks.vk target="_black")
+                img(src='/icons/header/vk_orange.svg' alt='vk')
+            if staff.networks.tg
+              a.ms-4(href=staff.networks.tg target="_black")
+                img(src='/icons/header/telegram_orange.svg' alt='telegram')

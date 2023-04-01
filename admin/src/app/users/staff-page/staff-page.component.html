@@ -28,11 +28,23 @@
               <h5>Фото по ссылке:</h5>
               <input type="text" class="form-control" formControlName="image" (change)="photoURL()"
               placeholder="Добавляйте только общедоступные ссылки">
+              <h5>Ссылка на научные публикации (elibrary):</h5>
+              <input type="text" class="form-control" formControlName="publications" placeholder="Если есть">
 
           </div>
           <div class="col-xs-12 col-sm-6">
               <img *ngIf="imagePreview" [src]="imagePreview" class="img-contain">
           </div>
+      </div>
+
+      <h5>Ссылки на социальные сети члена команды:</h5>
+      <div class="row" formGroupName="networks">
+        <div class="col-xs-12 col-sm-6">
+          <input type="text" class="form-control" formControlName="vk" placeholder="ВКонтакте">
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <input type="text" class="form-control" formControlName="tg" placeholder="Телеграм">
+        </div>
       </div>
       
       <h5>Информация:</h5>

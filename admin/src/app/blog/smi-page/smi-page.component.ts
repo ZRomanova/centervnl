@@ -55,8 +55,8 @@ export class SmiPageComponent implements OnInit {
         this.oSub = this.transportService.update("press", this.id, this.form.value).subscribe()
       } else {
         this.oSub = this.transportService.create("press", this.form.value).subscribe(el => {
-          
-          this.router.navigate(['blog', 'smi', el._id])
+          this.id = el._id
+          this.router.navigate(['blog', 'smi', this.id])
           
         })
       }
