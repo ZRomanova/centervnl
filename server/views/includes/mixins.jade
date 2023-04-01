@@ -1,6 +1,7 @@
 mixin long-text(text)
   if text 
-    .relative !{text.split('\n').join('<br>')}
+    - var urlRegex =  /(\s|<br>)\b((https?):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+    .relative !{text.split('\n').join('<br>').replace(urlRegex, function(url) {return ' <a href="' + url + '">'+ url.slice(0, 50) + (url.length > 50 ? '...' : '') +'</a>'})}
 
 mixin rows-4(text)
   if text 

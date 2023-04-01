@@ -31,8 +31,8 @@ block content
         if staff.networks && Object.keys(staff.networks).length && Object.keys(staff.networks).find(key => staff.networks[key])
           .text-400-16.mt-5= `${staff.name} в социальных сетях:` 
             if staff.networks.vk
-              a.ms-4(href=staff.networks.vk target="_black")
-                img(src='/icons/header/vk_orange.svg' alt='vk')
+              a.ms-4(href=staff.networks.vk target="_blank")
+                img(src='/icons/header/vk_orange.svg' alt=`${staff.name} ${staff.surname} ВКонтакте`)
             if staff.networks.tg
-              a.ms-4(href=staff.networks.tg target="_black")
-                img(src='/icons/header/telegram_orange.svg' alt='telegram')
+              a.ms-4(href=staff.networks.tg target="_blank")
+                img(src='/icons/header/telegram_orange.svg' alt=`${staff.name} ${staff.surname} Телеграм`)
