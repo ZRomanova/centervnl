@@ -25,7 +25,7 @@ const libSchema = new Schema({
   content: [{
     type: {
       type: String,
-      enum: ['ТЕКСТ', 'ПРЕЗЕНИТАЦИЯ', 'ВИДЕО'],
+      enum: ['ТЕКСТ', 'ПРЕЗЕНТАЦИЯ', 'ВИДЕО'],
       required: true
     },
     url: String,

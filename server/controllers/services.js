@@ -87,9 +87,8 @@ const renderServicePage = function(req, res, data) {
 
 module.exports.createRegistration = async (req, res) => {
     try {
-        await apiRegistrations.create(req, res, (req, res, reg) => {
-            res.redirect("/services/finish")
-        })
+        await apiRegistrations.create(req, res)
+        res.redirect("/services/finish")
     } catch (e) {
         console.log(e)
     }

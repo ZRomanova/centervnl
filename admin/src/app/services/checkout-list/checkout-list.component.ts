@@ -95,6 +95,13 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
     this.router.navigate(['services', 'checkout', id])
   }
 
+  check(user) {
+    this.oSub = this.checkoutsService.update(user._id, {status: 'участник'}).subscribe(result => {
+      user.status = 'участник'
+      user.statusColor = this.colorStatuses[user.status]
+    })
+  }
+
   ngOnDestroy(): void {
     if (this.oSub) this.oSub.unsubscribe()
     if (this.dSub) this.dSub.unsubscribe()

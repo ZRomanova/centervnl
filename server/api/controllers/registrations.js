@@ -78,26 +78,33 @@ module.exports.getByUser = async function(req, res, next) {
   }
 }
 
-module.exports.create = async function(req, res, next) {
+module.exports.create = async function(req, res) {
   try {
     const created = req.body
     // created.user = req.user.id
     created.date = moment(req.body.date)?.toDate();
     created.date_string = moment(req.body.date).format('D MMMM HH:mm')
-    console.log(created)
+    // console.log(created)
     // let pl = ''
     // if (req.body.priceID) {
     //   const service = await Service.findOne({'priceList._id': req.body.priceID}).lean()
     //   if (service && service.priceList) pl = service.priceList.find(el => String(el._id) == req.body.priceID)
     // }
-    // created.payment = {
-    //   price: req.body.price,
-    //   description: `${pl && pl.name ? pl.name : ''}`.trim(),
-    //   status: req.body.price == 0 ? 'оплачен' : req.body.statusPay,
-    //   method: req.body.price == 0 ? 'онлайн' : req.body.method
-    // }
-    await new Registration(created).save()
-    next(req, res)
+    let isExists = await Registration.findOne({
+        name: created.name, 
+        surname: created.surname, 
+        patronymic: created.patronymic,
+        email: created.email,
+        tel: created.tel,
+        service: created.service,
+        date_string: created.date_string
+    })
+
+    if (!isExists) {
+        // throw new Error('Ошибка. Вы уже зарегистрированы на данное мероприятие')
+        await new Registration(created).save()
+    }
+    // next(req, res)
   } catch (e) {
     errorHandler(res, e)
   }
