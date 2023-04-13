@@ -1,10 +1,8 @@
-<nav class="navbar-default navbar-fixed-top">
+<nav class="navbar-default">
 
-    <div class="navbar-header">
-        <button class="navbar-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-main"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-    </div>
-    <div class="navbar-collapse collapse" id="navbar-main">
-        <ul class="nav navbar-nav" style="width: 100%;">
+
+    <!-- <div class="-navbar-collapse -collapse" id="navbar-main"> -->
+        <ul class="nav">
             <li><a routerLink="general"><i class="fa-solid fa-border-all"></i></a></li>
             <li><a routerLink="users/forms"><i class="fa-solid fa-users"></i></a></li>
             <li><a routerLink="products"><i class="fa-solid fa-store"></i></a></li>
@@ -14,15 +12,10 @@
             <li><a routerLink="library"><i class="fa-solid fa-book"></i></a></li>
             <li><a routerLink="reports"><i class="fa-solid fa-flag"></i></a>
             <li><a routerLink="files"><i class="fa-solid fa-file-image"></i></a>
-            <li style="float: right !important;">
-                <a href="https://centervnl.ru/">
-                    <i class="fa-solid fa-arrow-right-to-bracket"></i>
-                </a>
-            </li>
         </ul>
-    </div>
+    <!-- </div> -->
 </nav>
-<div class="container first-container">
+<div class="container -first-container">
     <router-outlet></router-outlet>
 </div>
 
