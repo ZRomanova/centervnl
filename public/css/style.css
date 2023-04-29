@@ -71,6 +71,13 @@ a, a:hover {
   line-height: 39px;
   
 }
+.header {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 100000000;
+  box-shadow: 0 0 20px 20px #fff;
+}
 .header__links {
   display: flex;
   justify-content: space-between;

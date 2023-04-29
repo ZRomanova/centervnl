@@ -74,7 +74,7 @@ module.exports.getServicePage = async function(req, res) {
 
 const renderServicePage = function(req, res, data) {
     res.render('service', {
-        title: data.service ? data.service.name : 'Не найдено',
+        title: data.service.name,
         service: data.service,
         user_date: req.query.date,
         session: req.session,

@@ -33,7 +33,7 @@ block content
 
     .container
       
-      if service.active && !service.is_partner
+      if !service.is_partner && service.dates && service.dates.length
         form#form.row.mx-xl-5(action="/services" method="post")
           .col-12.col-md-6.mt-3
             .text-400-16 Имя
@@ -47,20 +47,24 @@ block content
           
           .col-12.col-md-6.mt-3
             .text-400-16 Отчество
-            //- input.d-none(name="q_patronymic" value="Имя")
             input.text-input.mt-2(type='text' name='patronymic' autocomplete='additional-name' placeholder="Например, Сергеевич")
           
           .col-12.col-md-6
 
           .col-12.col-md-6.mt-3
             .text-400-16 Телефон
-            //- input.d-none(name="q_tel" value="Телефон")
-            input.text-input.mt-2(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38" required)
+            input.text-input.mt-2.check-tel(type='tel' name='tel' autocomplete='tel' placeholder="Например, +7 916 953 83 38")
+            .mt-2
+              input#check2.form-check-input.no-tel(type='checkbox' value='Нет телефона' name='tel')
+              label.form-check-label(for='check2') Нет телефона
 
           .col-12.col-md-6.mt-3
             .text-400-16 Email
             //- input.d-none(name="q_email" value="Email")
-            input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+            input.text-input.mt-2.check-email(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru")
+            .mt-2
+              input#check1.form-check-input.no-email(type='checkbox' value='Нет email' name='email')
+              label.form-check-label(for='check1') Нет email
           
           input.d-none(name='service' value=service._id)
           .col-12.mt-3
@@ -73,31 +77,30 @@ block content
                   label.form-check-label.d-inline(for='defaultRadio'+index)= date.text
 
           .col-12.mt-3
-            .text-400-16 Отметьте, что к вам относится (одну или несколько строчек)
+            .text-400-16 Отметьте, что к вам относится
             .row 
               .col-12.col-sm-6.col-md-3.mt-2
-                input#defaultCheck1.form-check-input(type='checkbox' value='Родитель' name='roles')
+                input#defaultCheck1.form-check-input.role-input(type='radio' value='Родитель' name='roles')
                 label.form-check-label(for='defaultCheck1') Родитель
 
               .col-12.col-sm-6.col-md-3.mt-2
-                input#defaultCheck2.form-check-input(type='checkbox' value='Волонтер' name='roles')
+                input#defaultCheck2.form-check-input.role-input(type='radio' value='Волонтер' name='roles')
                 label.form-check-label(for='defaultCheck2') Волонтер
 
               .col-12.col-sm-6.mt-2
-                input#defaultCheck3.form-check-input(type='checkbox' value='Молодой взрослый' name='roles')
+                input#defaultCheck3.form-check-input.role-input(type='radio' value='Молодой взрослый' name='roles')
                 label.form-check-label(for='defaultCheck3') Молодой взрослый
 
               .col-12.col-sm-6.col-md-3.mt-2
-                input#defaultCheck4.form-check-input(type='checkbox' value='Специалист' name='roles')
+                input#defaultCheck4.form-check-input.role-input(type='radio' value='Специалист' name='roles')
                 label.form-check-label(for='defaultCheck4') Специалист
 
               .col-12.col-sm-6.col-md-3.mt-2
-                input#defaultCheck5.form-check-input(type='checkbox' value='Ребенок' name='roles')
+                input#defaultCheck5.form-check-input.role-input(type='radio' value='Ребенок' name='roles')
                 label.form-check-label(for='defaultCheck5') Ребенок
 
               .col-12.col-sm-6.mt-2
-                input#defaultCheck6.form-check-input(type='checkbox' value='Другое' name='roles')
-                label.form-check-label(for='defaultCheck6') Другое
+                input.text-input#other-role(type='text' name='roles' placeholder='Другое (укажите)')
 
           .mt-4 
             .col-12.mt-2 
@@ -107,7 +110,7 @@ block content
           .mt-4
             button.button.button_orange(type='submit') Зарегистрироваться
 
-      else if service.active && service.is_partner
+      else if service.is_partner && service.dates && service.dates.length
         .row.mx-xl-5
           .mt-4 
             .col-12.mt-2 
@@ -122,4 +125,5 @@ block content
 
 block scripts
   script(src='/javascripts/valid-form.js')
+  script(src='/javascripts/event-form.js')
 

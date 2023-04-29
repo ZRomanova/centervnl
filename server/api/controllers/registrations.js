@@ -78,18 +78,17 @@ module.exports.getByUser = async function(req, res, next) {
   }
 }
 
-module.exports.create = async function(req, res) {
+module.exports.create = async function(req, res, next) {
   try {
     const created = req.body
-    // created.user = req.user.id
+
     created.date = moment(req.body.date)?.toDate();
     created.date_string = moment(req.body.date).format('D MMMM HH:mm')
-    // console.log(created)
-    // let pl = ''
-    // if (req.body.priceID) {
-    //   const service = await Service.findOne({'priceList._id': req.body.priceID}).lean()
-    //   if (service && service.priceList) pl = service.priceList.find(el => String(el._id) == req.body.priceID)
-    // }
+
+    Object.keys(created).forEach(key => {
+        created[key] = String(created[key])
+    })
+
     let isExists = await Registration.findOne({
         name: created.name, 
         surname: created.surname, 
@@ -104,22 +103,44 @@ module.exports.create = async function(req, res) {
         // throw new Error('Ошибка. Вы уже зарегистрированы на данное мероприятие')
         await new Registration(created).save()
     }
-    // next(req, res)
   } catch (e) {
     errorHandler(res, e)
   }
 }
 
+module.exports.createJson = async function(req, res) {
+    try {
+      const created = req.body
+  
+      created.date = moment(req.body.date)?.toDate();
+      created.date_string = moment(req.body.date).format('D MMMM HH:mm')
+  
+      let isExists = await Registration.findOne({
+        name: created.name, 
+        surname: created.surname, 
+        patronymic: created.patronymic,
+        email: created.email,
+        tel: created.tel,
+        service: created.service,
+        date_string: created.date_string
+      })
+  
+      if (!isExists) {
+        let checkout = await new Registration(created).save()
+        res.status(201).json(checkout)
+      } else {
+        res.status(403).json({message: 'Такая запись уже существует'})
+      }
+      
+    } catch (e) {
+      errorHandler(res, e)
+    }
+  }
+
 module.exports.update = async function(req, res, next) {
     try {
         const updated = req.body
-        // if (updated.payment.paid >= updated.payment.price) {
-        //     updated.payment.status = 'оплачен'
-        // } else if (updated.payment.paid) {
-        //     updated.payment.status = 'оплачен частично'
-        // } else {
-        //     updated.payment.status = 'не оплачен'
-        // }
+
         const service = await Registration.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {

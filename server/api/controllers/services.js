@@ -250,6 +250,7 @@ module.exports.getServiceByPath = async function(req, res, next) {
             {path: req.params.path, visible: true},
             { date: 1, gallery: 1, name: 1, path: 1, peopleLimit: 1, description: 1, address: 1, image: 1, is_partner: 1, url: 1}
         ).lean()
+        console.log(service)
         
         if (service) {
 
