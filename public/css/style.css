@@ -193,8 +193,10 @@ a, a:hover {
 }
 .background__image {
   width: 100%;
+  display: block;
   object-fit: cover;
   border-radius: 8px;
+  margin-top: 25px;
 }
 .radius__image {
   border-radius: 8px;
