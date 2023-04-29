@@ -15,9 +15,9 @@ block content
           .row 
             each doc in docs 
               .col-12.col-md-6.col-lg-4.mt-3 
-                .row.d-flex.align-items-center
+                .d-flex.align-items-center
                   a.doc-icon.d-inline-block(href= doc.file target="_blank")
-                  a.news__subtitle.col.ms-2(href= doc.file target="_blank")= doc.name
+                  a.news__subtitle.col.ms-3(href= doc.file target="_blank")= doc.name
 
 
         h2.title-500-32.mt-5 Отчёты
@@ -25,24 +25,24 @@ block content
             each report in reports
               if report.annual
                 .col-12.col-md-6.col-lg-4.mt-3  
-                  .row.d-flex.align-items-center
-                    a.doc-icon.d-inline-block(href= report.annual target="_blank")
+                  .d-flex.align-items-center
+                    a.doc-icon.d-inline-block.me-2(href= report.annual target="_blank")
                     .col.d-flex.flex-column
                       a.title-700-20.hover-orange.col-12.ms-2(href= report.annual target="_blank") Годовой отчёт
                       a.text-500-16.hover-orange.col-12.ms-2(href= report.annual target="_blank")= report.year
 
               if report.justice
                 .col-12.col-md-6.col-lg-4.mt-3 
-                  .row.d-flex.align-items-center
-                    a.doc-icon.d-inline-block(href= report.justice target="_blank")
+                  .d-flex.align-items-center
+                    a.doc-icon.d-inline-block.me-2(href= report.justice target="_blank")
                     .col.d-flex.flex-column
                       a.title-700-20.hover-orange.col-12.ms-2(href= report.justice target="_blank") Отчёт в Минюст
                       a.text-500-16.hover-orange.col-12.ms-2(href= report.justice target="_blank")= report.year
 
               if report.finance
                 .col-12.col-md-6.col-lg-4.mt-3 
-                  .row.d-flex.align-items-center
-                    a.doc-icon.d-inline-block(href= report.finance target="_blank")
+                  .d-flex.align-items-center
+                    a.doc-icon.d-inline-block.me-2(href= report.finance target="_blank")
                     .col.d-flex.flex-column
                       a.title-700-20.hover-orange.col-12.ms-2(href= report.finance target="_blank") Отчёт в Минфин
                       a.text-500-16.hover-orange.col-12.ms-2(href= report.finance target="_blank")= report.year
