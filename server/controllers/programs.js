@@ -80,7 +80,7 @@ module.exports.getProgramProjectPage = async function(req, res, data = {}) {
 
 const renderProgramProjectPage = function(req, res, data) {
     res.render('project-program', {
-        title: data.program ? data.program.name : "Не найдено",
+        title: data.project ? data.project.name : "Не найдено",
         programs: data.programs, 
         program: data.program, 
         project: data.project, 
