@@ -57,7 +57,7 @@ module.exports.getHomePage = async function(req, res, data = {}) {
 
 const renderHomePage = function(req, res, data) {
     res.render('index', {
-        title: 'Ресурсный центр Вера Надежда Любовь',
+        title: 'Ресурсный центр "Вера. Надежда. Любовь"',
         text: data.description,
         contacts: data.contacts,
         programs: data.programs,

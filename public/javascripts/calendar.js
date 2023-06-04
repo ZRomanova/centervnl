@@ -171,15 +171,8 @@ function getAnouncementsByDay(day) {
 
       $('.calendar-item').removeClass("calendar-item-checked")
       $('#'+day).addClass('calendar-item-checked')
-      $( ".carousel-item" ).remove();
-      if (data.length > 1) {
-        $('#slider_buttons').removeClass("d-none")
-        $('#slider_buttons').addClass("d-block")
-      } else {
-        $('#slider_buttons').removeClass("d-block")
-        $('#slider_buttons').addClass("d-none")
-      }
-      let many = data.length > 2? 'col-lg-4' : ''
+
+      let many = data.length > 2 ? 'col-lg-4' : ''
       let list = `<div class="title-500-32 mb-3">Расписание на ${results.date}</div>`
       if (!data.length)  {
         list += `<div class="title-700-20 mb-1">Мероприятий нет</div>`
@@ -187,18 +180,18 @@ function getAnouncementsByDay(day) {
       let list_arr = []
       let element = ``
       for (let i = 0; i < data.length; i++) {
+        let url = `https://centervnl.ru/services/${data[i].path}`
         element += `<div class="col-12 col-md-6 ${many} mt-3">`
         element += `<div class="program__subtitle">${data[i].name}</div>`
-        element += data[i].image ? `<img class="event__image mt-3" src="${data[i].image}" alt="img" />` : ''
+        element += data[i].image ? `<a href="${url}"><img class="event__image mt-3" src="${data[i].image}" alt="img" /></a>` : ''
         element += `<div class="mt-3">${data[i].description}</div>`
-        let url = `https://centervnl.ru/services/${data[i].path}`
         
         data[i].dates.forEach(date => {
           list_arr.push({name: data[i].name, path: url, is_partner: data[i].is_partner, ...date})
           element += `<div class="title-700-20 mt-3">${results.date} ${date.timeStr}</div>`
         })
         
-        element += `<a type="button" class="button button_${data[i].is_partner ? 'blue' : 'orange'} mt-3 mb-3" href="${url}">Зарегистрироваться</a>`
+        element += `<a type="button" target="${data[i].is_partner ? '_blank' : '_self'}" class="button button_${data[i].is_partner ? 'blue' : 'orange'} mt-3 mb-3" href="${data[i].is_partner ? data[i].url : url}">Зарегистрироваться</a>`
         element += `</div>`
 
       }

@@ -40,7 +40,7 @@ module.exports.getTeamList = async function(req, res) {
 
 const renderTeamList = function(req, res, data) {
     res.render('team-list', {
-        title: 'Наша команда | Ресурсный центр Вера Надежда Любовь',
+        title: 'Наша команда',
         team: data.staffs,
         text: data.text,
         programs: data.programs, 
@@ -80,7 +80,7 @@ module.exports.getTeamPage = async function(req, res) {
 
 const renderTeamPage = function(req, res, data) {
     res.render('team', {
-        title: `${data.staff.name} ${data.staff.surname} | Ресурсный центр Вера Надежда Любовь`,
+        title: `${data.staff.name} ${data.staff.surname}`,
         staff: data.staff,
         programs: data.programs, 
         contacts: data.contacts, 

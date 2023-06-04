@@ -35,7 +35,7 @@ module.exports.getParentsList = async function(req, res) {
 
 const renderParentsList = function(req, res, data) {
     res.render('parents-list', {
-        title: 'Родителям | Ресурсный центр Вера Надежда Любовь',
+        title: 'Родителям',
         programs: data.programs, 
         contacts: data.contacts, 
         pages: data.pages, 
@@ -111,7 +111,7 @@ module.exports.getParentsClub = async function(req, res) {
 
 const renderParentsClub = function(req, res, data) {
   res.render('parents-club', {
-      title: `Родительский клуб | Ресурсный центр Вера Надежда Любовь`,
+      title: `Родительский клуб`,
       staff: data.staff,
       programs: data.programs, 
       contacts: data.contacts, 

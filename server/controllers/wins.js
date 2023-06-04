@@ -40,7 +40,7 @@ module.exports.getWinsList = async function(req, res) {
 
 const renderWinsList = function(req, res, data) {
     res.render('wins-list', {
-        title: 'Наши победы | Ресурсный центр Вера Надежда Любовь',
+        title: 'Наши победы',
         wins: data.wins,
         text: data.text,
         programs: data.programs, 
@@ -83,7 +83,7 @@ module.exports.getWinPage = async function(req, res) {
 
 const renderWinPage = function(req, res, data) {
     res.render('win', {
-        title: `${data.win.name} | Ресурсный центр Вера Надежда Любовь`,
+        title: data.win.name,
         win: data.win,
         programs: data.programs, 
         contacts: data.contacts, 
