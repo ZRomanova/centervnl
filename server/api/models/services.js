@@ -60,7 +60,8 @@ const serviceSchema = new Schema({
     time: Date
   },
   url: String,
-  is_partner: Boolean
+  is_partner: Boolean,
+  is_online: Boolean
 })
 
 

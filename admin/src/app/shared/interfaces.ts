@@ -149,6 +149,7 @@ export interface Service {
     dateStr: string
     gallery: string[]
     is_partner: boolean
+    is_online: boolean
     url?: string
 }
 

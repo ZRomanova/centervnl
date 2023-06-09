@@ -17,13 +17,16 @@
 
                 <h5>Отметьте, если регистрация на внешнем сайте</h5>
                 <div class="form-check form-switch mt-2">
-                    <input class="form-check-input mt-1" type="checkbox" id="switchCheckChecked1" formControlName="is_partner">
+                    <input class="form-check-input mt-1" type="checkbox" formControlName="is_partner">
                     <div>Партнерское мероприятие</div>
                 </div>
-                <ng-container *ngIf="form.controls.is_partner.value">
-                    <h5>Ссылка на регистрацию:</h5>
+                <div class="form-check form-switch mt-2">
+                    <input class="form-check-input mt-1" type="checkbox" formControlName="is_online">
+                    <div>Онлайн мероприятие</div>
+                </div>
+                <ng-container *ngIf="form.controls.is_partner.value || form.controls.is_online.value">
                     <input type="text" class="form-control" formControlName="url"
-                    placeholder="На внешний сайт">
+                    placeholder="Ссылка на внешний сайт">
                 </ng-container>
 
                 <h5>Обложка из файла:</h5>

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +19,7 @@ export class SmiPageComponent implements OnInit {
 
   constructor(private transportService: TransportService,
     private router: Router,
+    private datePipe: DatePipe,
     private activateRoute: ActivatedRoute ) { 
       this.id = this.activateRoute.snapshot.params['id'];
     }
@@ -30,16 +32,16 @@ export class SmiPageComponent implements OnInit {
             name: new FormControl(item.name, Validators.required),
             url: new FormControl(item.url, Validators.required),
             visible: new FormControl(item.visible),
-            date: new FormControl(item.date),
+            date: new FormControl(this.datePipe.transform(item.date, 'yyyy-MM-dd')),
           })
           this.loading --
         })
       } else {
         this.form = new FormGroup({
           name: new FormControl('', Validators.required),
-            url: new FormControl('', Validators.required),
-            visible: new FormControl(true),
-            date: new FormControl(null)
+          url: new FormControl('', Validators.required),
+          visible: new FormControl(true),
+          date: new FormControl(this.datePipe.transform(Date.now(), 'yyyy-MM-dd'))
         })
         this.loading --
       }
