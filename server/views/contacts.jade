@@ -8,7 +8,8 @@ block content
           a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
         h1.col-12.header__subtitle.title.mb-5 Контакты
         .col-12
-          #map
+          //- #map
+          <iframe src="https://yandex.ru/map-widget/v1/?z=12&ol=biz&oid=55518731734" id="map" frameborder="0"></iframe>
         .col-12 
           .row.mt-5 
             .col-12.col-md-6.mt-3 
@@ -51,6 +52,7 @@ block content
         .col-12.mt-5
           form#form.row(action="/form" method="post")
             h2.title-700-20 Обратная связь
+            .text Если вы посетили наш центр, вы можете <a href="https://yandex.ru/maps/org/vera_nadezhda_lyubov/55518731734/reviews/?add-review=true&from=mapframe&ll=37.762085%2C55.631870&z=17" target="_blank">оставить отзыв на Яндексе</a>. Также вы можете заполнить анкету ниже, чтобы связаться с нами по любым вопросам. Мы ответим в течение нескольких дней. Спасибо!
             .col-12.col-md-6.mt-3
               .text-400-16 Как вас зовут?
               input.d-none(name="q_name" value="Как вас зовут?")
@@ -81,6 +83,6 @@ block content
               button.button.button_orange(type='submit') Отправить
 
 block scripts
-  script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
+  //- script(src='https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=b8a04a7a-e4c3-45cf-97ba-eda8168528ca' type='text/javascript')
   script(src='/javascripts/map.js')
   script(src='/javascripts/valid-form.js')
