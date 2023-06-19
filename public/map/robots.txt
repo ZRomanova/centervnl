@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: 
+Disallow: /admin/
+Disallow: /services/finish
+Disallow: /help/donate/finish
+Disallow: /shop/basket/
+Disallow: /shop/order/
+
+Clean-param: date /services/ 

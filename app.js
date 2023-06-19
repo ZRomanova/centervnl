@@ -73,6 +73,14 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 app.use(require('cors')())
 
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(
+    path.resolve(
+      __dirname, 'public', 'map', 'robots.txt'
+    )
+  )
+})
+
 app.get('/captcha.jpg', captcha.math());
 
 app.post('/registration', (req, res) => {
