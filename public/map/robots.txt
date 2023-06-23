@@ -5,5 +5,7 @@ Disallow: /services/finish
 Disallow: /help/donate/finish
 Disallow: /shop/basket/
 Disallow: /shop/order/
+Disallow: /product/
+Disallow: /documents/
 
 Clean-param: date /services/ 
