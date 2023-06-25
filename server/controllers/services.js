@@ -6,10 +6,9 @@ const apiData = require('../api/controllers/data')
 const moment = require('moment')
 moment.locale('ru')
 
-module.exports.getServicesListPage = async function(req, res, data = {}) {
+module.exports.getServicesListPage = async function(req, res) {
     try {
-        const result = {...data}
-
+        const result = {}
         req.query.filter_visible = true
         
         req.query.fields_name = 1
@@ -36,6 +35,7 @@ module.exports.getServicesListPage = async function(req, res, data = {}) {
 
 
 const renderServicesListPage = function(req, res, data) {
+    console.log(6)
     res.render('services-list', {
         title: 'Мероприятия',
         contacts: data.contacts,

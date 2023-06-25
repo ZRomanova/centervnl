@@ -14,7 +14,7 @@ const week = [
     {num: 0, en: 'sunday', ru: 'ВС'}
   ]
 
-module.exports.getAnouncementsByDay = async function(req, res, next) {
+module.exports.getAnouncementsByDay = async function(req, res) {
     try {
         const queryDate = req.params.day ? new Date(req.params.day) : new Date()
         const start = moment(queryDate).startOf('day');
@@ -33,7 +33,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
                             start: {$lte: end}, 
                             $or: [{end: {$gte: start}}, {end: null}, {end: {$exists: false}}], 
                             time: {$exists: true},
-                            day: {$exists: true},
+                            day: {$exists: true, $in: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']},
                             visible: true,
                             day: dayStr
                         }
@@ -42,8 +42,8 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
             },{
                 name: 1, path: 1, image: 1, description: 1, date: 1, is_partner: 1, url: 1
             }).lean()
-            
-        results = []
+         
+        let results = []
         for (let event of events) {
             if (event.date.single && event.date.single.length) {
                 let len = results.push({
@@ -101,7 +101,7 @@ module.exports.getAnouncementsByDay = async function(req, res, next) {
 
         results.sort((a, b) => a.firstSort - b.firstSort)
 
-        next(req, res, {date: moment(queryDate).format('D MMMM'), events: results})
+        res.status(200).json({date: moment(queryDate).format('D MMMM'), events: results})
     } catch (e) {
         console.log(e)
         errorHandler(res, e)
@@ -174,7 +174,7 @@ module.exports.getAnouncementsByMonth = async function(req, res, next) {
 
         // console.log('month', results)
 
-        next(req, res, results)
+        res.status(200).json(results)
     } catch (e) {
         console.log(e)
         errorHandler(res, e)
@@ -250,7 +250,6 @@ module.exports.getServiceByPath = async function(req, res, next) {
             {path: req.params.path, visible: true},
             {}
         ).lean()
-        console.log(service)
         
         if (service) {
 
