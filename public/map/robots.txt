@@ -1,6 +1,7 @@
 User-agent: *
 Disallow: 
 Disallow: /admin/
+Disallow: /api/
 Disallow: /services/finish
 Disallow: /help/donate/finish
 Disallow: /shop/basket/
