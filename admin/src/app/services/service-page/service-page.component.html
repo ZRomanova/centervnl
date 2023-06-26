@@ -86,7 +86,7 @@
                 <div class="form-row" *ngFor="let time of form.controls.date.controls.period.controls; index as i">
                     <ng-container [formGroupName]="i">
                         <select class="form-group form-select col-1" formControlName="day">
-                            <option value="">День</option>
+                            <option [value]="null">День</option>
                             <option value="ПН" *ngFor="let day of week" [value]="day.ru">{{day.ru}}</option>
                         </select>
                         <div class="form-group col-3">
@@ -146,7 +146,7 @@
         <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
             Назад
         </button>
-        <button class="btn btn-custom mt-3 mb-3" type="submit">
+        <button class="btn btn-custom mt-3 mb-3" type="submit" [disabled]="form.disabled || form.invalid">
             {{id ? 'Сохранить' : 'Создать'}}
         </button>
     </form>

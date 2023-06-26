@@ -108,8 +108,8 @@ export class ServicePageComponent implements OnInit {
         address: new FormControl(this.service.address),
         priceList: new FormArray(this.service.priceList.map(pl => this.createPriceListFormGroup(pl))),
         date: new FormGroup({
-          single: new FormArray(this.service.date.single.map(d => new FormControl(this.datePipe.transform(d, 'yyyy-MM-ddTHH:mm', 'UTC +3'), Validators.required))),
-          period: new FormArray(this.service.date.period.map(p => this.createPeriodFormGroup(p)))
+          single: new FormArray((this.service.date.single && this.service.date.single.length) ? this.service.date.single.map(d => new FormControl(this.datePipe.transform(d, 'yyyy-MM-ddTHH:mm', 'UTC +3'), Validators.required)) : []),
+          period: new FormArray((this.service.date.period && this.service.date.period.length) ? this.service.date.period.map(p => this.createPeriodFormGroup(p)) : [])
         })
       })
 
@@ -146,7 +146,7 @@ export class ServicePageComponent implements OnInit {
         end: new FormControl(period.end ? this.datePipe.transform(period.end, 'yyyy-MM-dd', 'UTC +3') : null),
         time: new FormControl(typeof period.time == 'number' ? this.intToStringDate(period.time) : period.time),
         visible: new FormControl(period.visible),
-        day: new FormControl(period.day, Validators.required)
+        day: new FormControl(period.day, [Validators.required, Validators.minLength(2)])
       })
     }
 
@@ -264,6 +264,8 @@ export class ServicePageComponent implements OnInit {
         })
       } else {
         this.oSub = this.servicesService.create(data).subscribe(result1 => {
+          this.service = result1
+          this.id = this.service._id
           if (this.image || this.gallery.length) {
             this.iSub = this.servicesService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
               this.image = null
@@ -274,8 +276,6 @@ export class ServicePageComponent implements OnInit {
               this.router.navigate(['services', this.id])
             })
           } else {
-            this.service = result1
-            this.id = this.service._id
             this.router.navigate(['services', this.id])
           }
         })

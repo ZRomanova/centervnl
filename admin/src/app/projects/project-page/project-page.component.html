@@ -114,7 +114,7 @@
         <button class="btn btn-secondary mt-3 me-2 mb-3" type="button" (click)="back()">
             Назад
         </button>
-        <button class="btn btn-custom mt-3 mb-3" type="submit">
+        <button class="btn btn-custom mt-3 mb-3" type="submit" [disabled]="form.disabled || form.invalid">
             {{id ? 'Сохранить' : 'Создать'}}
         </button>
     </form>

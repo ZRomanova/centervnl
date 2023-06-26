@@ -192,7 +192,6 @@ export class ProjectPageComponent implements OnInit {
         if (this.image || this.gallery.length) {
           this.iSub = this.projectsService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
             this.project = result2
-            this.id = this.project._id
             this.data()
             this.gallery = []
             this.galleryPreview = []
@@ -200,7 +199,6 @@ export class ProjectPageComponent implements OnInit {
           })
         } else {
           this.project = result1
-          this.id = this.project._id
           this.data()
         }
       })
@@ -213,12 +211,12 @@ export class ProjectPageComponent implements OnInit {
             this.gallery = []
             this.galleryPreview = []
             this.id = this.project._id
-            this.router.navigate(['projects', this.id])
+            this.router.navigate(['programs', 'projects', this.id])
           })
         } else {
           this.project = result1
           this.id = this.project._id
-          this.router.navigate(['projects', this.id])
+          this.router.navigate(['programs', 'projects', this.id])
         }
       })
     }
