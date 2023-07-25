@@ -221,12 +221,14 @@ module.exports.createService = async function(req, res, next) {
 module.exports.updateService = async function(req, res, next) {
     try {
         const updated = req.body
+        
         updated.lastChange = {
             author: req.user.id,
             time: new Date()
         }
         if (!updated.path) updated.path = translit(updated.name)
         else updated.path = translit(updated.path)
+
         const service = await Service.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
         next(req, res, service)
     } catch (e) {

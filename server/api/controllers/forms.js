@@ -1,8 +1,8 @@
 const Form = require('../models/forms')
 const errorHandler = require('../utils/errorHandler')
+const sendEmail = require('../utils/email')
 
-
-module.exports.fillForm = async function(req) {
+module.exports.fillForm = async function(req, res) {
   try {
     const data = {
       page: req.headers.referer,
@@ -21,7 +21,16 @@ module.exports.fillForm = async function(req) {
         }
       }
     }
+
     await new Form(data).save()
+
+    let message = `Форма заполнена на странице ${data.page}\n\n`
+    data.answers.forEach(item => {
+      message += `${item.question} — ${item.answer}\n`
+    })
+
+    await sendEmail(message)
+      
   } catch (e) {
     errorHandler(res, e)
   }
