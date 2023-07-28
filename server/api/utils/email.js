@@ -13,15 +13,28 @@ let transporter = nodemailer.createTransport({
     },
 });
 
+function validateEmail(email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
+
 module.exports.sendEmail = async (data = {}) => {
   try {
-    await transporter.sendMail({
-      from: `"${data.from || 'no-reply@centervnl.ru'}" <no-reply@centervnl.ru>`,
-      to: data.to || defaultEmailTo,
-      subject: data.subject || 'Сообщение от сайта centervnl.ru',
-      text: data.message,
-    });
+    let to = data.to || defaultEmailTo
+    if (validateEmail(to)) {
+      await transporter.sendMail({
+        from: `"${data.from || 'no-reply@centervnl.ru'}" <no-reply@centervnl.ru>`,
+        to: data.to || defaultEmailTo,
+        subject: data.subject || 'Сообщение от сайта centervnl.ru',
+        text: data.message,
+      });
+    }
   } catch (e) {
     return
   }
+}
+
+function validateEmail(email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
 }

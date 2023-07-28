@@ -1,6 +1,5 @@
 const Service = require('../models/services')
 const Registration = require('../models/registrations')
-const errorHandler = require('../utils/errorHandler')
 const mongoose = require('mongoose')
 const moment = require('moment')
 moment.locale('ru')
@@ -86,7 +85,7 @@ module.exports.create = async function(req, res, next) {
     created.date_string = moment(req.body.date).format('D MMMM HH:mm')
 
     Object.keys(created).forEach(key => {
-        created[key] = String(created[key])
+        created[key] = String(created[key]).replace(/,$/, '')
     })
 
     let isExists = await Registration.findOne({
@@ -98,6 +97,8 @@ module.exports.create = async function(req, res, next) {
         service: created.service,
         date_string: created.date_string
     })
+
+    // console.log(created)
 
     if (!isExists) {
         // throw new Error('Ошибка. Вы уже зарегистрированы на данное мероприятие')

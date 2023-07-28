@@ -26,7 +26,7 @@ const registrSchema = new Schema({
   name: String,
   surname: String,
   patronymic: String,
-  roles: [String],
+  roles: String,
   // payment: {
   //   price: Number,
   //   description: String,
