@@ -142,8 +142,6 @@ module.exports.create = async function(req, res, next) {
     `
             }
 
-            console.log(sendToUser)
-
             if (!sendToUser) {
                 messageToAdmin.message += 'Пользователю не отправлено сообщение на почту'
             } else if (!sendToUser.accepted.includes(created.email)) {
