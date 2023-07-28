@@ -2,6 +2,8 @@ const Service = require('../models/services')
 const Registration = require('../models/registrations')
 const mongoose = require('mongoose')
 const moment = require('moment')
+const { sendEmail } = require('../utils/email')
+const errorHandler = require('../utils/errorHandler')
 moment.locale('ru')
 
 module.exports.getByService = async function(req, res, next) {
@@ -103,6 +105,55 @@ module.exports.create = async function(req, res, next) {
     if (!isExists) {
         // throw new Error('Ошибка. Вы уже зарегистрированы на данное мероприятие')
         await new Registration(created).save()
+
+        const event = await Service.findOne({_id: created.service}).lean()
+
+        if (event) {
+
+            let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
+            message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
+            if (event.address) message += `Место проведения: ${event.address}.\n\n`
+            if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
+            message += `Мы ждём вас!
+            
+Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу centervnl@mail.ru`
+
+            let messageToUser = {
+                message, 
+                to: created.email.trim(), 
+                subject: 'Регистрация на мероприятие'
+            }
+
+            let sendToUser = await sendEmail(messageToUser)
+
+            const messageToAdmin = {
+                subject: 'Новая регистрация на мероприятие',
+                message: `
+    Мероприятие: ${event.name}   
+    Дата: ${created.date_string}    
+
+    Фамилия: ${created.surname}  
+    Имя: ${created.name}  
+    Отчество: ${created.patronymic}  
+    Роль: ${created.roles}
+    email: ${created.email}
+    tel: ${created.tel}
+
+    `
+            }
+
+            console.log(sendToUser)
+
+            if (!sendToUser) {
+                messageToAdmin.message += 'Пользователю не отправлено сообщение на почту'
+            } else if (!sendToUser.accepted.includes(created.email)) {
+                messageToAdmin.message += 'Пользователю указал недействительную почту, сообщение не доставлено'
+            } else {
+                messageToAdmin.message += 'Пользователю отправлено уведомление о регистрации'
+            }
+
+            await sendEmail(messageToAdmin)
+        }
     }
   } catch (e) {
     errorHandler(res, e)

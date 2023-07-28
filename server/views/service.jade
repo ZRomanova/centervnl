@@ -33,7 +33,7 @@ block content
 
     .container
       
-      if !service.is_partner && !service.is_online && service.dates && service.dates.length
+      if !service.is_partner && service.dates && service.dates.length
         form#form.row.mx-xl-5(action="/services" method="post")
           .col-12.col-md-6.mt-3
             .text-400-16 Имя
@@ -118,15 +118,6 @@ block content
 
             .mt-4
               a.button.button_blue(href=service.url target='_blank') Зарегистрироваться  
-
-      else if service.is_online && service.dates && service.dates.length
-        .row.mx-xl-5
-          .mt-4 
-            .col-12.mt-2 
-              span.text-400-16 Внимание! Данное мероприятие проводится онлайн. Вы можете подключиться по ссылке ниже в назначенное время.
-
-            .mt-4
-              a.button.button_orange(href=service.url target='_blank') Подключиться
 
       else
         .row.mx-xl-5  

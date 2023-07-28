@@ -22,7 +22,7 @@ module.exports.sendEmail = async (data = {}) => {
   try {
     let to = data.to || defaultEmailTo
     if (validateEmail(to)) {
-      await transporter.sendMail({
+      return await transporter.sendMail({
         from: `"${data.from || 'no-reply@centervnl.ru'}" <no-reply@centervnl.ru>`,
         to: data.to || defaultEmailTo,
         subject: data.subject || 'Сообщение от сайта centervnl.ru',
