@@ -88,6 +88,7 @@ module.exports.create = async function(req, res, next) {
 
     Object.keys(created).forEach(key => {
         created[key] = String(created[key]).replace(/,$/, '')
+        created[key] = created[key].trim()
     })
 
     let isExists = await Registration.findOne({
@@ -109,48 +110,51 @@ module.exports.create = async function(req, res, next) {
         const event = await Service.findOne({_id: created.service}).lean()
 
         if (event) {
-
-            let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
-            message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
-            if (event.address) message += `Место проведения: ${event.address}.\n\n`
-            if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
-            message += `Мы ждём вас!
-            
+            let sendToUser
+            if (created.email) {
+                let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
+                message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
+                if (event.address) message += `Место проведения: ${event.address}.\n\n`
+                if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
+                message += `Мы ждём вас!
+                
 Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу centervnl@mail.ru`
-
-            let messageToUser = {
-                message, 
-                to: created.email.trim(), 
-                subject: 'Регистрация на мероприятие'
+    
+                let messageToUser = {
+                    message, 
+                    to: created.email.trim(), 
+                    subject: 'Регистрация на мероприятие'
+                }
+    
+                sendToUser = await sendEmail(messageToUser)
             }
 
-            let sendToUser = await sendEmail(messageToUser)
+//             const messageToAdmin = {
+//                 subject: 'Новая регистрация на мероприятие',
+//                 message: `
+// Мероприятие: ${event.name}   
+// Дата: ${created.date_string}    
 
-            const messageToAdmin = {
-                subject: 'Новая регистрация на мероприятие',
-                message: `
-    Мероприятие: ${event.name}   
-    Дата: ${created.date_string}    
+// Фамилия: ${created.surname}  
+// Имя: ${created.name}  
+// Отчество: ${created.patronymic}  
+// Роль: ${created.roles}
+// email: ${created.email}
+// tel: ${created.tel}
 
-    Фамилия: ${created.surname}  
-    Имя: ${created.name}  
-    Отчество: ${created.patronymic}  
-    Роль: ${created.roles}
-    email: ${created.email}
-    tel: ${created.tel}
+//     `
+//             }
+            
 
-    `
-            }
+//             if (!sendToUser) {
+//                 messageToAdmin.message += 'Пользователю не отправлено сообщение на почту'
+//             } else if (!sendToUser.accepted.includes(created.email)) {
+//                 messageToAdmin.message += 'Пользователю указал недействительную почту, сообщение не доставлено'
+//             } else {
+//                 messageToAdmin.message += 'Пользователю отправлено уведомление о регистрации'
+//             }
 
-            if (!sendToUser) {
-                messageToAdmin.message += 'Пользователю не отправлено сообщение на почту'
-            } else if (!sendToUser.accepted.includes(created.email)) {
-                messageToAdmin.message += 'Пользователю указал недействительную почту, сообщение не доставлено'
-            } else {
-                messageToAdmin.message += 'Пользователю отправлено уведомление о регистрации'
-            }
-
-            await sendEmail(messageToAdmin)
+//             await sendEmail(messageToAdmin)
         }
     }
   } catch (e) {
