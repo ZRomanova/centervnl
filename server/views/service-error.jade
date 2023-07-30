@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  section.about
+    .container
+      .row.mx-xl-5
+        a(href='https://centervnl.ru/services/')
+          .back__subtitle-top.back__subtitle-child Мероприятия
+
+        .col-12.header__subtitle.title К сожалению, нам не удалось вас зарегистрировать
+        .col-12.mt-5.text-500-16 
+          
+          | Возможно, все места на мероприятие уже заняты или произошла другая ошибка.
+          | Уточнить подробности вы можете по адресу 
+          a(href="mailto:"+contacts.email)= contacts.email
+
+        .col-12.mt-5
+          button.news__button.button.button_orange(onclick="history.back();") Вернуться назад

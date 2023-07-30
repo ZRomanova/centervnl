@@ -83,7 +83,11 @@ module.exports.create = async function(req, res, next) {
   try {
     const created = req.body
 
-    created.date = moment(req.body.date)?.toDate();
+    if (!req.body.date) return false
+
+    let finish
+
+    created.date = moment(req.body.date).toDate();
     created.date_string = moment(req.body.date).format('D MMMM HH:mm')
 
     Object.keys(created).forEach(key => {
@@ -99,35 +103,41 @@ module.exports.create = async function(req, res, next) {
         tel: created.tel,
         service: created.service,
         date_string: created.date_string
-    })
+    }).lean()
 
-    // console.log(created)
+    const event = await Service.findOne({_id: created.service}).lean()
+    
+    let isFreePlaces = !event.peopleLimit || 
+    (await Registration.count({
+        service: created.service,
+        date: created.date
+    }) < event.peopleLimit)
 
-    if (!isExists) {
+    // console.log(isFreePlaces, event.peopleLimit)
+
+    if (event && !isExists && isFreePlaces) {
         // throw new Error('Ошибка. Вы уже зарегистрированы на данное мероприятие')
-        await new Registration(created).save()
+        finish = await new Registration(created).save()
 
-        const event = await Service.findOne({_id: created.service}).lean()
 
-        if (event) {
-            let sendToUser
-            if (created.email) {
-                let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
-                message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
-                if (event.address) message += `Место проведения: ${event.address}.\n\n`
-                if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
-                message += `Мы ждём вас!
-                
+        let sendToUser
+        if (created.email) {
+            let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
+            message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
+            if (event.address) message += `Место проведения: ${event.address}.\n\n`
+            if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
+            message += `Мы ждём вас!
+            
 Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу centervnl@mail.ru`
-    
-                let messageToUser = {
-                    message, 
-                    to: created.email.trim(), 
-                    subject: 'Регистрация на мероприятие'
-                }
-    
-                sendToUser = await sendEmail(messageToUser)
+
+            let messageToUser = {
+                message, 
+                to: created.email.trim(), 
+                subject: 'Регистрация на мероприятие'
             }
+
+            sendToUser = await sendEmail(messageToUser)
+        }
 
 //             const messageToAdmin = {
 //                 subject: 'Новая регистрация на мероприятие',
@@ -144,7 +154,7 @@ module.exports.create = async function(req, res, next) {
 
 //     `
 //             }
-            
+        
 
 //             if (!sendToUser) {
 //                 messageToAdmin.message += 'Пользователю не отправлено сообщение на почту'
@@ -155,8 +165,11 @@ module.exports.create = async function(req, res, next) {
 //             }
 
 //             await sendEmail(messageToAdmin)
-        }
+    
     }
+
+    
+    return !!finish
   } catch (e) {
     errorHandler(res, e)
   }

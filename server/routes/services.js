@@ -7,6 +7,7 @@ const controller = require('../controllers/services');
 
 router.get('/', controller.getServicesListPage) 
 router.get('/finish', controller.getRegistrationFinish)
+router.get('/error', controller.getRegistrationError)
 router.get('/:path', controller.getServicePage)
 router.post('/', controller.createRegistration)
 

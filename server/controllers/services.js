@@ -35,7 +35,7 @@ module.exports.getServicesListPage = async function(req, res) {
 
 
 const renderServicesListPage = function(req, res, data) {
-    console.log(6)
+    // console.log(6)
     res.render('services-list', {
         title: 'Мероприятия',
         contacts: data.contacts,
@@ -87,8 +87,9 @@ const renderServicePage = function(req, res, data) {
 
 module.exports.createRegistration = async (req, res) => {
     try {
-        await apiRegistrations.create(req, res)
-        res.redirect("/services/finish")
+        let result = await apiRegistrations.create(req, res)
+        if (result) res.redirect("/services/finish")
+        else res.redirect("/services/error")
     } catch (e) {
         console.log(e)
     }
@@ -120,6 +121,39 @@ module.exports.getRegistrationFinish = async function(req, res) {
 const renderRegistrationFinish  = function(req, res, data) {
     res.render('service-finish', {
         title: 'Вы зарегистрированы!',
+        programs: data.programs, 
+        contacts: data.contacts, 
+        session: req.session,
+        shops: data.shops
+    })  
+}
+
+module.exports.getRegistrationError = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        renderRegistrationError(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderRegistrationError  = function(req, res, data) {
+    res.render('service-error', {
+        title: 'Произошла ошибка',
         programs: data.programs, 
         contacts: data.contacts, 
         session: req.session,
