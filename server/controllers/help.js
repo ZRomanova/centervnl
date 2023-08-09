@@ -67,7 +67,7 @@ module.exports.getHelpDonate = async function(req, res) {
 
 const renderHelpDonate  = function(req, res, data) {
     res.render('help-donate', {
-        title: 'Сделать пожертвование | Ресурсный центр Вера Надежда Любовь',
+        title: 'Сделать пожертвование',
         programs: data.programs, 
         contacts: data.contacts, 
         session: req.session,
@@ -356,6 +356,83 @@ module.exports.getHelpMillionPrizov = async function(req, res) {
     }
 }
 
+module.exports.getHelpCorporate = async function(req, res) {
+    try {
+        const result = {
+            page: 'help-corporate',
+            title: 'Стать корпоративным партнером'
+        }
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, async (req, res, shops) => {
+            result.shops = shops
+        })
+        renderHelpVariant(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports.getHelpMuseum = async function(req, res) {
+    try {
+        const result = {
+            page: 'help-museum',
+            title: 'Помочь экспонатами музею'
+        }
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderHelpVariant(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+module.exports.getHelpInfo = async function(req, res) {
+    try {
+        const result = {
+            page: 'help-info',
+            title: 'Стать информационным партнером'
+        }
+        req.query.filter_visible = true
+        
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, contacts) => {
+            result.contacts = contacts
+        })
+        req.query.fields_name = 1
+        req.query.fields_path = 1
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        renderHelpVariant(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
 
 
 
@@ -367,7 +444,7 @@ module.exports.getHelpMillionPrizov = async function(req, res) {
 
 const renderHelpVariant  = function(req, res, data) {
     res.render(data.page, {
-        title: `${data.title} | Ресурсный центр Вера Надежда Любовь`,
+        title: data.title,
         programs: data.programs, 
         contacts: data.contacts, 
         session: req.session,
