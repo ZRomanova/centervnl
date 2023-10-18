@@ -62,6 +62,9 @@ import { FormsPageComponent } from './users/forms-page/forms-page.component';
 import { FilesListComponent } from './files/files-list/files-list.component';
 import { GalleryListComponent } from './files/gallery-list/gallery-list.component';
 import { FilesLayoutComponent } from './files/files-layout/files-layout.component';
+import { DocsLayoutComponent } from './reports/docs-layout/docs-layout.component';
+import { ProviderListComponent } from './reports/provider-list/provider-list.component';
+import { ProviderPageComponent } from './reports/provider-page/provider-page.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +123,10 @@ import { FilesLayoutComponent } from './files/files-layout/files-layout.componen
     FormsPageComponent,
     FilesListComponent,
     GalleryListComponent,
-    FilesLayoutComponent
+    FilesLayoutComponent,
+    DocsLayoutComponent,
+    ProviderListComponent,
+    ProviderPageComponent
   ],
   imports: [
     BrowserModule,

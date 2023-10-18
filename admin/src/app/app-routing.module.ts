@@ -46,6 +46,9 @@ import { FormsPageComponent } from './users/forms-page/forms-page.component';
 import { FilesLayoutComponent } from './files/files-layout/files-layout.component';
 import { FilesListComponent } from './files/files-list/files-list.component';
 import { GalleryListComponent } from './files/gallery-list/gallery-list.component';
+import { ProviderListComponent } from './reports/provider-list/provider-list.component';
+import { ProviderPageComponent } from './reports/provider-page/provider-page.component';
+import { DocsLayoutComponent } from './reports/docs-layout/docs-layout.component';
 
 const routes: Routes = [
   {
@@ -94,9 +97,13 @@ const routes: Routes = [
       {path: 'partner/:id', component: PartnersFormComponent},
       {path: 'documents/:id', component: DocsFormComponent},
       {path: 'slide', component: SlidePageComponent},
-      {path: 'slide/:id', component: SlidePageComponent},
-      {path: 'reports', component: ReportsListComponent},
+      { path: 'slide/:id', component: SlidePageComponent },
+      {path: 'docs', component: DocsLayoutComponent, children: [
+        {path: '', component: ReportsListComponent},
+        {path: 'provider', component: ProviderListComponent},
+      ]},
       {path: 'reports/:id', component: ReportPageComponent},
+      {path: 'docs/provider/:id', component: ProviderPageComponent},
       {path: 'library', component: LibraryLayoutComponent, children: [
         {path: '', component: LibraryListComponent},
         {path: 'parents', component: ParentsListComponent},

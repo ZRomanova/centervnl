@@ -74,7 +74,7 @@ export class ReportPageComponent implements OnInit, OnDestroy {
   }
 
   back() {
-    this.router.navigate(['reports'])
+    this.router.navigate(['docs'])
   }
 
   onSubmit() {

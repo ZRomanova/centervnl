@@ -6,6 +6,7 @@ const controller = require('../controllers/index');
 /* GET home page. */
 router.get('/', controller.getHomePage) 
 router.get('/docs', controller.getDocsPage)
+router.get('/provider', controller.getProviderPage)
 router.get('/partners', controller.getPartnersPage)
 router.get('/press', controller.getSmiPage)
 router.get('/contacts', controller.getContactsPage)

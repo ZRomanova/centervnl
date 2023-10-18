@@ -13,33 +13,33 @@ export class DocsService {
 
   constructor(private http: HttpClient) { }
 
-  fetch(): Observable<Doc[]> {
-    return this.http.get<Doc[]>(`${URL}/api/documents`)
+  fetch(type = 'documents'): Observable<Doc[]> {
+    return this.http.get<Doc[]>(`${URL}/api/${type}/`)
   }
 
-  fetchById(id: string): Observable<Doc> {
-    return this.http.get<Doc>(`${URL}/api/documents/${id}`)
+  fetchById(id: string,type = 'documents'): Observable<Doc> {
+    return this.http.get<Doc>(`${URL}/api/${type}//${id}`)
   }
 
-  delete(id: string): Observable<any> {
-    return this.http.delete<any>(`${URL}/api/documents/${id}`)
+  delete(id: string, type = 'documents'): Observable<any> {
+    return this.http.delete<any>(`${URL}/api/${type}/${id}`)
   }
 
-  create(data: any): Observable<Doc> {
+  create(data: any, type = 'documents'): Observable<Doc> {
     let json = JSON.stringify(data)
     const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
-    return this.http.post<Doc>(`${URL}/api/documents`, json, {headers: myHeaders})
+    return this.http.post<Doc>(`${URL}/api/${type}`, json, {headers: myHeaders})
   }
 
-  update(id: string, data: any): Observable<Doc> {
+  update(id: string, data: any, type = 'documents'): Observable<Doc> {
     let json = JSON.stringify(data)
     const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
-    return this.http.put<Doc>(`${URL}/api/documents/${id}`, json, {headers: myHeaders})
+    return this.http.put<Doc>(`${URL}/api/${type}/${id}`, json, {headers: myHeaders})
   }
 
-  upload(id: string, file: File): Observable<Doc> {
+  upload(id: string, file: File, type = 'documents'): Observable<Doc> {
     const fd = new FormData()
     fd.append('file', file, file.name)
-    return this.http.patch<Doc>(`${URL}/api/documents/${id}`, fd)
+    return this.http.patch<Doc>(`${URL}/api/${type}/${id}`, fd)
   }
 }

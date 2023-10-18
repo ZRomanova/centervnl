@@ -245,6 +245,7 @@ export class ServicePageComponent implements OnInit {
         item.time = this.stringToIntDate(item.time)
       }
       const data = {...this.form.value}
+
       if (this.id) {
         this.oSub = this.servicesService.update(this.id, data).subscribe(result1 => {
           if (this.image || this.gallery.length) {
@@ -267,7 +268,7 @@ export class ServicePageComponent implements OnInit {
           this.service = result1
           this.id = this.service._id
           if (this.image || this.gallery.length) {
-            this.iSub = this.servicesService.upload(result1._id, this.image, this.gallery).subscribe(result2 => {
+            this.iSub = this.servicesService.upload(this.id, this.image, this.gallery).subscribe(result2 => {
               this.image = null
               this.gallery = []
               this.galleryPreview = []

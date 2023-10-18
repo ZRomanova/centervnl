@@ -6,11 +6,11 @@ import { Doc } from 'src/app/shared/interfaces';
 import { DocsService } from 'src/app/shared/transport/documents.service';
 
 @Component({
-  selector: 'app-docs-form',
-  templateUrl: './docs-form.component.html',
-  styleUrls: ['./docs-form.component.css']
+  selector: 'app-provider-page',
+  templateUrl: './provider-page.component.html',
+  styleUrls: ['./provider-page.component.css']
 })
-export class DocsFormComponent implements OnInit, OnDestroy {
+export class ProviderPageComponent implements OnInit, OnDestroy {
 
   form: FormGroup
   loading = 1
@@ -29,7 +29,7 @@ export class DocsFormComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
       if (this.id === 'new') this.id = null
       if (this.id) {
-        this.docsService.fetchById(this.id).subscribe(doc => {
+        this.docsService.fetchById(this.id, 'providers').subscribe(doc => {
           this.doc = doc
           this.form = new FormGroup({
             name: new FormControl(this.doc.name, Validators.required),
@@ -56,14 +56,14 @@ export class DocsFormComponent implements OnInit, OnDestroy {
     }
   
     back() {
-      this.router.navigate(['docs'])
+      this.router.navigate(['docs/provider'])
     }
 
     onSubmit() {
       if (this.id) {
-        this.oSub = this.docsService.update(this.id, this.form.value).subscribe(doc1 => {
+        this.oSub = this.docsService.update(this.id, this.form.value, 'providers').subscribe(doc1 => {
           if (this.file) {
-            this.fSub = this.docsService.upload(this.id, this.file).subscribe(doc2 => {
+            this.fSub = this.docsService.upload(this.id, this.file, 'providers').subscribe(doc2 => {
               this.doc = doc2
               this.file = null
             })
@@ -72,14 +72,14 @@ export class DocsFormComponent implements OnInit, OnDestroy {
           }
         })
       } else {
-        this.oSub = this.docsService.create(this.form.value).subscribe(doc1 => {
+        this.oSub = this.docsService.create(this.form.value, 'providers').subscribe(doc1 => {
           if (this.file) {
-            this.fSub = this.docsService.upload(doc1._id, this.file).subscribe(doc2 => {
+            this.fSub = this.docsService.upload(doc1._id, this.file, 'providers').subscribe(doc2 => {
               this.file = null
-              this.router.navigate(['documents', doc1._id])
+              this.router.navigate(['docs/provider', doc1._id])
             })
           } else {
-            this.router.navigate(['documents', doc1._id])
+            this.router.navigate(['docs/provider', doc1._id])
           }
         })
       }

@@ -6,6 +6,7 @@ const apiShops = require('../api/controllers/shops')
 const apiUser = require('../api/controllers/auth')
 const apiForms = require('../api/controllers/forms')
 const apiDocs = require('../api/controllers/docs')
+const apiProvider = require('../api/controllers/provider_docs')
 const apiReports = require('../api/controllers/reports')
 const apiRegistrations = require('../api/controllers/registrations')
 const apiOrders = require('../api/controllers/orders')
@@ -582,6 +583,54 @@ const renderErrorPage = function(req, res, data) {
         session: req.session,
         shops: data.shops,
         error: data.error,
+    })
+}
+
+
+module.exports.getProviderPage = async function(req, res) {
+    try {
+        const result = {}
+        req.query.filter_visible = 1
+        req.params.type = "PROVIDERS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.text = data.text
+        })
+        req.params.type = "CONTACTS"
+        await apiData.getByType(req, res, (req, res, data) => {
+            result.contacts = data
+        })
+        // await apiReports.getReports(req, res, (req, res, docs) => {
+        //     result.reports = docs
+        // })
+
+        await apiProvider.getDocuments(req, res, (req, res, docs) => {
+            result.docs = docs.filter(doc => doc.visible && doc.name && doc.file)
+        })
+        req.query.fields_name = 1
+        
+        req.query.fields_path = 1
+        await apiShops.getShops(req, res, (req, res, shops) => {
+            result.shops = shops
+        })
+        await apiPrograms.getPrograms(req, res, (req, res, programs) => {
+            result.programs = programs
+        })
+        renderProviderPage(req, res, result)
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const renderProviderPage = function(req, res, data) {
+    res.render('provider', {
+        title: 'Поставщик социальных услуг',
+        programs: data.programs,
+        contacts: data.contacts,
+        text: data.text, 
+        session: req.session,
+        shops: data.shops,
+        docs: data.docs,
+        // reports: data.reports,
     })
     
 }

@@ -81,7 +81,6 @@ export class ReportsListComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.form.disable()
     this.cSub = this.generalService.update("REPORTS", this.form.value).subscribe(value => {
       this.form.patchValue(value)
     })
