@@ -27,19 +27,19 @@
             }
         }
     }
-    var nameMask = new IMask(nameOwner, optionName);
+    new IMask(nameOwner, optionName);
 
     var optionCvv = {
       mask: '000'
     }
-    var cvvMask = new IMask(cvvCard, optionCvv);
+    new IMask(cvvCard, optionCvv);
 
 
 
     var optionDate = {
         mask: '00 / 00'
       }
-    var monthMask = new IMask(dateCard, optionDate);
+    new IMask(dateCard, optionDate);
 
 
     // window.numCard = numCard;

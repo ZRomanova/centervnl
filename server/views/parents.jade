@@ -45,9 +45,9 @@ block content
 
       form#form.row.mx-xl-5(action="/form" method="post")
         .col-12.col-md-6.mt-3
-          .text-400-16 Имя
-          input.d-none(name="q_name" value="Имя")
-          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+          .text-400-16 Ваше ФИО
+          input.d-none(name="q_name" value="Ваше ФИО")
+          input.text-input.mt-2(type='text' name='name' autocomplete='name' placeholder="Например, Иванов Иван Иванович" required)
         
         .col-12.col-md-6.mt-3
           .text-400-16 Телефон
@@ -59,11 +59,15 @@ block content
           input.d-none(name="q_email" value="Email для связи")
           input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
 
-        
         .col-12.col-md-6.mt-3
-          .text-400-16 Возраст вашего ребенка
-          input.d-none(name="q_age" value="Возраст вашего ребенка")
-          input.text-input.mt-2(type='text' name='age' autocomplete='off' placeholder="Например, 3 года" required)
+          .text-400-16 ФИО вашего ребёнка
+          input.d-none(name="q_child_name" value="ФИО вашего ребёнка")
+          input.text-input.mt-2(type='text' name='child_name' autocomplete='text' placeholder="Например, Иванов Иван Иванович" required)
+         
+        .col-12.col-md-6.mt-3
+          .text-400-16 Дата рождения вашего ребенка
+          input.d-none(name="q_age" value="Дата рождения вашего ребенка")
+          input.text-input.mt-2#dateInput(type='text' name='age' autocomplete='off' placeholder="Например, 01.10.2002" required)
 
         .col-12.mt-3
           .text-400-16 Опишите проблему
@@ -82,7 +86,6 @@ block content
         span.title-700-20= page.text_library + ' '
           a(href=page.url_library target="_blank") можно здесь
 
-
       .row.mx-xl-5.mt-5
         .col-12.title-700-20= page.text_orgs
         each org in page.orgs 
@@ -92,6 +95,7 @@ block content
             span.text-500-16= " "
             span.text-500-16= org.description
 
-
 block scripts
+  script(src='/javascripts/mask-plugin.js')
+  script(src='/javascripts/date-masks.js')
   script(src='/javascripts/valid-form.js')
