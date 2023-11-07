@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const keys = require('../../config/keys')
 
-const defaultEmailTo = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'romanova.zoya.2002@mail.ru' : 'centervnl@mail.ru'
+const defaultEmailTo = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'romanova.zoya.2002@mail.ru' : 'director@centervnl.ru'
 
 let transporter = nodemailer.createTransport({
     host: 'smtp.mail.ru',

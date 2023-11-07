@@ -128,7 +128,7 @@ module.exports.create = async function(req, res, next) {
             if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
             message += `Мы ждём вас!
             
-Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу centervnl@mail.ru`
+Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу director@centervnl.ru`
 
             let messageToUser = {
                 message, 
