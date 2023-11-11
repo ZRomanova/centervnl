@@ -5,7 +5,7 @@ import { ServiceService } from 'src/app/shared/transport/service.service';
 import { CheckoutsService } from 'src/app/shared/transport/checkouts.service';
 import { Checkout, Service } from 'src/app/shared/interfaces';
 import { Subscription } from 'rxjs';
-
+// import * as FileSaver from 'file-saver';
 const STEP = 100
 
 @Component({
@@ -33,29 +33,29 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
   noMore = false
 
   colorStatuses = {
-    "ведущий":  'primary',
-    "неявка": 'danger', 
+    "ведущий": 'primary',
+    "неявка": 'danger',
     "заявка": 'warning',
-    "участник": 'success', 
+    "участник": 'success',
     "отмена": 'secondary'
   }
 
   constructor(private servicesService: ServiceService,
     private checkoutsService: CheckoutsService,
     private activateRoute: ActivatedRoute,
-    private router: Router) { 
-      this.id = this.activateRoute.snapshot.params['id'];
-    }
+    private router: Router) {
+    this.id = this.activateRoute.snapshot.params['id'];
+  }
 
   ngOnInit(): void {
-    this.sSub =  this.servicesService.fetchById(this.id).subscribe(service => {
+    this.sSub = this.servicesService.fetchById(this.id).subscribe(service => {
       this.service = service
       this.ready--
     })
     this.dSub = this.checkoutsService.fetchDates(this.id).subscribe(dates => {
       this.dates = dates
       this.ready--
-      if (this.dates && this.dates.length) { 
+      if (this.dates && this.dates.length) {
         this.date = this.dates[0]
         this.ready--
         this.fetch()
@@ -65,16 +65,34 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
 
   fetch() {
     const params = Object.assign({}, this.filter, {
-      offset: this.offset,
-      limit: this.limit
+      // offset: this.offset,
+      // limit: this.limit
     })
-    this.oSub = this.checkoutsService.fetch(this.id, this.date, params).subscribe(checkouts => {
+    this.oSub = this.checkoutsService.fetch(this.id, this.date, params).subscribe((checkouts: Checkout[]) => {
       this.checkouts = checkouts
       this.checkouts.forEach((item: any) => {
         item.statusColor = this.colorStatuses[item.status]
       })
       this.noMore = this.checkouts.length < this.limit
       this.loading = false
+    })
+  }
+
+  loadXLSX() {
+    const params = {
+      // offset: this.offset,
+      // limit: this.limit
+      format: 'xlsx'
+    }
+    this.oSub = this.checkoutsService.get_excel(this.id, this.date, params).subscribe({
+      next: (data: Blob) => {
+        // console.log(data)
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(data);
+        link.download = "Report.xlsx";
+        link.click();
+        // FileSaver.saveAs(data, `filename.xlsx`)
+      }
     })
   }
 
@@ -85,8 +103,8 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
     this.fetch()
   }
 
-  newDate(date) {
-    this.date = date
+  newDate() {
+    // this.date = date
     this.offset = 0
     this.fetch()
   }
@@ -96,7 +114,7 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
   }
 
   check(user) {
-    this.oSub = this.checkoutsService.update(user._id, {status: 'участник'}).subscribe(result => {
+    this.oSub = this.checkoutsService.update(user._id, { status: 'участник' }).subscribe(result => {
       user.status = 'участник'
       user.statusColor = this.colorStatuses[user.status]
     })

@@ -21,6 +21,15 @@ export class CheckoutsService {
     })
   }
 
+  get_excel(service: string, date: Date, params: any): Observable<Blob> {
+    return this.http.get(`${URL}/api/registrations/${service}/${date}`, {
+      responseType: 'blob',
+      params: new HttpParams({
+        fromObject: params
+      })
+    })
+  }
+
   fetchDates(service: string): Observable<Date[]> {
     return this.http.get<Date[]>(`${URL}/api/registrations/groups/${service}`)
   }
@@ -32,7 +41,7 @@ export class CheckoutsService {
   update(id: string, data: any): Observable<Checkout> {
     let json = JSON.stringify(data)
     const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
-    return this.http.put<Checkout>(`${URL}/api/registrations/${id}`, json, {headers: myHeaders})
+    return this.http.put<Checkout>(`${URL}/api/registrations/${id}`, json, { headers: myHeaders })
   }
 }
 
