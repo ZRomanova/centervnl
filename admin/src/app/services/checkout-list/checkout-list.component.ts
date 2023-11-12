@@ -43,6 +43,7 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
   constructor(private servicesService: ServiceService,
     private checkoutsService: CheckoutsService,
     private activateRoute: ActivatedRoute,
+    private datePipe: DatePipe,
     private router: Router) {
     this.id = this.activateRoute.snapshot.params['id'];
   }
@@ -89,7 +90,7 @@ export class CheckoutListComponent implements OnInit, OnDestroy {
         // console.log(data)
         let link = document.createElement('a');
         link.href = window.URL.createObjectURL(data);
-        link.download = "Report.xlsx";
+        link.download = `${this.service.name} (${this.datePipe.transform(this.date, "dd_MM_yyyy HH_mm", "UTC +3")}).xlsx`;
         link.click();
         // FileSaver.saveAs(data, `filename.xlsx`)
       }
