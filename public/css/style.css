@@ -1506,3 +1506,8 @@ input::-webkit-inner-spin-button {
 .form-check-label.d-inline {
   vertical-align: sub;
 }
+.paySystem {
+  width: 400px;
+  height: 400px;
+  align-content: center;
+}
