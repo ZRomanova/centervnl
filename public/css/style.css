@@ -1510,4 +1510,5 @@ input::-webkit-inner-spin-button {
   width: 400px;
   height: 400px;
   align-content: center;
+  max-width: 100%;
 }
