@@ -3,24 +3,33 @@ const errorHandler = require('../utils/errorHandler')
 const mongoose = require('mongoose')
 const translit = require('../utils/translit')
 
-module.exports.getProductById = async function(req, res, next) {
+function isValidObjectID(str) {
+    str = str + '';
+    var len = str.length, valid = false;
+    if (len == 12 || len == 24) {
+        valid = /^[0-9a-fA-F]+$/.test(str);
+    }
+    return valid;
+}
+
+module.exports.getProductById = async function (req, res, next) {
     try {
         const filter = {}
-        if (req.params.id && mongoose.isValidObjectId(req.params.id)) {
+        if (req.params.id && isValidObjectID(req.params.id)) {
             filter["groups.products._id"] = mongoose.Types.ObjectId(req.params.id)
         } else if (req.params.id) {
             filter["groups.products.path"] = req.params.id
         }
-        
+
         const shop = await Shop.findOne(
-            filter, 
-            {"groups.products.$": 1}
+            filter,
+            { "groups.products.$": 1 }
         ).lean()
 
         const product = shop.groups[0].products.find(item => (item._id == req.params.id || item.path == req.params.id))
 
 
-        if (product){
+        if (product) {
             product.shop_id = shop._id
             next(req, res, product)
         }
@@ -31,7 +40,7 @@ module.exports.getProductById = async function(req, res, next) {
     }
 }
 
-module.exports.getProducts = async function(req, res, next) {
+module.exports.getProducts = async function (req, res, next) {
     try {
         const filter = {}
         const fields = {}
@@ -48,22 +57,23 @@ module.exports.getProducts = async function(req, res, next) {
 
         const products = shops.reduce(function (result, shop) {
             return [
-                ...result, 
+                ...result,
 
-                ...shop.groups.reduce(function(groups, group) {
+                ...shop.groups.reduce(function (groups, group) {
                     return [
                         ...groups,
-                        
-                        ...group.products.reduce(function(products, product){
+
+                        ...group.products.reduce(function (products, product) {
                             return [
                                 ...products,
-                                {...product,
+                                {
+                                    ...product,
                                     group: group.name,
                                 }
                             ]
                         }, [])
-                        
-                        
+
+
                     ]
                 }, [])
             ]
@@ -76,7 +86,7 @@ module.exports.getProducts = async function(req, res, next) {
     }
 }
 
-module.exports.createProduct = async function(req, res, next) {
+module.exports.createProduct = async function (req, res, next) {
     try {
         const created = req.body
         created._id = mongoose.Types.ObjectId()
@@ -84,7 +94,7 @@ module.exports.createProduct = async function(req, res, next) {
         else if (created.name) created.path = translit(created.name)
         else created.name = "Новый продукт"
 
-        await Shop.findOneAndUpdate({"groups._id": created.group_id}, {"$push": {"groups.$.products": created}}, {new: true}).lean()
+        await Shop.findOneAndUpdate({ "groups._id": created.group_id }, { "$push": { "groups.$.products": created } }, { new: true }).lean()
 
         next(req, res, created)
     } catch (e) {
@@ -92,7 +102,7 @@ module.exports.createProduct = async function(req, res, next) {
     }
 }
 
-module.exports.updateProduct = async function(req, res, next) {
+module.exports.updateProduct = async function (req, res, next) {
     try {
         const item = req.body
         if (!item.path) item.path = translit(item.name)
@@ -101,8 +111,8 @@ module.exports.updateProduct = async function(req, res, next) {
         item._id = mongoose.Types.ObjectId(req.params.id)
 
         const shop = await Shop.findOneAndUpdate(
-            {"groups.products._id": req.params.id}, 
-            {"$set": {"groups.$.products.$[product]": item}},
+            { "groups.products._id": req.params.id },
+            { "$set": { "groups.$.products.$[product]": item } },
             {
                 "arrayFilters": [{ "product._id": req.params.id }],
                 new: true
@@ -116,7 +126,7 @@ module.exports.updateProduct = async function(req, res, next) {
     }
 }
 
-module.exports.uploadImagesProduct = async function(req, res, next) {
+module.exports.uploadImagesProduct = async function (req, res, next) {
     try {
         const updated = {}
         const item = {}
@@ -132,14 +142,14 @@ module.exports.uploadImagesProduct = async function(req, res, next) {
 
 
         const shop = await Shop.findOneAndUpdate(
-            {"groups.products._id": req.params.id}, 
-            {"$set": updated},
+            { "groups.products._id": req.params.id },
+            { "$set": updated },
             {
                 "arrayFilters": [{ "product._id": req.params.id }],
                 new: true
             })
 
-            console.log(shop.groups[0].products)
+        console.log(shop.groups[0].products)
         // const product = await Product.findOneAndUpdate({_id: req.params.id}, updated, {new: true}).lean()
         next(req, res, item)
     } catch (e) {

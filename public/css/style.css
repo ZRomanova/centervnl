@@ -1676,14 +1676,14 @@ input::-webkit-inner-spin-button {
   vertical-align: sub;
 }
 
-/* .paySystem {
+.paySystem {
   width: 400px;
   height: 400px;
   align-content: center;
-} */
+}
 
-.paySystem {
+/* .paySystem {
   max-width: 133px;
   width: 100%;
   aspect-ratio: 1 / 1;
-}
+} */
