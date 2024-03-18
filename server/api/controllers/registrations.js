@@ -177,24 +177,24 @@ module.exports.create = async function (req, res, next) {
             finish = await new Registration(created).save()
 
 
-            let sendToUser
-            if (created.email) {
-                let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
-                message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
-                if (event.address) message += `Место проведения: ${event.address}.\n\n`
-                if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
-                message += `Мы ждём вас!
-            
-Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу director@centervnl.ru`
+            //             let sendToUser
+            //             if (created.email) {
+            //                 let message = `${created.name}, вы успешно зарегистрированы на "${event.name}"\n\n`
+            //                 message += `Мероприятие пройдёт ${moment(req.body.date).format('D MMMM в HH:mm')}.\n\n`
+            //                 if (event.address) message += `Место проведения: ${event.address}.\n\n`
+            //                 if (event.is_online) message += `Ссылка на подключение: ${event.url}\n\n`
+            //                 message += `Мы ждём вас!
 
-                let messageToUser = {
-                    message,
-                    to: created.email.trim(),
-                    subject: 'Регистрация на мероприятие'
-                }
+            // Если ваши планы изменились, и вы не сможете участвовать, пожалуйста, сообщите нам по адресу director@centervnl.ru`
 
-                sendToUser = await sendEmail(messageToUser)
-            }
+            //                 let messageToUser = {
+            //                     message,
+            //                     to: created.email.trim(),
+            //                     subject: 'Регистрация на мероприятие'
+            //                 }
+
+            //                 sendToUser = await sendEmail(messageToUser)
+            //             }
 
             //             const messageToAdmin = {
             //                 subject: 'Новая регистрация на мероприятие',
