@@ -1681,3 +1681,7 @@ input::-webkit-inner-spin-button {
   width: 100%;
   aspect-ratio: 1 / 1;
 }
+
+.header__social-item {
+  size: 18px;
+}
