@@ -100,7 +100,7 @@ a:hover {
 .header__links-dropped,
 .header__links-list {
   color: #30333a;
-  font-size: 12px;
+  font-size: 18px;
   font-weight: 600;
 }
 
@@ -1675,12 +1675,6 @@ input::-webkit-inner-spin-button {
 .form-check-label.d-inline {
   vertical-align: sub;
 }
-
-/* .paySystem {
-  width: 400px;
-  height: 400px;
-  align-content: center;
-} */
 
 .paySystem {
   max-width: 133px;

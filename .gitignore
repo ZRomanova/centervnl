@@ -4,3 +4,4 @@ node_modules
 server/config/keys.dev.js
 import-shop.js
 script.js
+**/.DS_Store
