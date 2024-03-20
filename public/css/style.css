@@ -1682,7 +1682,6 @@ input::-webkit-inner-spin-button {
   aspect-ratio: 1 / 1;
 }
 
-
 .btn-up {
   /* фиксированное позиционирование */
   position: fixed;
@@ -1715,4 +1714,7 @@ input::-webkit-inner-spin-button {
   display: none;
 }
 
- 
+
+.header__social-item {
+  size: 18px;
+}
