@@ -125,10 +125,8 @@ html(lang='ru')
         .container.first-container
           block content
 
-
-          a.pageup#pageup(href="#up")
-            img.arrow__up(src="/icons/arrow_up.svg" alt="Кнопка наверх")
-
+       .btn-up.btn-up_hide
+    
       footer.footer
         .container
           .row
@@ -192,4 +190,5 @@ html(lang='ru')
     script(src='/javascripts/jquery-3.6.3.min.js')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/main.js')
+    script(src='/javascripts/button.js')
     block scripts

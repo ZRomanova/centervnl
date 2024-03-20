@@ -1681,3 +1681,38 @@ input::-webkit-inner-spin-button {
   width: 100%;
   aspect-ratio: 1 / 1;
 }
+
+
+.btn-up {
+  /* фиксированное позиционирование */
+  position: fixed;
+
+  /* расстояние от правого края окна браузера */
+  right: 20px;
+  /* расстояние от нижнего края окна браузера */
+  bottom: 40px;
+  /* вид курсора */
+  cursor: pointer;
+  /* отображение элемента как flex */
+  display: flex;
+  /* выравниваем элементы внутри элемента по центру вдоль поперечной оси */
+  align-items: center;
+  /* выравниваем элементы внутри элемента по центру вдоль главной оси */
+  justify-content: center;
+
+}
+
+.btn-up::before {
+  content: "";
+  width: 100px;
+  height: 100px;
+  background: transparent no-repeat center center;
+  background-size: 100% 100%;
+  background-image: url(../icons/arrow_up.svg);
+}
+
+.btn-up_hide {
+  display: none;
+}
+
+ 
