@@ -29,19 +29,19 @@ block content
           | Если у вас есть вопросы, задайте их <a href="https://centervnl.ru/contacts#form">здесь</a>. 
           br
           | Мы обязательно с вами свяжемся!
- 
+
 
       form#form.row.mx-xl-5.mt-5(action="/form" method="post")
         .col-12.col-md-6.mt-3
           .text-400-16 Имя
-          input.d-none(name="q_name" value="Имя")
-          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+          input.d-none(name="q_name" value="Ваше ФИО")
+          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иванов Иван Иванович" required)
 
         .col-12.col-md-6.mt-3
-          .text-400-16 Ваш возраст
-          input.d-none(name="q_age" value="Ваш возраст")
-          input.text-input.mt-2(type='text' name='age' autocomplete='off' placeholder="Например, 25 лет" required)
-        
+          .text-400-16 Дата рождения
+          input.d-none(name="q_age" value="Дата рождения")
+          input.text-input.mt-2#dateInput(type='text' name='age' autocomplete='off' placeholder="Например, 01.01.2000" required)
+
         .col-12.col-md-6.mt-3
           .text-400-16 Телефон
           input.d-none(name="q_tel" value="Телефон")
@@ -91,7 +91,7 @@ block content
           input.d-none(name="q_motivation" value="Почему вы решили стать волонтёром или что хотели бы получить от волонтерства?")
           textarea.text-input.mt-2(name='motivation' autocomplete='off' placeholder="Укажите мотивацию" required)
 
-        - var forces = ['Фотографирую', 'Снимаю и монтрую видео', 'Есть машина и я её вожу', 'Люблю читать и писать тексты', 'Умею вязать', 'Хорошо рисую', 'Имею опыт работы в столярной мастерской', 'Имею опыт работы в типографии', 'Умею шить', 'Хорошо разбираюсь в Excel', 'Владею дизайнерскими программами', 'Программирую', 'Играю музыкальных инструментах', 'Знаю рецепт суперблюда', 'Готов рассказать о своей профессии', 'Работаю в Сбере', 'Живу в Братеево', 'Свой вариант, расскажу']
+        - var forces = ['Фотографирую', 'Снимаю и монтрую видео', 'Есть машина и я её вожу', 'Люблю читать и писать тексты', 'Умею вязать', 'Умею ткать', 'Хорошо рисую', 'Имею опыт работы в столярной мастерской', 'Имею опыт работы в типографии', 'Умею шить', 'Хорошо разбираюсь в Excel', 'Владею дизайнерскими программами', 'Программирую', 'Играю на музыкальных инструментах', 'Знаю рецепт суперблюда', 'Готов рассказать о своей профессии', 'Работаю в Сбере', 'Живу в Братеево', 'Свой вариант, расскажу']
         .col-12.mt-3
           .text-400-16 Ваша «Суперсила»
           input.d-none(name="q_force" value="Ваша «Суперсила»")
@@ -100,6 +100,15 @@ block content
               .col-12.col-md-6.mt-2
                 input.form-check-input(type='checkbox' value=item name='force' id='forceCheck'+i)
                 label.form-check-label.d-inline(for='forceCheck'+i)= item
+
+        .col-12.mt-3
+          .text-400-16 У нас есть разные виды деятельности, в которых требуются волонтёры. Какие из перечисленных вариантов вам были бы интересны?
+          input.d-none(name="q_activity" value="У нас есть разные виды деятельности, в которых требуются волонтёры. Какие из перечисленных вариантов вам были бы интересны?")
+          .row 
+            each item, i in activity
+              .col-12.mt-2
+                input.form-check-input(type='checkbox' value=item name='activity' id='activityCheck'+i)
+                label.form-check-label.d-inline(for='activityCheck'+i)= item
 
         - var adapt = ['Нет', 'Да, для людей с нейроотличиями', 'Да, для людей с ограничениями по зрению', 'Да, для людей с ограничениями по слуху', 'Да, для людей с нарушениями опорно-двигательного аппарата', 'Да, передвигаюсь на коляске', 'Да, другое']
         .col-12.mt-3
@@ -120,4 +129,6 @@ block content
           button.button.button_orange(type='submit') Отправить
 
 block scripts
+  script(src='/javascripts/mask-plugin.js')
+  script(src='/javascripts/date-masks.js')
   script(src='/javascripts/valid-form.js')

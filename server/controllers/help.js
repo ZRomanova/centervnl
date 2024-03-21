@@ -6,12 +6,12 @@ const request = require('request');
 
 moment.locale('ru')
 
-module.exports.getHelpList = async function(req, res) {
+module.exports.getHelpList = async function (req, res) {
     try {
         const result = {}
         req.query.filter_visible = true
-        
-        
+
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -30,23 +30,23 @@ module.exports.getHelpList = async function(req, res) {
     }
 }
 
-const renderHelpList = function(req, res, data) {
+const renderHelpList = function (req, res, data) {
     res.render('help-list', {
         title: 'Как помочь | Ресурсный центр Вера Надежда Любовь',
-        programs: data.programs, 
-        contacts: data.contacts, 
+        programs: data.programs,
+        contacts: data.contacts,
         session: req.session,
         shops: data.shops
     })
-    
+
 }
 
 
-module.exports.getHelpDonate = async function(req, res) {
+module.exports.getHelpDonate = async function (req, res) {
     try {
         const result = {}
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -59,30 +59,30 @@ module.exports.getHelpDonate = async function(req, res) {
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
         })
-        renderHelpDonate (req, res, result)
+        renderHelpDonate(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const renderHelpDonate  = function(req, res, data) {
+const renderHelpDonate = function (req, res, data) {
     res.render('help-donate', {
         title: 'Сделать пожертвование',
-        programs: data.programs, 
-        contacts: data.contacts, 
+        programs: data.programs,
+        contacts: data.contacts,
         session: req.session,
         error: req.query.error,
         ip: req.ip,
         shops: data.shops
     })
-    
+
 }
 
 
 
 
 
-module.exports.createDonation = async function(req, res) {
+module.exports.createDonation = async function (req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/charge', {
             headers: {
@@ -95,11 +95,11 @@ module.exports.createDonation = async function(req, res) {
                 let model = body["Model"]
                 if (!body["Success"] && body["Model"] && body["Model"]["AcsUrl"]) {
                     data = {
-                    // "TermUrl": 'https://centervnl.ru/help/donate/',
-                    "MD": model["TransactionId"],
-                    "PaReq": model["PaReq"],
-                    "AcsUrl": model["AcsUrl"],
-                    "next": "3D"
+                        // "TermUrl": 'https://centervnl.ru/help/donate/',
+                        "MD": model["TransactionId"],
+                        "PaReq": model["PaReq"],
+                        "AcsUrl": model["AcsUrl"],
+                        "next": "3D"
                     };
                 } else if (body["Success"]) {
                     data = {
@@ -119,19 +119,19 @@ module.exports.createDonation = async function(req, res) {
                     next: "error"
                 }
             }
-          res.status(200).json(data)
+            res.status(200).json(data)
         })
-      } catch(e) {
+    } catch (e) {
         console.log(e)
-      }
+    }
 }
 
 
-module.exports.getDonateFinish = async function(req, res) {
+module.exports.getDonateFinish = async function (req, res) {
     try {
         const result = {}
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -150,21 +150,21 @@ module.exports.getDonateFinish = async function(req, res) {
     }
 }
 
-const renderDonateFinish  = function(req, res, data) {
+const renderDonateFinish = function (req, res, data) {
     res.render('help-finish', {
         title: 'Спасибо',
         header: 'От всего сердца благодарим Вас за пожертвование!',
         footer: 'По всем вопросам вы можете написать нам по адресу ',
-        programs: data.programs, 
-        contacts: data.contacts, 
+        programs: data.programs,
+        contacts: data.contacts,
         session: req.session,
         // ip: req.ip,
         shops: data.shops
-    })  
+    })
 }
 
 
-module.exports.createDonationFinish = async function(req, res) {
+module.exports.createDonationFinish = async function (req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/post3ds', {
             headers: {
@@ -181,7 +181,7 @@ module.exports.createDonationFinish = async function(req, res) {
                 if (body["Success"]) {
                     res.redirect("/help/donate/finish")
                 } else {
-                    res.redirect("/help/donate?error="+model["CardHolderMessage"]+'#error-text')
+                    res.redirect("/help/donate?error=" + model["CardHolderMessage"] + '#error-text')
                 }
 
             } else {
@@ -191,18 +191,18 @@ module.exports.createDonationFinish = async function(req, res) {
                 }
                 res.status(200).json(data)
             }
-          
+
         })
-      } catch(e) {
+    } catch (e) {
         console.log(e)
-      }
+    }
 }
 
 
 
 
 
-module.exports.createSubscription = async function(req, res) {
+module.exports.createSubscription = async function (req, res) {
     try {
         request.post('https://api.cloudpayments.ru/payments/cards/post3ds', {
             headers: {
@@ -229,26 +229,26 @@ module.exports.createSubscription = async function(req, res) {
                             "Amount": model["Amount"],
                             "Currency": model["Currency"],
                             "RequireConfirmation": false,
-                            "StartDate": new Date(new Date().setMonth(new Date().getMonth()+1)),
+                            "StartDate": new Date(new Date().setMonth(new Date().getMonth() + 1)),
                             "Period": 1,
                             "Interval": "Month"
 
                         },
-                    }, function(error, response, body){
+                    }, function (error, response, body) {
 
                         let model = body["Model"]
                         if (body["Success"]) {
                             res.redirect("/help/donate/subscribe")
                         } else {
-                            res.redirect("/help/donate?error="+model["CardHolderMessage"]+'#error-text')
+                            res.redirect("/help/donate?error=" + model["CardHolderMessage"] + '#error-text')
                         }
                     })
 
 
-                    
+
 
                 } else {
-                    res.redirect("/help/donate?error="+model["CardHolderMessage"]+'#error-text')
+                    res.redirect("/help/donate?error=" + model["CardHolderMessage"] + '#error-text')
                 }
 
             } else {
@@ -258,20 +258,20 @@ module.exports.createSubscription = async function(req, res) {
                 }
                 res.status(200).json(data)
             }
-          
+
         })
         // res.status(200).json(req.body)
-      } catch(e) {
+    } catch (e) {
         console.log(e)
-      }
+    }
 }
 
 
-module.exports.getSubscriptionFinish = async function(req, res) {
+module.exports.getSubscriptionFinish = async function (req, res) {
     try {
         const result = {}
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -284,34 +284,34 @@ module.exports.getSubscriptionFinish = async function(req, res) {
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
         })
-        renderSubscriptionFinish (req, res, result)
+        renderSubscriptionFinish(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-const renderSubscriptionFinish  = function(req, res, data) {
+const renderSubscriptionFinish = function (req, res, data) {
     res.render('help-finish', {
         title: 'Спасибо',
         header: 'От всего сердца благодарим Вас за подписку!',
-        programs: data.programs, 
-        contacts: data.contacts, 
+        programs: data.programs,
+        contacts: data.contacts,
         session: req.session,
         footer: 'Для отмены подписки и по всем другим вопросам вы можете написать нам по адресу ',
         shops: data.shops
     })
-    
+
 }
 
 
-module.exports.getHelpVolunteer = async function(req, res) {
+module.exports.getHelpVolunteer = async function (req, res) {
     try {
         const result = {
             page: 'help-volunteer',
             title: 'Стать волонтером'
         }
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -324,20 +324,54 @@ module.exports.getHelpVolunteer = async function(req, res) {
         await apiShops.getShops(req, res, async (req, res, shops) => {
             result.shops = shops
         })
+        const activity = [
+            'Проведение функциональных проб',
+            'Включенное наблюдение',
+            'Работа по собственному выбору в рамках индивидуальной исследовательской или проектной деятельности',
+            'Сопровождение в столярной мастерской и оценка',
+            'Сопровождение в швейной мастерской и оценка',
+            'Сопровождение в печатной мастерской и оценка',
+            'Сопровождение в бумажной мастерской и оценка',
+            'Сопровождение в клининге и оценка',
+            'Сопровождение в сборке и оценка',
+            'Сопровождение в кулинарии и оценка',
+            'Сопровождение в упаковке и оценка',
+            'Сопровождение в студии арт-дизайна и оценка',
+            'Сопровождение на рабочем месте в музее и оценка',
+            'Сопровождение на волонтерских сменах (плетение сетей)',
+            'Сопровождение на волонтерских сменах (пошив тактических носилок)',
+            'Сопровождение на волонтерских сменах (передачи гуманитарной помощи нуждающимся)',
+            'Индивидуальное творческое сопровождение (творческий поиск занятия, интересного особому стажеру)',
+            'Сопровождение ребят с низким слухом',
+            'Разработка визуального помощника под конкретную задачу (создание эскиза)',
+            'Фотосъёмка для визуального помощника',
+            'Разработка дидактической игры (описание игры и эскизы частей игры)',
+            'Верстка визуального помощника или дидактической игры (в дизайнерских программах по эскизу)',
+            'Разработка компьютерного тренажера (написание задания для программиста)',
+            'Разработка компьютерного тренажера по тех. заданию (HTML, CSS, JavaScript)',
+            'Медиаосвещение мероприятия (фото/видеосъёмка и написание поста)',
+            'Проведение независимой аттестации (оценка владения навыками по чек-листу)',
+            'Преподавание в вечерней школе (отработка навыков с использованием компьютерных тренажеров)',
+            'Проведение творческих мастер-классов',
+            'Наставничество при подготовке мастер-класса',
+            'Наставничество при подготовке экскурсии',
+            'Работа с данными для анализа'
+        ]
+        result.activity = activity
         renderHelpVariant(req, res, result)
     } catch (e) {
         console.log(e)
     }
 }
 
-module.exports.getHelpMillionPrizov = async function(req, res) {
+module.exports.getHelpMillionPrizov = async function (req, res) {
     try {
         const result = {
             page: 'help-millpriz',
             title: 'Миллион призов'
         }
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -356,14 +390,14 @@ module.exports.getHelpMillionPrizov = async function(req, res) {
     }
 }
 
-module.exports.getHelpCorporate = async function(req, res) {
+module.exports.getHelpCorporate = async function (req, res) {
     try {
         const result = {
             page: 'help-corporate',
             title: 'Стать корпоративным партнером'
         }
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -382,14 +416,14 @@ module.exports.getHelpCorporate = async function(req, res) {
     }
 }
 
-module.exports.getHelpMuseum = async function(req, res) {
+module.exports.getHelpMuseum = async function (req, res) {
     try {
         const result = {
             page: 'help-museum',
             title: 'Помочь экспонатами музею'
         }
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -408,14 +442,14 @@ module.exports.getHelpMuseum = async function(req, res) {
     }
 }
 
-module.exports.getHelpInfo = async function(req, res) {
+module.exports.getHelpInfo = async function (req, res) {
     try {
         const result = {
             page: 'help-info',
             title: 'Стать информационным партнером'
         }
         req.query.filter_visible = true
-        
+
         req.params.type = "CONTACTS"
         await apiData.getByType(req, res, (req, res, contacts) => {
             result.contacts = contacts
@@ -434,20 +468,6 @@ module.exports.getHelpInfo = async function(req, res) {
     }
 }
 
-
-
-
-
-
-
-
-
-const renderHelpVariant  = function(req, res, data) {
-    res.render(data.page, {
-        title: data.title,
-        programs: data.programs, 
-        contacts: data.contacts, 
-        session: req.session,
-        shops: data.shops
-    })
+const renderHelpVariant = function (req, res, data) {
+    res.render(data.page, data)
 }
