@@ -96,8 +96,21 @@ html(lang='ru')
                       each item in programs
                         li
                           a.dropdown-item.header__links-dropped(href='https://centervnl.ru/programs/'+item.path)= item.name
-                  li.nav-item
+                  li.nav-item.dropdown
                     a.nav-link.header__links-list(href='https://centervnl.ru/help/') Как помочь
+                    ul.dropdown-menu
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/donate/') Сделать пожертвование
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/corporate/') Стать корпоративным партнером
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/volunteer/') Стать волонтёром
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/info/') Стать информационным партнером
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/museum/') Помочь экспонатами музею
+                      li
+                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/million-prizov/') Пожертвуйте баллы на сайте "Активный гражданин"
                   li.nav-item
                     a.nav-link.header__links-list(href='https://centervnl.ru/parents/') Родителям
                   li.nav-item
