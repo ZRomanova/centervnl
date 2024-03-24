@@ -1,8 +1,8 @@
 const Form = require('../models/forms')
 const errorHandler = require('../utils/errorHandler')
-const {sendEmail} = require('../utils/email')
+const { sendEmail } = require('../utils/email')
 
-module.exports.fillForm = async function(req, res) {
+module.exports.fillForm = async function (req, res) {
   try {
     const data = {
       page: req.headers.referer,
@@ -22,22 +22,21 @@ module.exports.fillForm = async function(req, res) {
       }
     }
 
-    await new Form(data).save()
-
-    let message = `Форма заполнена на странице ${data.page}\n\n`
-    data.answers.forEach(item => {
-      message += `${item.question} — ${item.answer}\n`
-    })
-
-    await sendEmail({message, subject: 'Новая форма на сайте centervnl.ru'})
-      
+    if (data && data.answers) {
+      await new Form(data).save()
+      let message = `Форма заполнена на странице ${data.page}\n\n`
+      data.answers.forEach(item => {
+        message += `${item.question} — ${item.answer}\n`
+      })
+      await sendEmail({ message, subject: 'Новая форма на сайте centervnl.ru' })
+    }
   } catch (e) {
     errorHandler(res, e)
   }
 };
 
 
-module.exports.getFormById = async function(req, res, next) {
+module.exports.getFormById = async function (req, res, next) {
   try {
     const form = await Form.findById(req.params.id).lean()
     next(req, res, form)
@@ -47,14 +46,14 @@ module.exports.getFormById = async function(req, res, next) {
 };
 
 
-module.exports.getForms = async function(req, res, next) {
+module.exports.getForms = async function (req, res, next) {
   try {
     const docs = await Form
-    .find()
-    .skip(+req.query.offset)
-    .limit(+req.query.limit)
-    .sort({created: -1}).lean()
-    
+      .find()
+      .skip(+req.query.offset)
+      .limit(+req.query.limit)
+      .sort({ created: -1 }).lean()
+
     next(req, res, docs)
   } catch (e) {
     errorHandler(res, e)
