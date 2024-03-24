@@ -22,7 +22,7 @@ module.exports.fillForm = async function (req, res) {
       }
     }
 
-    if (data && data.answers) {
+    if (data && data.answers && data.answers.length) {
       await new Form(data).save()
       let message = `Форма заполнена на странице ${data.page}\n\n`
       data.answers.forEach(item => {
