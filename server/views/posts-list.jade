@@ -9,7 +9,19 @@ block content
       .row.mx-xl-5.about__wrapper
         each post in posts
           +post(post, 'news/')
-  
+      .pagination
+        .number.active
+          a(href='#') 1
+        .number
+          a(href='#') 2
+        .number
+          a(href='#') 3
+        .number
+          a(href='#') 4
+        .number
+          a(href='#') ...   
+          
+
 
 
   

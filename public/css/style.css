@@ -1708,3 +1708,37 @@ input::-webkit-inner-spin-button {
 .header__social-item {
   size: 18px;
 }
+
+
+.pagination {
+  display: inline-flex;
+  margin-top: 30px;
+  margin-left: 50px;
+}
+.pagination .number {
+  margin: 0 0.5vw;
+}
+.pagination a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3vw;
+  height: 3vw;
+  min-width: 30px;
+  min-height: 30px;
+  max-width: 90px;
+  max-height: 90px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  text-decoration: none;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: #E7E6E6;
+  color: #000;
+}
+.pagination .active a {
+  background: #FFA556;
+  color: #fff;
