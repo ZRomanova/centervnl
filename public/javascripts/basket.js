@@ -1,15 +1,15 @@
 function incrementItem(item, inc) {
   const data = $($(item).parent()[0]).data()
-  console.log(data.options)
+  // console.log(data.options)
   data.options = (data.options && data.options != "null") ? data.options.split(',') : []
   data.count = inc
-  console.log(data)
+  // console.log(data)
   $.ajax({
     type: "POST",
     dataType: 'json',
     url: '/api/orders',
     data,
-    success: function(data) {
+    success: function (data) {
       let html = ''
 
       data.products.forEach(item => {
@@ -44,7 +44,7 @@ function incrementItem(item, inc) {
         
         </div>
         `
-        
+
       })
 
       let total = data.products.reduce((prev, curr) => {
