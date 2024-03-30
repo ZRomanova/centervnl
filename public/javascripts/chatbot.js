@@ -22,12 +22,10 @@ function sendQuestion(message) {
 
 $('.chatbot__btn').click(function () {
   $('.chatbot').removeClass('d-none')
-  $('.chatbot').addClass('d-block')
 })
 
 $('.chatbot__close').click(function () {
   $('.chatbot').addClass('d-none')
-  $('.chatbot').removeClass('d-block')
 })
 
 $('.chatbot__input').on('input', function () {
