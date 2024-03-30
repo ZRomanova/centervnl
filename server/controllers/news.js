@@ -6,17 +6,25 @@ const moment = require('moment')
 
 moment.locale('ru')
 
-module.exports.getNewsListPage = async function(req, res, data = {}) {
+module.exports.getNewsListPage = async function (req, res, data = {}) {
     try {
-        const result = {...data}
+        const result = { ...data }
         req.query.filter_visible = true
+        req.query.limit = 4
+        req.query.offset = (req.query.page - 1 || 0) * 4
         await apiPosts.getPosts(req, res, (req, res, posts) => {
             posts.forEach(post => {
                 post.date = moment(post.date).format('D MMMM yyyy')
             })
             result.posts = posts
         })
-        
+        await apiPosts.countPosts(req, res, (req, res, posts) => {
+            result.pages = Math.ceil(posts.count / 4)
+        })
+        result.currentPage = req.query.page || 1
+        delete req.query.limit
+        delete req.query.offset
+
         req.query.fields_name = 1
         req.query.fields_path = 1
         await apiShops.getShops(req, res, (req, res, shops) => {
@@ -37,20 +45,16 @@ module.exports.getNewsListPage = async function(req, res, data = {}) {
     }
 }
 
-const renderNewsListPage = function(req, res, data) {
+const renderNewsListPage = function (req, res, data) {
     res.render('posts-list', {
+        ...data,
         title: 'Новости',
-        programs: data.programs, 
-        contacts: data.contacts,
-        session: req.session,
-        posts: data.posts,
-        shops: data.shops
     })
 }
 
-module.exports.getNewsPage = async function(req, res, data = {}) {
+module.exports.getNewsPage = async function (req, res, data = {}) {
     try {
-        const result = {...data}
+        const result = { ...data }
         req.query.filter_visible = true
         await apiPosts.getPostByPath(req, res, (req, res, post) => {
             post.date = moment(post.date).format('D MMMM yyyy')
@@ -76,11 +80,11 @@ module.exports.getNewsPage = async function(req, res, data = {}) {
     }
 }
 
-const renderPostPage = function(req, res, data) {
+const renderPostPage = function (req, res, data) {
     res.render('post', {
         title: data.post.name,
-        programs: data.programs, 
-        contacts: data.contacts, 
+        programs: data.programs,
+        contacts: data.contacts,
         session: req.session,
         post: data.post,
         shops: data.shops

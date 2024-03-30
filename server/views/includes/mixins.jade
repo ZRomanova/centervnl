@@ -72,3 +72,28 @@ mixin program-project(item)
 
       .col-12.program__text.mt-3.mb-2
         +rows-4(item.description)
+
+mixin pagination(currentPage, count, link)
+  .pagination
+    if currentPage > 1
+      .number
+        a(href=`${link}1`) 1
+    if currentPage > 3
+      .number
+        span ...
+
+    if currentPage > 2
+      .number
+        a(href=`${link}${+currentPage - 1}`)= +currentPage - 1
+    .number.active
+      span= currentPage
+    if currentPage < count
+      .number
+        a(href=`${link}${+currentPage + 1}`)= +currentPage + 1
+      
+    if currentPage < count - 2
+      .number
+        span ...
+    if currentPage < count - 1
+      .number
+        a(href=`${link}${count}`)= count

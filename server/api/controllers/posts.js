@@ -2,7 +2,7 @@ const Post = require('../models/posts')
 const errorHandler = require('../utils/errorHandler')
 const translit = require('../utils/translit')
 
-module.exports.getPosts = async function(req, res, next) {
+module.exports.getPosts = async function (req, res, next) {
     try {
         const filter = {}
         const fields = {}
@@ -14,11 +14,11 @@ module.exports.getPosts = async function(req, res, next) {
             }
         }
         const posts = await Post
-        .find(filter, fields)
-        .skip(+req.query.offset)
-        .limit(+req.query.limit)
-        .sort({date: -1, created: -1})
-        .lean()
+            .find(filter, fields)
+            .skip(+req.query.offset)
+            .limit(+req.query.limit)
+            .sort({ date: -1, created: -1 })
+            .lean()
 
         next(req, res, posts)
     } catch (e) {
@@ -26,7 +26,23 @@ module.exports.getPosts = async function(req, res, next) {
     }
 }
 
-module.exports.getPostById = async function(req, res, next) {
+module.exports.countPosts = async function (req, res, next) {
+    try {
+        const filter = {}
+        for (const str in req.query) {
+            if (str.length > 7 && str.substring(0, 7) === "filter_") {
+                filter[str.slice(7)] = req.query[str]
+            }
+        }
+        const posts = await Post.count(filter)
+
+        next(req, res, { count: posts })
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getPostById = async function (req, res, next) {
     try {
         const post = await Post.findById(req.params.id).lean()
         next(req, res, post)
@@ -35,7 +51,7 @@ module.exports.getPostById = async function(req, res, next) {
     }
 }
 
-module.exports.createPost = async function(req, res, next) {
+module.exports.createPost = async function (req, res, next) {
     try {
         const created = req.body
         created.author = req.user.id
@@ -48,7 +64,7 @@ module.exports.createPost = async function(req, res, next) {
     }
 }
 
-module.exports.updatePost = async function(req, res, next) {
+module.exports.updatePost = async function (req, res, next) {
     try {
         const updated = req.body
         if (!updated.path) updated.path = translit(updated.name)
@@ -57,67 +73,67 @@ module.exports.updatePost = async function(req, res, next) {
             author: req.user.id,
             time: new Date()
         }
-        const post = await Post.findOneAndUpdate({_id: req.params.id}, {$set: updated}, {new: true}).lean()
+        const post = await Post.findOneAndUpdate({ _id: req.params.id }, { $set: updated }, { new: true }).lean()
         next(req, res, post)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.deletePost = async function(req, res, next) {
+module.exports.deletePost = async function (req, res, next) {
     try {
-        await Post.deleteOne({_id: req.params.id})
-        next(req, res, {message: "Удалено"})
+        await Post.deleteOne({ _id: req.params.id })
+        next(req, res, { message: "Удалено" })
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.uploadImagesPost = async function(req, res, next) {
+module.exports.uploadImagesPost = async function (req, res, next) {
     try {
         const updated = {}
-        if (req.files && req.files.image) updated['$set'] = {image: 'https://centervnl.ru/uploads/' + req.files.image[0].filename}
+        if (req.files && req.files.image) updated['$set'] = { image: 'https://centervnl.ru/uploads/' + req.files.image[0].filename }
         if (req.files && req.files['gallery']) {
             let paths = req.files['gallery'].map(file => 'https://centervnl.ru/uploads/' + file.filename)
-            updated['$addToSet'] = {gallery: {$each: paths}}
+            updated['$addToSet'] = { gallery: { $each: paths } }
         }
 
-        const post = await Post.findOneAndUpdate({_id: req.params.id}, updated, {new: true}).lean()
+        const post = await Post.findOneAndUpdate({ _id: req.params.id }, updated, { new: true }).lean()
         next(req, res, post)
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.getPostByPath = async function(req, res, next) {
+module.exports.getPostByPath = async function (req, res, next) {
     try {
         const posts = await Post.aggregate([
             {
-                $match: {path: req.params.path, visible: true}
+                $match: { path: req.params.path, visible: true }
             },
-            { 
+            {
                 $project: { "created": 0, author: 0 }
             }
         ])
-        if (posts.length){
+        if (posts.length) {
             const post = posts[0]
             next(req, res, post)
         }
-        else 
+        else
             next(req, res, new Error("Пост не найден"))
     } catch (e) {
         errorHandler(res, e)
     }
 }
 
-module.exports.toggleLike = async function(req, res, next) {
+module.exports.toggleLike = async function (req, res, next) {
     try {
         const like = req.body.like
-        if (like) 
-            await Post.updateOne({path: req.params.id}, {$addToSet: {likes: req.user._id}}, {new: true})
+        if (like)
+            await Post.updateOne({ path: req.params.id }, { $addToSet: { likes: req.user._id } }, { new: true })
         else
-            await Post.updateOne({path: req.params.id}, {$pull: {likes: req.user._id}}, {new: true})
-        next(req, res, {message: "Обновлено."})
+            await Post.updateOne({ path: req.params.id }, { $pull: { likes: req.user._id } }, { new: true })
+        next(req, res, { message: "Обновлено." })
     } catch (e) {
         errorHandler(res, e)
     }
