@@ -126,20 +126,4 @@ app.use(function (err, req, res, next) {
   next()
 }, getErrorPage);
 
-
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-  socket.on('disconnect', () => {
-    console.log('A user disconnected');
-  });
-
-  socket.on('message', (message) => {
-    const response = `Chatbot: ${message}`;
-    socket.emit('botMessage', response);
-  });
-});
-
-module.exports = http
+module.exports = app

@@ -33,7 +33,6 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
-    "socket.io": "^4.7.5",
     "svg-captcha-express": "^1.0.8",
     "uuidv4": "^6.2.13",
     "xlsx": "^0.18.5"

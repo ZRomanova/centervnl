@@ -37,7 +37,7 @@ html(lang='ru')
       font-style: normal;
       font-display: swap;
       }
-    //- link(rel='stylesheet', href='/css/critical.css')
+    link(rel='stylesheet', href='/css/chatbot.css')
     link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/style.css')
     link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
@@ -62,7 +62,7 @@ html(lang='ru')
                 .header__social
                   a.header__social-item(href="https://vk.com/centervnl" target="_blank")
                     img(src='/icons/header/vk_orange.svg' alt='vk')
-                  a.header__social-item(href="https://t.me/+Thdy9trTjy0xMmIy" target="_blank")
+                  a.header__social-item(href="https://t.me/obuchnueludi" target="_blank")
                     img(src='/icons/header/telegram_orange.svg' alt='telegram')
                   a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_blank")
                     img(src='/icons/header/youtube_orange.svg' alt='youtube')
@@ -125,7 +125,10 @@ html(lang='ru')
         .container.first-container
           block content
 
-       .btn-up.btn-up_hide
+      
+      .app-btn.btn-up.btn-up_hide
+      .app-btn.chatbot__btn
+      include includes/chatbot
     
       footer.footer
         .container
@@ -138,7 +141,7 @@ html(lang='ru')
                 .d-flex.d-lg-none.justify-content-around.col.align-items-center
                   a.footer__social-link(href="https://vk.com/centervnl" target="_blank")
                     img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk' loading="lazy")
-                  a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_blank")
+                  a.footer__social-link(href="https://t.me/obuchnueludi" target="_blank")
                     img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram' loading="lazy")
                   a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_blank")
                     img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube' loading="lazy")
@@ -147,7 +150,7 @@ html(lang='ru')
               .d-none.footer__social.d-lg-flex.justify-content-between
                 a.footer__social-link(href="https://vk.com/centervnl" target="_blank")
                   img.footer__social-item(src='/icons/footer/vk_black.svg' alt='vk' loading="lazy")
-                a.footer__social-link(href="https://t.me/+Thdy9trTjy0xMmIy" target="_blank")
+                a.footer__social-link(href="https://t.me/obuchnueludi" target="_blank")
                   img.footer__social-item(src='/icons/footer/telegram_black.svg' alt='telegram' loading="lazy")
                 a.footer__social-link(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_blank")
                   img.footer__social-item(src='/icons/footer/youtube_black.svg' alt='youtube' loading="lazy")
@@ -191,4 +194,5 @@ html(lang='ru')
     script(src='/bootstrap/js/bootstrap.min.js')
     script(src='/javascripts/main.js')
     script(src='/javascripts/button.js')
+    script(src='/javascripts/chatbot.js')
     block scripts

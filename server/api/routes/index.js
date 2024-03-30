@@ -25,6 +25,7 @@ router.use('/pay', require('./pay'))
 router.use('/forms', require('./forms'))
 router.use('/files', require('./files'))
 router.use('/providers', require('./provider'))
+router.use('/question', require('./answers'))
 
 
 module.exports = router;
