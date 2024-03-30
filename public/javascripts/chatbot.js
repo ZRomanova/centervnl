@@ -41,6 +41,14 @@ $('.chatbot__submit').click(function () {
   addQuesion(message)
 })
 
+$('.chatbot__input').keydown(function (e) {
+  if (e.key === 'Enter') {
+    if (this.value && this.value.length > 6) {
+      addQuesion($('.chatbot__input').val())
+    }
+  }
+});
+
 function addQuesion(message) {
   let element = `
   <div class="chatbot__item chatbot__item_human">
