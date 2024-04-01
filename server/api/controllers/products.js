@@ -72,14 +72,12 @@ module.exports.getProducts = async function (req, res, next) {
                                 }
                             ]
                         }, [])
-
-
                     ]
                 }, [])
             ]
         }, [])
 
-        next(req, res, products)
+        next(req, res, products.filter(el => el.visible))
     } catch (e) {
         console.log(e)
         errorHandler(res, e)
