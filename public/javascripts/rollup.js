@@ -20,7 +20,7 @@
  				header.classList.remove('header_hidden') // то отображаем header
  			}
 
- 			prevScroll = currentScroll // записываем на сколько прокручена страница11 на данный момент
+ 			prevScroll = currentScroll // записываем на сколько прокручена страница на данный момент
 
  		})
 
