@@ -88,8 +88,7 @@ a:hover {
   top: 0;
   background: #fff;
   z-index: 100000000;
-  transition: 2s;
-  box-shadow: 0 0 20px 20px #fff;
+/* box-shadow: 0 0 20px 20px #fff;/*/
 }
 
 .header_hidden {
@@ -105,7 +104,7 @@ a:hover {
 .header__links-dropped,
 .header__links-list {
   color: #30333a;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
 }
 
