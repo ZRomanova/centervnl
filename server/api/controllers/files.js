@@ -16,7 +16,7 @@ module.exports.getFilesServer = async function (req, res) {
 
       // Сортируем сущности для обеспечения большей предсказуемости
       dirEntries.sort(
-        (a, b) => moment(a.name).format("DDMMYYYY_HHmmss_SSS") - moment(b.name).format("DDMMYYYY_HHmmss_SSS")
+        (a, b) => moment(b.name.slice(0, 19), "DDMMYYYY_HHmmss_SSS") - moment(a.name.slice(0, 19), "DDMMYYYY_HHmmss_SSS")
       );
 
       for (const dirEntry of dirEntries) {
