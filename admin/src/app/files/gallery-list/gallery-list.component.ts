@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FilesService } from 'src/app/shared/transport/files.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { FilesService } from 'src/app/shared/transport/files.service';
 export class GalleryListComponent implements OnInit {
 
   files: any[] = []
-
+  form: FormGroup
   currentItem = null
 
   constructor(
@@ -17,6 +18,9 @@ export class GalleryListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.form = new FormGroup({
+      url: new FormControl(null, Validators.required)
+    })
     this.fileService.fetch('gallery').subscribe(files => {
       this.files = files
       // console.log(files)
@@ -26,8 +30,8 @@ export class GalleryListComponent implements OnInit {
   }
 
   copyPath(text) {
-    navigator.clipboard.writeText(text).then(function() {
-    }, function(err) {
+    navigator.clipboard.writeText(text).then(function () {
+    }, function (err) {
       console.error('Async: Could not copy text: ', err);
     });
   }
@@ -50,12 +54,21 @@ export class GalleryListComponent implements OnInit {
     const decision = window.confirm(`
     Вы уверены, что хотите удалить файл? 
     Файл перестанет отображаться в галерее, но будет отображаться в других местах на сайте, где используется. 
-    Если файл загружен на диск, он будет отобрадаться во вкладке "Файлы на диске".
+    Если файл загружен на диск, он будет отображаться во вкладке "Файлы на диске".
     Восстановить описание будет невозможно.`)
 
     if (decision) {
       this.fileService.delete('gallery', item.path).subscribe(result => {
         this.files = this.files.filter(el => el != item)
+      })
+    }
+  }
+
+  addByUrl() {
+    if (this.form.valid) {
+      this.fileService.create({ type: 'ФОТО', path: this.form.value.url }).subscribe(result => {
+        this.files.push(result)
+        this.form.reset()
       })
     }
   }

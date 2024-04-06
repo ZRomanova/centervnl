@@ -1,16 +1,16 @@
 <ng-container *ngIf="!loading; else loader">
   <h3>Текст на странице</h3>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading">
-      <div class="row">
-          <div class="col">
-              <textarea class="form-control" formControlName="text" rows="3"></textarea>
-          </div>
-          <div class="col-2">
-              <button class="btn btn-custom" type="submit">
-                  Сохранить
-              </button>
-          </div>
+    <div class="row">
+      <div class="col">
+        <textarea class="form-control" formControlName="text" rows="3"></textarea>
       </div>
+      <div class="col-2">
+        <button class="btn btn-custom" type="submit">
+          Сохранить
+        </button>
+      </div>
+    </div>
   </form>
   <hr>
   <div class="container mb-3 mt-5">
@@ -31,7 +31,7 @@
       </div>
       <div class="col-12" *ngIf="docsSort">
         <ng-container *ngFor="let item of docsSort; index as i">
-          <div class="carousel-item" [ngClass]="{'active': i == activeDocsPage}" >
+          <div class="carousel-item" [ngClass]="{'active': i == activeDocsPage}">
             <div class="row">
               <div class="col-md-4 mb-3" *ngFor="let box of item">
                 <div class="card">

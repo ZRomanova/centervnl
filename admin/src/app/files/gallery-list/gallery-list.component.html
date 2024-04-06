@@ -1,4 +1,15 @@
-<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 row-cols-xxxl-6 g-4" *ngIf="files && files.length">
+<div class="col-12 mb-5">
+  <form class="m-3 d-flex flex-row" [formGroup]="form" (ngSubmit)="addByUrl()">
+    <input type="text" class="form-control col" formControlName="url" placeholder="Добавить фото по ссылке">
+    <button class="btn btn-custom" type="submit">
+      Добавить
+    </button>
+  </form>
+</div>
+
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-5 row-cols-xxxl-6 g-4"
+  *ngIf="files && files.length">
   <div class="card h-100 m-3" *ngFor="let card of files">
     <img *ngIf="card.type == 'ФОТО'" [src]="card.path" class="card-img">
     <h4 *ngIf="card.type == 'ВИДЕО'">
@@ -6,7 +17,8 @@
     </h4>
     <div class="card-body">
       <p class="card-text" *ngIf="!currentItem || card._id != currentItem._id">{{card.text}}</p>
-      <textarea *ngIf="currentItem && card._id == currentItem._id" [(ngModel)]="currentItem.text" class="form-control"></textarea>
+      <textarea *ngIf="currentItem && card._id == currentItem._id" [(ngModel)]="currentItem.text"
+        class="form-control"></textarea>
     </div>
     <div class="card-footer">
       <a class="btn btn-custom" role="button" (click)="copyPath(card.path)">

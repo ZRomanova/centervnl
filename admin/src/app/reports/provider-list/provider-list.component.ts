@@ -30,7 +30,7 @@ export class ProviderListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.generalService.fetch("PROVIDERS").subscribe(data => {
-      if (!data) data = {text: ''}
+      if (!data) data = { text: '' }
       this.form = new FormGroup({
         text: new FormControl(data.text)
       })
@@ -45,6 +45,16 @@ export class ProviderListComponent implements OnInit, OnDestroy {
 
   openDocForm(id) {
     this.router.navigate(['docs/provider', id])
+  }
+
+  backDocs() {
+    if (this.activeDocsPage == 0) this.activeDocsPage = this.docsSort.length - 1
+    else this.activeDocsPage--
+  }
+
+  nextDocs() {
+    if (this.activeDocsPage == this.docsSort.length - 1) this.activeDocsPage = 0
+    else this.activeDocsPage++
   }
 
   makeArray(arrFrom) {

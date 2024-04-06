@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const moment = require('moment')
 
 const Gallery = require('../models/gallery')
 const errorHandler = require('../utils/errorHandler')
@@ -15,7 +16,7 @@ module.exports.getFilesServer = async function (req, res) {
 
       // Сортируем сущности для обеспечения большей предсказуемости
       dirEntries.sort(
-        (a, b) => a.name.localeCompare(b.name, "en")
+        (a, b) => moment(a.name).format("DDMMYYYY_HHmmss_SSS") - moment(b.name).format("DDMMYYYY_HHmmss_SSS")
       );
 
       for (const dirEntry of dirEntries) {

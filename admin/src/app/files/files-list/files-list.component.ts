@@ -37,10 +37,10 @@ export class FilesListComponent implements OnInit {
       files = null
     })
   }
-  
+
   copyPath(text) {
-    navigator.clipboard.writeText(text).then(function() {
-    }, function(err) {
+    navigator.clipboard.writeText(text).then(function () {
+    }, function (err) {
       console.error('Async: Could not copy text: ', err);
     });
   }
@@ -63,7 +63,7 @@ export class FilesListComponent implements OnInit {
     if (item.gallery) {
       obs$ = this.fileService.delete('gallery', item.url)
     } else {
-      obs$ = this.fileService.create({type: 'ФОТО', path: item.url})
+      obs$ = this.fileService.create({ type: 'ФОТО', path: item.url })
     }
     obs$.subscribe(result => item.gallery = !item.gallery)
   }
