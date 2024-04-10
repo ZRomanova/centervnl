@@ -84,14 +84,16 @@ a:hover {
 }
  
 .header {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
+  left: 0;
   background: #fff;
   z-index: 100000000;
 /* box-shadow: 0 0 20px 20px #fff;/*/
 }
 
-.header_hidden {
+.header.hide {
   transform: translateY(-100%);
  }
 
