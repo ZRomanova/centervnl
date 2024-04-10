@@ -104,13 +104,21 @@ a:hover {
 .header__links-dropped,
 .header__links-list {
   color: #30333a;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
 }
 
+@media (min-width: 1200px) and (max-width: 1399px) { 
+  .header__links-dropped,
+  .header__links-list {
+    font-size: 14px;
+  }
+}
+
+
 .header__social {
   width: 8vw;
-  min-width: 148px;
+  min-width: 115px;
   display: flex;
   justify-content: space-between;
   align-items: center;
