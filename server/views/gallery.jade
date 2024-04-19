@@ -6,12 +6,20 @@ block content
       .row.mx-xl-5
         .col-12.back__subtitle-top
           a.back__subtitle-child(href='https://centervnl.ru/about/') О нас
-        h1.col-12.header__subtitle.title Фото и видео
-
+        h1.col-12.header__subtitle.title Фото и видео 
+      
       .row.mx-xl-5.mt-5#gallery_container
+      .modal-container
+        .modal
+          img.modal-content(src='')
+          span.close-modal &times;
 
 
+     
+      //.row.mx-xl-5.mt-5#gallery_container 
+    
   .d-none#showmore_triger(data-page=0)
 
 block scripts
   script(src="/javascripts/gallery.js")
+ script(src="/javascripts/modal.js")
