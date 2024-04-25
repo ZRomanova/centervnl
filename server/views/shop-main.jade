@@ -1,14 +1,23 @@
 extends layout
 
 block content
+ section.about
+    .container
+      .row.mx-xl-5
+        h2.col-12.mt-5.title Наши товары           
+        each shop in shops 
+          .col-12.col-md-4.mt-3
+            a.rectangle-19-14.d-flex.flex-column.justify-content-center.p-4(href="https://centervnl.ru/shop/"+shop.path)   
+              .program__img
+                img.program__icon(src= shop.icon alt=shop.name)
+              .program__subtitle= shop.name  
+  
   section.about
     .container
       .row.mx-xl-5
-        h1.col.about__title.title Магазин
-
       .row.mx-xl-5.about__wrapper
         .container
-          img.background__image(src='/img/shop/photo.jpg' alt='bg')
+        
         .about__wrapper
           p.target__text.
             Уважаемые покупатели! В этом разделе представлены товары, которые изготовили ребята с ментальными нарушениями в инклюзивных мастерских «Обычное дело».
@@ -21,30 +30,18 @@ block content
           p.target__text.mt-3.
             Если вы представитель компании, мы будем рады корпоративным заказам! Наш дизайнер разработает продукцию с логотипом компании или фото.
 
-          p.target__text.
-            Наши мастерские сотрудничают с Chudosvetik. Совместно мы изготавливаем наборы для творчества, в том числе, по вашему заказу.
+          
+
 
   section.about
     .container
-      .row.mx-xl-5
-        h2.col-12.mt-5.title Наши товары           
-        each shop in shops 
-          .col-12.col-md-4.mt-3
-            a.rectangle-19-14.d-flex.flex-column.justify-content-center.p-4(href="https://centervnl.ru/shop/"+shop.path)   
-              .program__img
-                img.program__icon(src= shop.icon alt=shop.name)
-              .program__subtitle= shop.name  
-  
-
-  section.about
-    .container
-      .row.mx-xl-5
+     // .row.mx-xl-5
         h2.col.mt-5.title Как заказать     
 
 
   section.about
     .container
-      .row.mx-xl-5
+     // .row.mx-xl-5
         h2.col.mt-5.title Условия оплаты
 
 
