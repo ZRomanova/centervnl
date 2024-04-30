@@ -160,6 +160,10 @@ a:hover {
   border-radius: var(--bs-navbar-toggler-border-radius);
   transition: var(--bs-navbar-toggler-transition);
 }
+ 
+  .first-container{
+    margin-top: 100px;
+  }
 
 .footer {
   /* flex: 0 0 auto; */

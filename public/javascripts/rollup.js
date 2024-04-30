@@ -1,19 +1,36 @@
-let lastScroll = 0;
-const counter = 200;
-const header = document.querySelector('.header');
+var header = document.querySelector('.header');
+var lastScrollTop = 0;
+var isHeaderVisible = true;
+var scrollTimeout;
 
-const scrollPosition = () => window.scrollY || document.documentElement.scrollTop;
-const containHide = () => header.classList.contains('hide');
+function handleScroll() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-window.addEventListener('scroll', () => {
-    if(scrollPosition() > lastScroll && !containHide() && scrollPosition() > counter) {
-        //scroll down
-        header.classList.add('hide');
-    }
-    else if(scrollPosition() < lastScroll && containHide()){
-        //scroll up
-        header.classList.remove('hide');
+    if (scrollTop > lastScrollTop && scrollTop > 200) {
+        hideHeader();
+    } else if (scrollTop < lastScrollTop - 50 || scrollTop === 0) {
+        showHeader();
     }
 
-    lastScroll = scrollPosition();
-})
+    lastScrollTop = scrollTop;
+}
+
+function hideHeader() {
+    if (isHeaderVisible) {
+        isHeaderVisible = false;
+        clearTimeout(scrollTimeout);
+        header.style.transform = "translateY(-100%)";
+    }
+}
+
+function showHeader() {
+    if (!isHeaderVisible) {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+            isHeaderVisible = true;
+            header.style.transform = "translateY(0)";
+        }, 100);
+    }
+}
+
+window.addEventListener("scroll", handleScroll);
