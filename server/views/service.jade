@@ -37,12 +37,10 @@ block content
         form#form.row.mx-xl-5(action="/services" method="post")
           .col-12.col-md-6.mt-3
             .text-400-16 Имя
-            //- input.d-none(name="q_name" value="Имя")
             input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
 
           .col-12.col-md-6.mt-3
             .text-400-16 Фамилия
-            //- input.d-none(name="q_surname" value="Имя")
             input.text-input.mt-2(type='text' name='surname' autocomplete='family-name' placeholder="Например, Федоров" required)
           
           .col-12.col-md-6.mt-3
@@ -60,7 +58,6 @@ block content
 
           .col-12.col-md-6.mt-3
             .text-400-16 Email
-            //- input.d-none(name="q_email" value="Email")
             input.text-input.mt-2.check-email(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru")
             .mt-2
               input#check1.form-check-input.no-email(type='checkbox' value='Нет email' name='email')
