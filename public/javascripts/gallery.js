@@ -54,3 +54,9 @@ $(window).scroll(function(){
 $(document).ready(function(){ 
 	scrollMore();
 });
+
+
+review_image.addEventListener(click, function() {
+  console.log('hello world');
+});
+
