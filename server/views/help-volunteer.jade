@@ -33,9 +33,20 @@ block content
 
       form#form.row.mx-xl-5.mt-5(action="/form" method="post")
         .col-12.col-md-6.mt-3
-          .text-400-16 Ваше ФИО
-          input.d-none(name="q_name" value="Ваше ФИО")
-          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иванов Иван Иванович" required)
+
+          .text-400-16 Фамилия
+          input.d-none(name="q_surname" value="Ваша фамилия")
+          input.text-input.mt-2(type='text' name='surname' autocomplete='family-name' placeholder="Например, Иванов" required)
+
+        .col-12.col-md-6.mt-3
+          .text-400-16 Имя
+          input.d-none(name="q_name" value="Ваше имя")
+          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+
+        .col-12.col-md-6.mt-3
+          .text-400-16 Отчество
+          input.d-none(name="patronymic" value="Ваше отчество")
+          input.text-input.mt-2(type='text' name='patronymic' autocomplete='additional-name' placeholder="Например, Иванович" required)
 
         .col-12.col-md-6.mt-3
           .text-400-16 Дата рождения
