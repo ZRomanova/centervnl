@@ -44,11 +44,21 @@ block content
 
 
       form#form.row.mx-xl-5(action="/form" method="post")
-        .col-12.col-md-6.mt-3
-          .text-400-16 Ваше ФИО
-          input.d-none(name="q_name" value="Ваше ФИО")
-          input.text-input.mt-2(type='text' name='name' autocomplete='name' placeholder="Например, Иванов Иван Иванович" required)
+       .col-12.col-md-6.mt-3
+          .text-400-16 Ваша фамилия
+          input.d-none(name="q_surname" value="Ваша фамилия")
+          input.text-input.mt-2(type='text' name='surname' autocomplete='family-name' placeholder="Например, Иванов" required)
         
+        .col-12.col-md-6.mt-3
+          .text-400-16 Ваше имя
+          input.d-none(name="q_name" value="Ваше имя")
+          input.text-input.mt-2(type='text' name='name' autocomplete='given-name' placeholder="Например, Иван" required)
+        
+        .col-12.col-md-6.mt-3
+          .text-400-16 Ваше отчество
+          input.d-none(name="q_patronymic" value="Ваше отчество")
+          input.text-input.mt-2(type='text' name='patronymic' autocomplete='additional-name' placeholder="Например, Иванович" required)
+
         .col-12.col-md-6.mt-3
           .text-400-16 Телефон
           input.d-none(name="q_tel" value="Телефон")
@@ -58,12 +68,22 @@ block content
           .text-400-16 Email для связи
           input.d-none(name="q_email" value="Email для связи")
           input.text-input.mt-2(type='email' name='email' autocomplete='email' placeholder="Например, example@mail.ru" required)
+      .row.mx-xl-5
+        .col-12.col-md-6.mt-3
+          .text-400-16 Фамилия вашего ребёнка
+          input.d-none(name="q_child_surname" value="Фамилия вашего ребёнка")
+          input.text-input.mt-2(type='text' name='child_surname' autocomplete='child-family-name' placeholder="Например, Иванов" required)
+        
+        .col-12.col-md-6.mt-3
+          .text-400-16 Имя вашего ребёнка
+          input.d-none(name="q_child_name" value="Имя вашего ребёнка")
+          input.text-input.mt-2(type='text' name='child_name' autocomplete='child-given-name' placeholder="Например, Иван" required)
 
         .col-12.col-md-6.mt-3
-          .text-400-16 ФИО вашего ребёнка
-          input.d-none(name="q_child_name" value="ФИО вашего ребёнка")
-          input.text-input.mt-2(type='text' name='child_name' autocomplete='text' placeholder="Например, Иванов Иван Иванович" required)
-         
+          .text-400-16 Отчество вашего ребёнка
+          input.d-none(name="q_child_patronymic" value="Отчество вашего ребёнка")
+          input.text-input.mt-2(type='text' name='child_patronymic' autocomplete='child-additional-name' placeholder="Например, Иванович" required)
+          
         .col-12.col-md-6.mt-3
           .text-400-16 Дата рождения вашего ребенка
           input.d-none(name="q_age" value="Дата рождения вашего ребенка")
@@ -75,7 +95,7 @@ block content
           textarea.text-input.mt-2(name='problem' autocomplete='off' placeholder="Проблема")
 
         .mt-4 
-          .col-12.mt-2 
+          .col-12.mt-2   
             span.text-400-16 Нажимая на кнопку, вы даете 
               a(href='/policy' target="_blank") согласие на обработку своих персональных данных
 
