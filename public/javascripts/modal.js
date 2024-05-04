@@ -7,10 +7,10 @@ document.addEventListener('DOMContentLoaded', function () {
   images.forEach(function (image) {
     image.addEventListener('click', function () {
       modal.style.display = 'block';
-      const src = this.getAttribute('.review__image');
-      const alt = this.getAttribute('alt');
-      modalImg.setAttribute('.review__image', src);
-      modalImg.setAttribute('alt', alt);
+      const src = this.querySelector('img').src;
+      const alt = this.querySelector('img').alt;
+      modalImg.src = src;
+      modalImg.alt = alt;
     });
   });
 
@@ -24,4 +24,3 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
- 
