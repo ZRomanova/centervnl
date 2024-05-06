@@ -1,3 +1,4 @@
+
 var block_show = false;
 const limit = 12
 var no_more = false
@@ -56,7 +57,4 @@ $(document).ready(function(){
 });
 
 
-review_image.addEventListener(click, function() {
-  console.log('hello world');
-});
 
