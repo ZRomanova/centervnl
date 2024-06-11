@@ -1835,8 +1835,12 @@ input::-webkit-inner-spin-button {
 }
 
 .modal-content {
-  max-width: 80%;
-  max-height: 80%;
+  max-width: 70%;
+  max-height: 90%;
+  align-content: center;
+  object-fit: contain  ;
+  background-color: transparent;
+  border: transparent;
 }
 
 .close-modal {

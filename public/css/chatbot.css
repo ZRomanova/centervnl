@@ -287,9 +287,7 @@
   background: transparent no-repeat center center;
   background-size: 100% 100%;
   background-image: url("data:image/svg+xml,%3Csvg aria-hidden='true' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='16' height='16'%3E%3Cpath fill='currentColor' d='M476 3.2L12.5 270.6a24 24 0 002.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5a24 24 0 0042.5 15.8L282 426l124.6 52.2a24 24 0 0033-18.2l72-432A24 24 0 00476 3.2z'%3E%3C/path%3E%3C/svg%3E");
-  opacity: 0.4;
 }
-
 
 .chatbot__submit:focus:not(:disabled),
 .chatbot__submit:hover:not(:disabled) {
@@ -297,7 +295,6 @@
   box-shadow: none;
   opacity: 0.8;
   cursor: pointer;
-  
 }
 
 /* scrollbar */
