@@ -1863,3 +1863,43 @@ input::-webkit-inner-spin-button {
   text-decoration: none;
   cursor: pointer;
 }
+.arrow {
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 50px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  border-radius: 50%; 
+  background-color:  #02B2B6; 
+}
+
+.arrow:hover {
+  background-color: #FFA556;
+}
+
+.arrow.left {
+  left: 10px;
+}
+
+.arrow.right {
+  right: 10px;
+}
+
+@media(max-width:670px) {
+  .arrow {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    color: #fff;
+    cursor: pointer;
+    
+  }
+}
