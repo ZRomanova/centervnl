@@ -78,12 +78,17 @@ block content
             .title-500-32.mt-5 Доставка
               .row.mt-3
                 .col-12.col-md-8.col-lg-4
-                  select.form-select
+                  select.form-select(name="delivery_type" onchange="changeDeliveryType(this)")
                     option.price-option(value="Самовывоз")="Самовывоз"
-                    //- option.price-option(value="Доставка")="Доставка"
+                    option.price-option(value="Доставка СДЭК")="Доставка СДЭК"
+                    option.price-option(value="Яндекс.Доставка")="Яндекс.Доставка"
 
                 .col-12.col-lg-8 
-                  .text-400-16 Забрать заказ можно будет по адресу ул. Ключевая, д. 22, к.2. Мы пришлём уведомление о готовности.
+                  .text-400-16#text-delivery-type Забрать заказ можно будет по адресу ул. Ключевая, д. 22, к.2. Мы пришлём уведомление о готовности.
+
+                .col-12.mt-3.d-none#delivery_address
+                  .text-400-16 Адрес доставки
+                  input.text-input.mt-2.address__field(name="delivery_address" type='text' autocomplete="off" placeholder="Город, улица, дом" disabled)
 
             .title-500-32.mt-5 Оплата
               .row

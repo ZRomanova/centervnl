@@ -8,27 +8,31 @@ const orderSchema = new Schema({
     },
     session: String,
 
-    email: String, 
-    tel: String, 
-    name: String, 
-    surname: String, 
-    patronymic: String, 
+    email: String,
+    tel: String,
+    name: String,
+    surname: String,
+    patronymic: String,
 
     org_name: String,
     org_actual_address: String, //фактический адрес
     org_legal_address: String, //Юридический адрес
     org_activity: String,
-    org_email: String, 
-    org_tel: String, 
-    addressee_type: String, 
-
+    org_email: String,
+    org_tel: String,
+    addressee_type: String,
     status: {
         type: String,
         enum: ['в корзине', 'принят', 'в работе', 'в доставке', 'доставлен', 'получен', 'отменен'],
         default: 'в корзине'
     },
-    address: String, //адрес доставки
-    products:[{
+    delivery_type: {
+        type: String,
+        enum: ['Cамовывоз', 'Доставка СДЭК', 'Яндекс.Доставка'],
+        default: 'Cамовывоз'
+    },
+    delivery_address: String, //адрес доставки
+    products: [{
         id: Schema.Types.ObjectId,
         options: [Schema.Types.ObjectId],
         name: String,

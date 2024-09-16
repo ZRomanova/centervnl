@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "bp": "ng build --prod --base-href /admin/ --output-path ../public/admin/",
+    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && ng serve",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider && ng build",
+    "bp": "SET NODE_OPTIONS=--openssl-legacy-provider && ng build --prod --base-href /admin/ --output-path ../public/admin/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~10.0.5",
     "@angular/platform-browser-dynamic": "~10.0.5",
     "@angular/router": "~10.0.5",
+    "admin-centervnl": "file:",
     "bootstrap": "^4.5.0",
     "jquery": "^3.6.0",
     "rxjs": "~6.5.5",

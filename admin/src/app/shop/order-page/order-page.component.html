@@ -53,11 +53,15 @@
     </div>
     <hr>
     <div class="row col-12">
-      <div class="col-8">
-        <h4>Адрес доставки</h4>
-        <h5>{{order.address}}</h5>
-      </div>
       <div class="col-4">
+        <h4>Тип доставки</h4>
+        <h5>{{order.delivery_type}}</h5>
+      </div>
+      <div class="col-4" *ngIf="order.delivery_address">
+        <h4>Адрес доставки</h4>
+        <h5>{{order.delivery_address}}</h5>
+      </div>
+      <div class="col-4" *ngIf="order.payment.delivery">
         <h4>Стоимость</h4>
         <h5>{{order.payment.delivery}} руб.</h5>
       </div>
@@ -109,7 +113,7 @@
       Назад
     </button>
     <button class="btn btn-custom mt-3 mb-3" type="submit">
-        Сохранить
+      Сохранить
     </button>
   </form>
 </div>
