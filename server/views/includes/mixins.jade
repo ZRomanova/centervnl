@@ -12,19 +12,20 @@ mixin slider(gallery)
     .carousel-inner
       each item in gallery
         .carousel-item.item-a 
-          img.slider__image(src= item alt='Картинка' style='width: 70%; aspect-ratio: 980 / 548;')
+          img.slider__image(src= item alt='Картинка' )
           
     if gallery.length > 1
-      button.carousel-control-prev(type='button' data-bs-target='#slider' data-bs-slide='prev')
-        svg(width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg')
-          circle(cx='30' cy='30' r='30' fill='#02B2B6')
-          path(fill-rule='evenodd' clip-rule='evenodd' d='M22.5001 28L20.0001 30.5L22.5001 33L22.5001 31L39.6045 31L39.6045 30L22.5001 30L22.5001 28Z' fill='white')
+      .carousel-controls-container
+        button.carousel-control-prev(type='button' data-bs-target='#slider' data-bs-slide='prev')
+          svg(width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg')
+            circle(cx='30' cy='30' r='30' fill='#02B2B6')
+            path(fill-rule='evenodd' clip-rule='evenodd' d='M22.5001 28L20.0001 30.5L22.5001 33L22.5001 31L39.6045 31L39.6045 30L22.5001 30L22.5001 28Z' fill='white')
 
 
-      button.carousel-control-next(type='button' data-bs-target='#slider' data-bs-slide='next')
-        svg(width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg')
-          circle(cx='30' cy='30' r='30' transform='rotate(-180 30 30)' fill='#02B2B6')
-          path(fill-rule='evenodd' clip-rule='evenodd' d='M37.4999 32L39.9999 29.5L37.4999 27L37.4999 29L20.3955 29L20.3955 30L37.4999 30L37.4999 32Z' fill='white')
+        button.carousel-control-next(type='button' data-bs-target='#slider' data-bs-slide='next')
+          svg(width='60' height='60' viewBox='0 0 60 60' fill='none' xmlns='http://www.w3.org/2000/svg')
+            circle(cx='30' cy='30' r='30' transform='rotate(-180 30 30)' fill='#02B2B6')
+            path(fill-rule='evenodd' clip-rule='evenodd' d='M37.4999 32L39.9999 29.5L37.4999 27L37.4999 29L20.3955 29L20.3955 30L37.4999 30L37.4999 32Z' fill='white')
 
 mixin video(url)
   .col-12.d-flex.justify-content-center
