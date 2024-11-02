@@ -270,6 +270,34 @@ a:hover {
 
 }
 
+.carousel-controls-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; 
+}
+
+@media(max-width:767px) {
+ 
+  .slider__image {
+    width: 100%;
+    aspect-ratio: 980 / 964;
+  }
+
+  .carousel-controls-container {
+      gap: 10px; 
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+}
+
+
 .top-120 {
   margin-top: 120px;
 }
@@ -615,7 +643,7 @@ a:hover {
   position: relative;
 }
 
-.news__image {
+.news__image { 
   height: -moz-fit-content;
   height: fit-content;
   width: -moz-fit-content;
@@ -1863,3 +1891,4 @@ input::-webkit-inner-spin-button {
   text-decoration: none;
   cursor: pointer;
 }
+
