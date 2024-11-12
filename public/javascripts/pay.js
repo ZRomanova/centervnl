@@ -1,6 +1,3 @@
-
-
-
 $('.submit').click(function (e) {
 
   var formData = new FormData(form);

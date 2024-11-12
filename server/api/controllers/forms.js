@@ -1,6 +1,7 @@
 const Form = require('../models/forms')
 const errorHandler = require('../utils/errorHandler')
-const { sendEmail } = require('../utils/email')
+const { sendEmail } = require('../utils/email');
+const isFormValid = require('../utils/isFormValid');
 
 module.exports.fillForm = async function (req, res) {
   try {
@@ -22,13 +23,13 @@ module.exports.fillForm = async function (req, res) {
       }
     }
 
-    if (data && data.answers && data.answers.length) {
+    if (data && data.answers && data.answers.length && isFormValid(data)) {
       await new Form(data).save()
       let message = `Форма заполнена на странице ${data.page}\n\n`
       data.answers.forEach(item => {
         message += `${item.question} — ${item.answer}\n`
       })
-      await sendEmail({ message, subject: 'Новая форма на сайте centervnl.ru' })
+      await sendEmail({ message, subject: `Новая форма на странице ${data.page}` })
     }
   } catch (e) {
     errorHandler(res, e)

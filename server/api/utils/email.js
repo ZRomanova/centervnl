@@ -4,13 +4,13 @@ const keys = require('../../config/keys')
 const defaultEmailTo = (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') ? 'romanova.zoya.2002@mail.ru' : 'director@centervnl.ru'
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.mail.ru',
-    port: 465,
-    secure: true,
-    auth: {
-        user: keys.emailUser,
-        pass: keys.emailPassword,
-    },
+  host: 'smtp.mail.ru',
+  port: 465,
+  secure: true,
+  auth: {
+    user: keys.emailUser,
+    pass: keys.emailPassword,
+  },
 });
 
 function validateEmail(email) {
@@ -32,9 +32,4 @@ module.exports.sendEmail = async (data = {}) => {
   } catch (e) {
     return
   }
-}
-
-function validateEmail(email) {
-  var re = /\S+@\S+\.\S+/;
-  return re.test(email);
 }
