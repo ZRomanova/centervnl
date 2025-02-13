@@ -9,26 +9,6 @@ block content
   section.top-120
     .container
       .row
-        img.target__image.d-md-none(src='/img/target/house.png' alt='Схематичный дом' loading="lazy" height="59" width="59")
-        h1.col.target__title.title Наши цели
-      .row
-        .d-none.d-md-block.col-md-4
-          img.target__image-lg(src='/img/target/house.png' alt='Схематичный дом' loading="lazy")
-        .col-12.col-md
-          p.target__text
-            | Ресурсный центр «Вера. Надежда. Любовь» опирается в своей деятельности на инклюзивные подходы. Мы стремимся, чтобы у человека с
-            | ментальными нарушениями не было социальных ограничений для включения в обычную жизнь. В своей работе мы используем современные методики
-            | и технологии с доказанной эффективностью.
-          p.target__text
-            | Наши усилия направлены на то, чтобы наши подопечные чувствовали себя нужными, занимали социально активную позицию, были независимы в
-            | быту, а при необходимости могли попросить поддержку.
-          p.target__text
-            | Поддерживая молодых взрослых с ментальными нарушениями, мы стремимся, чтобы ребята использовали общие для всех места обучения, работы и
-            | проведения досуга.
-
-  section.top-120
-    .container
-      .row
         h1.col.title Наши программы
       .row.program__wrapper
         each program in programs
@@ -120,38 +100,6 @@ block content
       .row.review__wrapper
         each item in gallery 
           +phrase(item)
-
-  section.top-120
-    .container
-      .row
-        h1.col.principles__title.title Наши принципы
-      .row.principles__wrapper
-        .col-12.col-lg-6.align-items-center.principles__item
-          .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_1.svg' alt='Три горы и флаг' loading="lazy")
-          p.col-8.principles__credo Самостоятельности столько, сколько возможно, помощи столько сколько необходимо
-        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
-          | Мы предоставляем возможность ребенку или молодому взрослому с ментальными нарушениями выполнить действие самому, соблюдаем паузы во
-          | взаимодействии, оказываем помощь, начиная с минимального объема или косвенной подсказки. Самостоятельность – это не только выполнение
-          | действия, но его планирование и оценка результата
-      .row.principles__wrapper
-        .col-12.col-lg-6.align-items-center.principles__item
-          .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_2.svg' alt='Три человека и шестерёнка' loading="lazy")
-          p.col-8.principles__credo Ничего для нас без нас
-        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
-          | Помогая ребенку и молодому взрослому включаться в различные социальные сферы, мы разрабатываем визуальные помощники и документы «на
-          | простом языке». С помощью визуальных помощников наши подопечные могут выразить свое мнение по вопросам, касающимся их жизни. Разработка
-          | визуальных помощников организуется с участием самих ребят, которые будут использовать эти документы
-      .row.principles__wrapper
-        .col-12.col-lg-6.align-items-center.principles__item
-          .col-4.d-flex.justify-content-center.align-items-center.principles__img
-            img.principles__image(src='img/principles/principles_3.svg' alt='Планета с людьми' loading="lazy")
-          p.col-8.principles__credo Мы там, где все
-        p.col-12.col-lg-6.d-flex.align-items-center.principles__descr
-          | Включение в социальные сферы - проживание в обычном доме, получение образования и включение в трудовую занятость, проведение досуга в
-          | обычных местах должно быть доступно для детей и молодых взрослых с ментальными нарушениями. При возникновении трудовых отношений люди с
-          | ментальными нарушениями наравне с другими выполняют взятые на себя обязанности и являются налогоплательщиками
 
   section.top-120
     .container
