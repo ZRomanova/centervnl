@@ -1,12 +1,12 @@
-$('.donate-circle').click(function() {
+$('.donate-circle').click(function () {
   clickDonate(this)
 })
 
-$('.donate-text').click(function() {
+$('.donate-text').click(function () {
   clickDonate(this)
 })
 
-const clickDonate = function(element) {
+const clickDonate = function (element) {
   $('.donate-box').removeClass('active')
   var elParent = $(element).parent().addClass('active')
   var index = elParent.index()
@@ -16,7 +16,7 @@ const clickDonate = function(element) {
   $($('.donate-content')[index]).removeClass('d-none')
 }
 
-$('#sumText').on("input", function(e) {
+$('#sumText').on("input", function (e) {
   if (this.value > 0) {
     $('.sumCheckButton').prop('checked', false);
   }
@@ -25,11 +25,11 @@ $('#sumText').on("input", function(e) {
   }
 })
 
-$('.sumCheckButton').click(function(e) {
+$('.sumCheckButton').click(function (e) {
   $('#sumText').prop('value', "");
 })
 
-$('.submit').click(function(e) {
+$('.submit').click(function (e) {
   // console.log('start')
   var formData = new FormData(form);
   if (formData.get('regularity') == "false") {
@@ -47,25 +47,25 @@ function singlePay(formData) {
     container: document.getElementById("#form")
   });
 
-  
-  
+
+
   checkout.createPaymentCryptogram()
     .then((cryptogram) => {
-      
+
       let data = {
         "Amount": Number(formData.get('sum')),
-        "Currency":"RUB",
+        "Currency": "RUB",
         "IpAddress": formData.get('ip'),
-        "Description":"Благотворительное пожертвование в АНО РЦ Вера. Надежда. Любовь",
-        "AccountId":formData.get('email'),
+        "Description": "Благотворительное пожертвование в АНО РЦ Вера. Надежда. Любовь",
+        "AccountId": formData.get('email'),
         "Email": formData.get('email'),
-        // "Name":"CARDHOLDER NAME", 
-        "CardCryptogramPacket":cryptogram,
-        "Payer": { 
-          "FirstName":formData.get('name'),
-          "LastName":formData.get('lastname'),
+        "Name": formData.get('cardholder'),
+        "CardCryptogramPacket": cryptogram,
+        "Payer": {
+          "FirstName": formData.get('name'),
+          "LastName": formData.get('lastname'),
           // "MiddleName":formData.get('email'),
-          "Phone":formData.get('tel')
+          "Phone": formData.get('tel')
         }
       }
       $.ajax({
@@ -73,7 +73,7 @@ function singlePay(formData) {
         dataType: 'json',
         url: '/help/donate/',
         data,
-        success: function(data) {
+        success: function (data) {
           if (data.next == "3D") {
             const form = `
             <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
@@ -95,7 +95,7 @@ function singlePay(formData) {
 
     }).catch((errors) => {
       let message = ''
-      if (errors['cardNumber'] === 'CardNumber_Invalid') message = 	"Некорректный номер карты"
+      if (errors['cardNumber'] === 'CardNumber_Invalid') message = "Некорректный номер карты"
       else if (errors['expDateMonthYear'] === 'ExpDateMonthYear_Invalid') message = "Некорректная дата"
       else if (errors['ccv'] === 'Cvv_Invalid') message = "Некорректный CVV"
       $('#error-text')[0].innerText = message
@@ -108,25 +108,25 @@ function recurringPay(formData) {
     container: document.getElementById("#form")
   });
 
-  
-  
+
+
   checkout.createPaymentCryptogram()
     .then((cryptogram) => {
-      
+
       let data = {
         "Amount": Number(formData.get('sum')),
-        "Currency":"RUB",
+        "Currency": "RUB",
         "IpAddress": formData.get('ip'),
-        "Description":"Подписка на ежемесячное пожертвование в АНО РЦ Вера. Надежда. Любовь",
-        "AccountId":formData.get('email'),
+        "Description": "Подписка на ежемесячное пожертвование в АНО РЦ Вера. Надежда. Любовь",
+        "AccountId": formData.get('email'),
         "Email": formData.get('email'),
-        // "Name":"CARDHOLDER NAME", 
-        "CardCryptogramPacket":cryptogram,
-        "Payer": { 
-          "FirstName":formData.get('name'),
-          "LastName":formData.get('lastname'),
+        "Name": formData.get('cardholder'),
+        "CardCryptogramPacket": cryptogram,
+        "Payer": {
+          "FirstName": formData.get('name'),
+          "LastName": formData.get('lastname'),
           // "MiddleName":formData.get('email'),
-          "Phone":formData.get('tel')
+          "Phone": formData.get('tel')
         }
       }
       $.ajax({
@@ -134,7 +134,7 @@ function recurringPay(formData) {
         dataType: 'json',
         url: '/help/donate/',
         data,
-        success: function(data) {
+        success: function (data) {
           if (data.next == "3D") {
             const form = `
             <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
@@ -154,6 +154,6 @@ function recurringPay(formData) {
       })
 
     }).catch((errors) => {
-        console.log(errors)
+      console.log(errors)
     });
 }

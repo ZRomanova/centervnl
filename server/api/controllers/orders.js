@@ -421,6 +421,7 @@ module.exports.orderPayFinish = async function (req, res) {
                         {
                             "$set": {
                                 "payment.status": "оплачен",
+                                "payment.method": 'Банковская карта',
                                 "status": 'принят',
                             }
                         }
