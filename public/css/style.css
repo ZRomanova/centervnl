@@ -924,8 +924,22 @@ a.news__subtitle:hover {
   margin-top: 80px;
 }
 
-.about__wrapper {
-  margin-top: 60px;
+
+.about__wrapper .background__image {
+  display: block; 
+  margin: 60px auto; 
+  width: 50%;  
+  border-radius: 8px;
+  object-fit: cover;  
+  height: auto;  
+
+} 
+
+@media screen and (max-width: 568px) {
+.about__wrapper .background__image {
+  width: 85%;    
+  height: auto; 
+} 
 }
 
 .about__item {
