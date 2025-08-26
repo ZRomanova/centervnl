@@ -5,12 +5,12 @@
 [admin](.\admin) - клиент админки на angular
 [public](.\public) - статические файлы для работы сайта
 [server](.\server) - основная папка сайта
-> [server\api](.\server\api) - API для работы админки
-> [server\config](.\server\config) - настройки конфигурации 
-> [server\controllers](.\server\controllers) - контроллеры сайта
-> [server\middleware](.\server\middleware) - middleware сайта
-> [server\routes](.\server\routes) - роуты сайта
-> [server\views](.\server\views) - шаблоны страниц jade (pug)
+  [server\api](.\server\api) - API для работы админки
+  [server\config](.\server\config) - настройки конфигурации 
+  [server\controllers](.\server\controllers) - контроллеры сайта
+  [server\middleware](.\server\middleware) - middleware сайта
+  [server\routes](.\server\routes) - роуты сайта
+  [server\views](.\server\views) - шаблоны страниц jade (pug)
 uploads - папка для загрузки пользовательских файлов
 
 
