@@ -1,10 +1,18 @@
-$('.donate-circle').click(function () {
-  clickDonate(this)
-})
+$('.donate-circle, .donate-text').off('click').on('click', function (e) {
+  const box = $(this).closest('.donate-box');
+  const key = box.attr('data-vnl-modal');
+  if (key) {
+    e.preventDefault();
+    if (typeof window.openModal === 'function') {
+      window.openModal(key);
+    } else {
+      document.addEventListener('vnlModalReady', () => window.openModal(key), { once: true });
+    }
+    return;
+  }
+  clickDonate(this);
+});
 
-$('.donate-text').click(function () {
-  clickDonate(this)
-})
 
 const clickDonate = function (element) {
   $('.donate-box').removeClass('active')
@@ -30,7 +38,6 @@ $('.sumCheckButton').click(function (e) {
 })
 
 $('.submit').click(function (e) {
-  // console.log('start')
   var formData = new FormData(form);
   if (formData.get('regularity') == "false") {
     singlePay(formData)
@@ -44,7 +51,7 @@ function singlePay(formData) {
 
   const checkout = new cp.Checkout({
     publicId: 'pk_af1616eb150356d4911c1f2a80aaa',
-    container: document.getElementById("#form")
+    container: document.getElementById('form')
   });
 
 
@@ -125,7 +132,6 @@ function recurringPay(formData) {
         "Payer": {
           "FirstName": formData.get('name'),
           "LastName": formData.get('lastname'),
-          // "MiddleName":formData.get('email'),
           "Phone": formData.get('tel')
         }
       }
@@ -157,3 +163,94 @@ function recurringPay(formData) {
       console.log(errors)
     });
 }
+
+(() => {
+  function initVnlModal() {
+    const root = document.getElementById('vnlModal');
+
+    if (!root) {
+      window.openModal = function () { console.warn('[vnl-modal] #vnlModal не найден на странице'); };
+      document.dispatchEvent(new Event('vnlModalReady'));
+      return;
+    }
+
+    const contentEl = root.querySelector('.vnl-modal__content');
+    const backdrop  = root.querySelector('.vnl-modal__backdrop');
+    const closeBtn  = root.querySelector('[data-vnl-close]');
+    const templates = {
+      sbp:        document.getElementById('vnl-tpl-sbp'),
+      sms:        document.getElementById('vnl-tpl-sms'),
+      receipt:    document.getElementById('vnl-tpl-receipt'),
+      requisites: document.getElementById('vnl-tpl-requisites'),
+      bank:       document.getElementById('vnl-tpl-bank'),
+      contracts:  document.getElementById('vnl-tpl-contracts'),
+    };
+
+    let lastActive = null;
+
+    window.openModal = function (key) {
+      const tpl = templates[key];
+      if (!tpl) return;
+      contentEl.innerHTML = '';
+      const node = tpl.content ? tpl.content.cloneNode(true) : tpl.cloneNode(true);
+      contentEl.appendChild(node);
+      lastActive = document.activeElement;
+      root.classList.add('is-open');
+      document.body.classList.add('vnl-modal-open');
+      root.setAttribute('aria-hidden', 'false');
+      if (closeBtn) closeBtn.focus({ preventScroll: true });
+    };
+
+    function close() {
+      root.classList.remove('is-open');
+      document.body.classList.remove('vnl-modal-open');
+      root.setAttribute('aria-hidden', 'true');
+      contentEl.innerHTML = '';
+      if (lastActive && lastActive.focus) lastActive.focus({ preventScroll: true });
+    }
+
+    backdrop && backdrop.addEventListener('click', close);
+    closeBtn && closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && root.classList.contains('is-open')) close();
+    });
+
+    document.dispatchEvent(new Event('vnlModalReady'));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVnlModal);
+  } else {
+    initVnlModal();
+  }
+})();
+
+$('.donate-grid')
+  .off('click.donate')
+  .on('click.donate', '.donate-box, .donate-box *', function (e) {
+    const $box = $(this).closest('.donate-box');
+
+    $('.donate-box').removeClass('active');
+    $box.addClass('active');
+
+    const key = $box.attr('data-vnl-modal');
+    if (key) {
+      e.preventDefault();
+      if (typeof window.openModal === 'function') {
+        window.openModal(key);
+      } else {
+        document.addEventListener('vnlModalReady', () => window.openModal(key), { once: true });
+      }
+      return;
+    }
+
+    const idx = $box.index();
+    const $content = $('.donate-content');
+
+    if ($content.length > 1) {
+      $content.removeClass('d-block').addClass('d-none');
+      $content.eq(idx).addClass('d-block').removeClass('d-none');
+    } else {
+      $content.addClass('d-block').removeClass('d-none');
+    }
+  });
