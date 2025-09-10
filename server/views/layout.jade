@@ -47,93 +47,94 @@ html(lang='ru')
     include ./includes/mixins
     .root-wrapper
       .wrapper
-        header.header
-          nav.navbar.navbar-expand-xl
-            .container-fluid
-              a.navbar-brand(href='https://centervnl.ru/')
-                img(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом' width="82" height="72")
-              
-              button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false')
-                svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' alt="Выпадающее меню")
-                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
-                  path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
+        block header
+          header.header
+            nav.navbar.navbar-expand-xl
+              .container-fluid
+                a.navbar-brand(href='https://centervnl.ru/')
+                  img(src='/img/logo.svg' alt='Логотип вера надежда любовь с птицей и птенцом' width="82" height="72")
+                
+                button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false')
+                  svg(width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg' alt="Выпадающее меню")
+                    path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 14.1064H21.5999V15.8643H2.3999V14.1064Z' fill='#30333A')
+                    path(fill-rule='evenodd' clip-rule='evenodd' d='M2.3999 8.13477H21.5999V9.89257H2.3999V8.13477Z' fill='#30333A')
 
-              #navbarToggler.collapse.navbar-collapse
-                .header__social
-                  a.header__social-item(href="https://vk.com/centervnl" target="_blank")
-                    img(src='/icons/header/vk_orange.svg' alt='vk')
-                  a.header__social-item(href="https://t.me/centervnl" target="_blank")
-                    img(src='/icons/header/telegram_orange.svg' alt='telegram')
-                  a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_blank")
-                    img(src='/icons/header/youtube_orange.svg' alt='youtube')
-                ul.navbar-nav.me-auto.ms-4
-                  li.nav-item.dropdown
-                    a.nav-link.header__links-list(href='https://centervnl.ru/about/') О нас
-                    ul.dropdown-menu
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/about/list') Кто мы?
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/team/') Наша команда
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/docs/') Документы и отчеты
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/wins/') Наши победы
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/partners/') Наши партнеры
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/press/') СМИ о нас
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/contacts/') Контакты
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/gallery/') Фото и видео
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/projects/') Гранты и субсидии
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/provider/') Поставщик социальных услуг
-                  li.nav-item.dropdown
-                    a.nav-link.header__links-list(href='https://centervnl.ru/programs/') Что мы делаем
-                    ul.dropdown-menu
-                      each item in programs
+                #navbarToggler.collapse.navbar-collapse
+                  .header__social
+                    a.header__social-item(href="https://vk.com/centervnl" target="_blank")
+                      img(src='/icons/header/vk_orange.svg' alt='vk')
+                    a.header__social-item(href="https://t.me/centervnl" target="_blank")
+                      img(src='/icons/header/telegram_orange.svg' alt='telegram')
+                    a.header__social-item(href="https://www.youtube.com/channel/UCxTHZRfxPbSh-aTchZaAmOQ?view_as=subscriber" target="_blank")
+                      img(src='/icons/header/youtube_orange.svg' alt='youtube')
+                  ul.navbar-nav.me-auto.ms-4
+                    li.nav-item.dropdown
+                      a.nav-link.header__links-list(href='https://centervnl.ru/about/') О нас
+                      ul.dropdown-menu
                         li
-                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/programs/'+item.path)= item.name
-                  li.nav-item.dropdown
-                    a.nav-link.header__links-list(href='https://centervnl.ru/help/') Как помочь
-                    ul.dropdown-menu
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/donate/') Сделать пожертвование
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/corporate/') Стать корпоративным партнером
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/volunteer/') Стать волонтёром
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/info/') Стать информационным партнером
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/museum/') Помочь экспонатами музею
-                      li
-                        a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/million-prizov/') Пожертвовать баллы на сайте «Активный гражданин»
-                  li.nav-item
-                    a.nav-link.header__links-list(href='https://centervnl.ru/parents/') Родителям
-                  li.nav-item
-                    a.nav-link.header__links-list(href='https://centervnl.ru/library/') База знаний
-                  li.nav-item
-                    a.nav-link.header__links-list(href='https://centervnl.ru/news/') Новости
-                  li.nav-item
-                    a.nav-link.header__links-list(href='https://centervnl.ru/services/') Мероприятия
-                  li.nav-item.dropdown
-                    a.nav-link.header__links-list(href='https://centervnl.ru/shop/') Магазин
-                    ul.dropdown-menu
-                      each item in shops
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/about/list') Кто мы?
                         li
-                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/shop/'+item.path)= item.name
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/team/') Наша команда
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/docs/') Документы и отчеты
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/wins/') Наши победы
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/partners/') Наши партнеры
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/press/') СМИ о нас
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/contacts/') Контакты
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/gallery/') Фото и видео
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/projects/') Гранты и субсидии
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/provider/') Поставщик социальных услуг
+                    li.nav-item.dropdown
+                      a.nav-link.header__links-list(href='https://centervnl.ru/programs/') Что мы делаем
+                      ul.dropdown-menu
+                        each item in programs
+                          li
+                            a.dropdown-item.header__links-dropped(href='https://centervnl.ru/programs/'+item.path)= item.name
+                    li.nav-item.dropdown
+                      a.nav-link.header__links-list(href='https://centervnl.ru/help/') Как помочь
+                      ul.dropdown-menu
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/donate/') Сделать пожертвование
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/corporate/') Стать корпоративным партнером
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/volunteer/') Стать волонтёром
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/info/') Стать информационным партнером
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/museum/') Помочь экспонатами музею
+                        li
+                          a.dropdown-item.header__links-dropped(href='https://centervnl.ru/help/million-prizov/') Пожертвовать баллы на сайте «Активный гражданин»
+                    li.nav-item
+                      a.nav-link.header__links-list(href='https://centervnl.ru/parents/') Родителям
+                    li.nav-item
+                      a.nav-link.header__links-list(href='https://centervnl.ru/library/') База знаний
+                    li.nav-item
+                      a.nav-link.header__links-list(href='https://centervnl.ru/news/') Новости
+                    li.nav-item
+                      a.nav-link.header__links-list(href='https://centervnl.ru/services/') Мероприятия
+                    li.nav-item.dropdown
+                      a.nav-link.header__links-list(href='https://centervnl.ru/shop/') Магазин
+                      ul.dropdown-menu
+                        each item in shops
+                          li
+                            a.dropdown-item.header__links-dropped(href='https://centervnl.ru/shop/'+item.path)= item.name
 
 
-                .d-flex.w-auto.justify-content-between
-                  .header__icons.d-none
-                    a.header__icons-item(href='#')
-                      img(src='/icons/header/man.svg' alt='Профиль')
-                    a.header__icons-item(href='#')
-                      img(src='/icons/header/search.svg' alt='Поиск')
-                  a.button.button_blue(href='https://centervnl.ru/help/donate/') Помочь
+                  .d-flex.w-auto.justify-content-between
+                    .header__icons.d-none
+                      a.header__icons-item(href='#')
+                        img(src='/icons/header/man.svg' alt='Профиль')
+                      a.header__icons-item(href='#')
+                        img(src='/icons/header/search.svg' alt='Поиск')
+                    a.button.button_blue(href='https://centervnl.ru/help/donate/') Помочь
         #up          
         .container.first-container
           block content

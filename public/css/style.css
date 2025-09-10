@@ -54,11 +54,30 @@ a:hover {
 }
 
 .button_blue {
-  background: #02b2b6;
+  border-radius: 8px;
+  background-color: #02B2B6;
+  border: 3px solid #02B2B6;
+  padding: 12px 72px;
+  font-size: 16px;
+  color: #fff;
+  transition: all 500ms ease;
 }
 
+.button_blue:disabled{
+  background: #FFF;
+  color: #30333A;
+  opacity: 1 !important;
+}
+
+
 .button_blue:hover {
-  background: #009ea1;
+  background: #02B2B6;
+  color: #fff;
+}
+
+.button_blue:active {
+  background: #02B2B6;
+  cursor: pointer;
 }
 
 .button_orange {
@@ -80,7 +99,12 @@ a:hover {
   font-weight: 500;
   font-size: 32px;
   line-height: 39px;
+}
 
+.third-title{
+  font-weight: 500;
+  font-size: 24px;
+  line-height: normal;
 }
  
 .header {
@@ -733,6 +757,12 @@ a.news__subtitle:hover {
   color: #30333A;
 }
 
+.title-600-40{
+  font-weight: 600;
+  font-size: clamp(32px, 3.1vw, 40px);
+  line-height: 1.2;
+}
+
 .title-500-32 {
   font-weight: 500;
   font-size: 32px;
@@ -880,6 +910,16 @@ a.news__subtitle:hover {
   font-size: 20px;
   line-height: 150%;
   color: #656973;
+}
+
+
+.text-400-24 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(16px, 2.2vw, 24px);
+  line-height: 1.4;
+  color: #30333a;
 }
 
 .std__descr {
@@ -1343,7 +1383,7 @@ a.rectangle-19-14:hover {
 }
 
 .donate-circle {
-  max-width: 100px;
+  max-width: 64px;
   margin: auto;
   aspect-ratio: 1 / 1;
   border: 1px solid #FFA556;
@@ -1367,11 +1407,11 @@ a.rectangle-19-14:hover {
   line-height: 140%;
   text-align: center;
   color: #000000;
-  /* width: 75%; */
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
   cursor: pointer;
+  max-width: 136px;
 }
 
 .donate-box.active .donate-text {
@@ -1394,6 +1434,14 @@ a.rectangle-19-14:hover {
   font-weight: 700;
   font-size: 16px;
   line-height: 140%;
+}
+
+.donate-form-button{
+  width: auto;                 /* раньше было 100% */
+  display: inline-flex;        /* стабильная высота и центр по оси */
+  align-items: center;
+  justify-content: center;
+  padding: 15.5px 40px;        /* как просил */
 }
 
 .donate-form-button:hover {
@@ -1906,3 +1954,142 @@ input::-webkit-inner-spin-button {
   cursor: pointer;
 }
 
+.about-header{ display:flex; gap:24px; align-items:flex-start; }
+.about-left{ flex:1 1 auto; min-width:0; }   /* было max-width:947px; — убрать */
+.about-logo{ flex:0 0 142px; height:auto; }
+
+.donate-content.d-block{
+  display: flex !important;         /* перекрываем .d-block из Bootstrap */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.donate-content form{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.donate-aside{
+  flex: 0 0 380px;                  /* как в макете */
+  width: 380px;
+  height: 510px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.donate-toggle-row{
+  --bs-gutter-x: 32px; /* для Bootstrap row */
+  --bs-gutter-y: 0;
+  margin-bottom: 16px;
+}
+
+.donate-form-btn-small{
+  width: auto !important;
+  min-width: max-content;  
+  white-space: nowrap;     
+  padding-inline: 16px;    
+}
+
+.sum-row{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 20.5px;
+  row-gap: 20.5px;
+  align-items: center;
+}
+
+.sum-row .sum-item{ display: flex; }
+.sum-row .btn{ margin: 0; }
+
+#sumText{
+  height: 40px;             /* подгони под высоту ваших btn */
+  padding: 8px 12px;
+  border: 1px solid #E2E6EE;
+  border-radius: 8px;
+  font: inherit;
+  line-height: 1;
+  min-width: 180px;         
+  flex: 1 1 200px;          
+}
+
+#sumText::-webkit-outer-spin-button,
+#sumText::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+#sumText{ -moz-appearance: textfield; }
+
+.donate-grid{
+  --bs-gutter-x: 62px;
+  --bs-gutter-y: 62px;
+}
+
+.row-cols-7 > * { 
+  flex: 0 0 auto; 
+  width: calc(100% / 7); 
+}
+
+.donate-mobile{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;     
+  margin: 16px auto 0; 
+}
+
+
+@media (min-width:1200px){
+  .about .row.align-items-start{ 
+    position: relative; 
+    padding-right: 166px; 
+  }
+  .about .col-xl-auto{
+    position: absolute; right: 0; top: 0; width: 142px;
+  }
+  .about .col-xl-9{
+    flex: 0 0 100%; max-width: 100%;
+  }
+}
+@media (max-width:1199.98px){
+  .about .col-xl-auto{ position: static; width: auto; }
+}
+
+@media (max-width: 991.98px){
+  .donate-content.d-block{ flex-direction: column; }
+  .donate-aside{
+    flex: 0 0 auto;
+    width: 100%;
+    height: auto;
+    max-width: 380px;
+    align-self: center;
+    margin-top: 24px;
+  }
+}
+
+@media (min-width: 768px){
+  .row-cols-md-7 > * { 
+    flex: 0 0 auto; 
+    width: calc(100% / 7);
+  }
+}
+
+@media (max-width: 767.98px){
+  .about-header{
+    flex-direction: column;     
+    gap: 16px;
+    align-items: start;
+  }
+  .text-400-24 > .d-block{
+    display: inline !important;
+  }
+  .about-logo{
+    order: -1;                   
+    width: 120px;               
+    height: auto;
+  }
+  .about-left{ width: 100%; }
+
+  .donate-grid{
+    --bs-gutter-x: 24px;
+    --bs-gutter-y: 24px;
+  }
+}
