@@ -27,13 +27,13 @@ block content
         form#form
           .row
             input.d-none(name='ip' value=ip)
-            .row.align-items-start.donate-toggle-row
+            .row.align-items-start.donate-toggle-row.flex-nowrap
               .col-auto
                 input#regularity2.btn-check(type='radio' name='regularity' value='true' autocomplete='off' required)
-                label.btn.donate-form-button(for='regularity2') Ежемесячно
+                label.btn.btn-every.donate-form-button(for='regularity2') Ежемесячно
               .col-auto
                 input#regularity1.btn-check(type='radio' name='regularity' value='false' autocomplete='off' checked required)
-                label.btn.donate-form-button(for='regularity1') Разово
+                label.btn-once.btn.donate-form-button(for='regularity1') Разово
           .d-block 
             .sum-row
               .sum-item
@@ -79,13 +79,26 @@ block content
             .mt-4.error-text.text-400-16#error-text= error
 
             .mt-3.col-12.col-md-8
-              .d-flex.flex-row.align-items-center.gap-4.mb-3
-                img.system-logo(src="/img/help/mastercard.svg")
-                img.system-logo(src="/img/help/visa.svg")
-                img.system-logo(src="/img/help/mir.svg")
-                img.system-logo(src="/img/help/sbp.svg")
-                img.system-logo(src="/img/help/sber.svg")
-                img.system-logo(src="/img/help/tbank.svg")
+              .d-flex.flex-row.align-items-center.gap-4.gap-8.mb-3
+                picture
+                  source(srcset="/img/help/mastercard-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/mastercard.svg" alt="Mastercard" loading="lazy" decoding="async")
+                picture
+                  source(srcset="/img/help/visa-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/visa.svg" alt="Visa" loading="lazy" decoding="async")
+                picture
+                  source(srcset="/img/help/mir-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/mir.svg" alt="МИР" loading="lazy" decoding="async")
+                picture
+                  source(srcset="/img/help/sbp-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/sbp.svg" alt="СБП" loading="lazy" decoding="async")
+                picture
+                  source(srcset="/img/help/sber-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/sber.svg" alt="Сбер" loading="lazy" decoding="async")
+                picture
+                  source(srcset="/img/help/tbank-mob.svg" media="(max-width: 767.98px)" type="image/svg+xml")
+                  img.system-logo(src="/img/help/tbank.svg" alt="T-Bank" loading="lazy" decoding="async")
+
               .text-400-14.text-400-14-dark Пожертвование осуществляется с помощью банковской карты через защищённую систему приёма платежей CloudPayments
               
         img.donate-aside.d-none.d-md-block(src="/img/help/donate.png" alt="Фото" loading="lazy" width="380" height="510")
@@ -314,8 +327,8 @@ block scripts
     @media (max-width: 767.98px){
       .first-container { padding-top: 7px; margin-top: 0px !important;}
     }
-  script(src="https://checkout.cloudpayments.ru/checkout.js")
   script(src='/javascripts/mask-plugin.js')
   script(src='/javascripts/card-masks.js')
   script(src='/javascripts/valid-form.js')
   script(src='/javascripts/donate.js')
+  script(src="https://widget.cloudpayments.ru/bundles/cloudpayments.js" defer)

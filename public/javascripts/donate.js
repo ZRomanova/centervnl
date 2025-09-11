@@ -13,156 +13,97 @@ $('.donate-circle, .donate-text').off('click').on('click', function (e) {
   clickDonate(this);
 });
 
-
 const clickDonate = function (element) {
-  $('.donate-box').removeClass('active')
-  var elParent = $(element).parent().addClass('active')
-  var index = elParent.index()
-  $('.donate-content').removeClass('d-block')
-  $('.donate-content').addClass('d-none')
-  $($('.donate-content')[index]).addClass('d-block')
-  $($('.donate-content')[index]).removeClass('d-none')
-}
+  $('.donate-box').removeClass('active');
+  var elParent = $(element).parent().addClass('active');
+  var index = elParent.index();
+  $('.donate-content').removeClass('d-block').addClass('d-none');
+  $($('.donate-content')[index]).addClass('d-block').removeClass('d-none');
+};
 
-$('#sumText').on("input", function (e) {
+$('#sumText').on('input', function () {
   if (this.value > 0) {
     $('.sumCheckButton').prop('checked', false);
   }
   if (this.value == 0) {
     $($('.sumCheckButton')[0]).prop('checked', true);
   }
-})
+});
 
-$('.sumCheckButton').click(function (e) {
-  $('#sumText').prop('value', "");
-})
+$('.sumCheckButton').click(function () {
+  $('#sumText').prop('value', '');
+});
 
-$('.submit').click(function (e) {
-  var formData = new FormData(form);
-  if (formData.get('regularity') == "false") {
-    singlePay(formData)
-  } else {
-    recurringPay(formData)
+$('.submit').off('click.cp').on('click.cp', function (e) {
+  e.preventDefault();
+
+  const formEl = document.getElementById('form');
+  if (!formEl) return;
+
+  if (!window.cp || !cp.CloudPayments) {
+    $('#error-text').text('Не удалось загрузить платёжный виджет. Обновите страницу и попробуйте ещё раз.');
+    return;
   }
-})
 
+  const fd = new FormData(formEl);
 
-function singlePay(formData) {
+  const amountRaw = (fd.get('sum') || '').toString().replace(',', '.');
+  const amount = Number(amountRaw);
+  if (!amount || amount <= 0) {
+    $('#error-text').text('Введите сумму пожертвования');
+    return;
+  }
 
-  const checkout = new cp.Checkout({
-    publicId: 'pk_af1616eb150356d4911c1f2a80aaa',
-    container: document.getElementById('form')
-  });
+  const isRecurring = fd.get('regularity') === 'true';
 
+  const email = (fd.get('email') || '').toString().trim();
+  const firstName = (fd.get('name') || '').toString().trim();
+  const lastName = (fd.get('lastname') || '').toString().trim();
+  const phone = (fd.get('tel') || '').toString().trim();
 
+  if (!email) {
+    $('#error-text').text('Укажите email');
+    return;
+  }
 
-  checkout.createPaymentCryptogram()
-    .then((cryptogram) => {
+  const PUBLIC_ID = 'pk_af1616eb150356d4911c1f2a80aaa';
 
-      let data = {
-        "Amount": Number(formData.get('sum')),
-        "Currency": "RUB",
-        "IpAddress": formData.get('ip'),
-        "Description": "Благотворительное пожертвование в АНО РЦ Вера. Надежда. Любовь",
-        "AccountId": formData.get('email'),
-        "Email": formData.get('email'),
-        "Name": formData.get('cardholder'),
-        "CardCryptogramPacket": cryptogram,
-        "Payer": {
-          "FirstName": formData.get('name'),
-          "LastName": formData.get('lastname'),
-          // "MiddleName":formData.get('email'),
-          "Phone": formData.get('tel')
-        }
+  const descriptionOnce = 'Благотворительное пожертвование в АНО РЦ «Вера. Надежда. Любовь»';
+  const descriptionSub  = 'Подписка на ежемесячное пожертвование в АНО РЦ «Вера. Надежда. Любовь»';
+
+  const options = {
+    publicId: PUBLIC_ID,
+    description: isRecurring ? descriptionSub : descriptionOnce,
+    amount,
+    currency: 'RUB',
+    accountId: email, // обязателен для рекуррентов
+    email,
+    skin: 'modern',
+    data: {
+      CloudPayments: isRecurring
+        ? { recurrent: { interval: 'Month', period: 1, amount } }
+        : {}
+    }
+  };
+
+  const widget = new cp.CloudPayments();
+
+  widget.pay(
+    'charge',                  // разовый платеж; для рекуррентов первый список тоже charge
+    options,
+    {
+      onSuccess: function () {
+        location.href = isRecurring ? '/help/donate/subscribe/' : '/help/donate/finish/';
+      },
+      onFail: function () {
+        $('#error-text').text('Оплата не прошла. Попробуйте ещё раз или выберите другой способ.');
+      },
+      onComplete: function (paymentResult /*, opts */) {
+        // логи (пока пустые)
       }
-      $.ajax({
-        type: "POST",
-        dataType: 'json',
-        url: '/help/donate/',
-        data,
-        success: function (data) {
-          if (data.next == "3D") {
-            const form = `
-            <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
-              <input hidden name="PaReq" value="${data["PaReq"]}">
-              <input hidden name="MD" value="${data["MD"]}">
-              <input hidden name="TermUrl" value="https://centervnl.ru/help/donate/finish/"> 
-            </form>
-            `
-            $(document.body).append($(form));
-            document.forms['downloadForm'].submit()
-
-          } else if (data.next == "finish") {
-            location.href = "/help/donate/finish/"
-          } else {
-            $('#error-text')[0].innerText = data["message"]
-          }
-        }
-      })
-
-    }).catch((errors) => {
-      let message = ''
-      if (errors['cardNumber'] === 'CardNumber_Invalid') message = "Некорректный номер карты"
-      else if (errors['expDateMonthYear'] === 'ExpDateMonthYear_Invalid') message = "Некорректная дата"
-      else if (errors['ccv'] === 'Cvv_Invalid') message = "Некорректный CVV"
-      $('#error-text')[0].innerText = message
-    });
-}
-
-function recurringPay(formData) {
-  const checkout = new cp.Checkout({
-    publicId: 'pk_af1616eb150356d4911c1f2a80aaa',
-    container: document.getElementById("#form")
-  });
-
-
-
-  checkout.createPaymentCryptogram()
-    .then((cryptogram) => {
-
-      let data = {
-        "Amount": Number(formData.get('sum')),
-        "Currency": "RUB",
-        "IpAddress": formData.get('ip'),
-        "Description": "Подписка на ежемесячное пожертвование в АНО РЦ Вера. Надежда. Любовь",
-        "AccountId": formData.get('email'),
-        "Email": formData.get('email'),
-        "Name": formData.get('cardholder'),
-        "CardCryptogramPacket": cryptogram,
-        "Payer": {
-          "FirstName": formData.get('name'),
-          "LastName": formData.get('lastname'),
-          "Phone": formData.get('tel')
-        }
-      }
-      $.ajax({
-        type: "POST",
-        dataType: 'json',
-        url: '/help/donate/',
-        data,
-        success: function (data) {
-          if (data.next == "3D") {
-            const form = `
-            <form name="downloadForm" action="${data["AcsUrl"]}" method="POST">
-              <input hidden name="PaReq" value="${data["PaReq"]}">
-              <input hidden name="MD" value="${data["MD"]}">
-              <input hidden name="TermUrl" value="https://centervnl.ru/help/donate/subscribe/"> 
-            </form>
-            `
-            $(document.body).append($(form));
-            document.forms['downloadForm'].submit()
-          } else if (data.next == "finish") {
-            location.href = "/help/donate/subscribe/"
-          } else {
-            $('#error-text')[0].innerText = data["message"]
-          }
-        }
-      })
-
-    }).catch((errors) => {
-      console.log(errors)
-    });
-}
+    }
+  );
+});
 
 (() => {
   function initVnlModal() {

@@ -1439,9 +1439,9 @@ a.rectangle-19-14:hover {
   border: 1px solid #FFA556;
   border-radius: 8px;
   width: 100%;
-  padding: 20px;
+  padding: 13.2px 40px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 140%;
 }
 
@@ -1450,7 +1450,7 @@ a.rectangle-19-14:hover {
   display: inline-flex;        /* стабильная высота и центр по оси */
   align-items: center;
   justify-content: center;
-  padding: 15.5px 40px;        /* как просил */
+  padding: 15.4px 40px;        /* как просил */
 }
 
 .donate-form-button:hover {
@@ -1458,7 +1458,8 @@ a.rectangle-19-14:hover {
 }
 
 .donate-form-btn-small {
-  padding: 18px;
+  padding: 16.8px 33px 16.8px 33px;
+  font-size: 16px !important;
 }
 
 .btn-check:checked+.donate-form-button,
@@ -1774,15 +1775,70 @@ input::-webkit-inner-spin-button {
   }
 
   .donate-form-button {
-    font-size: 11px;
-    padding: 10px;
+    font-size: 14px;
+    line-height: 140%;
+  }
+
+  .btn-every{
+    max-width: 140px;
+    width: 100%;
+    padding: 13.2px 22px;
+  }
+
+  .btn-once{
+    max-width: 120px !important;
+    width: 100% !important;
+    padding: 13.2px 33px;
+  }
+
+  .sum-row{
+    column-gap: 10px !important;
+    row-gap: 10px !important;
+  }
+
+  .donate-toggle-row{
+    --bs-gutter-x: 20px;
+    --bs-gutter-y: 0;
+    margin-bottom: 16px
+  }
+
+  .donate-form-btn-small{
+    padding: 5.3px 16.53px !important;
+    width: auto;
+  }
+  .donate-toggle-row{
+    display: flex;
+    gap: 20px;
+    padding-left: 10px;
+    --bs-gutter-x: 0 !important;
+  }
+  .system-logo{
+    width: 100%;
+    height: auto;
+    max-height: 16px;
+    max-width: 54px;
+  }
+  
+  .gap-8{
+    gap: 8px !important;
   }
 
   .text-input {
-    font-size: 11px;
+    font-size: 11px !important;
     padding: 13px;
   }
-
+    
+  .vnl-modal__close{
+    top: -35px !important;
+    right: 50% !important;
+    transform: translate(50%, -50%);
+  }
+  #sumText{
+    max-width: 124px !important;
+    width: 100%;
+    font-size: 11px !important;
+    height: 35px !important;
+  }
   #sumText,
   .num-input {
     height: 35px;
@@ -2040,13 +2096,14 @@ input::-webkit-inner-spin-button {
 .sum-row .btn{ margin: 0; }
 
 #sumText{
-  height: 40px;             /* подгони под высоту ваших btn */
-  padding: 8px 12px;
+  height: 58px;             /* подгони под высоту ваших btn */
+  padding: 18px 22px;
   border: 1px solid #E2E6EE;
   border-radius: 8px;
   font: inherit;
   line-height: 1;
-  min-width: 180px;         
+  max-width: 180px; 
+  width: 100%;        
   flex: 1 1 200px;          
 }
 
@@ -2086,12 +2143,13 @@ input::-webkit-inner-spin-button {
 .vnl-modal.is-open{display:flex;}
 .vnl-modal__backdrop{position:absolute; inset:0; background:rgba(217,217,217,.6); backdrop-filter:blur(3px);} /* как на 3-м скрине */
 .vnl-modal__dialog{
+  overflow: visible;
   position:relative; z-index:1;
   background:#fff; border-radius:8px;
   box-shadow:0 4px 20px rgba(60,65,71,.2);
   padding:32px;
   width:min(616px, calc(100% - 32px)); /* по макету ~552–616 */
-  max-height:90vh; overflow:auto;
+  max-height: 85vh; 
 }
 .vnl-modal__close{position:absolute; top:0; right:0; line-height:1; padding:8px;}
 .vnl-modal__content{display:block;}
@@ -2101,31 +2159,29 @@ input::-webkit-inner-spin-button {
 .vnl-modal__list{padding-left:18px; margin:8px 0 0;}
 body.vnl-modal-open{overflow:hidden;}
 @media (max-width:575.98px){
-  .vnl-modal__dialog{padding:24px; width:calc(100% - 24px);}
+  .vnl-modal__dialog{padding:32px; width:calc(100% - 24px);}
   .vnl-modal__title{font-size:24px;}
+}
+
+.vnl-modal__content{
+  max-height: calc(90vh - 64px);
+  overflow: auto;
 }
 
 .vnl-modal__dialog { position: relative; }
 
-.vnl-modal__close {
+.vnl-modal__close{
   position: absolute;
-  top: 0px;
-  right: 0px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  top: -40px;
+  right: -48px;
   width: 40px;
   height: 40px;
-
   border-radius: 50%;
-  border: 1px solid #FFA556;  
+  border: 1px solid #FFA556;
   background: #FFF;
-
-  padding: 0;                 
+  z-index: 2; /* выше контента модалки */
   line-height: 0;
-  cursor: pointer;
+  padding: 0;
 }
 
 .vnl-modal__close.btn-link {
@@ -2222,6 +2278,7 @@ body.vnl-modal-open{overflow:hidden;}
     flex: 0 0 auto; 
     width: calc(100% / 7);
   }
+
 }
 
 @media (max-width: 767.98px){
@@ -2239,7 +2296,9 @@ body.vnl-modal-open{overflow:hidden;}
     height: auto;
   }
   .about-left{ width: 100%; }
-
+  .vnl-modal.is-open{
+    padding-top: 30px;
+  }
   .donate-grid{
     --bs-gutter-x: 24px;
     --bs-gutter-y: 24px;
