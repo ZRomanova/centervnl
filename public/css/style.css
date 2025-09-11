@@ -866,6 +866,16 @@ a.news__subtitle:hover {
   color: #30333A;
 }
 
+
+.text-600-14 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 15px;
+  color: #30333A;
+}
+
 .text-700-16-dark {
   font-family: 'Montserrat';
   font-style: normal;
@@ -1477,6 +1487,22 @@ a.rectangle-19-14:hover {
   margin-top: 16px;
 }
 
+.mt-24{
+  margin-top: 24px;
+}
+
+.mt-48{
+  margin-top: 48px;
+}
+
+.mt-64{
+  margin-top: 64px;
+}
+
+.mw-674{
+  max-width: 674px;
+  width: 100%;
+}
 .donate-box[role="button"] { cursor: pointer; }
 
 
@@ -2149,7 +2175,13 @@ body.vnl-modal-open{overflow:hidden;}
   text-underline-offset: 3px;
 }
 
-
+.media-block .link-block{
+  margin-top: 10px;     
+  display: flex;
+  gap: 20px;            
+  align-items: center;
+}
+.media-block .link-block img{ display:block; }
 
 .vnl-bank-list a:hover{ color:#FFA556; }
 

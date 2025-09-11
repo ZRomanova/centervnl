@@ -28,6 +28,7 @@ module.exports.getHelpList = async function (req, res) {
     } catch (e) {
         console.log(e)
     }
+    
 }
 
 const renderHelpList = function (req, res, data) {
@@ -78,8 +79,61 @@ const renderHelpDonate = function (req, res, data) {
 
 }
 
+module.exports.getHelpDonateTbank = async function (req, res) {
+  try {
+    const result = {}
+    req.query.filter_visible = true
 
+    req.params.type = "CONTACTS"
+    await apiData.getByType(req, res, (req, res, contacts) => { result.contacts = contacts })
+    req.query.fields_name = 1
+    req.query.fields_path = 1
+    await apiPrograms.getPrograms(req, res, (req, res, programs) => { result.programs = programs })
+    await apiShops.getShops(req, res, async (req, res, shops) => { result.shops = shops })
 
+    renderHelpDonateTbank(req, res, result)
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+module.exports.getHelpDonateSber = async function (req, res) {
+  try {
+    const result = {};
+    req.query.filter_visible = true;
+
+    req.params.type = "CONTACTS";
+    await apiData.getByType(req, res, (req, res, contacts) => { result.contacts = contacts; });
+    req.query.fields_name = 1;
+    req.query.fields_path = 1;
+    await apiPrograms.getPrograms(req, res, (req, res, programs) => { result.programs = programs; });
+    await apiShops.getShops(req, res, async (req, res, shops) => { result.shops = shops; });
+
+    renderHelpDonateSber(req, res, result);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const renderHelpDonateSber = function (req, res, data) {
+  res.render('help-donate-sber', {
+    title: 'Как помочь через Сбербанк?',
+    programs: data.programs,
+    contacts: data.contacts,
+    session: req.session,
+    shops: data.shops
+  });
+};
+
+const renderHelpDonateTbank = function (req, res, data) {
+  res.render('help-donate-tbank', {
+    title: 'Пожертвовать через Т-Банк',
+    programs: data.programs,
+    contacts: data.contacts,
+    session: req.session,
+    shops: data.shops
+  })
+}
 
 
 module.exports.createDonation = async function (req, res) {
@@ -125,6 +179,50 @@ module.exports.createDonation = async function (req, res) {
         console.log(e)
     }
 }
+
+module.exports.getHelpDonateAlfa = async function (req, res) {
+  try {
+    const result = {};
+    req.query.filter_visible = true;
+
+    req.params.type = "CONTACTS";
+    await apiData.getByType(req, res, (req, res, contacts) => { result.contacts = contacts; });
+    req.query.fields_name = 1;
+    req.query.fields_path = 1;
+    await apiPrograms.getPrograms(req, res, (req, res, programs) => { result.programs = programs; });
+    await apiShops.getShops(req, res, async (req, res, shops) => { result.shops = shops; });
+
+    res.render('help-donate-alfa', {
+      title: 'Как помочь через Альфа-Банк',
+      programs: result.programs,
+      contacts: result.contacts,
+      session: req.session,
+      shops: result.shops
+    });
+  } catch (e) { console.log(e); }
+};
+
+module.exports.getHelpDonateVtb = async function (req, res) {
+  try {
+    const result = {};
+    req.query.filter_visible = true;
+
+    req.params.type = "CONTACTS";
+    await apiData.getByType(req, res, (req, res, contacts) => { result.contacts = contacts; });
+    req.query.fields_name = 1;
+    req.query.fields_path = 1;
+    await apiPrograms.getPrograms(req, res, (req, res, programs) => { result.programs = programs; });
+    await apiShops.getShops(req, res, async (req, res, shops) => { result.shops = shops; });
+
+    res.render('help-donate-vtb', {
+      title: 'Как помочь через ВТБ',
+      programs: result.programs,
+      contacts: result.contacts,
+      session: req.session,
+      shops: result.shops
+    });
+  } catch (e) { console.log(e); }
+};
 
 
 module.exports.getDonateFinish = async function (req, res) {
