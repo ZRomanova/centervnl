@@ -11,6 +11,10 @@ router.post('/donate/finish', controller.createDonationFinish)
 
 router.post('/donate/subscribe', controller.createSubscription)
 router.get('/donate/subscribe', controller.getSubscriptionFinish)
+router.get('/donate/tbank', controller.getHelpDonateTbank);
+router.get('/donate/sber', controller.getHelpDonateSber);
+router.get('/donate/alfa', controller.getHelpDonateAlfa);
+router.get('/donate/vtb',  controller.getHelpDonateVtb);
 
 router.get('/volunteer', controller.getHelpVolunteer)
 router.get('/million-prizov', controller.getHelpMillionPrizov)
