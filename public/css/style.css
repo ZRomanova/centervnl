@@ -53,7 +53,7 @@ a:hover {
   color: #fff;
 }
 
-.button_blue {
+.donate-button {
   border-radius: 8px;
   background-color: #02B2B6;
   border: 3px solid #02B2B6;
@@ -63,22 +63,32 @@ a:hover {
   transition: all 500ms ease;
 }
 
-.button_blue:disabled{
+.donate-button:disabled{
   background: #FFF;
   color: #30333A;
   opacity: 1 !important;
 }
 
 
-.button_blue:hover {
+.donate-button:hover {
   background: #02B2B6;
   color: #fff;
 }
 
-.button_blue:active {
+.donate-button:active {
   background: #02B2B6;
   cursor: pointer;
 }
+
+
+.button_blue {
+  background: #02b2b6;
+}
+
+.button_blue:hover {
+  background: #009ea1;
+}
+
 
 .button_orange {
   background: #ffa556;
