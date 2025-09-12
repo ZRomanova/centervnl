@@ -1792,7 +1792,7 @@ input::-webkit-inner-spin-button {
   }
 
   .sum-row{
-    column-gap: 10px !important;
+    column-gap: 12.7px !important;
     row-gap: 10px !important;
   }
 
@@ -1809,7 +1809,7 @@ input::-webkit-inner-spin-button {
   .donate-toggle-row{
     display: flex;
     gap: 20px;
-    padding-left: 10px;
+    padding-left: 12px;
     --bs-gutter-x: 0 !important;
   }
   .system-logo{
@@ -2071,7 +2071,7 @@ input::-webkit-inner-spin-button {
 }
 
 .donate-toggle-row{
-  --bs-gutter-x: 32px; /* для Bootstrap row */
+  --bs-gutter-x: 24px; 
   --bs-gutter-y: 0;
   margin-bottom: 16px;
 }
@@ -2164,7 +2164,7 @@ body.vnl-modal-open{overflow:hidden;}
 }
 
 .vnl-modal__content{
-  max-height: calc(90vh - 64px);
+  max-height: calc(80vh - 32px);
   overflow: auto;
 }
 
