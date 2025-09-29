@@ -20,6 +20,7 @@ function validateEmail(email) {
 
 module.exports.sendEmail = async (data = {}) => {
   try {
+    return
     let to = data.to || defaultEmailTo
     if (validateEmail(to)) {
       return await transporter.sendMail({
